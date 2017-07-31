@@ -1,0 +1,15 @@
+{
+  "name": "recruiters-portal-heroku-app",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
