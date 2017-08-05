@@ -11,12 +11,11 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import url('https://fonts.googleapis.com/css?family=Roboto');
+  html, body, h1, h2, h3, h4, h5, h6, p, a, span, input, select, textarea, div, label{
+    font-family: 'Roboto', sans-serif !important;
+  }
+  html, #general-container{
+    background: url('~@/assets/background.png');
+  }
 </style>

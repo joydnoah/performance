@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Auth from '@/components/Auth'
+import Home from '@/components/Home'
+import Position from '@/components/Position'
+import Positions from '@/components/Positions'
 import Callback from '@/components/Callback'
 import { requireAuth } from '../../utils/auth'
 
@@ -12,14 +13,20 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Auth',
-      component: Auth
+      name: 'Home',
+      component: Home
     },
     {
-      path: '/required',
-      name: 'Hello',
+      path: '/position',
+      name: 'Position',
       beforeEnter: requireAuth,
-      component: Hello
+      component: Position
+    },
+    {
+      path: '/positions',
+      name: 'Positions',
+      beforeEnter: requireAuth,
+      component: Positions
     },
     {
       path: '/callback',

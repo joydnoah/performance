@@ -2,7 +2,15 @@
 	<div>
 		<app-nav></app-nav>
 		<h3 class="text-center">Cotopaxi-io</h3>
-		<button v-on:click="link()">Get Hello</button>
+    <input type="text" v-model="city"  />
+    <button v-on:click="create_city()">Create City</button>
+		<button v-on:click="get_cities()">Get Cities</button>
+
+    <ul id="example-1">
+      <li v-for="item in cities">
+        {{ item.city }}
+      </li>
+    </ul>
 	</div>
 </template>
 
@@ -17,23 +25,39 @@
     },
     data: function () {
       return {
-        sources: null
+        city: '',
+        sources: null,
+        cities: {}
       }
     },
     methods: {
       isLoggedIn () {
         return isLoggedIn()
       },
-      link () {
-        console.log(`Bearer ${getIdToken()}`)
-        const url = '/positions/get'
+      get_cities () {
         axios.defaults.baseURL = 'http://localhost:5000'
         axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-        axios.get(url)
-        .then(response => { console.log(response) })
+
+        axios.get('/city/')
+        .then(response => {
+          console.log(response)
+          this.cities = JSON.parse(response.data)
+        })
         .catch(error => { console.log(error.response) })
-        // axios.post(url).then(response => console.log(response.data))
+      },
+      create_city () {
+        axios.defaults.baseURL = 'http://localhost:5000'
+        axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+        if (this.city !== '') {
+          axios.post('/city/', { city: this.city })
+          .then(response => {
+            this.city = ''
+            console.log(response)
+          })
+          .catch(error => { console.log(error.response) })
+        }
       }
     }
   }

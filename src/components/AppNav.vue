@@ -1,14 +1,39 @@
 <template>
-  <nav class="navbar navbar-default">
-    <div class="navbar-header">
-      <router-link to="/" class="navbar-brand"> Inicio</router-link>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <button class="btn btn-danger log" v-show="isLoggedIn()" @click="handleLogout()">Log out </button>
-        <button class="btn btn-info log" v-show="!isLoggedIn()" @click="handleLogin()">Log In</button>
-      </li>
-    </ul>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <router-link to="/" class="navbar-brand">Cotopaxi-io</router-link>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Producto</a></li>
+          <li><a href="#">Precio</a></li>
+          <li><router-link v-show="isLoggedIn()" to="/positions">Posiciones</router-link></li>
+          <li>
+            <a v-show="!isLoggedIn()" @click="handleLogin()" href="#">Ingresar</a>
+          </li>
+          <li>
+            <a v-show="isLoggedIn()" @click="handleLogout()" href="#">Cerrar Sesión</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="navbar-right header-networks">
+            <a href="#"><img src="~@/assets/facebook.png" /></a>
+            <a href="#"><img src="~@/assets/twitter.png" /></a>
+            <a href="#"><img src="~@/assets/linkedin.png" /></a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
   </nav>
 </template>
 
@@ -37,5 +62,19 @@
 
 .log {
   margin: 5px 10px 0 0;
+}
+.header-networks{
+  vertical-align: middle;
+  text-align: right;
+}
+.header-networks a{
+  display: inline;
+}
+.header-networks img{
+  width: 6%;
+  margin-top: 0.7em;
+}
+.a-button{
+  margin-top: 20px;
 }
 </style>
