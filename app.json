@@ -1,5 +1,21 @@
 {
-  "name": "Recruiters portal app",
-  "description": "",
-  "repository": "https://github.com/cotopaxi-io/recruiters-portal"
+  "name": "recruiters-portal-heroku-app",
+  "scripts": {
+  },
+  "env": {
+    "INHERIT_THIS_CONFIG_VAR": {
+      "NODE_ENV": true,
+      "NODE_MODULES_CACHE": true,
+      "NPM_CONFIG_PRODUCTION": false
+    },
+    "DONT_INHERIT_THIS_CONFIG_VAR": "production"
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
 }
