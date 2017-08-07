@@ -4,9 +4,7 @@
   },
   "env": {
     "INHERIT_THIS_CONFIG_VAR": {
-      "NODE_ENV": true,
-      "NODE_MODULES_CACHE": true,
-      "NPM_CONFIG_PRODUCTION": false
+      "required": true
     },
     "DONT_INHERIT_THIS_CONFIG_VAR": "production"
   },
