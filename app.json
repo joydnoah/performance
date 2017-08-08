@@ -1,0 +1,8 @@
+{
+  "name": "recruiters-portal-heroku-app",
+  "env":{
+    "NODE_ENV": "development",
+    "NODE_MODULES_CACHE": "false",
+    "NPM_CONFIG_PRODUCTION": "false"
+  }
+}
