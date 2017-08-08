@@ -54,11 +54,8 @@
         return isLoggedIn()
       },
       get_positions () {
-        axios.defaults.baseURL = 'http://localhost:5000'
         axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-
-        axios.get('/position/')
+        this.axios.get('/position/')
         .then(response => {
           this.positions = JSON.parse(response.data)
         })

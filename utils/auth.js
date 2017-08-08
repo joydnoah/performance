@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import decode from 'jwt-decode';
 import axios from 'axios';
 import auth0 from 'auth0-js';
@@ -6,11 +7,18 @@ import Auth0Lock from 'auth0-lock';
 const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 
-const CLIENT_ID = '3ZdqWf44EjTeXtIMGxMFFxiFevzr1ewq';
-const CLIENT_DOMAIN = 'xogost.auth0.com';
-const REDIRECT = 'http://localhost:8080/callback';
-const SCOPE = 'full_access';
-const AUDIENCE = 'https://xogost.auth0.com/userinfo';
+Vue.config.debug = process.env.DEBUG_MODE
+Vue.config.client_id = process.env.CLIENT_ID
+Vue.config.client_domain = process.env.CLIENT_DOMAIN
+Vue.config.redirect = process.env.REDIRECT
+Vue.config.scope = process.env.SCOPE
+Vue.config.audience = process.env.AUDIENCE
+
+const CLIENT_ID = Vue.config.client_id;
+const CLIENT_DOMAIN = Vue.config.client_domain;
+const REDIRECT = Vue.config.redirect;
+const SCOPE = Vue.config.scope;
+const AUDIENCE = Vue.config.audience;
 
 var auth = new auth0.WebAuth({
   clientID: CLIENT_ID,

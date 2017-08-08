@@ -15,21 +15,12 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="#">Producto</a></li>
-          <li><a href="#">Precio</a></li>
           <li><router-link v-show="isLoggedIn()" to="/positions">Posiciones</router-link></li>
           <li>
             <a v-show="!isLoggedIn()" @click="handleLogin()" href="#">Ingresar</a>
           </li>
           <li>
             <a v-show="isLoggedIn()" @click="handleLogout()" href="#">Cerrar Sesión</a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="navbar-right header-networks">
-            <a href="#"><img src="~@/assets/facebook.png" /></a>
-            <a href="#"><img src="~@/assets/twitter.png" /></a>
-            <a href="#"><img src="~@/assets/linkedin.png" /></a>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
