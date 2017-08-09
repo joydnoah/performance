@@ -1,0 +1,43 @@
+<template>
+  <div>
+    <app-nav></app-nav>
+    <div class="home-title">
+      <h3>
+      ¡Cotopaxi te ayuda a reclutar!
+      La manera mas rapida de contratar ejecutivos y empleados.
+      </h3>
+      <p>
+        Con Cotopaxi ahorra tiempo publicando y manejando solicitudes de empleo a tu empresa.
+      </p>
+    </div>
+  </div>
+</template>
+<script>
+  import AppNav from './AppNav'
+  export default {
+    components: {
+      AppNav
+    },
+    mounted: function () {
+    }
+  }
+</script>
+
+<style scoped>
+  .home-title {
+  	text-align: center;
+  	height: 300px;
+  	border-bottom: 1px solid #9c9c9c;
+  	padding-top: 4em;
+  }
+  .home-title h3{
+	width: 30%;
+	margin: 1em auto;
+	text-align: left;
+  }
+  .home-title p{
+	width: 30%;
+	margin: 1em auto;
+	text-align: left;
+  }
+</style>

@@ -1,21 +1,8 @@
 {
   "name": "recruiters-portal-heroku-app",
-  "scripts": {
-  },
-  "env": {
-    "INHERIT_THIS_CONFIG_VAR": {
-      "NODE_ENV": true,
-      "NODE_MODULES_CACHE": true,
-      "NPM_CONFIG_PRODUCTION": false
-    },
-    "DONT_INHERIT_THIS_CONFIG_VAR": "production"
-  },
-  "formation": {
-  },
-  "addons": [
-
-  ],
-  "buildpacks": [
-
-  ]
+  "env":{
+    "NODE_ENV": "development",
+    "NODE_MODULES_CACHE": "false",
+    "NPM_CONFIG_PRODUCTION": "false"
+  }
 }
