@@ -57,7 +57,7 @@
         axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/')
         .then(response => {
-          this.positions = JSON.parse(response.data)
+          this.positions = JSON.parse(response.data.data.positions)
         })
         .catch(error => { console.log(error.response) })
       }
