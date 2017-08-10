@@ -41,6 +41,7 @@ var router = new Router({
 export function logout() {
   clearIdToken();
   clearAccessToken();
+  localStorage.removeItem('user_info');
   router.go('/');
 }
 
@@ -61,6 +62,10 @@ export function getIdToken() {
 
 export function getAccessToken() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
+
+export function getUserInfo() {
+  return localStorage.getItem('user_info');
 }
 
 function clearIdToken() {

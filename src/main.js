@@ -16,6 +16,7 @@ Vue.config.productionTip = false
 Vue.config.base_url = process.env.BASE_URL
 
 Vue.axios.defaults.baseURL = Vue.config.base_url
+Vue.axios.defaults.headers.get['Content-Type'] = 'application/json; charset=utf-8'
 Vue.axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8'
 
 /* eslint-disable no-new */
