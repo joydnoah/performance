@@ -36,7 +36,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   
@@ -54,7 +53,7 @@
         return isLoggedIn()
       },
       get_positions () {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/')
         .then(response => {
           this.positions = JSON.parse(response.data.data.positions)

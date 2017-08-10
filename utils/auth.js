@@ -72,7 +72,7 @@ function clearAccessToken() {
 }
 
 // Helper function that will allow us to extract the access_token and id_token
-function getParameterByName(name) {
+export function getParameterByName(name) {
   let match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash);
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
