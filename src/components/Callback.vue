@@ -6,7 +6,6 @@
   export default {
     name: 'callback',
     mounted () {
-      // var error = getParameterByName('error');
       if (getParameterByName('error_description') === 'Please verify your email before logging in.') {
         window.location.href = '/verify-email'
       } else {
