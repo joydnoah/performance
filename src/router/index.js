@@ -5,6 +5,8 @@ import Position from '@/components/Position'
 import Positions from '@/components/Positions'
 import Callback from '@/components/Callback'
 import VerifyEmail from '@/components/VerifyEmail'
+import CreateCompany from '@/components/CreateCompany'
+import Dashboard from '@/components/Dashboard'
 import { requireAuth } from '../../utils/auth'
 
 Vue.use(Router)
@@ -38,6 +40,16 @@ export default new Router({
       path: '/verify-email',
       name: 'VerifyEmail',
       component: VerifyEmail
+    },
+    {
+      path: '/create-company',
+      name: 'CreateCompany',
+      component: CreateCompany
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     }
   ]
 })

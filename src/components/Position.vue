@@ -10,7 +10,7 @@
           </div>
           <div class="form-group">
             <label>Descripción de la posición</label>
-            <textarea name='position_description' class="form-control" v-model='position_description'></textarea>
+            <textarea name='description' class="form-control" v-model='description'></textarea>
           </div>
           <div class="form-group">
             <label>Descripción del equipo de trabajo</label>
@@ -18,11 +18,15 @@
           </div>
           <div class="form-group">
             <label>Características que estas buscando en un empleado</label>
-            <textarea name='position_characteristics' class="form-control" v-model='position_characteristics'></textarea>
+            <textarea name='candidate_characteristics' class="form-control" v-model='candidate_characteristics'></textarea>
           </div>
-          <div class="form-group" v-bind:class="{ 'has-error': $v.expiration_date_position.$error }">
-          <label>Fecha de caducidad de la oferta de posición</label>
-          <input type='date' v-on:input="$v.expiration_date_position.$touch" name='expiration_date_position' class="form-control" v-model='expiration_date_position' />
+          <div class="form-group" v-bind:class="{ 'has-error': $v.publication_date.$error }">
+            <label>Fecha de Publicación</label>
+            <input type='date' v-on:input="$v.publication_date.$touch" name='publication_date' class="form-control" v-model='publication_date' />
+          </div>
+          <div class="form-group" v-bind:class="{ 'has-error': $v.expiration_date.$error }">
+            <label>Fecha de caducidad de la oferta de posición</label>
+            <input type='date' v-on:input="$v.expiration_date.$touch" name='expiration_date' class="form-control" v-model='expiration_date' />
           </div>
           <button class="btn btn-success" @click="post_position($v)">Guardar y Salir</button>
           <button class="btn btn-danger" v-on:click="exit()">Salir sin Guardar</button>
@@ -46,19 +50,23 @@
         department_id: '',
         position_type_id: '',
         city_id: '',
-        position_description: '',
+        description: '',
         work_team_description: '',
-        position_characteristics: '',
+        candidate_characteristics: '',
         questions: '',
         preformulated_questions: '',
-        expiration_date_position: ''
+        publication_date: '',
+        expiration_date: ''
       }
     },
     validations: {
       name: {
         required
       },
-      expiration_date_position: {
+      expiration_date: {
+        required
+      },
+      publication_date: {
         required
       }
     },
@@ -71,14 +79,16 @@
       },
       post_position (v) {
         v.$touch()
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         if (!v.$error) {
+          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.post('/position/', {
+            'company_id': localStorage['company_id'],
             'name': this.name,
-            'position_description': this.position_description,
+            'description': this.description,
             'work_team_description': this.work_team_description,
-            'position_characteristics': this.position_characteristics,
-            'expiration_date_position': this.expiration_date_position
+            'candidate_characteristics': this.candidate_characteristics,
+            'publication_date': this.publication_date,
+            'expiration_date': this.expiration_date
           })
           .then(response => {
             window.location.href = '/positions'

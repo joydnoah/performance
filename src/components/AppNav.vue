@@ -15,7 +15,6 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><router-link v-show="isLoggedIn()" to="/positions">Posiciones</router-link></li>
           <li>
             <button class="btn btn-default navbar-btn" v-show="!isLoggedIn()" @click="handleLogin()">Ingresar</button>
           </li>
@@ -52,6 +51,7 @@
       },
       handleLogout () {
         logout()
+        window.location.href = '/'
       },
       isLoggedIn () {
         return isLoggedIn()

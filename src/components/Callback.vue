@@ -1,7 +1,15 @@
 <template>
+  <div id="general-container">
+    <div id="loading" class="panel panel-default">
+      <div class="panel-body">
+        <img src="~@/assets/loading.gif">
+        Procesando por favor espere...
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-  import { setIdToken, setAccessToken, getParameterByName, getAccessToken } from '../../utils/auth'
+  import { setIdToken, setAccessToken, getParameterByName, getAccessToken, getIdToken } from '../../utils/auth'
 
   export default {
     name: 'callback',
@@ -16,7 +24,17 @@
           this.axios.get(process.env.AUDIENCE)
           .then(response => {
             localStorage.setItem('user_info', JSON.stringify({ user_id: response.data.user_id, picture: response.data.picture, name: response.data.name, nickname: response.data.nickname, email: response.data.email }))
-            window.location.href = '/'
+            this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+            this.axios.get('/users/', {params: {'user_id': response.data.user_id}})
+            .then(response => {
+              if (response.data.data.user === '[]') {
+                window.location.href = '/create-company'
+              } else {
+                localStorage.setItem('company_id', JSON.parse(response.data.data.user)[0].company_id)
+                window.location.href = '/positions'
+              }
+            })
+            .catch(error => { console.log(error.response) })
           })
           .catch(error => { console.log(error.response) })
         })
@@ -24,3 +42,15 @@
     }
   }
 </script>
+<style scoped>
+  #loading{
+    width: 20%;
+    margin: 5em auto;
+    font-weight: bold;
+    text-align: center;
+  }
+  #loading img{
+    margin: 0 auto;
+    display: block;
+  }
+</style>

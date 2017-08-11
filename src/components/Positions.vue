@@ -13,7 +13,8 @@
               <th>Nombre</th>
               <th>Descripción de Posición</th>
               <th>Fecha de Vencimiento</th>
-              <th></th>
+              <th>Fecha de Publicación</th>
+              <th>Fecha de Creación</th>
             </tr>
           </thead>
           <tbody>
@@ -22,10 +23,16 @@
                 {{ item.name }}
               </td>
               <td>
-                {{ item.position_description }}
+                {{ item.description }}
               </td>
               <td>
-                {{ item.expiration_date_position }}
+                {{ item.expiration_date }}
+              </td>
+              <td>
+                {{ item.publication_date }}
+              </td>
+              <td>
+                {{ item.created_at }}
               </td>
             </tr>
           </tbody>
@@ -54,7 +61,7 @@
       },
       get_positions () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/position/')
+        this.axios.get('/position/', {params: {'company_id': localStorage['company_id']}})
         .then(response => {
           this.positions = JSON.parse(response.data.data.positions)
         })
