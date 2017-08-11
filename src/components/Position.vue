@@ -28,7 +28,7 @@
             <label>Fecha de caducidad de la oferta de posición</label>
             <input type='date' v-on:input="$v.expiration_date.$touch" name='expiration_date' class="form-control" v-model='expiration_date' />
           </div>
-          <button class="btn btn-success" @click="post_position($v)">Guardar y Salir</button>
+          <button class="btn btn-success" @click="save($v)">Guardar y Salir</button>
           <button class="btn btn-danger" v-on:click="exit()">Salir sin Guardar</button>
         </div>
       </div>
@@ -77,11 +77,37 @@
       exit () {
         window.location.href = '/positions'
       },
-      post_position (v) {
+      save (v) {
+        if (this.id !== undefined) {
+          this.put(v)
+        } else {
+          this.post(v)
+        }
+      },
+      put (v) {
         v.$touch()
         if (!v.$error) {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.post('/position/', {
+          this.axios.put('/position', {
+            'id': this.id,
+            'name': this.name,
+            'description': this.description,
+            'work_team_description': this.work_team_description,
+            'candidate_characteristics': this.candidate_characteristics,
+            'publication_date': this.publication_date,
+            'expiration_date': this.expiration_date
+          })
+          .then(response => {
+            window.location.href = '/positions'
+          })
+          .catch(error => { console.log(error.response) })
+        }
+      },
+      post (v) {
+        v.$touch()
+        if (!v.$error) {
+          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+          this.axios.post('/position', {
             'company_id': localStorage['company_id'],
             'name': this.name,
             'description': this.description,
@@ -95,6 +121,23 @@
           })
           .catch(error => { console.log(error.response) })
         }
+      }
+    },
+    mounted () {
+      if (this.$route.query.id !== undefined) {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.get('/position', {params: {'id': this.$route.query.id}})
+        .then((response) => {
+          this.id = JSON.parse(response.data.data.position).id
+          this.name = JSON.parse(response.data.data.position).name
+          this.department_id = JSON.parse(response.data.data.position).department_id
+          this.description = JSON.parse(response.data.data.position).description
+          this.work_team_description = JSON.parse(response.data.data.position).work_team_description
+          this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
+          this.publication_date = JSON.parse(response.data.data.position).publication_date.substring(0, 10)
+          this.expiration_date = JSON.parse(response.data.data.position).expiration_date.substring(0, 10)
+        })
+        .catch(error => { console.log(error.response) })
       }
     }
   }

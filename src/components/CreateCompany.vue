@@ -83,7 +83,7 @@
         v.$touch()
         if (!v.$error) {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.post('/companies/', {
+          this.axios.post('/companies', {
             'number_employees': this.number_employees,
             'industry': this.industry,
             'name': this.name

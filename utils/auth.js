@@ -42,6 +42,7 @@ export function logout() {
   clearIdToken();
   clearAccessToken();
   localStorage.removeItem('user_info');
+  localStorage.removeItem('company_id');
   router.go('/');
 }
 
