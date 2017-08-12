@@ -4,11 +4,11 @@
     "NODE_ENV": "development",
     "NODE_MODULES_CACHE": "false",
     "NPM_CONFIG_PRODUCTION": "false",
-    "CLIENT_ID": '"zDGXQ7dR6DQ5f2e7k0sWThovX1U82Ey-"',
-    "CLIENT_DOMAIN": '"cotopaxi-auth0-reviewapp.auth0.com"',
-    "REDIRECT": '"https://recruiters-portal-develo-pr-10.herokuapp.com/callback"',
-    "SCOPE": '"full_access"',
-    "AUDIENCE": '"https://xogost.auth0.com/userinfo"',
-    "BASE_URL": '"https://jobs-api-development-pr-1.herokuapp.com"'
+    "CLIENT_ID": "'zDGXQ7dR6DQ5f2e7k0sWThovX1U82Ey-'",
+    "CLIENT_DOMAIN": "'cotopaxi-auth0-reviewapp.auth0.com'",
+    "REDIRECT": "'https://recruiters-portal-develo-pr-10.herokuapp.com/callback'",
+    "SCOPE": "'full_access'",
+    "AUDIENCE": "'https://xogost.auth0.com/userinfo'",
+    "BASE_URL": "'https://jobs-api-development-pr-1.herokuapp.com'"
   }
 }
