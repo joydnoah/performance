@@ -88,8 +88,7 @@
         v.$touch()
         if (!v.$error) {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.put('/position', {
-            'id': this.id,
+          this.axios.put('/position/' + this.id, {
             'name': this.name,
             'description': this.description,
             'work_team_description': this.work_team_description,
@@ -107,7 +106,7 @@
         v.$touch()
         if (!v.$error) {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.post('/position', {
+          this.axios.post('/positions', {
             'company_id': localStorage['company_id'],
             'name': this.name,
             'description': this.description,
@@ -126,7 +125,7 @@
     mounted () {
       if (this.$route.query.id !== undefined) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/position', {params: {'id': this.$route.query.id}})
+        this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
           this.id = JSON.parse(response.data.data.position).id
           this.name = JSON.parse(response.data.data.position).name

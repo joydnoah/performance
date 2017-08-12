@@ -15,15 +15,34 @@
           </div>
           <div class="form-group" v-bind:class="{ 'has-error': $v.number_employees.$error }">
             <label>¿Cuantos empledos tiene su empresa? <span class="required-span">*</span></label>
-            <input type="number" v-on:input="$v.number_employees.$touch" v-model="number_employees" class="form-control" id="number_employees" name="number_employees" />
+            <select v-on:input="$v.number_employees.$touch" v-model="number_employees" class="form-control" id="number_employees" name="number_employees">
+              <option value="">Seleccionar</option>
+              <option value="1-10">1-10</option>
+              <option value="11-50">11-50</option>
+              <option value="51-250">51-250</option>
+              <option value="Más de 250">Más de 250</option>
+            </select>
           </div>
           <div class="form-group" v-bind:class="{ 'has-error': $v.industry.$error }">
             <label>¿En que industria se desempeña tu empresa? <span class="required-span">*</span></label>
-            <input type="text" class="form-control" v-on:input="$v.industry.$touch" v-model="industry" id="industry" name="industry" />
+            <select class="form-control" v-on:input="$v.industry.$touch" v-model="industry" id="industry" name="industry" >
+              <option value="">Seleccionar</option>
+              <option value="Banca o Finanzas">Banca o Finanzas</option>
+              <option value="Manufactura">Manufactura</option>
+              <option value="Agricultura">Agricultura</option>
+              <option value="Servicios">Servicios</option>
+              <option value="Importación y Exportación">Importación y Exportación</option>
+            </select>
           </div>
           <div class="form-group" v-bind:class="{ 'has-error': $v.company_role.$error }">
             <label>¿Cuál es tu rol dentro de la empresa? <span class="required-span">*</span></label>
-            <input type="text" class="form-control" v-on:input="$v.company_role.$touch" v-model="company_role" id="company_role" name="company_role" />
+            <select class="form-control" v-on:input="$v.company_role.$touch" v-model="company_role" id="company_role" name="company_role">
+              <option value="">Seleccionar</option>
+              <option value="Gerente de RRHH">Gerente de RRHH</option>
+              <option value="Especialista de RRHH">Especialista de RRHH</option>
+              <option value="Entrevistador">Entrevistador</option>
+              <option value="Otro">Otro</option>
+            </select>
           </div>
           <div class="form-group" v-bind:class="{ 'has-error': $v.name.$error }">
             <label>¿Cuál es el nombre de tu empresa? <span class="required-span">*</span></label>
@@ -39,7 +58,7 @@
 <script>
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn, getUserInfo } from '../../utils/auth'
-  import { required, between } from 'vuelidate/lib/validators'
+  import { required } from 'vuelidate/lib/validators'
   
   export default {
     components: {
@@ -56,8 +75,7 @@
     },
     validations: {
       number_employees: {
-        required,
-        between: between(1, 100000000)
+        required
       },
       industry: {
         required
@@ -89,7 +107,8 @@
             'name': this.name
           })
           .then(response => {
-            this.axios.post('/users/', {
+            localStorage.setItem('company_id', response.data.data.company_id)
+            this.axios.post('/users', {
               'company_role': this.company_role,
               'company_id': response.data.data.company_id,
               'user_id': this.user_id
