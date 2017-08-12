@@ -24,7 +24,7 @@ const CLIENT_ID = "zDGXQ7dR6DQ5f2e7k0sWThovX1U82Ey-";
 const CLIENT_DOMAIN = "cotopaxi-auth0-reviewapp.auth0.com";
 const REDIRECT = "https://recruiters-portal-develo-pr-10.herokuapp.com/callback";
 const SCOPE = "full_access";
-const AUDIENCE = "https://recruiters-portal-develo-pr-10.herokuapp.com/userinfo";
+const AUDIENCE = "https://cotopaxi-auth0-reviewapp.auth0.com/userinfo";
 
 var auth = new auth0.WebAuth({
   clientID: CLIENT_ID,
