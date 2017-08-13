@@ -7,24 +7,12 @@ import Auth0Lock from 'auth0-lock';
 const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 
-// Vue.config.debug = process.env.DEBUG_MODE
-// Vue.config.client_id = process.env.CLIENT_ID
-// Vue.config.client_domain = process.env.CLIENT_DOMAIN
-// Vue.config.redirect = process.env.REDIRECT
-// Vue.config.scope = process.env.SCOPE
-// Vue.config.audience = process.env.AUDIENCE
-
-// const CLIENT_ID = Vue.config.client_id;
-// const CLIENT_DOMAIN = Vue.config.client_domain;
-// const REDIRECT = Vue.config.redirect;
-// const SCOPE = Vue.config.scope;
-// const AUDIENCE = Vue.config.audience;
-
-const CLIENT_ID = "zDGXQ7dR6DQ5f2e7k0sWThovX1U82Ey-";
-const CLIENT_DOMAIN = "cotopaxi-auth0-reviewapp.auth0.com";
-const REDIRECT = "https://recruiters-portal-develo-pr-10.herokuapp.com/callback";
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN;
+const AUTH0_CALLBACK_REDIRECT = process.env.AUTH0_CALLBACK_REDIRECT;
 const SCOPE = "full_access";
-const AUDIENCE = "https://cotopaxi-auth0-reviewapp.auth0.com/userinfo";
+const AUDIENCE = process.env.AUTH0_AUDIENCE;
+
 
 var auth = new auth0.WebAuth({
   clientID: CLIENT_ID,
@@ -34,7 +22,7 @@ var auth = new auth0.WebAuth({
 export function login() {
   auth.authorize({
     responseType: 'token id_token',
-    redirectUri: REDIRECT,
+    redirectUri: AUTH0_CALLBACK_REDIRECT,
     audience: AUDIENCE,
     scope: SCOPE
   });
