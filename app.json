@@ -3,6 +3,11 @@
   "env":{
     "NODE_ENV": "development",
     "NODE_MODULES_CACHE": "false",
-    "NPM_CONFIG_PRODUCTION": "false"
+    "NPM_CONFIG_PRODUCTION": "false",
+    "CLIENT_ID": "UXE1NJvyCYPYASv3yrRu2Uris2c3ULeZ",
+    "CLIENT_DOMAIN": "cotopaxi-auth0-staging.auth0.com",
+    "AUTH0_CALLBACK_REDIRECT": "https://recruiters-portal-develo-pr-10.herokuapp.com/callback",
+    "AUTH0_AUDIENCE": "https://cotopaxi-auth0-staging.auth0.com/userinfo",
+    "JOBS_API_URL": "https://jobs-api-development.herokuapp.com"
   }
 }

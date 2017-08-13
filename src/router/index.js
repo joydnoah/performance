@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Position from '@/components/Position'
 import Positions from '@/components/Positions'
 import Callback from '@/components/Callback'
+import VerifyEmail from '@/components/VerifyEmail'
 import { requireAuth } from '../../utils/auth'
 
 Vue.use(Router)
@@ -32,6 +33,11 @@ export default new Router({
       path: '/callback',
       name: 'Callback',
       component: Callback
+    },
+    {
+      path: '/verify-email',
+      name: 'VerifyEmail',
+      component: VerifyEmail
     }
   ]
 })

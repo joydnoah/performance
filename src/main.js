@@ -13,9 +13,10 @@ Vue.use(Vuelidate)
 Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
-Vue.config.base_url = process.env.BASE_URL
+// // Vue.config.base_url = process.env.BASE_URL
 
-Vue.axios.defaults.baseURL = Vue.config.base_url
+// Vue.axios.defaults.baseURL = Vue.config.base_url
+Vue.axios.defaults.baseURL = process.env.JOBS_API_URL
 Vue.axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8'
 
 /* eslint-disable no-new */
