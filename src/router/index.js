@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Position from '@/components/Position'
+import PositionPreview from '@/components/PositionPreview'
 import Positions from '@/components/Positions'
 import Callback from '@/components/Callback'
 import VerifyEmail from '@/components/VerifyEmail'
@@ -30,6 +31,12 @@ export default new Router({
       name: 'Positions',
       beforeEnter: requireAuth,
       component: Positions
+    },
+    {
+      path: '/position-preview',
+      name: 'PositionPreview',
+      beforeEnter: requireAuth,
+      component: PositionPreview
     },
     {
       path: '/callback',

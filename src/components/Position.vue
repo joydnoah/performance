@@ -29,6 +29,7 @@
             <input type='date' v-on:input="$v.expiration_date.$touch" name='expiration_date' class="form-control" v-model='expiration_date' />
           </div>
           <button class="btn btn-success" @click="save($v)">Guardar y Salir</button>
+          <button class="btn btn-warning" @click="preview()">Previsualizar</button>
           <button class="btn btn-danger" v-on:click="exit()">Salir sin Guardar</button>
         </div>
       </div>
@@ -73,6 +74,9 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      preview () {
+        window.location.href = '/position-preview?id=' + this.id
       },
       exit () {
         window.location.href = '/positions'

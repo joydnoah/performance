@@ -12,7 +12,6 @@
             <tr>
               <th>ID de posición</th>
               <th>Nombre</th>
-              <th>Descripción de Posición</th>
               <th>Fecha de Vencimiento</th>
               <th>Fecha de Publicación</th>
               <th>Fecha de Creación</th>
@@ -28,9 +27,6 @@
                 {{ item.name }}
               </td>
               <td>
-                {{ item.description }}
-              </td>
-              <td>
                 {{ item.expiration_date.substring(0, 10) }}
               </td>
               <td>
@@ -40,7 +36,8 @@
                 {{ item.created_at.substring(0, 10) }}
               </td>
               <td>
-                <a v-bind:href="'/position?id=' + item.id" class="btn btn-warning">Editar</a>
+                <a v-bind:href="'/position?id=' + item.id" class="btn btn-warning">Editar</a> 
+                <a v-bind:href="'/position-preview?id=' + item.id" class="btn btn-warning">Previsualizar</a>
               </td>
             </tr>
           </tbody>
@@ -69,7 +66,7 @@
       },
       get_positions () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/positions', {params: {'company_id': localStorage['company_id']}})
+        this.axios.get('/position', {params: {'company_id': localStorage['company_id']}})
         .then(response => {
           this.positions = JSON.parse(response.data.data.positions)
         })

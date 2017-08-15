@@ -20,11 +20,17 @@
 
   export default {
     name: 'callback',
+    data: function () {
+      return {
+        interval: null
+      }
+    },
     methods: {
       go_to_dashboard () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/user/' + JSON.parse(localStorage['user_info']).user_id)
         .then((response) => {
+          // clearInterval(this.interval)
           if (response.data.data.user === '[]') {
             window.location.href = '/create-company'
           } else {
@@ -32,7 +38,10 @@
             window.location.href = '/positions'
           }
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => {
+          // clearInterval(this.interval)
+          console.log(error)
+        })
       }
     },
     mounted () {
@@ -44,13 +53,13 @@
         var instance = axios.create({
           headers: {'Authorization': `Bearer ${getAccessToken()}`}
         })
-        instance.get(process.env.AUDIENCE)
+        instance.get(process.env.AUTH0_AUDIENCE)
         .then(response => {
           localStorage.setItem('user_info', JSON.stringify({ user_id: response.data.user_id, picture: response.data.picture, name: response.data.name, nickname: response.data.nickname, email: response.data.email }))
           document.getElementById('loading-container').style.display = 'none'
           document.getElementById('welcome-app-container').style.display = 'block'
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => { console.log(error) })
         this.$nextTick(function () {
         })
       }
