@@ -14,16 +14,20 @@
 
           <label>Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
+
+          <application-form></application-form>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import ApplicationForm from './ApplicationForm'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   
   export default {
     components: {
+      ApplicationForm
     },
     data: function () {
       return {
@@ -83,10 +87,12 @@
       display: block;
       margin-top: 2em;
       margin-bottom: 1em;
+      font-size: 1em;
     }
 
     p{
       display: block;
       text-align: justify;
+      font-size: 1em;
     }
 </style>
