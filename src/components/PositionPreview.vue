@@ -15,7 +15,7 @@
           <label>Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
 
-          <application-form></application-form>
+          <application-form :position="id"></application-form>
         </div>
       </div>
     </div>
@@ -31,6 +31,7 @@
     },
     data: function () {
       return {
+        id: '',
         name: '',
         department_id: '',
         position_type_id: '',
