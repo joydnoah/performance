@@ -3,7 +3,7 @@
     <div id="container-preview">
       <div class="panel panel-default">
         <div class="panel-body position-panel">
-          <h3>{{ name }}</h3>
+          <h3>{{ name }} - {{ city }}</h3>
           <router-link to="/positions">(Ver Todas las posiciones)</router-link>
 
           <label>Descripción de la posición</label>
@@ -35,7 +35,7 @@
         name: '',
         department_id: '',
         position_type_id: '',
-        city_id: '',
+        city: '',
         description: '',
         work_team_description: '',
         candidate_characteristics: '',
@@ -62,6 +62,7 @@
           this.name = JSON.parse(response.data.data.position).name
           this.department_id = JSON.parse(response.data.data.position).department_id
           this.description = JSON.parse(response.data.data.position).description
+          this.city = JSON.parse(response.data.data.position).city
           this.work_team_description = JSON.parse(response.data.data.position).work_team_description
           this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
           this.publication_date = JSON.parse(response.data.data.position).publication_date.substring(0, 10)

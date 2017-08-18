@@ -8,7 +8,9 @@ import axios from 'axios'
 import router from './router'
 import VueAxios from 'vue-axios'
 import Vuelidate from 'vuelidate'
+import Multiselect from 'vue-multiselect'
 
+Vue.component(Multiselect)
 Vue.use(Vuelidate)
 Vue.use(VueAxios, axios)
 
