@@ -14,7 +14,10 @@
           </div>
           <div class="form-group">
             <label>Departamento</label>
-            <multiselect v-model="department" :options="department_list" label="name" :multiple="true" :hide-selected="true" track-by="name"></multiselect>
+            <multiselect id="department_create" v-model="department" :options="department_list" label="name" :multiple="true" :hide-selected="true" track-by="name"></multiselect>
+            <select id="department_update" v-model="department_update" class="form-control">
+              <option v-for = "item in department_list" :value="item.id" >{{item.name}}</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Ciudad</label>
@@ -26,7 +29,7 @@
                 v-on:placechanged="getAddressData"
             >
             </vue-google-autocomplete>
-            <table class="table">
+            <table id="cities_table" class="table">
               <thead>
                 <tr>
                   <th>
@@ -44,6 +47,15 @@
                 </tr>
               </tbody>
             </table>
+            <vue-google-autocomplete
+                id="cities_update"
+                classname="form-control"
+                placeholder="Buscar Ciudad"
+                types="geocode"
+                v-on:placechanged="getAddressData"
+            >
+            </vue-google-autocomplete>
+            <p id="container-city-update">{{ city_update }}</p>
           </div>
           <div class="form-group">
             <label>Descripción del equipo de trabajo</label>
@@ -87,8 +99,10 @@
         name: '',
         department_list: [],
         department: '',
+        department_update: '',
         position_type_id: '',
         city: [],
+        city_update: '',
         description: '',
         work_team_description: '',
         candidate_characteristics: '',
@@ -123,7 +137,11 @@
         this.city.splice(index, 1)
       },
       getAddressData: function (addressData, placeResultData) {
-        this.city.push(addressData.locality + ', ' + addressData.country)
+        if (this.$route.query.id !== undefined) {
+          this.city_update = addressData.locality + ', ' + addressData.country
+        } else {
+          this.city.push(addressData.locality + ', ' + addressData.country)
+        }
       },
       save (v) {
         if (this.id !== undefined) {
@@ -146,7 +164,9 @@
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.put('/position/' + this.id, {
             'name': this.name,
+            'department_id': this.department_update,
             'description': this.description,
+            'city': this.city_update,
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
             'publication_date': this.publication_date,
@@ -183,12 +203,16 @@
     mounted () {
       this.get_departments()
       if (this.$route.query.id !== undefined) {
+        document.getElementsByClassName('multiselect')[0].style.display = 'none'
+        document.getElementById('cities_table').style.display = 'none'
+        document.getElementById('cities').style.display = 'none'
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
           this.id = JSON.parse(response.data.data.position).id
           this.name = JSON.parse(response.data.data.position).name
-          this.department_id = JSON.parse(response.data.data.position).department_id
+          this.department_update = JSON.parse(response.data.data.position).department_id
+          this.city_update = JSON.parse(response.data.data.position).city
           this.description = JSON.parse(response.data.data.position).description
           this.work_team_description = JSON.parse(response.data.data.position).work_team_description
           this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
@@ -196,6 +220,9 @@
           this.expiration_date = JSON.parse(response.data.data.position).expiration_date.substring(0, 10)
         })
         .catch(error => { console.log(error.response) })
+      } else {
+        document.getElementById('department_update').style.display = 'none'
+        document.getElementById('cities_update').style.display = 'none'
       }
     }
   }
@@ -215,5 +242,9 @@
     }
     button{
       display: inline-block;
+    }
+    #container-city-update{
+      margin-top: 1em;
+      padding-left: 0.5em; 
     }
 </style>
