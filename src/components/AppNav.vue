@@ -15,12 +15,16 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><router-link v-show="isLoggedIn()" to="/positions">Posiciones</router-link></li>
           <li>
-            <a v-show="!isLoggedIn()" @click="handleLogin()" href="#">Ingresar</a>
+            <button class="btn btn-default navbar-btn" v-show="!isLoggedIn()" @click="handleLogin()">Ingresar</button>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li id="li-profile" v-show="isLoggedIn()">
+            <img id="img-profile" class="img-circle" :src="user_info.picture" /> <span>{{ user_info.name }}</span>
           </li>
           <li>
-            <a v-show="isLoggedIn()" @click="handleLogout()" href="#">Cerrar Sesión</a>
+            <button v-show="isLoggedIn()" @click="handleLogout()" class="btn btn-default navbar-btn"> Cerrar Sesión</button>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -29,19 +33,36 @@
 </template>
 
 <script>
-  import { isLoggedIn, login, logout } from '../../utils/auth'
+  import { isLoggedIn, login, logout, getUserInfo } from '../../utils/auth'
 
   export default {
     name: 'app-nav',
+    data: function () {
+      return {
+        user_info: {
+          picture: '',
+          name: ''
+        }
+      }
+    },
     methods: {
       handleLogin () {
         login()
       },
       handleLogout () {
         logout()
+        window.location.href = '/'
       },
       isLoggedIn () {
         return isLoggedIn()
+      },
+      getUserInfo () {
+        this.user_info = JSON.parse(getUserInfo())
+      }
+    },
+    mounted: function () {
+      if (this.isLoggedIn()) {
+        this.getUserInfo()
       }
     }
   }
@@ -67,5 +88,15 @@
 }
 .a-button{
   margin-top: 20px;
+}
+#li-profile{
+  color: #fff;
+  text-align: right;
+  padding-right: 1em;
+  font-weight: 550;
+}
+#img-profile{
+  width: 36px;
+  margin: 0.5em;
 }
 </style>
