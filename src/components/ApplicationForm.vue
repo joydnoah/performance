@@ -3,6 +3,12 @@
     <div class="panel-heading">Enviar solicitud a esta posición</div>
     <div class="panel-body">
       <div class="form form-horizontal">
+      <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
+          <label class="col-sm-2 control-label" >Correo Electrónico *</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" v-on:change="get_applicant()" v-on:input="$v.email.$touch" v-model='email' id="email" >
+          </div>
+        </div>
         <div class="form-group" v-bind:class="{ 'has-error': $v.first_name.$error }">
           <label class="col-sm-2 control-label" >Nombre *</label>
           <div class="col-sm-10">
@@ -13,12 +19,6 @@
           <label class="col-sm-2 control-label" >Apellido *</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name">
-          </div>
-        </div>
-        <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
-          <label class="col-sm-2 control-label" >Correo Electrónico *</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" v-on:input="$v.email.$touch" v-model='email' id="email" >
           </div>
         </div>
         <div class="form-group">
@@ -55,7 +55,7 @@
         </div>
       </div>
       <legend></legend>
-      <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
+      <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>      
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@
     props: ['position'],
     data: function () {
       return {
-        position_id: this.position,
+        id: 0,
         first_name: '',
         last_name: '',
         email: '',
@@ -97,12 +97,32 @@
       isLoggedIn () {
         return isLoggedIn()
       },
+      get_applicant () {
+        if (this.email.trim() !== '') {
+          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+          this.axios.get('/applicant/' + this.email)
+          .then((response) => {
+            if (response.data.data.Applicant !== '{}') {
+              this.id = JSON.parse(response.data.data.Applicant).id
+              this.first_name = JSON.parse(response.data.data.Applicant).first_name
+              this.last_name = JSON.parse(response.data.data.Applicant).last_name
+              this.email = JSON.parse(response.data.data.Applicant).email
+              this.phone_code = JSON.parse(response.data.data.Applicant).phone_code
+              this.phone_number = JSON.parse(response.data.data.Applicant).phone_number
+              this.linkedin_user = JSON.parse(response.data.data.Applicant).linkedin_user
+              this.twitter_user = JSON.parse(response.data.data.Applicant).twitter_user
+            }
+          })
+          .catch(error => { console.log(error.response) })
+        }
+      },
       post (v) {
         v.$touch()
         if (!v.$error) {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.post('/applicant', {
-            'position_id': this.position_id,
+            'id': this.id,
+            'position_id': this.position,
             'first_name': this.first_name,
             'last_name': this.last_name,
             'email': this.email,
