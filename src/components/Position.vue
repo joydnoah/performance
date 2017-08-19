@@ -14,7 +14,7 @@
           </div>
           <div class="form-group">
             <label>Departamento</label>
-            <multiselect id="department_create" v-model="department" :options="department_list" label="name" :multiple="true" :hide-selected="true" track-by="name"></multiselect>
+            <multiselect id="department_create" v-model="department" :options="department_list" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange"></multiselect>
             <select id="department_update" v-model="department_update" class="form-control">
               <option v-for = "item in department_list" :value="item.id" >{{item.name}}</option>
             </select>
@@ -99,6 +99,7 @@
         name: '',
         department_list: [],
         department: '',
+        departments: [],
         department_update: '',
         position_type_id: '',
         city: [],
@@ -133,14 +134,20 @@
       exit () {
         window.location.href = '/positions'
       },
+      onChange () {
+        this.departments = []
+        for (var item in this.department) {
+          this.departments.push(this.department[item].id)
+        }
+      },
       remove_city (index) {
         this.city.splice(index, 1)
       },
       getAddressData: function (addressData, placeResultData) {
         if (this.$route.query.id !== undefined) {
-          this.city_update = addressData.locality + ', ' + addressData.country
+          this.city_update = addressData.administrative_area_level_1 + ', ' + addressData.country
         } else {
-          this.city.push(addressData.locality + ', ' + addressData.country)
+          this.city.push(addressData.administrative_area_level_1 + ', ' + addressData.country)
         }
       },
       save (v) {
@@ -186,7 +193,7 @@
             'company_id': localStorage['company_id'],
             'name': this.name,
             'description': this.description,
-            'department': JSON.stringify(this.department),
+            'department': JSON.stringify(this.departments),
             'city': JSON.stringify(this.city),
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,

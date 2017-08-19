@@ -71,7 +71,7 @@
     props: ['position'],
     data: function () {
       return {
-        id: 0,
+        applicant_id: 0,
         first_name: '',
         last_name: '',
         email: '',
@@ -103,7 +103,7 @@
           this.axios.get('/applicant/' + this.email)
           .then((response) => {
             if (response.data.data.Applicant !== '{}') {
-              this.id = JSON.parse(response.data.data.Applicant).id
+              this.applicant_id = JSON.parse(response.data.data.Applicant).id
               this.first_name = JSON.parse(response.data.data.Applicant).first_name
               this.last_name = JSON.parse(response.data.data.Applicant).last_name
               this.email = JSON.parse(response.data.data.Applicant).email
@@ -120,8 +120,8 @@
         v.$touch()
         if (!v.$error) {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.post('/applicant', {
-            'id': this.id,
+          this.axios.post('/application', {
+            'applicant_id': this.applicant_id,
             'position_id': this.position,
             'first_name': this.first_name,
             'last_name': this.last_name,
