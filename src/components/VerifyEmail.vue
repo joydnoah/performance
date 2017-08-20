@@ -3,7 +3,7 @@
     <app-nav></app-nav>
     <div id="verify-div" class="alert alert-info" role="alert">
       <i class="glyphicon glyphicon-envelope"></i> 
-      <strong>Ooops..</strong> Por favor verifica tu cuenta de e Mail y vuelve a intentarlo. <router-link to="/">Regresar</router-link>
+      Por favor verifica tu cuenta de e-Mail y vuelve a intentarlo. <router-link to="/">Regresar</router-link>
     </div>
   </div>
 </template>

@@ -15,7 +15,7 @@
           <label>Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
 
-          <application-form :position="id"></application-form>
+          <a href="/positions" class="btn btn-warning">Regresar</a>
         </div>
       </div>
     </div>
