@@ -3,8 +3,8 @@
     <div id="container-preview">
       <div class="panel panel-default">
         <div class="panel-body position-panel">
+          <button title="Copiar URL de posición" id="copy-link" v-clipboard:copy="url_position" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-link"></i></button>
           <h3>{{ name }} - {{ city }}</h3>
-          <router-link to="/positions">(Ver Todas las posiciones)</router-link>
 
           <label>Descripción de la posición</label>
           <p>{{ description }}</p>
@@ -15,17 +15,18 @@
           <label>Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
 
-          <a href="/positions" class="btn btn-warning">Regresar</a>
+          <application-form :position="id"></application-form>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-  import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
+  import ApplicationForm from './ApplicationForm'
   
   export default {
     components: {
+      ApplicationForm
     },
     data: function () {
       return {
@@ -40,20 +41,17 @@
         questions: '',
         preformulated_questions: '',
         publication_date: '',
-        expiration_date: ''
+        expiration_date: '',
+        url_position: window.location.href
       }
     },
     methods: {
-      isLoggedIn () {
-        return isLoggedIn()
-      },
       exit () {
         window.location.href = '/positions'
       }
     },
     mounted () {
       if (this.$route.query.id !== undefined) {
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
           this.id = JSON.parse(response.data.data.position).id
@@ -94,5 +92,8 @@
       display: block;
       text-align: justify;
       font-size: 1em;
+    }
+    #copy-link{
+      float: right;
     }
 </style>

@@ -10,8 +10,8 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID de posición</th>
               <th>Nombre</th>
+              <th>Ciudad</th>
               <th>Fecha de Vencimiento</th>
               <th>Fecha de Publicación</th>
               <th>Fecha de Creación</th>
@@ -21,10 +21,10 @@
           <tbody>
             <tr v-for="item in positions">
               <td>
-                {{ item.id }}
+                {{ item.name }}
               </td>
               <td>
-                {{ item.name }}
+                {{ item.city }}
               </td>
               <td>
                 {{ item.expiration_date.substring(0, 10) }}
@@ -37,7 +37,8 @@
               </td>
               <td>
                 <a v-bind:href="'/position?id=' + item.id" class="btn btn-warning">Editar</a> 
-                <a v-bind:href="'/position-preview?id=' + item.id" class="btn btn-warning">Previsualizar</a>
+                <a v-bind:href="'/position-preview?id=' + item.id" class="btn btn-default">Previsualizar</a>
+                <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" class="btn btn-success">Publicar</a>
               </td>
             </tr>
           </tbody>

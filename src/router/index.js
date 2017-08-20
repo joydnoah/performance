@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Position from '@/components/Position'
 import PositionPreview from '@/components/PositionPreview'
+import PositionApply from '@/components/PositionApply'
 import Positions from '@/components/Positions'
 import Callback from '@/components/Callback'
 import VerifyEmail from '@/components/VerifyEmail'
@@ -37,6 +38,11 @@ export default new Router({
       name: 'PositionPreview',
       beforeEnter: requireAuth,
       component: PositionPreview
+    },
+    {
+      path: '/position-apply',
+      name: 'PositionApply',
+      component: PositionApply
     },
     {
       path: '/callback',

@@ -2,8 +2,12 @@
   <div class="panel panel-default">
     <div class="panel-heading">Enviar solicitud a esta posición</div>
     <div class="panel-body">
+      <div style="display: none;" class="alert alert-success">
+        <i class="glyphicon glyphicon-ok"></i> <strong>Proceso finalizado</strong>
+        <p>Se ha enviado tu solicitud de aplicante para la posición actual.</p>
+      </div>
       <div class="form form-horizontal">
-      <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
+        <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
           <label class="col-sm-2 control-label" >Correo Electrónico *</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" v-on:change="get_applicant()" v-on:input="$v.email.$touch" v-model='email' id="email" >
@@ -42,8 +46,8 @@
             <input type="file" class="form-control" id="name" >
           </div>
         </div>
+        <legend></legend>
       </div>
-      <legend></legend>
       <div class="form">
         <div class="form-group">
           <label for="exampleInputEmail1">Perfil de LinkedIn (opcional)</label>
@@ -53,9 +57,9 @@
           <label for="exampleInputEmail1">Usuario de Twitter (opcional)</label>
           <input type="text" class="form-control" v-model='twitter_user' id="twitter_user" >
         </div>
+        <legend></legend>
+        <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
       </div>
-      <legend></legend>
-      <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>      
     </div>
   </div>
 </template>
@@ -132,8 +136,9 @@
             'twitter_user': this.twitter_user
           })
           .then(response => {
-            window.location.href = '/positions'
-            console.log(response.data)
+            document.getElementsByClassName('form')[0].style.display = 'none'
+            document.getElementsByClassName('form')[1].style.display = 'none'
+            document.getElementsByClassName('alert')[0].style.display = 'block'
           })
           .catch(error => { console.log(error.response) })
         }
