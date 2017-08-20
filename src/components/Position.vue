@@ -87,7 +87,7 @@
   import VueGoogleAutocomplete from 'vue-google-autocomplete'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
-  
+
   export default {
     components: {
       AppNav,
@@ -137,7 +137,7 @@
       onChange () {
         this.departments = []
         for (var item in this.department) {
-          this.departments.push(this.department[item].id)
+          this.departments.push(this.department[item].name)
         }
       },
       remove_city (index) {
@@ -253,6 +253,6 @@
     }
     #container-city-update{
       margin-top: 1em;
-      padding-left: 0.5em; 
+      padding-left: 0.5em;
     }
 </style>
