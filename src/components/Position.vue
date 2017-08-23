@@ -15,9 +15,8 @@
           <div class="form-group">
             <label>Departamento</label>
             <multiselect id="department_create" v-model="department" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department"></multiselect>
-            <select id="department_update" v-model="department_update" class="form-control">
-              <option v-for = "item in department_list" :value="item.id" >{{item.name}}</option>
-            </select>
+            
+            <multiselect id="department_update" v-model="department_update" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="false" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department_update"></multiselect>
           </div>
           <div class="form-group">
             <label>Ciudad</label>
@@ -128,9 +127,6 @@
     validations: {
       name: {
         required
-      },
-      expiration_date: {
-        // required
       }
     },
     methods: {
@@ -161,6 +157,14 @@
         }
         this.department_list.push(tag)
         this.department.push(tag)
+      },
+      add_department_update (newTag) {
+        const tag = {
+          name: newTag,
+          id: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+        }
+        this.department_list.push(tag)
+        this.department_update = tag
       },
       getAddressData: function (addressData, placeResultData) {
         if (this.$route.query.id !== undefined) {
@@ -195,7 +199,8 @@
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.put('/position/' + this.id, {
             'name': this.name,
-            'department_id': this.department_update,
+            'company_id': localStorage['company_id'],
+            'department': this.department_update.name,
             'description': this.description,
             'city': this.city_update,
             'work_team_description': this.work_team_description,
@@ -280,7 +285,7 @@
         .then((response) => {
           this.id = JSON.parse(response.data.data.position).id
           this.name = JSON.parse(response.data.data.position).name
-          this.department_update = JSON.parse(response.data.data.position).department_id
+          this.department_update = { name: JSON.parse(response.data.data.position).department, id: Math.floor((Math.random() * 10000000)) }
           this.city_update = JSON.parse(response.data.data.position).city
           this.description = JSON.parse(response.data.data.position).description
           this.work_team_description = JSON.parse(response.data.data.position).work_team_description
@@ -289,7 +294,7 @@
         })
         .catch(error => { console.log(error.response) })
       } else {
-        document.getElementById('department_update').style.display = 'none'
+        document.getElementsByClassName('multiselect')[1].style.display = 'none'
         document.getElementById('cities_update').style.display = 'none'
         document.getElementById('preview-button').style.display = 'none'
       }

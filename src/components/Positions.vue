@@ -46,6 +46,7 @@
               <td>
                 <a v-bind:href="'/position?id=' + item.id" title="Editar" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a> 
                 <a v-bind:href="'/position-preview?id=' + item.id" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a v-bind:href="'/applicants?position_id=' + item.id" title="Solicitantes" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
                 <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" title="Publicar" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></a>
               </td>
             </tr>
