@@ -14,7 +14,7 @@
           </div>
           <div class="form-group">
             <label>Departamento</label>
-            <multiselect id="department_create" v-model="department" :options="department_list" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange"></multiselect>
+            <multiselect id="department_create" v-model="department" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department"></multiselect>
             <select id="department_update" v-model="department_update" class="form-control">
               <option v-for = "item in department_list" :value="item.id" >{{item.name}}</option>
             </select>
@@ -65,15 +65,21 @@
             <label>Características que estas buscando en un empleado</label>
             <textarea name='candidate_characteristics' class="form-control" v-model='candidate_characteristics'></textarea>
           </div>
-          <div class="form-group" v-bind:class="{ 'has-error': $v.publication_date.$error }">
-            <label>Fecha de Publicación</label>
-            <input type='date' v-on:input="$v.publication_date.$touch" name='publication_date' class="form-control" v-model='publication_date' />
+          <div class="form-group">
+            <label>Fecha de caducidad de la oferta de posición *</label>
+            <datepicker required v-model='expiration_date' id='expiration_date' name='expiration_date' :disabled="disabled" language="es" format="dd/MM/yyyy" input-class="form-control form__input"></datepicker>
           </div>
-          <div class="form-group" v-bind:class="{ 'has-error': $v.expiration_date.$error }">
-            <label>Fecha de caducidad de la oferta de posición</label>
-            <input type='date' v-on:input="$v.expiration_date.$touch" name='expiration_date' class="form-control" v-model='expiration_date' />
+          
+          <div style="display: none;" id="alert-error" class="alert alert-danger" role="alert">
+            <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Error</strong>
+            <p>Por favor diligencie todos los campos requeridos (*)</p>
           </div>
-          <button class="btn btn-success" @click="save($v)">Guardar y Salir</button>
+          <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
+            <strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong>
+            <p>La posición se almaceno correctamente.</p>
+          </div>
+
+          <button id="submit" class="btn btn-success" @click="save($v)">Guardar y Salir</button>
           <button class="btn btn-warning" id="preview-button" @click="preview()">Previsualizar</button>
           <button class="btn btn-danger" v-on:click="exit()">Salir sin Guardar</button>
         </div>
@@ -87,16 +93,19 @@
   import VueGoogleAutocomplete from 'vue-google-autocomplete'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
+  import Datepicker from 'vuejs-datepicker'
 
   export default {
     components: {
       AppNav,
       Multiselect,
-      VueGoogleAutocomplete
+      VueGoogleAutocomplete,
+      Datepicker
     },
     data: function () {
       return {
         name: '',
+        new_department: '',
         department_list: [],
         department: '',
         departments: [],
@@ -109,8 +118,11 @@
         candidate_characteristics: '',
         questions: '',
         preformulated_questions: '',
-        publication_date: '',
-        expiration_date: ''
+        expiration_date: '',
+        disabled: {
+          to: new Date()
+        },
+        is_valid_expiration_date: false
       }
     },
     validations: {
@@ -118,10 +130,7 @@
         required
       },
       expiration_date: {
-        required
-      },
-      publication_date: {
-        required
+        // required
       }
     },
     methods: {
@@ -135,13 +144,23 @@
         window.location.href = '/positions'
       },
       onChange () {
-        this.departments = []
-        for (var item in this.department) {
-          this.departments.push(this.department[item].name)
-        }
       },
       remove_city (index) {
         this.city.splice(index, 1)
+      },
+      remove_department (index) {
+        this.new_departments.splice(index, 1)
+      },
+      add_department (newTag) {
+        if (this.department === '') {
+          this.department = []
+        }
+        const tag = {
+          name: newTag,
+          id: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+        }
+        this.department_list.push(tag)
+        this.department.push(tag)
       },
       getAddressData: function (addressData, placeResultData) {
         if (this.$route.query.id !== undefined) {
@@ -151,6 +170,7 @@
         }
       },
       save (v) {
+        this.hide_alerts()
         if (this.id !== undefined) {
           this.put(v)
         } else {
@@ -163,11 +183,15 @@
         .then((response) => {
           this.department_list = JSON.parse(response.data.data.departments)
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => {
+          console.log(error.response)
+        })
       },
       put (v) {
         v.$touch()
-        if (!v.$error) {
+        this.is_valid_expiration_date = this.validate_expiration_date()
+        if (!v.$error && this.is_valid_expiration_date) {
+          document.getElementById('submit').disabled = true
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.put('/position/' + this.id, {
             'name': this.name,
@@ -176,18 +200,29 @@
             'city': this.city_update,
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
-            'publication_date': this.publication_date,
             'expiration_date': this.expiration_date
           })
           .then(response => {
-            window.location.href = '/positions'
+            this.show_success()
           })
-          .catch(error => { console.log(error.response) })
+          .catch(error => {
+            console.log(error.response)
+            document.getElementById('submit').disabled = false
+            this.show_error()
+          })
+        } else {
+          this.show_error()
         }
       },
       post (v) {
         v.$touch()
-        if (!v.$error) {
+        this.is_valid_expiration_date = this.validate_expiration_date()
+        if (!v.$error && this.is_valid_expiration_date) {
+          document.getElementById('submit').disabled = true
+          this.departments = []
+          for (var item in this.department) {
+            this.departments.push(this.department[item].name)
+          }
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.post('/position', {
             'company_id': localStorage['company_id'],
@@ -197,13 +232,40 @@
             'city': JSON.stringify(this.city),
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
-            'publication_date': this.publication_date,
             'expiration_date': this.expiration_date
           })
           .then(response => {
-            window.location.href = '/positions'
+            this.show_success()
           })
-          .catch(error => { console.log(error.response) })
+          .catch(error => {
+            console.log(error.response)
+            document.getElementById('submit').disabled = false
+            this.show_error()
+          })
+        } else {
+          this.show_error()
+        }
+      },
+      show_error () {
+        document.getElementById('alert-error').style.display = 'block'
+      },
+      show_success () {
+        document.getElementById('alert-success').style.display = 'block'
+        setTimeout(function () {
+          window.location.href = '/positions'
+        }, 500)
+      },
+      hide_alerts () {
+        document.getElementById('alert-error').style.display = 'none'
+        document.getElementById('alert-success').style.display = 'none'
+      },
+      validate_expiration_date () {
+        if (this.expiration_date === '') {
+          document.getElementById('expiration_date').parentElement.parentElement.parentElement.className = 'form-group has-error'
+          return false
+        } else {
+          document.getElementById('expiration_date').parentElement.parentElement.parentElement.className = 'form-group'
+          return true
         }
       }
     },
@@ -223,7 +285,6 @@
           this.description = JSON.parse(response.data.data.position).description
           this.work_team_description = JSON.parse(response.data.data.position).work_team_description
           this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
-          this.publication_date = JSON.parse(response.data.data.position).publication_date.substring(0, 10)
           this.expiration_date = JSON.parse(response.data.data.position).expiration_date.substring(0, 10)
         })
         .catch(error => { console.log(error.response) })
