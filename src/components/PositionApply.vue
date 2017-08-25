@@ -3,7 +3,9 @@
     <div id="container-preview">
       <div class="panel panel-default">
         <div class="panel-body position-panel">
-          <button title="Copiar URL de posición" id="copy-link" v-clipboard:copy="url_position" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-link"></i></button>
+          <tooltip text="Copiar enlace">
+            <button id="copy-link" v-clipboard:copy="url_position" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-link"></i></button>
+          </tooltip>
           <h3>{{ name }} - {{ city }}</h3>
 
           <label>Descripción de la posición</label>

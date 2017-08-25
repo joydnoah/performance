@@ -4,7 +4,6 @@
       <div class="panel panel-default">
         <div class="panel-body position-panel">
           <h3>{{ name }} - {{ city }}</h3>
-          <router-link to="/positions">(Ver Todas las posiciones)</router-link>
 
           <label>Descripción de la posición</label>
           <p>{{ description }}</p>
