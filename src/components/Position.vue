@@ -285,7 +285,7 @@
         .then((response) => {
           this.id = JSON.parse(response.data.data.position).id
           this.name = JSON.parse(response.data.data.position).name
-          this.department_update = { name: JSON.parse(response.data.data.position).department, id: Math.floor((Math.random() * 10000000)) }
+          this.department_update = { name: JSON.parse(response.data.data.position).department_name, id: Math.floor((Math.random() * 10000000)) }
           this.city_update = JSON.parse(response.data.data.position).city
           this.description = JSON.parse(response.data.data.position).description
           this.work_team_description = JSON.parse(response.data.data.position).work_team_description

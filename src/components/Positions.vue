@@ -26,7 +26,7 @@
                 {{ item.name }}
               </td>
               <td>
-                {{ item.department }}
+                {{ item.department_name }}
               </td>
               <td>
                 {{ item.city }}
