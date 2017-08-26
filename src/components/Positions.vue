@@ -32,7 +32,7 @@
                 {{ item.city }}
               </td>
               <td>
-                {{ item.applicants_quanty }}
+                {{ item.applicants_number }}
               </td>
               <td>
                 {{ item.created_at.substring(0, 10) }}
