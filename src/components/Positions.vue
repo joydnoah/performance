@@ -11,10 +11,12 @@
           <thead>
             <tr>
               <th>Nombre</th>
+              <th>Departamento</th>
               <th>Ciudad</th>
-              <th>Fecha de Vencimiento</th>
-              <th>Fecha de Publicación</th>
+              <th>Solicitantes</th>
               <th>Fecha de Creación</th>
+              <th>Fecha de Publicación</th>
+              <th>Fecha de Vencimiento</th>
               <th></th>
             </tr>
           </thead>
@@ -24,21 +26,36 @@
                 {{ item.name }}
               </td>
               <td>
+                {{ item.department_name }}
+              </td>
+              <td>
                 {{ item.city }}
               </td>
               <td>
-                {{ item.expiration_date.substring(0, 10) }}
-              </td>
-              <td>
-                {{ item.publication_date.substring(0, 10) }}
+                {{ item.applicants_number }}
               </td>
               <td>
                 {{ item.created_at.substring(0, 10) }}
               </td>
               <td>
-                <a v-bind:href="'/position?id=' + item.id" class="btn btn-warning">Editar</a> 
-                <a v-bind:href="'/position-preview?id=' + item.id" class="btn btn-default">Previsualizar</a>
-                <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" class="btn btn-success">Publicar</a>
+                {{ item.publication_date == null? "Sin Publicar" : item.publication_date.substring(0, 10) }}
+              </td>
+              <td>
+                {{ item.expiration_date.substring(0, 10) }}
+              </td>
+              <td>
+                <tooltip text="Editar">
+                  <a v-bind:href="'/position?id=' + item.id" title="Editar" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a> 
+                </tooltip>
+                <tooltip text="Previsualizar">
+                  <a v-bind:href="'/position-preview?id=' + item.id" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
+                </tooltip>
+                <tooltip text="Solicitantes">
+                  <a v-bind:href="'/applicants?position_id=' + item.id" title="Solicitantes" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
+                </tooltip>
+                <tooltip text="Publicar">
+                  <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" title="Publicar" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></a>
+                </tooltip>
               </td>
             </tr>
           </tbody>
@@ -51,10 +68,12 @@
 <script>
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
+  import { Tooltip } from 'uiv'
   
   export default {
     components: {
-      AppNav
+      AppNav,
+      Tooltip
     },
     data: function () {
       return {

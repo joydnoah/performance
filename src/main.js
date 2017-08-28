@@ -10,7 +10,9 @@ import VueAxios from 'vue-axios'
 import Vuelidate from 'vuelidate'
 import Multiselect from 'vue-multiselect'
 import VueClipboard from 'vue-clipboard2'
+import * as uiv from 'uiv'
 
+Vue.use(uiv)
 Vue.use(VueClipboard)
 Vue.component(Multiselect)
 Vue.use(Vuelidate)
