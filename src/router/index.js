@@ -9,6 +9,7 @@ import Applicants from '@/components/Applicants'
 import Callback from '@/components/Callback'
 import VerifyEmail from '@/components/VerifyEmail'
 import CreateCompany from '@/components/CreateCompany'
+import CompanyJobs from '@/components/CompanyJobs'
 import Dashboard from '@/components/Dashboard'
 import { requireAuth } from '../../utils/auth'
 
@@ -65,6 +66,11 @@ export default new Router({
       path: '/create-company',
       name: 'CreateCompany',
       component: CreateCompany
+    },
+    {
+      path: '/company-jobs',
+      name: 'CompanyJobs',
+      component: CompanyJobs
     },
     {
       path: '/dashboard',

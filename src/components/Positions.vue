@@ -6,6 +6,7 @@
       <div class="panel-body">
         <div id="add-section">
           <router-link to="/position" class="btn btn-success">Agregar Posición</router-link>
+          <router-link to="/company-jobs" class="btn btn-success">Editar Página de Posiciones</router-link>
         </div>
         <table class="table">
           <thead>
@@ -13,7 +14,7 @@
               <th>Nombre</th>
               <th>Departamento</th>
               <th>Ciudad</th>
-              <th>Solicitantes</th>
+              <th>Cantidad Candidatos</th>
               <th>Fecha de Creación</th>
               <th>Fecha de Publicación</th>
               <th>Fecha de Vencimiento</th>
@@ -48,10 +49,10 @@
                   <a v-bind:href="'/position?id=' + item.id" title="Editar" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a> 
                 </tooltip>
                 <tooltip text="Previsualizar">
-                  <a v-bind:href="'/position-preview?id=' + item.id" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
+                  <a v-bind:href="'/position-preview?id=' + item.id" target="_blank" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
                 </tooltip>
-                <tooltip text="Solicitantes">
-                  <a v-bind:href="'/applicants?position_id=' + item.id" title="Solicitantes" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
+                <tooltip text="Canditatos">
+                  <a v-bind:href="'/applicants?position_id=' + item.id" title="Canditatos" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
                 </tooltip>
                 <tooltip text="Publicar">
                   <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" title="Publicar" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></a>

@@ -2,7 +2,7 @@
   <div id="general-container">
     <app-nav></app-nav>
     <div id="container-positions" class="panel panel-default">
-      <div class="panel-heading"><h3 id="header-positions">Solicitantes:</h3></div>
+      <div class="panel-heading"><h3 id="header-positions">Canditatos:</h3></div>
       <div class="panel-body">
         <table class="table">
           <thead>

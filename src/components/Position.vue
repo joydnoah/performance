@@ -79,7 +79,7 @@
           </div>
 
           <button id="submit" class="btn btn-success" @click="save($v)">Guardar y Salir</button>
-          <button class="btn btn-warning" id="preview-button" @click="preview()">Previsualizar</button>
+          <a class="btn btn-warning" target="_blank" id="preview-button" :href="'/position-preview?id=' + id">Previsualizar</a>
           <button class="btn btn-danger" v-on:click="exit()">Salir sin Guardar</button>
         </div>
       </div>
@@ -103,6 +103,7 @@
     },
     data: function () {
       return {
+        id: null,
         name: '',
         new_department: '',
         department_list: [],
@@ -167,10 +168,12 @@
         this.department_update = tag
       },
       getAddressData: function (addressData, placeResultData) {
+        addressData.locality = addressData.locality === undefined ? 'No Aplica' : addressData.locality
+        addressData.administrative_area_level_1 = addressData.administrative_area_level_1 === undefined ? 'No Aplica' : addressData.administrative_area_level_1
         if (this.$route.query.id !== undefined) {
-          this.city_update = addressData.administrative_area_level_1 + ', ' + addressData.country
+          this.city_update = addressData.locality + ', ' + addressData.administrative_area_level_1 + ', ' + addressData.country
         } else {
-          this.city.push(addressData.administrative_area_level_1 + ', ' + addressData.country)
+          this.city.push(addressData.locality + ', ' + addressData.administrative_area_level_1 + ', ' + addressData.country)
         }
       },
       save (v) {
