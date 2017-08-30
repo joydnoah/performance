@@ -168,12 +168,20 @@
         this.department_update = tag
       },
       getAddressData: function (addressData, placeResultData) {
-        addressData.locality = addressData.locality === undefined ? 'No Aplica' : addressData.locality
-        addressData.administrative_area_level_1 = addressData.administrative_area_level_1 === undefined ? 'No Aplica' : addressData.administrative_area_level_1
+        addressData.position_city = ''
+        if (addressData.locality !== undefined) {
+          addressData.position_city += addressData.locality + ', '
+        }
+        if (addressData.administrative_area_level_1 !== undefined) {
+          addressData.position_city += addressData.administrative_area_level_1 + ', '
+        }
+
+        addressData.position_city += addressData.country
+
         if (this.$route.query.id !== undefined) {
-          this.city_update = addressData.locality + ', ' + addressData.administrative_area_level_1 + ', ' + addressData.country
+          this.city_update = addressData.position_city
         } else {
-          this.city.push(addressData.locality + ', ' + addressData.administrative_area_level_1 + ', ' + addressData.country)
+          this.city.push(addressData.position_city)
         }
       },
       save (v) {
