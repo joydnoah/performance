@@ -112,9 +112,7 @@
       },
       set_status_position (id, status) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.post('/position/' + id, {
-          'status': status
-        })
+        this.axios.post('/position/' + id + '/' + status)
         .then(response => {
           if (response.data !== {}) {
             if (response.data.data.position.result === 'before publish update expiration date') {

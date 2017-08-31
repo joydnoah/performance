@@ -1,0 +1,83 @@
+<template>
+  <div id="general-container">
+    <app-nav></app-nav>
+    <div id="container-positions" class="panel panel-default">
+      <div class="panel-heading"><h3>Detalles del candidato</h3></div>
+      <div class="panel-body">
+        <div class="form">
+          <label>Nombre</label>
+          <p>{{ first_name }}</p>
+          <label>Apellido</label>
+          <p>{{ last_name }}</p>
+          <label>e-Mail</label>
+          <p>{{ email }}</p>
+          <label>Teléfono</label>
+          <p>{{ phone_code }} - {{ phone_number }}</p>
+          <label>Usuario Linkedin</label>
+          <p>{{ linkedin_user }}</p>
+          <label>Usuario Twitter</label>
+          <p>{{ twitter_user }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import AppNav from './AppNav'
+  import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
+  
+  export default {
+    components: {
+      AppNav
+    },
+    data: function () {
+      return {
+        id: this.$route.params.id,
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone_code: '',
+        phone_number: '',
+        linkedin_user: '',
+        twitter_user: '',
+        created_at: ''
+      }
+    },
+    methods: {
+      isLoggedIn () {
+        return isLoggedIn()
+      }
+    },
+    mounted: function () {
+      this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+      this.axios.get('/applicant/' + this.id)
+      .then((response) => {
+        this.first_name = JSON.parse(response.data.data.applicant).first_name
+        this.last_name = JSON.parse(response.data.data.applicant).last_name
+        this.email = JSON.parse(response.data.data.applicant).email
+        this.phone_code = JSON.parse(response.data.data.applicant).phone_code
+        this.phone_number = JSON.parse(response.data.data.applicant).phone_number
+        this.linkedin_user = JSON.parse(response.data.data.applicant).linkedin_user
+        this.twitter_user = JSON.parse(response.data.data.applicant).twitter_user
+        this.created_at = JSON.parse(response.data.data.applicant).created_at
+      })
+      .catch(error => { console.log(error.response) })
+    }
+  }
+</script>
+
+<style scoped>
+  #container-positions{
+    width: 60%;
+    margin: 0 auto;
+  }
+  #add-section{
+    text-align: right;
+    width: 100%;
+    padding: 1em 1em 1em 1em;
+  }
+  .required-span{
+    color: #a94442;
+  }
+</style>

@@ -10,6 +10,7 @@
               <th>Nombre</th>
               <th>Apellido</th>
               <th>Fecha de Solicitud</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -17,6 +18,7 @@
               <td>{{ item.first_name }}</td>
               <td>{{ item.last_name }}</td>
               <td>{{ item.created_at.substring(0, 10) }}</td>
+              <td><a class="btn btn-warning" :href="'/applicant/' + item.id">Detalles</a></td>
             </tr>
           </tbody>
         </table>

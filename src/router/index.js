@@ -6,6 +6,7 @@ import PositionPreview from '@/components/PositionPreview'
 import PositionApply from '@/components/PositionApply'
 import Positions from '@/components/Positions'
 import Applicants from '@/components/Applicants'
+import Applicant from '@/components/Applicant'
 import Callback from '@/components/Callback'
 import VerifyEmail from '@/components/VerifyEmail'
 import CreateCompany from '@/components/CreateCompany'
@@ -51,6 +52,12 @@ export default new Router({
       name: 'Applicants',
       beforeEnter: requireAuth,
       component: Applicants
+    },
+    {
+      path: '/applicant/:id',
+      name: 'Applicant',
+      beforeEnter: requireAuth,
+      component: Applicant
     },
     {
       path: '/callback',
