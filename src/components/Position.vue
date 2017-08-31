@@ -186,7 +186,7 @@
       },
       save (v) {
         this.hide_alerts()
-        if (this.id !== undefined) {
+        if (this.id !== undefined && this.id !== null) {
           this.put(v)
         } else {
           this.post(v)

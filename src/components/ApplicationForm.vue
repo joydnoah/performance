@@ -6,6 +6,10 @@
         <i class="glyphicon glyphicon-ok"></i> <strong>Proceso finalizado</strong>
         <p>Se ha enviado tu solicitud de aplicante para la posición actual.</p>
       </div>
+      <div style="display: none;" class="alert alert-warning">
+        <i class="glyphicon glyphicon-ok"></i> <strong>Formulario no disponible</strong>
+        <p>No es posible aplicar a la posición actual.</p>
+      </div>
       <div class="form form-horizontal">
         <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
           <label class="col-sm-2 control-label" >Correo Electrónico *</label>
@@ -72,7 +76,7 @@
     name: 'application-form',
     components: {
     },
-    props: ['position'],
+    props: ['position', 'status'],
     data: function () {
       return {
         applicant_id: 0,
@@ -144,7 +148,25 @@
         }
       }
     },
+    watch: {
+      status: function () {
+        if (this.status !== 'publish') {
+          document.getElementsByClassName('form')[0].style.display = 'none'
+          document.getElementsByClassName('form')[1].style.display = 'none'
+          document.getElementsByClassName('alert')[1].style.display = 'block'
+        } else {
+          document.getElementsByClassName('form')[0].style.display = 'block'
+          document.getElementsByClassName('form')[1].style.display = 'block'
+          document.getElementsByClassName('alert')[1].style.display = 'none'
+        }
+      }
+    },
     mounted () {
+      if (this.status !== 'publish') {
+        document.getElementsByClassName('form')[0].style.display = 'none'
+        document.getElementsByClassName('form')[1].style.display = 'none'
+        document.getElementsByClassName('alert')[1].style.display = 'block'
+      }
     }
   }
 </script>

@@ -14,6 +14,7 @@
               <th>Nombre</th>
               <th>Departamento</th>
               <th>Ciudad</th>
+              <th>Estado</th>
               <th>Cantidad Candidatos</th>
               <th>Fecha de Creación</th>
               <th>Fecha de Publicación</th>
@@ -33,13 +34,19 @@
                 {{ item.city }}
               </td>
               <td>
+                {{ item.status_type === "publish" ? "Publicado" : '' }}
+                {{ item.status_type === "unpublished" ? "Sin Publicar" : '' }}
+                {{ item.status_type === null ? "Sin Publicar" : '' }}
+                {{ item.status_type === "closed" ? "Cerrada" : '' }}
+              </td>
+              <td>
                 {{ item.applicants_number }}
               </td>
               <td>
                 {{ item.created_at.substring(0, 10) }}
               </td>
               <td>
-                {{ item.publication_date == null? "Sin Publicar" : item.publication_date.substring(0, 10) }}
+                {{ item.status_type !== "publish" ? "Sin Publicar" : item.publication_date_str.substring(0, 16) }}
               </td>
               <td>
                 {{ item.expiration_date.substring(0, 10) }}
@@ -51,16 +58,25 @@
                 <tooltip text="Previsualizar">
                   <a v-bind:href="'/position-preview?id=' + item.id" target="_blank" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
                 </tooltip>
+                <tooltip text="Link de posición">
+                  <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" title="Link Posición" class="btn btn-info"><i class="glyphicon glyphicon-link"></i></a>
+                </tooltip>
                 <tooltip text="Canditatos">
                   <a v-bind:href="'/applicants?position_id=' + item.id" title="Canditatos" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
                 </tooltip>
                 <tooltip text="Publicar">
-                  <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" title="Publicar" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></a>
+                  <button @click="set_status_position(item.id, 'publish')" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></button>
+                </tooltip>
+                <tooltip text="Cerrar">
+                  <button @click="set_status_position(item.id, 'closed')" class="btn btn-danger"><i class="glyphicon glyphicon-ban-circle"></i></button>
                 </tooltip>
               </td>
             </tr>
           </tbody>
         </table>
+        <modal v-model="publish_problem" :footer="false" title="Estado de Posición">
+          <p>No se puede publicar la posición ya que la fecha de vencimiento es menor a la fecha actual.</p>
+        </modal>
       </div>
     </div>
   </div>
@@ -78,7 +94,8 @@
     },
     data: function () {
       return {
-        positions: {}
+        positions: {},
+        publish_problem: false
       }
     },
     methods: {
@@ -92,6 +109,22 @@
           this.positions = JSON.parse(response.data.data.positions)
         })
         .catch(error => { console.log(error.response) })
+      },
+      set_status_position (id, status) {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.post('/position/' + id, {
+          'status': status
+        })
+        .then(response => {
+          if (response.data !== {}) {
+            if (response.data.data.position.result === 'before publish update expiration date') {
+              this.publish_problem = true
+            } else {
+              this.get_positions()
+            }
+          }
+        })
+        .catch(error => { console.log(error.response) })
       }
     },
     mounted: function () {
@@ -102,7 +135,7 @@
 
 <style scoped>
   #container-positions{
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
   }
   #add-section{
