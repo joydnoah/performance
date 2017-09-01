@@ -10,6 +10,10 @@
         <i class="glyphicon glyphicon-ok"></i> <strong>Formulario no disponible</strong>
         <p>No es posible aplicar a la posición actual.</p>
       </div>
+      <div style="display: none;" class="alert alert-info">
+        <i class="glyphicon glyphicon-ok"></i> <strong>Candidato Existente!</strong>
+        <p>Existe un candidato registrado como <strong>{{ email }}</strong>, ¿Desea enviar la solicitud?</p>
+      </div>
       <div class="form form-horizontal">
         <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
           <label class="col-sm-2 control-label" >Correo Electrónico *</label>
@@ -64,6 +68,10 @@
         <legend></legend>
         <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
       </div>
+      <div style="display: none;" class="form">
+        <legend></legend>
+        <button class="btn btn-success" @click="save($v)">Enviar Solicitud</button>
+      </div>
     </div>
   </div>
 </template>
@@ -108,17 +116,14 @@
       get_applicant () {
         if (this.email.trim() !== '') {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.get('/applicant/' + this.email)
+          this.axios.get('/applicant/' + this.email + '/verify')
           .then((response) => {
             if (response.data.data.Applicant !== '{}') {
               this.applicant_id = JSON.parse(response.data.data.Applicant).id
-              this.first_name = JSON.parse(response.data.data.Applicant).first_name
-              this.last_name = JSON.parse(response.data.data.Applicant).last_name
-              this.email = JSON.parse(response.data.data.Applicant).email
-              this.phone_code = JSON.parse(response.data.data.Applicant).phone_code
-              this.phone_number = JSON.parse(response.data.data.Applicant).phone_number
-              this.linkedin_user = JSON.parse(response.data.data.Applicant).linkedin_user
-              this.twitter_user = JSON.parse(response.data.data.Applicant).twitter_user
+              document.getElementsByClassName('form')[0].style.display = 'none'
+              document.getElementsByClassName('form')[1].style.display = 'none'
+              document.getElementsByClassName('form')[2].style.display = 'block'
+              document.getElementsByClassName('alert')[2].style.display = 'block'
             }
           })
           .catch(error => { console.log(error.response) })
@@ -127,25 +132,30 @@
       post (v) {
         v.$touch()
         if (!v.$error) {
-          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.post('/application', {
-            'applicant_id': this.applicant_id,
-            'position_id': this.position,
-            'first_name': this.first_name,
-            'last_name': this.last_name,
-            'email': this.email,
-            'phone_code': this.phone_code,
-            'phone_number': this.phone_number,
-            'linkedin_user': this.linkedin_user,
-            'twitter_user': this.twitter_user
-          })
-          .then(response => {
-            document.getElementsByClassName('form')[0].style.display = 'none'
-            document.getElementsByClassName('form')[1].style.display = 'none'
-            document.getElementsByClassName('alert')[0].style.display = 'block'
-          })
-          .catch(error => { console.log(error.response) })
+          this.save()
         }
+      },
+      save () {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.post('/application', {
+          'applicant_id': this.applicant_id,
+          'position_id': this.position,
+          'first_name': this.first_name,
+          'last_name': this.last_name,
+          'email': this.email,
+          'phone_code': this.phone_code,
+          'phone_number': this.phone_number,
+          'linkedin_user': this.linkedin_user,
+          'twitter_user': this.twitter_user
+        })
+        .then(response => {
+          document.getElementsByClassName('form')[0].style.display = 'none'
+          document.getElementsByClassName('form')[1].style.display = 'none'
+          document.getElementsByClassName('form')[2].style.display = 'none'
+          document.getElementsByClassName('alert')[2].style.display = 'none'
+          document.getElementsByClassName('alert')[0].style.display = 'block'
+        })
+        .catch(error => { console.log(error.response) })
       }
     },
     watch: {
