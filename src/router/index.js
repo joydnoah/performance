@@ -48,7 +48,7 @@ export default new Router({
       component: PositionApply
     },
     {
-      path: '/applicants',
+      path: '/applicants/:position_id',
       name: 'Applicants',
       beforeEnter: requireAuth,
       component: Applicants

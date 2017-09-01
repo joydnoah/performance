@@ -62,7 +62,7 @@
                   <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" title="Link Posición" class="btn btn-info"><i class="glyphicon glyphicon-link"></i></a>
                 </tooltip>
                 <tooltip text="Canditatos">
-                  <a v-bind:href="'/applicants?position_id=' + item.id" title="Canditatos" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
+                  <a v-bind:href="'/applicants/' + item.id" title="Canditatos" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
                 </tooltip>
                 <tooltip text="Publicar">
                   <button @click="set_status_position(item.id, 'publish')" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></button>
