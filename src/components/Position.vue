@@ -196,7 +196,7 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/departments/' + localStorage['company_id'])
         .then((response) => {
-          this.department_list = JSON.parse(response.data.data.departments)
+          this.department_list = response.data.data.departments
         })
         .catch(error => {
           console.log(error.response)
@@ -294,14 +294,14 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
-          this.id = JSON.parse(response.data.data.position).id
-          this.name = JSON.parse(response.data.data.position).name
-          this.department_update = { name: JSON.parse(response.data.data.position).department_name, id: Math.floor((Math.random() * 10000000)) }
-          this.city_update = JSON.parse(response.data.data.position).city
-          this.description = JSON.parse(response.data.data.position).description
-          this.work_team_description = JSON.parse(response.data.data.position).work_team_description
-          this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
-          this.expiration_date = JSON.parse(response.data.data.position).expiration_date.substring(0, 10)
+          this.id = response.data.data.position.id
+          this.name = response.data.data.position.name
+          this.department_update = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
+          this.city_update = response.data.data.position.city
+          this.description = response.data.data.position.description
+          this.work_team_description = response.data.data.position.work_team_description
+          this.candidate_characteristics = response.data.data.position.candidate_characteristics
+          this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
         })
         .catch(error => { console.log(error.response) })
       } else {

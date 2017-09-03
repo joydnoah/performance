@@ -104,9 +104,9 @@
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/company/' + localStorage['company_id'])
       .then((response) => {
-        this.description = JSON.parse(response.data.data.company).description
-        this.work_with_us = JSON.parse(response.data.data.company).work_with_us
-        this.uri = JSON.parse(response.data.data.company).uri
+        this.description = response.data.data.company.description
+        this.work_with_us = response.data.data.company.work_with_us
+        this.uri = response.data.data.company.uri
       })
       .catch(error => { console.log(error.response) })
     }

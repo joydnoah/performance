@@ -19,9 +19,7 @@
               <td>{{ item.applicant_first_name }}</td>
               <td>{{ item.applicant_last_name }}</td>
               <td>
-                {{ item.status_application === "in_process" ? "En Proceso" : '' }}
-                {{ item.status_application === "approved" ? "Aprovado" : '' }}
-                {{ item.status_application === "rejection" ? "Rechazado" : '' }}
+                {{ get_applicants_status(item.status_application) }}
               </td>
               <td>{{ item.created_at.substring(0, 10) }}</td>
               <td>
@@ -63,9 +61,18 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/applications/' + this.$route.params.position_id)
         .then(response => {
-          this.applicants = JSON.parse(response.data.data.applicants)
+          this.applicants = response.data.data.applicants
         })
         .catch(error => { console.log(error.response) })
+      },
+      get_applicants_status (status) {
+        if (status === 'approved') {
+          return 'Aprobado'
+        } else if (status === 'in_process' || status === null) {
+          return 'En Proceso'
+        } else if (status === 'rejection') {
+          return 'Rechazado'
+        }
       },
       set_status_application (id, status) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`

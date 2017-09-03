@@ -34,10 +34,7 @@
                 {{ item.city }}
               </td>
               <td>
-                {{ item.status_type === "publish" ? "Publicado" : '' }}
-                {{ item.status_type === "unpublished" ? "Sin Publicar" : '' }}
-                {{ item.status_type === null ? "Sin Publicar" : '' }}
-                {{ item.status_type === "closed" ? "Cerrada" : '' }}
+                {{ get_status(item.status_type) }}
               </td>
               <td>
                 {{ item.applicants_number }}
@@ -106,23 +103,29 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position', {params: {'company_id': localStorage['company_id']}})
         .then(response => {
-          this.positions = JSON.parse(response.data.data.positions)
+          this.positions = response.data.data.positions
         })
         .catch(error => { console.log(error.response) })
+      },
+      get_status (status) {
+        if (status === 'publish') {
+          return 'Publicado'
+        } else if (status === 'unpublished' || status === null) {
+          return 'Sin Publicar'
+        } else if (status === 'closed') {
+          return 'Cerrada'
+        }
       },
       set_status_position (id, status) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/position/' + id + '/' + status)
         .then(response => {
-          if (response.data !== {}) {
-            if (response.data.data.position.result === 'before publish update expiration date') {
-              this.publish_problem = true
-            } else {
-              this.get_positions()
-            }
-          }
+          this.get_positions()
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => {
+          this.publish_problem = true
+          console.log(error)
+        })
       }
     },
     mounted: function () {

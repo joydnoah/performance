@@ -53,14 +53,14 @@
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/applicant/' + this.id)
       .then((response) => {
-        this.first_name = JSON.parse(response.data.data.applicant).first_name
-        this.last_name = JSON.parse(response.data.data.applicant).last_name
-        this.email = JSON.parse(response.data.data.applicant).email
-        this.phone_code = JSON.parse(response.data.data.applicant).phone_code
-        this.phone_number = JSON.parse(response.data.data.applicant).phone_number
-        this.linkedin_user = JSON.parse(response.data.data.applicant).linkedin_user
-        this.twitter_user = JSON.parse(response.data.data.applicant).twitter_user
-        this.created_at = JSON.parse(response.data.data.applicant).created_at
+        this.first_name = response.data.data.applicant.first_name
+        this.last_name = response.data.data.applicant.last_name
+        this.email = response.data.data.applicant.email
+        this.phone_code = response.data.data.applicant.phone_code
+        this.phone_number = response.data.data.applicant.phone_number
+        this.linkedin_user = response.data.data.applicant.linkedin_user
+        this.twitter_user = response.data.data.applicant.twitter_user
+        this.created_at = response.data.data.applicant.created_at
       })
       .catch(error => { console.log(error.response) })
     }

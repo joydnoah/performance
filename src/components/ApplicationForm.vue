@@ -119,7 +119,7 @@
           this.axios.get('/applicant/' + this.email + '/verify')
           .then((response) => {
             if (response.data.data.Applicant !== '{}') {
-              this.applicant_id = JSON.parse(response.data.data.Applicant).id
+              this.applicant_id = response.data.data.Applicant.id
               document.getElementsByClassName('form')[0].style.display = 'none'
               document.getElementsByClassName('form')[1].style.display = 'none'
               document.getElementsByClassName('form')[2].style.display = 'block'
