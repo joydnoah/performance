@@ -79,7 +79,7 @@
 <script>
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { required, email } from 'vuelidate/lib/validators'
-  
+
   export default {
     name: 'application-form',
     components: {
@@ -118,8 +118,8 @@
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.get('/applicant/' + this.email + '/verify')
           .then((response) => {
-            if (response.data.data.Applicant !== '{}') {
-              this.applicant_id = response.data.data.Applicant.id
+            if (response.data.data.applicant !== '{}') {
+              this.applicant_id = response.data.data.applicant.id
               document.getElementsByClassName('form')[0].style.display = 'none'
               document.getElementsByClassName('form')[1].style.display = 'none'
               document.getElementsByClassName('form')[2].style.display = 'block'
@@ -182,5 +182,5 @@
 </script>
 
 <style scoped>
-		
+
 </style>
