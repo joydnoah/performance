@@ -79,7 +79,7 @@
           </div>
 
           <button id="submit" class="btn btn-success" @click="save($v)">Guardar y Salir</button>
-          <button class="btn btn-warning" id="preview-button" @click="preview()">Previsualizar</button>
+          <a class="btn btn-warning" target="_blank" id="preview-button" :href="'/position-preview?id=' + id">Previsualizar</a>
           <button class="btn btn-danger" v-on:click="exit()">Salir sin Guardar</button>
         </div>
       </div>
@@ -103,6 +103,7 @@
     },
     data: function () {
       return {
+        id: null,
         name: '',
         new_department: '',
         department_list: [],
@@ -167,15 +168,25 @@
         this.department_update = tag
       },
       getAddressData: function (addressData, placeResultData) {
+        addressData.position_city = ''
+        if (addressData.locality !== undefined) {
+          addressData.position_city += addressData.locality + ', '
+        }
+        if (addressData.administrative_area_level_1 !== undefined) {
+          addressData.position_city += addressData.administrative_area_level_1 + ', '
+        }
+
+        addressData.position_city += addressData.country
+
         if (this.$route.query.id !== undefined) {
-          this.city_update = addressData.administrative_area_level_1 + ', ' + addressData.country
+          this.city_update = addressData.position_city
         } else {
-          this.city.push(addressData.administrative_area_level_1 + ', ' + addressData.country)
+          this.city.push(addressData.position_city)
         }
       },
       save (v) {
         this.hide_alerts()
-        if (this.id !== undefined) {
+        if (this.id !== undefined && this.id !== null) {
           this.put(v)
         } else {
           this.post(v)
@@ -185,7 +196,7 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/departments/' + localStorage['company_id'])
         .then((response) => {
-          this.department_list = JSON.parse(response.data.data.departments)
+          this.department_list = response.data.data.departments
         })
         .catch(error => {
           console.log(error.response)
@@ -283,14 +294,14 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
-          this.id = JSON.parse(response.data.data.position).id
-          this.name = JSON.parse(response.data.data.position).name
-          this.department_update = { name: JSON.parse(response.data.data.position).department_name, id: Math.floor((Math.random() * 10000000)) }
-          this.city_update = JSON.parse(response.data.data.position).city
-          this.description = JSON.parse(response.data.data.position).description
-          this.work_team_description = JSON.parse(response.data.data.position).work_team_description
-          this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
-          this.expiration_date = JSON.parse(response.data.data.position).expiration_date.substring(0, 10)
+          this.id = response.data.data.position.id
+          this.name = response.data.data.position.name
+          this.department_update = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
+          this.city_update = response.data.data.position.city
+          this.description = response.data.data.position.description
+          this.work_team_description = response.data.data.position.work_team_description
+          this.candidate_characteristics = response.data.data.position.candidate_characteristics
+          this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
         })
         .catch(error => { console.log(error.response) })
       } else {

@@ -17,7 +17,7 @@
           <label>Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
 
-          <application-form :position="id"></application-form>
+          <application-form :position="id" :status="status_type"></application-form>
         </div>
       </div>
     </div>
@@ -44,6 +44,7 @@
         preformulated_questions: '',
         publication_date: '',
         expiration_date: '',
+        status_type: '',
         url_position: window.location.href
       }
     },
@@ -63,8 +64,7 @@
           this.city = JSON.parse(response.data.data.position).city
           this.work_team_description = JSON.parse(response.data.data.position).work_team_description
           this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
-          this.publication_date = JSON.parse(response.data.data.position).publication_date.substring(0, 10)
-          this.expiration_date = JSON.parse(response.data.data.position).expiration_date.substring(0, 10)
+          this.status_type = JSON.parse(response.data.data.position).status_type
         })
         .catch(error => { console.log(error.response) })
       }

@@ -6,9 +6,11 @@ import PositionPreview from '@/components/PositionPreview'
 import PositionApply from '@/components/PositionApply'
 import Positions from '@/components/Positions'
 import Applicants from '@/components/Applicants'
+import Applicant from '@/components/Applicant'
 import Callback from '@/components/Callback'
 import VerifyEmail from '@/components/VerifyEmail'
 import CreateCompany from '@/components/CreateCompany'
+import CompanyJobs from '@/components/CompanyJobs'
 import Dashboard from '@/components/Dashboard'
 import { requireAuth } from '../../utils/auth'
 
@@ -46,10 +48,16 @@ export default new Router({
       component: PositionApply
     },
     {
-      path: '/applicants',
+      path: '/applicants/:position_id',
       name: 'Applicants',
       beforeEnter: requireAuth,
       component: Applicants
+    },
+    {
+      path: '/applicant/:id',
+      name: 'Applicant',
+      beforeEnter: requireAuth,
+      component: Applicant
     },
     {
       path: '/callback',
@@ -65,6 +73,11 @@ export default new Router({
       path: '/create-company',
       name: 'CreateCompany',
       component: CreateCompany
+    },
+    {
+      path: '/company-jobs',
+      name: 'CompanyJobs',
+      component: CompanyJobs
     },
     {
       path: '/dashboard',
