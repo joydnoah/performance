@@ -53,10 +53,10 @@
                   <a v-bind:href="'/position?id=' + item.id" title="Editar" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a> 
                 </tooltip>
                 <tooltip text="Previsualizar">
-                  <a v-bind:href="'/position-preview?id=' + item.id" target="_blank" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
+                  <a v-bind:href="'/position-preview/' + item.id" target="_blank" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
                 </tooltip>
                 <tooltip text="Link de posición">
-                  <a target="_blank" v-bind:href="'/position-apply?id=' + item.id" title="Link Posición" class="btn btn-info"><i class="glyphicon glyphicon-link"></i></a>
+                  <a target="_blank" v-bind:href="'/position-apply/' + item.id" title="Link Posición" class="btn btn-info"><i class="glyphicon glyphicon-link"></i></a>
                 </tooltip>
                 <tooltip text="Canditatos">
                   <a v-bind:href="'/applicants/' + item.id" title="Canditatos" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>

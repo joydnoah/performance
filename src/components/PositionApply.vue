@@ -54,20 +54,18 @@
       }
     },
     mounted () {
-      if (this.$route.query.id !== undefined) {
-        this.axios.get('/position/' + this.$route.query.id)
-        .then((response) => {
-          this.id = JSON.parse(response.data.data.position).id
-          this.name = JSON.parse(response.data.data.position).name
-          this.department_id = JSON.parse(response.data.data.position).department_id
-          this.description = JSON.parse(response.data.data.position).description
-          this.city = JSON.parse(response.data.data.position).city
-          this.work_team_description = JSON.parse(response.data.data.position).work_team_description
-          this.candidate_characteristics = JSON.parse(response.data.data.position).candidate_characteristics
-          this.status_type = JSON.parse(response.data.data.position).status_type
-        })
-        .catch(error => { console.log(error.response) })
-      }
+      this.axios.get('/position/' + this.$route.params.id)
+      .then((response) => {
+        this.id = response.data.data.position.id
+        this.name = response.data.data.position.name
+        this.department_id = response.data.data.position.department_id
+        this.description = response.data.data.position.description
+        this.city = response.data.data.position.city
+        this.work_team_description = response.data.data.position.work_team_description
+        this.candidate_characteristics = response.data.data.position.candidate_characteristics
+        this.status_type = response.data.data.position.status_type
+      })
+      .catch(error => { console.log(error.response) })
     }
   }
 </script>
