@@ -37,13 +37,13 @@ export default new Router({
       component: Positions
     },
     {
-      path: '/position-preview',
+      path: '/position-preview/:id',
       name: 'PositionPreview',
       beforeEnter: requireAuth,
       component: PositionPreview
     },
     {
-      path: '/position-apply',
+      path: '/position-apply/:id',
       name: 'PositionApply',
       component: PositionApply
     },
