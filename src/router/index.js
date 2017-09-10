@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Position from '@/components/Position'
 import PositionPreview from '@/components/PositionPreview'
 import PositionApply from '@/components/PositionApply'
+import EmailTemplates from '@/components/EmailTemplates'
 import Positions from '@/components/Positions'
 import Applicants from '@/components/Applicants'
 import Applicant from '@/components/Applicant'
@@ -46,6 +47,11 @@ export default new Router({
       path: '/position-apply/:id',
       name: 'PositionApply',
       component: PositionApply
+    },
+    {
+      path: '/email-templates/:position_id',
+      name: 'EmailTemplates',
+      component: EmailTemplates
     },
     {
       path: '/applicants/:position_id',
