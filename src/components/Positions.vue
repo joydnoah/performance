@@ -61,6 +61,7 @@
                     <li><a target="_blank" v-bind:href="'/position-apply/' + item.id" title="Link Posición">Link de posición</a></li>
                     <li><a v-bind:href="'/applicants/' + item.id" title="Canditatos">Ver Candidatos</a></li>
                     <li role="separator" class="divider"></li>
+                    <li><a target="_blank" v-bind:href="'/filters/' + item.id" title="Filtros">Filtros</a></li>
                     <li><a target="_blank" v-bind:href="'/email-templates/' + item.id" title="Plantillas de email">Plantillas de email</a></li>
                   </template>
                 </dropdown>

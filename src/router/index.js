@@ -5,6 +5,7 @@ import Position from '@/components/Position'
 import PositionPreview from '@/components/PositionPreview'
 import PositionApply from '@/components/PositionApply'
 import EmailTemplates from '@/components/EmailTemplates'
+import Filters from '@/components/Filters'
 import Positions from '@/components/Positions'
 import Applicants from '@/components/Applicants'
 import Applicant from '@/components/Applicant'
@@ -52,6 +53,11 @@ export default new Router({
       path: '/email-templates/:position_id',
       name: 'EmailTemplates',
       component: EmailTemplates
+    },
+    {
+      path: '/filters/:position_id',
+      name: 'Filters',
+      component: Filters
     },
     {
       path: '/applicants/:position_id',
