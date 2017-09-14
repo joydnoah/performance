@@ -52,11 +52,13 @@ export default new Router({
     {
       path: '/email-templates/:position_id',
       name: 'EmailTemplates',
+      beforeEnter: requireAuth,
       component: EmailTemplates
     },
     {
       path: '/filters/:position_id',
       name: 'Filters',
+      beforeEnter: requireAuth,
       component: Filters
     },
     {
@@ -89,6 +91,7 @@ export default new Router({
     {
       path: '/company-jobs',
       name: 'CompanyJobs',
+      beforeEnter: requireAuth,
       component: CompanyJobs
     },
     {
