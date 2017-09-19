@@ -4,7 +4,10 @@ import Home from '@/components/Home'
 import Position from '@/components/Position'
 import PositionPreview from '@/components/PositionPreview'
 import PositionApply from '@/components/PositionApply'
+import EmailTemplates from '@/components/EmailTemplates'
+import Filters from '@/components/Filters'
 import Positions from '@/components/Positions'
+import SocialCompany from '@/components/SocialCompany'
 import Applicants from '@/components/Applicants'
 import Applicant from '@/components/Applicant'
 import Callback from '@/components/Callback'
@@ -49,6 +52,23 @@ export default new Router({
       component: PositionApply
     },
     {
+      path: '/social-company',
+      name: 'SocialCompany',
+      component: SocialCompany
+    },
+    {
+      path: '/email-templates/:position_id',
+      name: 'EmailTemplates',
+      beforeEnter: requireAuth,
+      component: EmailTemplates
+    },
+    {
+      path: '/filters/:position_id',
+      name: 'Filters',
+      beforeEnter: requireAuth,
+      component: Filters
+    },
+    {
       path: '/applicants/:position_id',
       name: 'Applicants',
       beforeEnter: requireAuth,
@@ -78,6 +98,7 @@ export default new Router({
     {
       path: '/company-jobs',
       name: 'CompanyJobs',
+      beforeEnter: requireAuth,
       component: CompanyJobs
     },
     {

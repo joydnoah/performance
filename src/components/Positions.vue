@@ -6,8 +6,9 @@
       <div class="panel-body">
         <div id="add-section">
           <router-link to="/position" class="btn btn-success">Agregar Posición</router-link>
-          <router-link to="/company-jobs" class="btn btn-success">Editar Página de Posiciones</router-link>
+          <router-link to="/company-jobs" class="btn btn-warning">Editar Página de Posiciones</router-link>
           <router-link v-bind:to="'/company/' + company_id" class="btn btn-success">Página Empresa</router-link>
+          <router-link to="/social-company" class="btn btn-primary">Redes sociales de la empresa</router-link>
         </div>
         <table class="table">
           <thead>
@@ -20,6 +21,7 @@
               <th>Fecha de Creación</th>
               <th>Fecha de Publicación</th>
               <th>Fecha de Vencimiento</th>
+              <th></th>
               <th></th>
             </tr>
           </thead>
@@ -50,18 +52,23 @@
                 {{ item.expiration_date.substring(0, 10) }}
               </td>
               <td>
-                <tooltip text="Editar">
-                  <a v-bind:href="'/position?id=' + item.id" title="Editar" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a> 
-                </tooltip>
-                <tooltip text="Previsualizar">
-                  <a v-bind:href="'/position-preview/' + item.id" target="_blank" title="Previsualizar" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
-                </tooltip>
-                <tooltip text="Link de posición">
-                  <a target="_blank" v-bind:href="'/position-apply/' + item.id" title="Link Posición" class="btn btn-info"><i class="glyphicon glyphicon-link"></i></a>
-                </tooltip>
-                <tooltip text="Canditatos">
-                  <a v-bind:href="'/applicants/' + item.id" title="Canditatos" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></a>
-                </tooltip>
+                <dropdown>
+                  <button data-role="trigger" class="btn btn-warning dropdown-toggle" type="button">
+                    <span>Acciones</span>
+                    <span class="caret"></span>
+                  </button>
+                  <template slot="dropdown">
+                    <li><a v-bind:href="'/position?id=' + item.id" title="Editar">Editar</a></li>
+                    <li><a v-bind:href="'/position-preview/' + item.id" target="_blank" title="Previsualizar">Previsualizar</a></li>
+                    <li><a target="_blank" v-bind:href="'/position-apply/' + item.id" title="Link Posición">Link de posición</a></li>
+                    <li><a v-bind:href="'/applicants/' + item.id" title="Canditatos">Ver Candidatos</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a target="_blank" v-bind:href="'/filters/' + item.id" title="Filtros">Filtros</a></li>
+                    <li><a target="_blank" v-bind:href="'/email-templates/' + item.id" title="Plantillas de email">Plantillas de email</a></li>
+                  </template>
+                </dropdown>
+              </td>
+              <td>
                 <tooltip text="Publicar">
                   <button @click="set_status_position(item.id, 'publish')" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></button>
                 </tooltip>
@@ -83,12 +90,13 @@
 <script>
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
-  import { Tooltip } from 'uiv'
+  import { Tooltip, Dropdown } from 'uiv'
   
   export default {
     components: {
       AppNav,
-      Tooltip
+      Tooltip,
+      Dropdown
     },
     data: function () {
       return {
