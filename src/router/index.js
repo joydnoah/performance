@@ -14,6 +14,7 @@ import Callback from '@/components/Callback'
 import VerifyEmail from '@/components/VerifyEmail'
 import CreateCompany from '@/components/CreateCompany'
 import CompanyJobs from '@/components/CompanyJobs'
+import Company from '@/components/Company'
 import Dashboard from '@/components/Dashboard'
 import { requireAuth } from '../../utils/auth'
 
@@ -99,6 +100,11 @@ export default new Router({
       name: 'CompanyJobs',
       beforeEnter: requireAuth,
       component: CompanyJobs
+    },
+    {
+      path: '/company/:company_id',
+      name: 'Company',
+      component: Company
     },
     {
       path: '/dashboard',

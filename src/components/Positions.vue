@@ -7,6 +7,7 @@
         <div id="add-section">
           <router-link to="/position" class="btn btn-success">Agregar Posición</router-link>
           <router-link to="/company-jobs" class="btn btn-warning">Editar Página de Posiciones</router-link>
+          <router-link v-bind:to="'/company/' + company_id" class="btn btn-success">Página Empresa</router-link>
           <router-link to="/social-company" class="btn btn-primary">Redes sociales de la empresa</router-link>
         </div>
         <table class="table">
@@ -100,7 +101,8 @@
     data: function () {
       return {
         positions: {},
-        publish_problem: false
+        publish_problem: false,
+        company_id: localStorage['company_id']
       }
     },
     methods: {
