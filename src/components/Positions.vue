@@ -6,7 +6,8 @@
       <div class="panel-body">
         <div id="add-section">
           <router-link to="/position" class="btn btn-success">Agregar Posición</router-link>
-          <router-link to="/company-jobs" class="btn btn-success">Editar Página de Posiciones</router-link>
+          <router-link to="/company-jobs" class="btn btn-warning">Editar Página de Posiciones</router-link>
+          <router-link to="/social-company" class="btn btn-primary">Redes sociales de la empresa</router-link>
         </div>
         <table class="table">
           <thead>
