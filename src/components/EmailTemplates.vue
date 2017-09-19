@@ -99,7 +99,7 @@
           'body': this.reject.body
         })
         .then(response => {
-          console.log(response)
+          window.location.href = '/positions'
         })
         .catch(error => {
           console.log(error)
@@ -113,7 +113,7 @@
           'body': this.reject.body
         })
         .then(response => {
-          console.log(response)
+          window.location.href = '/positions'
         })
         .catch(error => {
           console.log(error)
