@@ -19,37 +19,39 @@
             <multiselect id="department_update" v-model="department_update" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="false" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department_update"></multiselect>
           </div>
           <div class="form-group">
-            <label>Ciudad</label>
+            <label>Lugar de trabajo</label>
             <vue-google-autocomplete
                 id="cities"
                 classname="form-control"
-                placeholder="Buscar Ciudad"
+                placeholder="Buscar Lugar de trabajo"
                 types="geocode"
                 v-on:placechanged="getAddressData"
             >
             </vue-google-autocomplete>
-            <table id="cities_table" class="table">
-              <thead>
-                <tr>
-                  <th>
-                    Ciudad
-                  </th>
-                  <th>
-                    Eliminar
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, index) in city">
-                  <td>{{ item }}</td>
-                  <td><button class="btn btn-danger btn-xs" v-on:click="remove_city(index)"><i class="glyphicon glyphicon-remove"></i></button></td>
-                </tr>
-              </tbody>
-            </table>
+            <div v-if="city.length > 0">
+              <table id="cities_table" class="table">
+                <thead>
+                  <tr>
+                    <th>
+                      Lugar de trabajo
+                    </th>
+                    <th>
+                      Eliminar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in city">
+                    <td>{{ item }}</td>
+                    <td><button class="btn btn-danger btn-xs" v-on:click="remove_city(index)"><i class="glyphicon glyphicon-remove"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <vue-google-autocomplete
                 id="cities_update"
                 classname="form-control"
-                placeholder="Buscar Ciudad"
+                placeholder="Buscar Lugar de trabajo"
                 types="geocode"
                 v-on:placechanged="getAddressData"
             >
@@ -79,7 +81,7 @@
           </div>
 
           <button id="submit" class="btn btn-success" @click="save($v)">Guardar y Salir</button>
-          <a class="btn btn-warning" target="_blank" id="preview-button" :href="'/position-preview?id=' + id">Previsualizar</a>
+          <a class="btn btn-warning" target="_blank" id="preview-button" :href="'/position-preview/' + id">Previsualizar</a>
           <button class="btn btn-danger" v-on:click="exit()">Salir sin Guardar</button>
         </div>
       </div>
@@ -289,7 +291,9 @@
       this.get_departments()
       if (this.$route.query.id !== undefined) {
         document.getElementsByClassName('multiselect')[0].style.display = 'none'
-        document.getElementById('cities_table').style.display = 'none'
+        if (document.getElementById('cities_table') !== null) {
+          document.getElementById('cities_table').style.display = 'none'
+        }
         document.getElementById('cities').style.display = 'none'
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
