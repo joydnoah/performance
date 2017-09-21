@@ -102,7 +102,7 @@ export default new Router({
       component: CompanyJobs
     },
     {
-      path: '/company/:company_id',
+      path: '/:uri',
       name: 'Company',
       component: Company
     },
