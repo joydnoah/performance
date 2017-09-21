@@ -39,6 +39,10 @@
             <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect()">Desconectar</button>
           </div>
         </div>
+        <h4>Twitter</h4>
+        <div>
+          <button class="btn btn-info" @click='post_twitter'>Login Twitter</button>
+        </div>
         <div v-if="social_network_connections.length > 0">
           <legend>Contenido del post</legend>
           <div class="form">
@@ -74,7 +78,8 @@
         facebook_auth_response: {},
         pages: [],
         social_network_connections: [],
-        text_post: ''
+        text_post: '',
+        twitter: null
       }
     },
     methods: {
@@ -134,6 +139,15 @@
         this.axios.get('/social_network_connection/' + localStorage['company_id'])
         .then(response => {
           this.social_network_connections = response.data.data.social_network_connections
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      post_twitter () {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.post('/twitter_connection/' + localStorage['company_id'])
+        .then(response => {
+          window.localStorage.setItem('twitter_request_token', JSON.stringify(response.data.data.request_token))
+          window.location.href = response.data.data.url
         })
         .catch(error => { console.log(error.response) })
       }
