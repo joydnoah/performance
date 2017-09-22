@@ -12,9 +12,8 @@
 </template>
 <script>
   import { getIdToken, getAccessToken } from '../../utils/auth'
-
   export default {
-    name: 'callback',
+    name: 'linkedIn-callback',
     data: function () {
       return {
       }
@@ -24,17 +23,17 @@
     mounted () {
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.post('/social_network_connection/' + window.localStorage['company_id'], {
-        'access_token': '0',
-        'provider': 'twitter',
+        'access_token': this.$route.query.code,
+        'provider': 'linkedin',
         'page_id': 'No Aplica',
-        'oauth_token': window.localStorage['twitter_request_token'],
-        'oauth_verifier': this.$route.query.oauth_verifier
+        'oauth_token': '0',
+        'oauth_verifier': '0'
       })
       .then(response => {
-        window.localStorage.removeItem('twitter_request_token')
         window.location.href = '/social-company'
       })
       .catch(error => {
+        window.location.href = '/social-company'
         console.log(error.response)
       })
     }

@@ -6,7 +6,7 @@
       <div class="panel-body">
         <legend>Conexión con redes sociales</legend>
         <h4>Facebook</h4>
-        <div v-if="social_network_connections.length === 0">
+        <div v-if="facebook_status !== 'connected'">
           <fb-signin-button id="facebook-button"
             :params="fbSignInParams"
             @success="onSignInSuccess"
@@ -34,14 +34,30 @@
             </tbody>
           </table>
         </div>
-        <div v-if="social_network_connections.length > 0">
+        <div v-if="facebook_status === 'connected'">
           <div id="facebook-connected" class="alert alert-info">
             <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect()">Desconectar</button>
           </div>
         </div>
-        <h4>Twitter</h4>
-        <div>
+        <br/>
+        <h4>Iniciar Sesión Twitter</h4>
+        <div v-if="twitter_status !== 'connected'">
           <button class="btn btn-info" @click='post_twitter'>Login Twitter</button>
+        </div>
+        <div v-if="twitter_status === 'connected'">
+          <div id="twitter-connected" class="alert alert-info">
+            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect()">Desconectar</button>
+          </div>
+        </div>
+        <br/>
+        <h4>LinkedIn</h4>
+        <div v-if="linkedin_status !== 'connected'">
+          <button @click="send_linkedin" class="btn btn-primary">Iniciar Sesión LinkedIn</button>
+        </div>
+        <div v-if="linkedin_status === 'connected'">
+          <div id="linkedin-connected" class="alert alert-info">
+            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect()">Desconectar</button>
+          </div>
         </div>
         <div v-if="social_network_connections.length > 0">
           <legend>Contenido del post</legend>
@@ -79,7 +95,9 @@
         pages: [],
         social_network_connections: [],
         text_post: '',
-        twitter: null
+        twitter_status: 'not_connected',
+        facebook_status: 'not_connected',
+        linkedin_status: 'not_connected'
       }
     },
     methods: {
@@ -98,7 +116,9 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/social_network_connection/' + window.localStorage['company_id'], {
           'access_token': this.facebook_auth_response.access_token,
-          'page_id': this.facebook_auth_response.id
+          'page_id': this.facebook_auth_response.id,
+          'provider': 'facebook',
+          'access_token_secret': '0'
         })
         .then(response => {
           this.get_connections()
@@ -139,6 +159,15 @@
         this.axios.get('/social_network_connection/' + localStorage['company_id'])
         .then(response => {
           this.social_network_connections = response.data.data.social_network_connections
+          for (var index in this.social_network_connections) {
+            if (this.social_network_connections[index].provider === 'facebook') {
+              this.facebook_status = 'connected'
+            } else if (this.social_network_connections[index].provider === 'twitter') {
+              this.twitter_status = 'connected'
+            } else if (this.social_network_connections[index].provider === 'linkedin') {
+              this.linkedin_status = 'connected'
+            }
+          }
         })
         .catch(error => { console.log(error.response) })
       },
@@ -150,6 +179,9 @@
           window.location.href = response.data.data.url
         })
         .catch(error => { console.log(error.response) })
+      },
+      send_linkedin () {
+        window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?client_id=86i0y19veu734y&redirect_uri=http://127.0.0.1:8080/linkedin-callback&state=f1576406b382b7d1c8c2607f7c563d4f&response_type=code&scope=r_basicprofile w_share'
       }
     },
     mounted: function () {
