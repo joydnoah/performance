@@ -87,6 +87,8 @@
     },
     data: function () {
       return {
+        script_html: '',
+        facebook_plugin: null,
         fbSignInParams: {
           scope: 'email, public_profile, manage_pages, publish_actions, publish_pages',
           return_scopes: true
@@ -181,8 +183,29 @@
         .catch(error => { console.log(error.response) })
       },
       send_linkedin () {
-        window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?client_id=86i0y19veu734y&redirect_uri=http://127.0.0.1:8080/linkedin-callback&state=f1576406b382b7d1c8c2607f7c563d4f&response_type=code&scope=r_basicprofile w_share'
+        window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?client_id=' + process.env.LINKEDIN_CLIENT_ID + '&redirect_uri=' + process.env.LINKEDIN_CALLBACK + '&state=f1576406b382b7d1c8c2607f7c563d4f&response_type=code&scope=r_basicprofile w_share'
       }
+    },
+    created: function () {
+      this.facebook_plugin = document.createElement('script')
+      this.facebook_plugin.setAttribute('type', 'text/javascript')
+      this.script_html += 'window.fbAsyncInit = function() {\n'
+      this.script_html += '  FB.init({\n'
+      this.script_html += '    appId      : "' + process.env.FACEBOOK_APP_ID + '",\n'
+      this.script_html += '    cookie     : true,  // enable cookies to allow the server to access the session\n'
+      this.script_html += '    xfbml      : true,  // parse social plugins on this page\n'
+      this.script_html += '    version    : "v2.10" // use graph api version 2.8\n'
+      this.script_html += '  });\n'
+      this.script_html += '};\n'
+      this.script_html += '(function(d, s, id) {\n'
+      this.script_html += '  var js, fjs = d.getElementsByTagName(s)[0];\n'
+      this.script_html += '  if (d.getElementById(id)) return;\n'
+      this.script_html += '  js = d.createElement(s); js.id = id;\n'
+      this.script_html += '  js.src = "//connect.facebook.net/en_US/sdk.js";\n'
+      this.script_html += '  fjs.parentNode.insertBefore(js, fjs);\n'
+      this.script_html += '}(document, "script", "facebook-jssdk"));\n'
+      this.facebook_plugin.innerHTML = this.script_html
+      document.body.appendChild(this.facebook_plugin)
     },
     mounted: function () {
       this.get_connections()

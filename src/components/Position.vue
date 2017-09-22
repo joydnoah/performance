@@ -103,6 +103,7 @@
     },
     data: function () {
       return {
+        google_api_plugin: null,
         id: null,
         name: '',
         new_department: '',
@@ -309,6 +310,11 @@
         document.getElementById('cities_update').style.display = 'none'
         document.getElementById('preview-button').style.display = 'none'
       }
+    },
+    created: function () {
+      this.google_api_plugin = document.createElement('script')
+      this.google_api_plugin.setAttribute('src', 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_API_KEY + '&libraries=places')
+      document.body.appendChild(this.google_api_plugin)
     }
   }
 </script>
