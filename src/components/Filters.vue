@@ -53,13 +53,9 @@
           <tbody>
             <tr v-if="filters_experience_years.length === 0">
               <td>
-                <div class="input-group min-max">
+                <div class="input-group">
                   <span class="input-group-addon">Min</span>
                   <input type="text" class="form-control" v-model="experience_years_min">
-                </div>
-                <div class="input-group min-max">
-                  <span class="input-group-addon">Max</span>
-                  <input type="text" class="form-control" v-model="experience_years_max">
                 </div>
               </td>
               <td>
@@ -67,13 +63,9 @@
               </td>
             <tr v-for="item in filters_experience_years">
               <td>
-                <div class="input-group min-max">
+                <div class="input-group">
                   <span class="input-group-addon">Min</span>
                   <input type="text" class="form-control" v-on:change="set_experience_years(item, $event)" v-bind:value="item.value.split('-')[0]">
-                </div>
-                <div class="input-group min-max">
-                  <span class="input-group-addon">Max</span>
-                  <input type="text" class="form-control" v-on:change="set_experience_years(item, $event)" v-bind:value="item.value.split('-')[1]">
                 </div>
               </td>
               <td>
@@ -202,7 +194,7 @@
             this.value = this.education_level
             break
           case 'experience_years':
-            this.value = this.experience_years_min + ' - ' + this.experience_years_max
+            this.value = this.experience_years_min
             break
           case 'technical_skill':
             this.value = this.technical_skill
@@ -305,12 +297,12 @@
           importance: -1,
           position_id: this.position_id,
           type_filter: 'experience_years',
-          value: this.experience_years_min + '-' + this.experience_years_max
+          value: this.experience_years_min
         })
         this.experience_years = ''
       },
       set_experience_years (item, event) {
-        item.value = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value.trim(' ') + '-' + event.target.parentElement.parentElement.getElementsByTagName('input')[1].value.trim(' ')
+        item.value = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value.trim(' ')
       }
     },
     mounted: function () {

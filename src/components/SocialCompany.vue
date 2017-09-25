@@ -36,7 +36,7 @@
         </div>
         <div v-if="facebook_status === 'connected'">
           <div id="facebook-connected" class="alert alert-info">
-            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect()">Desconectar</button>
+            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect('facebook')">Desconectar</button>
           </div>
         </div>
         <br/>
@@ -46,7 +46,7 @@
         </div>
         <div v-if="twitter_status === 'connected'">
           <div id="twitter-connected" class="alert alert-info">
-            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect()">Desconectar</button>
+            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect('twitter')">Desconectar</button>
           </div>
         </div>
         <br/>
@@ -56,7 +56,7 @@
         </div>
         <div v-if="linkedin_status === 'connected'">
           <div id="linkedin-connected" class="alert alert-info">
-            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect()">Desconectar</button>
+            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect('linkedin')">Desconectar</button>
           </div>
         </div>
         <div v-if="social_network_connections.length > 0">
@@ -116,7 +116,7 @@
         this.facebook_auth_response.id = id
 
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.post('/social_network_connection/' + window.localStorage['company_id'], {
+        this.axios.post('/social-network-connection/' + window.localStorage['company_id'], {
           'access_token': this.facebook_auth_response.access_token,
           'page_id': this.facebook_auth_response.id,
           'provider': 'facebook',
@@ -131,7 +131,7 @@
       },
       put () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.put('/social_network_connection/' + window.localStorage['company_id'], {
+        this.axios.put('/social-network-connection/' + window.localStorage['company_id'], {
           'text_post': this.text_post
         })
         .then(response => {
@@ -145,9 +145,9 @@
           console.log(error.response)
         })
       },
-      disconnect () {
+      disconnect (provider) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.delete('/social_network_connection/' + window.localStorage['company_id'], {
+        this.axios.delete('/social-network/' + provider + '/company/' + window.localStorage['company_id'] + '/connection', {
         })
         .then(response => {
           window.location.reload()
@@ -158,7 +158,7 @@
       },
       get_connections () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/social_network_connection/' + localStorage['company_id'])
+        this.axios.get('/social-network-connection/' + localStorage['company_id'])
         .then(response => {
           this.social_network_connections = response.data.data.social_network_connections
           for (var index in this.social_network_connections) {
@@ -175,7 +175,7 @@
       },
       post_twitter () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.post('/twitter_connection/' + localStorage['company_id'])
+        this.axios.post('/social-network/twitter/company/' + localStorage['company_id'] + '/connection')
         .then(response => {
           window.localStorage.setItem('twitter_request_token', JSON.stringify(response.data.data.request_token))
           window.location.href = response.data.data.url

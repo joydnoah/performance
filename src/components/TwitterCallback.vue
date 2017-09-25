@@ -23,7 +23,7 @@
     },
     mounted () {
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-      this.axios.post('/social_network_connection/' + window.localStorage['company_id'], {
+      this.axios.post('/social-network-connection/' + window.localStorage['company_id'], {
         'access_token': '0',
         'provider': 'twitter',
         'page_id': 'No Aplica',
