@@ -8,6 +8,8 @@ import EmailTemplates from '@/components/EmailTemplates'
 import Filters from '@/components/Filters'
 import Positions from '@/components/Positions'
 import SocialCompany from '@/components/SocialCompany'
+import TwitterCallback from '@/components/TwitterCallback'
+import LinkedInCallback from '@/components/LinkedInCallback'
 import Applicants from '@/components/Applicants'
 import Applicant from '@/components/Applicant'
 import Callback from '@/components/Callback'
@@ -54,7 +56,20 @@ export default new Router({
     {
       path: '/social-company',
       name: 'SocialCompany',
+      beforeEnter: requireAuth,
       component: SocialCompany
+    },
+    {
+      path: '/twitter-callback',
+      name: 'TwitterCallback',
+      beforeEnter: requireAuth,
+      component: TwitterCallback
+    },
+    {
+      path: '/linkedin-callback',
+      name: 'LinkedInCallback',
+      beforeEnter: requireAuth,
+      component: LinkedInCallback
     },
     {
       path: '/email-templates/:position_id',
