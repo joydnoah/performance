@@ -25,6 +25,7 @@
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.post('/social-network-connection/' + window.localStorage['company_id'], {
         'access_token': '0',
+        'access_token_secret': '0',
         'provider': 'twitter',
         'page_id': 'No Aplica',
         'oauth_token': window.localStorage['twitter_request_token'],

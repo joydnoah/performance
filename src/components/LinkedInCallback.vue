@@ -24,6 +24,7 @@
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.post('/social-network-connection/' + window.localStorage['company_id'], {
         'access_token': this.$route.query.code,
+        'access_token_secret': '0',
         'provider': 'linkedin',
         'page_id': 'No Aplica',
         'oauth_token': '0',
