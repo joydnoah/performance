@@ -120,7 +120,9 @@
           'access_token': this.facebook_auth_response.access_token,
           'page_id': this.facebook_auth_response.id,
           'provider': 'facebook',
-          'access_token_secret': '0'
+          'access_token_secret': '0',
+          'oauth_token': '0',
+          'oauth_verifier': '0'
         })
         .then(response => {
           this.get_connections()
