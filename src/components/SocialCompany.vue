@@ -68,7 +68,7 @@
             </div>
           </div>
           <div style="display: none;" id="success-post" class="alert alert-info">La publicación se ha realizado correctamente!</div>
-          <button @click="put()" class="btn btn-primary">Publicar</button>
+          <button @click="publish()" class="btn btn-primary">Publicar</button>
         </div>
         <a href="/positions" class="btn btn-danger">Salir</a>
       </div>
@@ -129,13 +129,12 @@
           console.log(error.response)
         })
       },
-      put () {
+      publish () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.put('/social-network-connection/' + window.localStorage['company_id'], {
+        this.axios.post('/social-networks/company/' + window.localStorage['company_id'] + '/publish', {
           'text_post': this.text_post
         })
         .then(response => {
-          this.get_connections()
           document.getElementById('success-post').style.display = 'block'
           setTimeout(function () {
             document.getElementById('success-post').style.display = 'none'
