@@ -202,7 +202,7 @@
           this.department_list = response.data.data.departments
         })
         .catch(error => {
-          console.log(error.response)
+          console.log(error)
         })
       },
       put (v) {
@@ -316,9 +316,6 @@
       }
     },
     created: function () {
-      this.google_api_plugin = document.createElement('script')
-      this.google_api_plugin.setAttribute('src', 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_API_KEY + '&libraries=places')
-      document.body.appendChild(this.google_api_plugin)
     }
   }
 </script>
