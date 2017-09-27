@@ -187,6 +187,7 @@
       }
     },
     created: function () {
+      // TODO: improve embedded string approach
       this.facebook_plugin = document.createElement('script')
       this.facebook_plugin.setAttribute('type', 'text/javascript')
       this.script_html += 'window.fbAsyncInit = function() {\n'
