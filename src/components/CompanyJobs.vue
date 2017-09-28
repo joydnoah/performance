@@ -61,7 +61,7 @@
         description: '',
         work_with_us: '',
         uri: '',
-        server: process.env.DEV_SERVER
+        server: process.env.HOST
       }
     },
     validations: {
