@@ -28,7 +28,7 @@
           <div class="form-group" v-bind:class="{ 'has-error': $v.uri.$error }">
             <label>Enlace de página de empresa <span class="required-span">*</span></label>
             <div class="input-group">
-              <span class="input-group-addon">https://recruiters-portal-development.herokuapp.com/</span>
+              <span class="input-group-addon">{{ server }}/</span>
               <input type="text" class="form-control" v-on:input="$v.uri.$touch" v-model="uri" id="uri" name="uri" />
             </div>
           </div>
@@ -60,7 +60,8 @@
       return {
         description: '',
         work_with_us: '',
-        uri: ''
+        uri: '',
+        server: process.env.HOST
       }
     },
     validations: {
