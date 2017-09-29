@@ -64,13 +64,14 @@
           <div class="form">
             <div class="form-group">
               <label>Texto</label>
-              <textarea v-model="text_post" class="form-control" rows="10"></textarea>
+              <textarea v-model="text_post" v-on:keyup="get_counter_characters()" class="form-control" rows="10"></textarea>
+              <div id="counter_characters">{{ counter_characters }}</div>
             </div>
           </div>
           <div style="display: none;" id="success-post" class="alert alert-info">La publicación se ha realizado correctamente!</div>
-          <button @click="publish('facebook')" class="btn btn-primary">Publicar en Facebook</button>
-          <button @click="publish('twitter')" class="btn btn-primary">Publicar en Twitter</button>
-          <button @click="publish('linkedin')" class="btn btn-primary">Publicar en Linkedin</button>
+          <button v-if="facebook_status === 'connected'" @click="publish('facebook')" class="btn btn-primary">Publicar en Facebook</button>
+          <button v-if="twitter_status === 'connected'" @click="publish('twitter')" class="btn btn-primary">Publicar en Twitter</button>
+          <button v-if="linkedin_status === 'connected'" @click="publish('linkedin')" class="btn btn-primary">Publicar en Linkedin</button>
           <legend></legend>
         </div>
         <a href="/positions" class="btn btn-danger">Salir</a>
@@ -99,10 +100,12 @@
         facebook_auth_response: {},
         pages: [],
         social_network_connections: [],
-        text_post: '',
         twitter_status: 'not_connected',
         facebook_status: 'not_connected',
-        linkedin_status: 'not_connected'
+        linkedin_status: 'not_connected',
+        position: {},
+        text_post: '',
+        counter_characters: 200
       }
     },
     methods: {
@@ -188,6 +191,19 @@
       },
       send_linkedin () {
         window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?client_id=' + process.env.LINKEDIN_CLIENT_ID + '&redirect_uri=' + process.env.LINKEDIN_CALLBACK + '&state=f1576406b382b7d1c8c2607f7c563d4f&response_type=code&scope=r_basicprofile w_share'
+      },
+      get_position () {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.get('/position/' + this.$route.params.position_id)
+        .then((response) => {
+          this.position = response.data.data.position
+          this.text_post = this.position.name + ' - ' + process.env.HOST + '/position-apply/696b2a83-bbac-478f-bfc4-4e902e669308'
+          this.get_counter_characters()
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      get_counter_characters () {
+        this.counter_characters = this.text_post.length
       }
     },
     created: function () {
@@ -213,6 +229,7 @@
       document.body.appendChild(this.facebook_plugin)
     },
     mounted: function () {
+      this.get_position()
       this.get_connections()
     }
   }
@@ -248,5 +265,11 @@
     border-radius: 3px;
     background-color: #4267b2;
     color: #fff;
+  }
+  #counter_characters {
+    width: 100%;
+    text-align: right;
+    color: #337ab7;
+    font-weight: bold;
   }
 </style>
