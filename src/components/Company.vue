@@ -9,19 +9,25 @@
           <h3> Pocisiones Abiertas Actualmente en {{ company.name }}</h3>
           <div class="form-group">
             <label></label>
-            <select id="departments-list" class="form-control">
-              <option v-for="item in department_list" v-bind:value="id">
+            <select id="departments-list" class="form-control" v-model="department_to_filter" v-on:change="filter_department">
+              <option value="0">
+                Todos
+              </option>
+              <option v-for="item in department_list" v-bind:value="item.id">
                 {{ item.name }}
               </option>
             </select>
-
-            <ol class="list-positions">
-              <li v-for="item in positions" v-bind:value="id">
-                <a v-bind:href="'/position-apply/' + item.id">{{ item.name }} - {{ item.city }}</a>
-                <br/>
-                <strong>{{ item.department_name }}</strong>
-              </li>
-            </ol>
+            
+            
+            <div v-for="item in department_list" class="department-container" v-bind:id="'department-' + item.id">
+              <h4>{{ item.name }}</h4>
+              <div v-for="item_position in positions">
+                <div v-if="item_position.department_name === item.name">
+                  <a v-bind:href="'/position-apply/' + item_position.id">{{ item_position.name }} - {{ item_position.city }}</a>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -39,7 +45,10 @@
         id: this.$route.params.company_id,
         company: {},
         positions: [],
-        department_list: []
+        department_list: [
+        {'id': 0, 'name': 'Todos'}
+        ],
+        department_to_filter: '0'
       }
     },
     methods: {
@@ -50,7 +59,7 @@
       },
       get_positions () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/position', {params: {'company_id': this.id}})
+        this.axios.get('/company/' + this.$route.params.uri + '/positions')
         .then(response => {
           for (var item in response.data.data.positions) {
             if (response.data.data.positions[item].status_type === 'publish') {
@@ -62,24 +71,38 @@
       },
       get_departments () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/departments/' + this.id)
+        this.axios.get('/departments/' + this.company.id)
         .then((response) => {
           this.department_list = response.data.data.departments
         })
         .catch(error => {
           console.log(error.response)
         })
+      },
+      get_company () {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.get('/company/uri/' + this.$route.params.uri)
+        .then((response) => {
+          this.company = response.data.data.company
+          this.get_departments()
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      filter_department () {
+        if (this.department_to_filter === '0') {
+          for (var i = 0; i < document.getElementsByClassName('department-container').length; i++) {
+            document.getElementsByClassName('department-container')[i].style.display = 'block'
+          }
+        } else {
+          for (var j = 0; j < document.getElementsByClassName('department-container').length; j++) {
+            document.getElementsByClassName('department-container')[j].style.display = 'none'
+          }
+          document.getElementById('department-' + this.department_to_filter).style.display = 'block'
+        }
       }
     },
     mounted () {
-      this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-      this.axios.get('/company/' + this.id)
-      .then((response) => {
-        this.company = response.data.data.company
-      })
-      .catch(error => { console.log(error.response) })
-
-      this.get_departments()
+      this.get_company()
       this.get_positions()
     }
   }
@@ -118,5 +141,12 @@
     }
     .list-positions li{
       margin-top: 2em;
+    }
+    .department-container {
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+    .department-container div{
+      margin-top: 1em;
     }
 </style>
