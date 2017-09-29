@@ -7,7 +7,7 @@
         <div id="add-section">
           <router-link to="/position" class="btn btn-success">Agregar Posición</router-link>
           <router-link to="/company-jobs" class="btn btn-warning">Editar Página de Posiciones</router-link>
-          <router-link v-bind:to="'/company/' + company_id" class="btn btn-success">Página Empresa</router-link>
+          <router-link v-bind:to="'/' + company.uri" target="_blank" class="btn btn-success">Página Empresa</router-link>
         </div>
         <table class="table">
           <thead>
@@ -102,7 +102,8 @@
       return {
         positions: {},
         publish_problem: false,
-        company_id: localStorage['company_id']
+        company_id: localStorage['company_id'],
+        company: {}
       }
     },
     methods: {
@@ -140,6 +141,13 @@
     },
     mounted: function () {
       this.get_positions()
+
+      this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+      this.axios.get('/company/' + this.company_id)
+      .then((response) => {
+        this.company = response.data.data.company
+      })
+      .catch(error => { console.log(error.response) })
     }
   }
 </script>

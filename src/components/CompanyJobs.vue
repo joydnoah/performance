@@ -39,7 +39,7 @@
           </div>
 
           <button id="submit" class="btn btn-success" @click="update_company($v)">Guardar Cambios</button>
-          <a class="btn btn-warning" target="_blank" id="preview-button" href="#">Vista Preliminar</a>
+          <router-link v-bind:to="'/' + uri" target="_blank" class="btn btn-warning">Vista Preliminar</router-link>
           <button class="btn btn-danger" @click="exit()">Salir sin Guardar</button>
         </div>
       </div>
