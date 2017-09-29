@@ -8,7 +8,6 @@
           <router-link to="/position" class="btn btn-success">Agregar Posición</router-link>
           <router-link to="/company-jobs" class="btn btn-warning">Editar Página de Posiciones</router-link>
           <router-link v-bind:to="'/company/' + company_id" class="btn btn-success">Página Empresa</router-link>
-          <router-link to="/social-company" class="btn btn-primary">Redes sociales de la empresa</router-link>
         </div>
         <table class="table">
           <thead>
@@ -65,6 +64,7 @@
                     <li role="separator" class="divider"></li>
                     <li><a target="_blank" v-bind:href="'/filters/' + item.id" title="Filtros">Filtros</a></li>
                     <li><a target="_blank" v-bind:href="'/email-templates/' + item.id" title="Plantillas de email">Plantillas de email</a></li>
+                    <li><a v-bind:href="'/social-position/' + item.id" title="Plantillas de email">Publicar en redes sociales</a></li>
                   </template>
                 </dropdown>
               </td>

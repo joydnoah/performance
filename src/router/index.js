@@ -7,7 +7,7 @@ import PositionApply from '@/components/PositionApply'
 import EmailTemplates from '@/components/EmailTemplates'
 import Filters from '@/components/Filters'
 import Positions from '@/components/Positions'
-import SocialCompany from '@/components/SocialCompany'
+import SocialPosition from '@/components/SocialPosition'
 import TwitterCallback from '@/components/TwitterCallback'
 import LinkedInCallback from '@/components/LinkedInCallback'
 import Applicants from '@/components/Applicants'
@@ -54,10 +54,10 @@ export default new Router({
       component: PositionApply
     },
     {
-      path: '/social-company',
-      name: 'SocialCompany',
+      path: '/social-position/:position_id',
+      name: 'SocialPosition',
       beforeEnter: requireAuth,
-      component: SocialCompany
+      component: SocialPosition
     },
     {
       path: '/twitter-callback',
