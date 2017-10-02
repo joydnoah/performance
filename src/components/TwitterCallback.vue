@@ -36,6 +36,7 @@
         window.location.href = window.localStorage['position_url_social_return']
       })
       .catch(error => {
+        console.log(error)
         window.location.href = window.localStorage['position_url_social_return']
       })
     }
