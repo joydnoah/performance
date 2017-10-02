@@ -184,12 +184,14 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/social-network/twitter/company/' + localStorage['company_id'] + '/connection')
         .then(response => {
+          window.localStorage.setItem('position_url_social_return', window.location.href)
           window.localStorage.setItem('twitter_request_token', JSON.stringify(response.data.data.request_token))
           window.location.href = response.data.data.url
         })
         .catch(error => { console.log(error.response) })
       },
       send_linkedin () {
+        window.localStorage.setItem('position_url_social_return', window.location.href)
         window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?client_id=' + process.env.LINKEDIN_CLIENT_ID + '&redirect_uri=' + process.env.LINKEDIN_CALLBACK + '&state=f1576406b382b7d1c8c2607f7c563d4f&response_type=code&scope=r_basicprofile w_share'
       },
       get_position () {
@@ -231,6 +233,7 @@
     mounted: function () {
       this.get_position()
       this.get_connections()
+      window.localStorage.removeItem('position_url_social_return')
     }
   }
 </script>

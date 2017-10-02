@@ -33,10 +33,10 @@
       })
       .then(response => {
         window.localStorage.removeItem('twitter_request_token')
-        window.location.href = '/social-company'
+        window.location.href = window.localStorage['position_url_social_return']
       })
       .catch(error => {
-        console.log(error.response)
+        window.location.href = window.localStorage['position_url_social_return']
       })
     }
   }

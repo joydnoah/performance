@@ -31,11 +31,10 @@
         'oauth_verifier': '0'
       })
       .then(response => {
-        window.location.href = '/social-company'
+        window.location.href = window.localStorage['position_url_social_return']
       })
       .catch(error => {
-        window.location.href = '/social-company'
-        console.log(error.response)
+        window.location.href = window.localStorage['position_url_social_return']
       })
     }
   }
