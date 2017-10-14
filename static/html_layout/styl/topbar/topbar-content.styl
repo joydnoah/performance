@@ -1,0 +1,184 @@
+
+.topbar
+	background transparent
+	background -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
+	background -webkit-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 100%);
+	background linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 100%);
+	position absolute
+	top 0
+	width 100%
+	z-index 20
+
+	.topbar-container
+		color color-white
+		display block
+		margin 0 auto
+
+		.left-side
+			display inline-block
+			float left
+			height 80px
+			padding-top 24px
+
+			.logo
+				display inline-block
+				vertical-align middle
+
+				img
+					height 27px
+					width auto
+
+		.right-side
+			float right
+			height 80px
+			padding-top 24px
+
+			.main-nav
+
+				.nav-item
+					cursor pointer
+					display inline-block
+					font-size 14px
+					font-weight regular
+					margin-left 50px
+					position relative
+					vertical-align middle
+
+					a
+						color color-text-secondary
+
+						&.log-out-btn
+							color color-white
+
+						&:hover
+							text-decoration none
+
+					.material-icons
+						font-size 25px
+						line-height 1
+						margin-right 10px
+						padding-bottom 3px
+						vertical-align middle
+
+						&.icon-row
+							font-size 10px
+							line-height 1
+							margin-left 0
+							margin-right 0
+							vertical-align middle
+
+					.role-name
+						bottom -8px
+						font-size 9px
+						position absolute
+						right 12px
+						text-align right
+
+	// topbar dropdowns
+	.item-nav-dropdown
+		position relative
+		&.color-white
+			color color-white
+
+		&:hover > .dropdown-nav-container
+			visibility visible
+			opacity 1
+
+	.left-side
+		.dropdown-nav-container
+			left 0
+
+	.right-side
+		.dropdown-nav-container
+			right 0
+
+	.dropdown-nav-container
+		@extends .transition-mdl-elements
+		opacity 0
+		padding-top 10px
+		position absolute
+		top 20px
+		z-index 3
+		visibility hidden
+
+		.dropdown-nav
+			@extends .transition-mdl-elements
+			background color-white
+			box-shadow 0 7px 17px rgba(0,0,0,0.1)
+			min-width 160px
+			position relative
+			&:hover
+				box-shadow 0 7px 24px rgba(0,0,0,0.2)
+
+
+			&:before
+				border-color transparent transparent color-background transparent
+				border-style solid
+				border-width 0 5px 6px 5px
+				content ''
+				height 0
+				position absolute
+				top -6px
+				width 0
+
+			&.arrow-left
+
+				&:before
+					left 6px
+
+			&.arrow-right
+
+				&:before
+					right 6px
+
+			.dropdown-list-title
+				background color-background
+				color color-text-secondary
+				display block
+				font-size 9px
+				font-weight bold
+				height 17px
+				padding 2px 11px 0
+
+			.dropdown-list
+				border none
+				margin 0
+				padding 0
+
+				li
+					list-style none
+					margin 0
+					padding 0
+
+					a
+						@extends .transition-mdl-elements
+						border none
+						color color-text-secondary
+						cursor pointer
+						display flex
+						font-size 11px
+						line-height 1
+						padding 12px 11px 11px
+
+						&:hover
+							background color-background
+							color color-text-primary
+							padding-left 15px
+							text-decoration none
+
+			.log-out-btn
+				@extends .transition-mdl-elements
+				background color-secondary
+				border-radius 4px
+				color color-white
+				display block
+				font-size 11px
+				height 23px
+				line-height 1
+				margin 3px 11px 5px
+				padding 6px 0
+				text-align center
+
+				&:hover
+					background color-primary
+					text-decoration none
