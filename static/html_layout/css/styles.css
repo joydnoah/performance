@@ -13,9 +13,12 @@
 .topbar .dropdown-nav-container .dropdown-nav .dropdown-list li a,
 .topbar .dropdown-nav-container .dropdown-nav .log-out-btn,
 .offer-row-container,
-.offer-row-container .actions-dropdown.dropdown.open button,
-.offer-row-container .actions-dropdown.dropdown .dropdown-menu,
-.offer-row-container .actions-dropdown.dropdown .dropdown-menu li {
+.applicant-row-container,
+.applicant-row-container .top-row,
+.applicant-row-container .bottom-row,
+.actions-dropdown.dropdown.open button,
+.actions-dropdown.dropdown .dropdown-menu,
+.actions-dropdown.dropdown .dropdown-menu li {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -moz-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -o-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -592,15 +595,132 @@ html body textarea {
   color: #6f747a;
   font-weight: 400;
 }
-.offer-row-container .actions-dropdown.dropdown {
+.applicant-row-container {
+  border: solid 1px #dfdfe1;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  margin-bottom: 32px;
+  padding: 0 15px;
+}
+.applicant-row-container:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+.applicant-row-container:hover .top-row {
+  background: #fafafc;
+}
+.applicant-row-container:hover .bottom-row {
+  background: #fff;
+}
+.applicant-row-container .top-row {
+  background: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  min-height: 72px;
+  padding: 25px 0 14px;
+}
+.applicant-row-container .bottom-row {
+  background: #fafafc;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  min-height: 60px;
+  padding: 20px 0 16px;
+}
+.applicant-row-container .row-info {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1.1;
+}
+.applicant-row-container .row-info.row-text {
+  color: #6f747a;
+  font-weight: 400;
+}
+.applicant-row-container .row-info.row-name-link {
+  color: #393c41;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+.applicant-row-container .row-bookmark {
+  border: solid 1px;
+  border-color: #dfdfe1;
+  border-radius: 100px;
+  cursor: pointer;
+  height: 25px;
+  text-align: center;
+  padding-top: 3px;
+  width: 25px;
+}
+.applicant-row-container .row-bookmark .material-icons {
+  color: #dfdfe1;
+  font-size: 17px;
+}
+.applicant-row-container .row-bookmark.is-active {
+  border-color: #12abd4;
+}
+.applicant-row-container .row-bookmark.is-active .material-icons {
+  color: #12abd4;
+}
+.applicant-row-container .row-compatibility p {
+  color: #6f747a;
+  font-size: 12px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.applicant-row-container .row-compatibility .compatibility-container {
+  background: #dfdfe1;
+  border-radius: 100px;
+  height: 7px;
+  width: 100%;
+}
+.applicant-row-container .row-compatibility .compatibility-container .compatibility-level {
+  background: #dfdfe1;
+  border-radius: 100px;
+  height: 7px;
+  width: 0%;
+}
+.applicant-row-container .row-compatibility.is-high p {
+  color: #00c4b6;
+}
+.applicant-row-container .row-compatibility.is-high .compatibility-container .compatibility-level {
+  background: #00c4b6;
+  width: 100%;
+}
+.applicant-row-container .row-compatibility.is-medium p {
+  color: #ff9600;
+}
+.applicant-row-container .row-compatibility.is-medium .compatibility-container .compatibility-level {
+  background: #ff9600;
+  width: 66%;
+}
+.applicant-row-container .row-compatibility.is-low p {
+  color: #ff0052;
+}
+.applicant-row-container .row-compatibility.is-low .compatibility-container .compatibility-level {
+  background: #ff0052;
+  width: 34%;
+}
+.applicant-row-container .row-description {
+  color: #6f747a;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+  max-width: 750px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.actions-dropdown.dropdown {
   float: right;
 }
-.offer-row-container .actions-dropdown.dropdown.open button {
+.actions-dropdown.dropdown.open button {
   background: #ff9600;
   border: solid 1px #ff9600;
   color: #fff;
 }
-.offer-row-container .actions-dropdown.dropdown button {
+.actions-dropdown.dropdown button {
   background: #fff;
   border: solid 1px #ff9600;
   border-radius: 100px;
@@ -611,23 +731,23 @@ html body textarea {
   outline: none;
   padding: 0 12px 0 15px;
 }
-.offer-row-container .actions-dropdown.dropdown button .material-icons {
+.actions-dropdown.dropdown button .material-icons {
   font-size: 16px;
   vertical-align: middle;
 }
-.offer-row-container .actions-dropdown.dropdown.open .dropdown-menu {
+.actions-dropdown.dropdown.open .dropdown-menu {
   opacity: 1;
   top: 100%;
   visibility: visible;
 }
-.offer-row-container .actions-dropdown.dropdown.dropup .dropdown-menu {
+.actions-dropdown.dropdown.dropup .dropdown-menu {
   bottom: 70%;
   top: auto;
 }
-.offer-row-container .actions-dropdown.dropdown.open.dropup .dropdown-menu {
+.actions-dropdown.dropdown.open.dropup .dropdown-menu {
   bottom: 100%;
 }
-.offer-row-container .actions-dropdown.dropdown .dropdown-menu {
+.actions-dropdown.dropdown .dropdown-menu {
   background: #fff;
   border-radius: 0;
   box-shadow: 0 7px 17px rgba(0,0,0,0.1);
@@ -640,10 +760,10 @@ html body textarea {
   top: 70%;
   visibility: hidden;
 }
-.offer-row-container .actions-dropdown.dropdown .dropdown-menu:hover {
+.actions-dropdown.dropdown .dropdown-menu:hover {
   box-shadow: 0 7px 24px rgba(0,0,0,0.2);
 }
-.offer-row-container .actions-dropdown.dropdown .dropdown-menu li {
+.actions-dropdown.dropdown .dropdown-menu li {
   border: none;
   color: #6f747a;
   cursor: pointer;
@@ -652,12 +772,12 @@ html body textarea {
   line-height: 1;
   padding: 12px 11px 11px;
 }
-.offer-row-container .actions-dropdown.dropdown .dropdown-menu li:hover {
+.actions-dropdown.dropdown .dropdown-menu li:hover {
   background: #fafafc;
   color: #393c41;
   padding-left: 15px;
   text-decoration: none;
 }
-.offer-row-container .actions-dropdown.dropdown .dropdown-menu li.is-negative {
+.actions-dropdown.dropdown .dropdown-menu li.is-negative {
   color: #ff0052;
 }
