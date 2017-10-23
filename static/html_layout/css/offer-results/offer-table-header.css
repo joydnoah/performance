@@ -1,0 +1,35 @@
+.offer-header-container .header-title {
+  color: color-primaru;
+  curso: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: regular;
+  line-height: 1.2;
+  vertical-align: middle;
+/*&:before*/
+}
+.offer-header-container .header-title:after {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: color-primary;
+  content: 'keyboard_arrow_down';
+  direction: ltr;
+  display: none;
+  letter-spacing: normal;
+  line-height: 1;
+  font-family: 'Material Icons';
+  font-feature-settings: 'liga';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.offer-header-container .header-title.ascending:before {
+  display: inline-block;
+}
+.offer-header-container .header-title.descending:after {
+  display: inline-block;
+}

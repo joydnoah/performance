@@ -1,0 +1,204 @@
+/*Btn main action personalization color and shadow*/
+.mdl-button--fab.action-btn
+  @extends .transition-mdl-elements
+  background color-accent
+  box-shadow 0 1px 1.5px 0 rgba(0,0,0,.12),0 2px 4px 0 rgba(0,0,0,.24),0 1px 0px 0 rgba(255,255,255,.5) inset
+
+  &:active,&:focus,&:hover
+    background color-accent
+
+  &:active,&:focus
+    box-shadow 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2)
+
+  .material-icons
+    @extends .transition-mdl-elements
+    left 16px
+    top 16px
+    transform rotate(0deg)
+
+/*MDL inputs*/
+
+.mdl-textfield.mdl-textfield--floating-label
+
+  // Behavior when is empty
+  .mdl-textfield__input
+    border-bottom solid 1px color-border
+    color color-text-primary
+
+  .mdl-textfield__label
+    color color-text-disable
+    &:after
+      background color-secondary
+
+  .mdl-textfield__error
+    color color-error
+
+  // Behavior when is focused
+  &.is-focused
+    .mdl-textfield__input
+      color color-text-primary
+
+    .mdl-textfield__label
+      color color-secondary
+      &:after
+        background color-secondary
+
+  // Behavior when is full
+  &.is-dirty
+    // .mdl-textfield__input
+    .mdl-textfield__label
+      color color-secondary
+
+  // Behavior when is error
+  &.is-invalid.is-focused, &.is-invalid.is-dirty
+    .mdl-textfield__input
+      color color-text-primary
+
+    .mdl-textfield__label
+      color color-error
+      &:after
+        background color-error
+
+  // Behavior when is error because of empty
+  &.is-invalid
+    color color-text-primary
+
+    .mdl-textfield__label
+      color color-error
+      &:after
+        background color-error
+
+/*MDL checkbox*/
+
+.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect
+
+  .mdl-checkbox__label
+    color color-text-primary
+
+  .mdl-checkbox__box-outline
+    @extends .transition-mdl-elements
+    border solid 1px color-text-secondary
+
+    .mdl-checkbox__tick-outline
+      background-color color-white
+
+  .mdl-checkbox__ripple-container
+
+    .mdl-ripple
+      background color-primary
+
+  &.is-checked
+
+    .mdl-checkbox__box-outline
+      border solid 1px color-primary
+      box-shadow: 0 0 0 3px color-primary inset
+
+      .mdl-checkbox__tick-outline
+        background-color color-primary
+
+
+/*MDL radio button*/
+
+.mdl-radio.mdl-js-radio.mdl-js-ripple-effect
+
+  .mdl-radio__label
+    color color-text-primary
+
+  .mdl-radio__outer-circle
+    border solid 1px color-text-secondary
+
+  .mdl-radio__inner-circle
+    background-color color-white
+    border solid 1px color-text-secondary
+
+  .mdl-radio__ripple-container
+    left -10px
+    .mdl-ripple
+      background color-primary
+
+  &.is-checked
+
+    .mdl-radio__inner-circle
+      background-color color-primary
+      border solid 1px color-primary
+
+
+/*Error message*/
+.mdl-message__error
+  color color-error
+
+/*Tabs*/
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
+
+
+  .mdl-tabs__tab-bar
+    border-bottom 1px solid color-border
+
+  .mdl-tabs__tab
+    color color-text-disable
+
+    &.is-active
+      color color-secondary
+
+      &:after
+        background color-secondary
+
+    .mdl-tabs__ripple-container
+      .mdl-ripple
+        background color-secondary
+
+
+/*MDL select*/
+
+.mdl-selectfield.mdl-selectfield--floating-label
+
+  .mdl-selectfield__select
+    color color-text-primary
+
+  // Behavior when is empty
+  .mdl-selectfield__input
+    border-bottom solid 1px color-border
+    color color-text-primary
+
+  .mdl-selectfield__label
+    color color-text-disable
+    &:after
+      background color-secondary
+
+  // Behavior when is focused
+  &.is-focused
+    .mdl-selectfield__input
+      color color-text-primary
+
+    .mdl-selectfield__label
+      color color-secondary
+      &:after
+        background color-secondary
+
+  // Behavior when is full
+  &.is-dirty
+    // .mdl-selectfield__input
+    .mdl-selectfield__label
+      color color-secondary
+
+  // Behavior when is error
+  &.is-invalid.is-focused, &.is-invalid.is-dirty
+    .mdl-selectfield__input
+      color color-text-primary
+
+    .mdl-selectfield__label
+      color color-error
+      &:after
+        background color-error
+
+  // Behavior when is error because of empty
+  &.is-invalid
+    color color-text-primary
+
+    .mdl-selectfield__select
+      border-color color-text-inactive
+
+    .mdl-selectfield__label
+      color color-error
+      &:after
+        background color-error
