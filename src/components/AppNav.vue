@@ -1,47 +1,35 @@
 <template>
-  <!-- topbar -->
-  <div class="topbar wow fadeIn" data-wow-delay="0.4s" data-wow-duration="1.2s">
-    <div class="topbar-container general-container">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="left-side">
-            <div class="logo">
-              <a href="">
-                <img :src="'/static/html_layout/images/company-logo.svg'">
-              </a>
-            </div>
-          </div>
-          <div class="right-side">
-            <div class="main-nav">
-              <div v-show="isLoggedIn()" @click="go_to('/positions')" class="nav-item">
-                <i class="material-icons">dashboard</i>Panel de ofertas
-              </div>
-              <div v-show="!isLoggedIn()" @click="handleLogin()" class="nav-item">
-                <i class="material-icons">account_circle</i>Login
-              </div>
-              <div v-show="isLoggedIn()" @click="go_to('/position')" class="nav-item">
-                <i class="material-icons">note_add</i>Crear posición
-              </div>
-              <div v-show="isLoggedIn()" class="nav-item item-nav-dropdown">
-                <i class="material-icons">account_circle</i>{{ user_info.name }}
-                <i class="material-icons icon-row">keyboard_arrow_down</i>
-                <div class="dropdown-nav-container">
-                  <div class="dropdown-nav arrow-right">
-                    <span class="dropdown-list-title">Opciones de usuario</span>
-                    <ul class="dropdown-list">
-                      <li><a href="/company-jobs">Informacion empresarial</a></li>
-                      <li><a @click="handleLogout()" href="#">Cerrar sesión</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><!-- row end -->
-    </div>
-  </div>
-  <!-- topbar end -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <router-link to="/" class="navbar-brand">Cotopaxi-io</router-link>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <button class="btn btn-default navbar-btn" v-show="!isLoggedIn()" @click="handleLogin()">Ingresar</button>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li id="li-profile" v-show="isLoggedIn()">
+            <img id="img-profile" class="img-circle" :src="user_info.picture" /> <span>{{ user_info.name }}</span>
+          </li>
+          <li>
+            <button v-show="isLoggedIn()" @click="handleLogout()" class="btn btn-default navbar-btn"> Cerrar Sesión</button>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 </template>
 
 <script>
@@ -70,9 +58,6 @@
       },
       getUserInfo () {
         this.user_info = JSON.parse(getUserInfo())
-      },
-      go_to (url) {
-        window.location.href = url
       }
     },
     mounted: function () {
@@ -85,4 +70,33 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.navbar-right { margin-right: 0px !important}
+
+.log {
+  margin: 5px 10px 0 0;
+}
+.header-networks{
+  vertical-align: middle;
+  text-align: right;
+}
+.header-networks a{
+  display: inline;
+}
+.header-networks img{
+  width: 6%;
+  margin-top: 0.7em;
+}
+.a-button{
+  margin-top: 20px;
+}
+#li-profile{
+  color: #fff;
+  text-align: right;
+  padding-right: 1em;
+  font-weight: 550;
+}
+#img-profile{
+  width: 36px;
+  margin: 0.5em;
+}
 </style>

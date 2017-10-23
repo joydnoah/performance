@@ -1,11 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>cotopaxi-portal</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+
+    <title>Cotopaxi</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/html_layout/external-libs/animate/animate.css">
+    <link rel="stylesheet" href="/static/html_layout/external-libs/mdl-selectfield/mdl-selectfield.min.css">
+    <link rel="stylesheet" href="/static/html_layout/css/styles.css">
+
+    <!-- Javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script defer src="/static/html_layout/external-libs/mdl-selectfield/mdl-selectfield.min.js"></script>
+    <script src="/static/html_layout/external-libs/wow/wow.min.js"></script>
+    <script src="/static/html_layout/external-libs/wow/setup.js"></script>
+    <script src="/static/html_layout/external-libs/scrollmagic/ScrollMagic.js"></script>
+    <script src="/static/html_layout/external-libs/scrollmagic/debug.addIndicators.js"></script>
+
+    <script type="text/javascript">
+      function determineDropDirection(){
+        $(".dropdown-menu").each( function(){
+          
+          $(this).parent().removeClass("dropup");
+          
+          if ($(this).offset().top + $(this).outerHeight() > $(window).innerHeight() + $(window).scrollTop()){
+            $(this).parent().addClass("dropup");
+          }
+          
+          $(this).removeAttr("style");
+        });
+      }
+
+      determineDropDirection();
+
+      $(window).scroll(determineDropDirection);
+    </script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7eJ9C8ZnzzBD1sEpg2hDT9KC7GBCJiOU&libraries=places"></script>
   </head>
-  <body>
+  <body class="visibility-hidden wow fadeIn" data-wow-duration="1s">
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

@@ -1,6 +1,6 @@
 <template>
   <div id="general-container">
-    <app-nav></app-nav>
+    <toolbar></toolbar>
     
     <!-- body-container start -->
     <div class="body-container">
@@ -223,14 +223,14 @@
 </template>
 
 <script>
-  import AppNav from './AppNav'
+  import Toolbar from './Toolbar'
   import LayoutHeader from './LayoutHeader'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Tooltip, Dropdown } from 'uiv'
   
   export default {
     components: {
-      AppNav,
+      Toolbar,
       LayoutHeader,
       Tooltip,
       Dropdown

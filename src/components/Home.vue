@@ -1,52 +1,41 @@
 <template>
-  <div id="general-container">
+  <div>
     <app-nav></app-nav>
-    
-    <!-- body-container start -->
-    <div class="body-container">
-      
-      <layout-header title="Inicio"></layout-header>
-
-      <!-- results-status start -->
-      <div class="general-container">
-        <div class="home-title">
-          <h3>
-          ¡Cotopaxi te ayuda a reclutar!
-          La manera mas rapida de contratar ejecutivos y empleados.
-          </h3>
-          <p>
-            Con Cotopaxi ahorra tiempo publicando y manejando solicitudes de empleo a tu empresa.
-          </p>
-        </div>
-      </div><!-- results-status end -->
+    <div class="home-title">
+      <h3>
+      ¡Cotopaxi te ayuda a reclutar!
+      La manera mas rapida de contratar ejecutivos y empleados.
+      </h3>
+      <p>
+        Con Cotopaxi ahorra tiempo publicando y manejando solicitudes de empleo a tu empresa.
+      </p>
     </div>
   </div>
 </template>
 <script>
   import AppNav from './AppNav'
-  import LayoutHeader from './LayoutHeader'
   export default {
     components: {
-      AppNav,
-      LayoutHeader
+      AppNav
     }
   }
 </script>
 
 <style scoped>
   .home-title {
-  	text-align: center;
-  	height: 300px;
-  	padding-top: 4em;
+    text-align: center;
+    height: 300px;
+    border-bottom: 1px solid #9c9c9c;
+    padding-top: 4em;
   }
   .home-title h3{
-  	width: 30%;
-  	margin: 1em auto;
-  	text-align: left;
+  width: 30%;
+  margin: 1em auto;
+  text-align: left;
   }
   .home-title p{
-  	width: 30%;
-  	margin: 1em auto;
-  	text-align: left;
+  width: 30%;
+  margin: 1em auto;
+  text-align: left;
   }
 </style>
