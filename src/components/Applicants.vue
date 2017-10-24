@@ -23,22 +23,12 @@
               </td>
               <td>{{ item.created_at.substring(0, 10) }}</td>
               <td>
-                <a class="btn btn-warning" :href="'/applicant/' + item.applicant_id">Detalles</a>
-                <tooltip text="Iniciar Proceso">
-                  <button @click="set_status_application(item.id, 'in_process')" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i></button>
-                </tooltip>
-                <tooltip text="Aprobar">
-                  <button @click="set_status_application(item.id, 'approved')" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i></button>
-                </tooltip>
-                <tooltip text="Rechazar">
-                  <button @click="set_status_application(item.id, 'rejection')" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
-                </tooltip>
-                <tooltip text="Invitar a LLamada">
-                  <button @click="set_status_application(item.id, 'scheduled_call')" class="btn btn-info"><i class="glyphicon glyphicon-phone"></i></button>
-                </tooltip>
-                <tooltip text="Invitar a Entrevista">
-                  <button @click="set_status_application(item.id, 'scheduled_interview')" class="btn btn-default"><i class="glyphicon glyphicon-user"></i></button>
-                </tooltip>
+                <a class="btn btn-default" :href="'/applicant/' + item.applicant_id">Detalles</a>
+                <button @click="set_status_application(item.id, 'in_process')" class="btn btn-primary"><i class="glyphicon glyphicon-bullhorn"></i> Iniciar Proceso</button>
+                <button @click="set_status_application(item.id, 'approved')" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Aprobar</button>
+                <button @click="set_status_application(item.id, 'rejection')" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Rechazar</button>
+                <button @click="set_status_application(item.id, 'scheduled_call')" class="btn btn-info"><i class="glyphicon glyphicon-phone"></i> Invitar LLamada</button>
+                <button @click="set_status_application(item.id, 'scheduled_interview')" class="btn btn-warning"><i class="glyphicon glyphicon-user"></i> Invitar Entrevista</button>
               </td>
             </tr>
           </tbody>
