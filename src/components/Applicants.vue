@@ -24,6 +24,9 @@
               <td>{{ item.created_at.substring(0, 10) }}</td>
               <td>
                 <a class="btn btn-warning" :href="'/applicant/' + item.applicant_id">Detalles</a>
+                <tooltip text="Iniciar Proceso">
+                  <button @click="set_status_application(item.id, 'in_process')" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i></button>
+                </tooltip>
                 <tooltip text="Aprobar">
                   <button @click="set_status_application(item.id, 'approved')" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i></button>
                 </tooltip>
