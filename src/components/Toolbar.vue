@@ -16,6 +16,9 @@
               <div v-show="isLoggedIn()" @click="go_to('/positions')" class="nav-item">
                 <i class="material-icons">dashboard</i>Panel de ofertas
               </div>
+              <div v-show="isLoggedIn()" @click="go_to('/' + company.uri)" class="nav-item">
+                <i class="material-icons">dashboard</i>Página Empresa
+              </div>
               <div v-show="!isLoggedIn()" @click="handleLogin()" class="nav-item">
                 <i class="material-icons">account_circle</i>Login
               </div>
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-  import { isLoggedIn, login, logout, getUserInfo } from '../../utils/auth'
+  import { isLoggedIn, login, logout, getUserInfo, getIdToken, getAccessToken } from '../../utils/auth'
 
   export default {
     name: 'toolbar',
@@ -54,7 +57,8 @@
         user_info: {
           picture: '',
           name: ''
-        }
+        },
+        company: {}
       }
     },
     methods: {
@@ -79,6 +83,12 @@
       if (this.isLoggedIn()) {
         this.getUserInfo()
       }
+      this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+      this.axios.get('/company/' + window.localStorage['company_id'])
+      .then((response) => {
+        this.company = response.data.data.company
+      })
+      .catch(error => { console.log(error.response) })
     }
   }
 </script>
