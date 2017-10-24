@@ -13,7 +13,7 @@
               <td>
                 <select v-model="education_level" class="form-control" v-on:change="add_education_level()">
                   <option value="Bachiller">Bachiller</option>
-                  <option value="Ténico">Ténico</option>
+                  <option value="Ténico">Técnico</option>
                   <option value="Universitario">Universitario</option>
                   <option value="Post-grado">Post-grado</option>
                 </select>
