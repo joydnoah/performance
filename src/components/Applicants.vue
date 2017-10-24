@@ -30,6 +30,12 @@
                 <tooltip text="Rechazar">
                   <button @click="set_status_application(item.id, 'rejection')" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
                 </tooltip>
+                <tooltip text="Invitar a LLamada">
+                  <button @click="set_status_application(item.id, 'scheduled_call')" class="btn btn-info"><i class="glyphicon glyphicon-phone"></i></button>
+                </tooltip>
+                <tooltip text="Invitar a Entrevista">
+                  <button @click="set_status_application(item.id, 'scheduled_interview')" class="btn btn-default"><i class="glyphicon glyphicon-user"></i></button>
+                </tooltip>
               </td>
             </tr>
           </tbody>
@@ -72,6 +78,10 @@
           return 'En Proceso'
         } else if (status === 'rejection') {
           return 'Rechazado'
+        } else if (status === 'scheduled_call') {
+          return 'Invitación a LLamada'
+        } else if (status === 'scheduled_interview') {
+          return 'Invitación a Entrevista'
         }
       },
       set_status_application (id, status) {
