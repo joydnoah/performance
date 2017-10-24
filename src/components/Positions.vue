@@ -120,7 +120,7 @@
                   <li @click="go_to('/position?id=' + item.id)">Editar</li>
                   <li @click="go_to('/position-preview/' + item.id)">Vista previa</li>
                   <li @click="go_to('/position-apply/' + item.id)">Link</li>
-                  <li @click="go_to('/email-templates/' + item.id)">Candidatos</li>
+                  <li @click="go_to('/applicants/' + item.id)">Candidatos</li>
                   <li @click="set_status_position(item.id, 'publish')">Publicar</li>
                   <li @click="go_to('/filters/' + item.id)">Filtros</li>
                   <li @click="go_to('/email-templates/' + item.id)">Correos</li>
@@ -240,7 +240,8 @@
         positions: {},
         publish_problem: false,
         company_id: localStorage['company_id'],
-        company: {}
+        company: {},
+        bootstrap_min_js: null
       }
     },
     methods: {
@@ -288,6 +289,12 @@
         this.company = response.data.data.company
       })
       .catch(error => { console.log(error.response) })
+
+      this.bootstrap_min_js = document.createElement('script')
+      this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
+      this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
+      document.head.appendChild(this.bootstrap_min_js)
     }
   }
 </script>
