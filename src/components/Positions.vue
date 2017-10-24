@@ -120,7 +120,7 @@
                   <li @click="go_to('/position?id=' + item.id)">Editar</li>
                   <li @click="go_to('/position-preview/' + item.id)">Vista previa</li>
                   <li @click="go_to('/position-apply/' + item.id)">Link</li>
-                  <li @click="go_to('/email-templates/' + item.id)">Candidatos</li>
+                  <li @click="go_to('/applicants/' + item.id)">Candidatos</li>
                   <li @click="set_status_position(item.id, 'publish')">Publicar</li>
                   <li @click="go_to('/filters/' + item.id)">Filtros</li>
                   <li @click="go_to('/email-templates/' + item.id)">Correos</li>
