@@ -1,0 +1,108 @@
+
+.applicant-row-container
+	@extends .transition-mdl-elements
+	border solid 1px color-border
+	border-radius 10px
+	box-shadow 0 4px 14px rgba(0,0,0,0.1)
+	margin-bottom 32px
+	padding 0 15px
+	&:hover
+		box-shadow 0 6px 20px rgba(0,0,0,0.12)
+		.top-row
+			background color-background
+		.bottom-row
+			background color-white
+	.top-row
+		@extends .transition-mdl-elements
+		background color-white
+		border-top-left-radius 10px
+		border-top-right-radius 10px
+		min-height 72px
+		padding 25px 0 14px
+	.bottom-row
+		@extends .transition-mdl-elements
+		background color-background
+		border-bottom-left-radius 10px
+		border-bottom-right-radius 10px
+		min-height 60px
+		padding 20px 0 16px
+
+	.row-info
+		display inline-block
+		font-size 12px
+		line-height 1.1
+		&.row-text
+			color color-text-secondary
+			font-weight regular
+		&.row-name-link
+			color color-text-primary
+			cursor pointer
+			font-size 20px
+			font-weight regular
+			margin 0
+	.row-bookmark
+		border solid 1px
+		border-color color-empty
+		border-radius 100px
+		cursor pointer
+		height 25px
+		text-align center
+		padding-top 3px
+		width 25px
+		.material-icons
+			color color-empty
+			font-size 17px
+		&.is-active
+			border-color color-primary
+			.material-icons
+				color color-primary
+	.row-compatibility
+		p
+			color color-text-secondary
+			font-size 12px
+			line-height 1.1
+			margin-bottom 6px
+		.compatibility-container
+			background color-empty
+			border-radius 100px
+			height 7px
+			width 100%
+			.compatibility-level
+				background color-empty
+				border-radius 100px
+				height 7px
+				width 0%
+		&.is-high
+			p
+				color color-success
+			.compatibility-container
+				.compatibility-level
+					background color-success
+					width 100%
+		&.is-medium
+			p
+				color color-warning
+			.compatibility-container
+				.compatibility-level
+					background color-warning
+					width 66%
+		&.is-low
+			p
+				color color-error
+			.compatibility-container
+				.compatibility-level
+					background color-error
+					width 34%
+
+
+	.row-description
+		color color-text-secondary
+		display inline-block
+		font-size 11px
+		font-weight regular
+		line-height 1.1
+		margin 0
+		max-width 750px
+		overflow hidden
+		text-overflow ellipsis
+		white-space nowrap
