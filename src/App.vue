@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Roboto');
+  /*@import url('https://fonts.googleapis.com/css?family=Roboto');
   html, body, h1, h2, h3, h4, h5, h6, p, a, span, input, select, textarea, div, label{
     font-family: 'Roboto', sans-serif !important;
   }
@@ -20,6 +20,6 @@ export default {
   }
   select.form-control { 
     transition: none !important;
-  }
+  }*/
 
 </style>
