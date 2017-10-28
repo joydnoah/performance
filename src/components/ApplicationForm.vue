@@ -14,6 +14,7 @@
         <i class="glyphicon glyphicon-ok"></i> <strong>Candidato Existente!</strong>
         <p>Existe un candidato registrado como <strong>{{ email }}</strong>, ¿Desea enviar la solicitud?</p>
       </div>
+
       <div class="form form-horizontal">
         <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
           <label class="col-sm-2 control-label" >Correo Electrónico *</label>
@@ -33,29 +34,18 @@
             <input type="text" class="form-control" v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" v-bind:class="{ 'has-error': $v.phone_number.$error }">
           <label class="col-sm-2 control-label" >Teléfono *</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" v-model='phone_code' id="phone_code" >
+            <input type="text" class="form-control" v-on:input="$v.phone_code.$touch" v-model='phone_code' id="phone_code" >
           </div>
           <div class="col-sm-8">
-            <input type="text" class="form-control" v-model='phone_number' id="phone_number" >
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >Curriculum Vitae *</label>
-          <div class="col-sm-10">
-            <input type="file" class="form-control" id="name" >
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >Carta de presentación *</label>
-          <div class="col-sm-10">
-            <input type="file" class="form-control" id="name" >
+            <input type="text" class="form-control" v-on:input="$v.phone_number.$touch" v-model='phone_number' id="phone_number" >
           </div>
         </div>
         <legend></legend>
       </div>
+
       <div class="form">
         <div class="form-group">
           <label for="exampleInputEmail1">Perfil de LinkedIn (opcional)</label>
@@ -65,12 +55,33 @@
           <label for="exampleInputEmail1">Usuario de Twitter (opcional)</label>
           <input type="text" class="form-control" v-model='twitter_user' id="twitter_user" >
         </div>
+      </div>
+      
+      <div class="form form-horizontal">
+        <legend></legend>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >Curriculum Vitae</label>
+          <div class="col-sm-10">
+            <input type="file" class="form-control" id="name" v-on:change="set_files('curriculum_vitae', $event)" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >Carta de presentación</label>
+          <div class="col-sm-10">
+            <input type="file" class="form-control" id="name" v-on:change="set_files('presentation_letter', $event)" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form" style="display: none;">
         <legend></legend>
         <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
-      </div>
-      <div style="display: none;" class="form">
-        <legend></legend>
-        <button class="btn btn-success" @click="save($v)">Enviar Solicitud</button>
+        <br/>
+        <br/>
+        <div style="display: none;" class="alert alert-danger">
+          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
+          <p id="error_message"></p>
+        </div>
       </div>
     </div>
   </div>
@@ -94,7 +105,10 @@
         phone_code: '',
         phone_number: '',
         linkedin_user: '',
-        twitter_user: ''
+        twitter_user: '',
+        curriculum_vitae: '',
+        presentation_letter: '',
+        form_data: null
       }
     },
     validations: {
@@ -107,14 +121,32 @@
       email: {
         required,
         email
+      },
+      phone_number: {
+        required
+      },
+      phone_code: {
+        required
       }
     },
     methods: {
       isLoggedIn () {
         return isLoggedIn()
       },
+      set_files (type, event) {
+        switch (type) {
+          case 'curriculum_vitae':
+            this.curriculum_vitae = event.target.files[0]
+            break
+
+          case 'presentation_letter':
+            this.presentation_letter = event.target.files[0]
+            break
+        }
+      },
       get_applicant () {
         if (this.email.trim() !== '') {
+          this.email = this.email.trim().toLowerCase()
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.get('/applicant/' + this.email + '/verify')
           .then((response) => {
@@ -130,32 +162,50 @@
         }
       },
       post (v) {
+        document.getElementsByClassName('alert')[3].style.display = 'none'
         v.$touch()
-        if (!v.$error) {
+        if (this.applicant_id === 0) {
+          if (!v.$error) {
+            this.save()
+          }
+        } else {
           this.save()
         }
       },
       save () {
+        document.getElementsByTagName('button')[1].disabled = true
+        document.getElementsByTagName('button')[1].innerHTML = 'Procesando, por favor espere...'
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.post('/application', {
-          'applicant_id': this.applicant_id,
-          'position_id': this.position,
-          'first_name': this.first_name,
-          'last_name': this.last_name,
-          'email': this.email,
-          'phone_code': this.phone_code,
-          'phone_number': this.phone_number,
-          'linkedin_user': this.linkedin_user,
-          'twitter_user': this.twitter_user
-        })
+        this.form_data = new FormData()
+        this.form_data.append('curriculum_vitae', this.curriculum_vitae)
+        this.form_data.append('presentation_letter', this.presentation_letter)
+        this.form_data.append('applicant_id', this.applicant_id)
+        this.form_data.append('position_id', this.position)
+        this.form_data.append('first_name', this.first_name)
+        this.form_data.append('last_name', this.last_name)
+        this.form_data.append('email', this.email)
+        this.form_data.append('phone_code', this.phone_code)
+        this.form_data.append('phone_number', this.phone_number)
+        this.form_data.append('linkedin_user', this.linkedin_user)
+        this.form_data.append('twitter_user', this.twitter_user)
+
+        this.axios.post('/application', this.form_data)
         .then(response => {
           document.getElementsByClassName('form')[0].style.display = 'none'
           document.getElementsByClassName('form')[1].style.display = 'none'
           document.getElementsByClassName('form')[2].style.display = 'none'
+          document.getElementsByClassName('form')[3].style.display = 'none'
           document.getElementsByClassName('alert')[2].style.display = 'none'
           document.getElementsByClassName('alert')[0].style.display = 'block'
+          document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
+          document.getElementsByTagName('button')[1].disabled = false
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => {
+          document.getElementById('error_message').innerHTML = error.response.data.message
+          document.getElementsByClassName('alert')[3].style.display = 'block'
+          document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
+          document.getElementsByTagName('button')[1].disabled = false
+        })
       }
     },
     watch: {
@@ -163,10 +213,13 @@
         if (this.status !== 'publish') {
           document.getElementsByClassName('form')[0].style.display = 'none'
           document.getElementsByClassName('form')[1].style.display = 'none'
+          document.getElementsByClassName('form')[2].style.display = 'none'
           document.getElementsByClassName('alert')[1].style.display = 'block'
         } else {
           document.getElementsByClassName('form')[0].style.display = 'block'
           document.getElementsByClassName('form')[1].style.display = 'block'
+          document.getElementsByClassName('form')[2].style.display = 'block'
+          document.getElementsByClassName('form')[3].style.display = 'block'
           document.getElementsByClassName('alert')[1].style.display = 'none'
         }
       }
@@ -175,6 +228,7 @@
       if (this.status !== 'publish') {
         document.getElementsByClassName('form')[0].style.display = 'none'
         document.getElementsByClassName('form')[1].style.display = 'none'
+        document.getElementsByClassName('form')[2].style.display = 'none'
         document.getElementsByClassName('alert')[1].style.display = 'block'
       }
     }
