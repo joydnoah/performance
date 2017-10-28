@@ -17,6 +17,28 @@
           <p>{{ linkedin_user }}</p>
           <label>Usuario Twitter</label>
           <p>{{ twitter_user }}</p>
+
+          <table class="table">
+            <caption>Documentos Adjuntos</caption>
+            <thead>
+              <tr>
+                <th>Posición</th>
+                <th>Nombre Archivo</th>
+                <th>Tipo de Archivo</th>
+                <th>Ver Archivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in documents">
+                <td>{{ item.position_name }}</td>
+                <td>{{ item.original_name }}</td>
+                <td>{{ item.type_file == 'presentation_letter'? 'Carta de presentación': 'Curriculum Vitae' }}</td>
+                <td>
+                  <a target="_blank" v-bind:href='"http://" + bucket + ".s3.amazonaws.com/" + item.id + "." + item.original_name.split(".")[1]'>Link</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -41,7 +63,9 @@
         phone_number: '',
         linkedin_user: '',
         twitter_user: '',
-        created_at: ''
+        created_at: '',
+        documents: [],
+        bucket: process.env.AWS_S3_BUCKET
       }
     },
     methods: {
@@ -61,6 +85,13 @@
         this.linkedin_user = response.data.data.applicant.linkedin_user
         this.twitter_user = response.data.data.applicant.twitter_user
         this.created_at = response.data.data.applicant.created_at
+      })
+      .catch(error => { console.log(error.response) })
+
+      this.axios.get('/applicant/documents/' + this.id)
+      .then((response) => {
+        console.log(response.data.data)
+        this.documents = response.data.data.documents
       })
       .catch(error => { console.log(error.response) })
     }

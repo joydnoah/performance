@@ -13,5 +13,6 @@ module.exports = merge(prodEnv, {
   LINKEDIN_CALLBACK: '"' +  process.env.LINKEDIN_CALLBACK + '"',
   GOOGLE_API_KEY: '"' +  process.env.GOOGLE_API_KEY + '"',
   FACEBOOK_APP_ID: '"' + process.env.FACEBOOK_APP_ID + '"',
-  HOST: '"' + process.env.HOST + '"'
+  HOST: '"' + process.env.HOST + '"',
+  AWS_S3_BUCKET: '"' + process.env.AWS_S3_BUCKET + '"'
 })
