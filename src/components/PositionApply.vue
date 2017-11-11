@@ -7,15 +7,21 @@
             <button id="copy-link" v-clipboard:copy="url_position" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-link"></i></button>
           </tooltip>
           <h3>{{ name }} - {{ city }}</h3>
-
-          <label>Descripción de la posición</label>
-          <p>{{ description }}</p>
-
-          <label>Descripción del equipo de trabajo</label>
-          <p>{{ work_team_description }}</p>
-
-          <label>Características que estamos buscando en un empleado</label>
-          <p>{{ candidate_characteristics }}</p>
+          
+          <div v-if="description != null && description.length > 0">
+            <label>Descripción de la posición</label>
+            <p>{{ description }}</p>
+          </div>
+          
+          <div v-if="work_team_description != null && work_team_description.length > 0">
+            <label>Descripción del equipo de trabajo</label>
+            <p>{{ work_team_description }}</p>
+          </div>
+          
+          <div v-if="candidate_characteristics != null && candidate_characteristics.length > 0">
+            <label>Características que estamos buscando en un empleado</label>
+            <p>{{ candidate_characteristics }}</p>
+          </div>
 
           <application-form :position="id" :status="status_type"></application-form>
         </div>

@@ -53,13 +53,15 @@
           <tbody>
             <tr v-if="filters_experience_years.length === 0">
               <td>
-                <div class="input-group">
-                  <span class="input-group-addon">Min</span>
-                  <input type="text" class="form-control" v-model="experience_years_min">
+                <div class="input-group" v-bind:class="{ 'has-error': $v.experience_years_min.$error }">
+                  <span class="input-group-addon">Años</span>
+                  <input type="text" v-on:input="$v.experience_years_min.$touch" class="form-control form__input" v-model="experience_years_min">
                 </div>
+                <br/>
+                <span class="form-group__message label-error" v-if="!$v.experience_years_min.between">El valor debe estar en el rango de {{$v.experience_years_min.$params.between.min}} a {{$v.experience_years_min.$params.between.max}}</span>
               </td>
               <td>
-                <button class="btn btn-default" @click='add_experience_years()'>Asignar</button>
+                <button class="btn btn-default" v-if="$v.experience_years_min.between" @click='add_experience_years()'>Asignar</button>
               </td>
             <tr v-for="item in filters_experience_years">
               <td>
@@ -159,6 +161,7 @@
 <script>
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
+  import { between } from 'vuelidate/lib/validators'
   
   export default {
     components: {
@@ -182,6 +185,11 @@
         type: 'education_level',
         importance: -1,
         radioValue: 1
+      }
+    },
+    validations: {
+      experience_years_min: {
+        between: between(0, 50)
       }
     },
     methods: {
@@ -340,5 +348,8 @@
   .min-max{
     display: inline-table;
     width: 49%;
+  }
+  .label-error {
+    color: rgb(169, 68, 66);
   }
 </style>

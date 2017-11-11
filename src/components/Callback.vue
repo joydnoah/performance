@@ -6,10 +6,10 @@
           <img src="~@/assets/loading.gif">
           Procesando por favor espere...
         </div>
-        <div style="display: none;" id="welcome-app-container">
+        <!-- <div style="display: none;" id="welcome-app-container">
           <h3>Bienvenido!</h3>
           <button class="btn btn-success" v-on:click="go_to_dashboard()">Continuar</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -56,8 +56,7 @@
         instance.get(process.env.AUTH0_AUDIENCE)
         .then(response => {
           localStorage.setItem('user_info', JSON.stringify({ user_id: response.data.user_id, picture: response.data.picture, name: response.data.name, nickname: response.data.nickname, email: response.data.email }))
-          document.getElementById('loading-container').style.display = 'none'
-          document.getElementById('welcome-app-container').style.display = 'block'
+          this.go_to_dashboard()
         })
         .catch(error => { console.log(error) })
         this.$nextTick(function () {

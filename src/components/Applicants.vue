@@ -61,7 +61,7 @@
                 </div>
               </div>
               <div class="col-xs-3">
-                <p class="row-info row-name-link">
+                <p @click="go_to('/applicant/' + item.applicant_id)" class="row-info row-name-link">
                   {{ item.applicant_first_name }} {{ item.applicant_last_name }}
                 </p>
               </div>
@@ -134,6 +134,9 @@
       }
     },
     methods: {
+      go_to (url) {
+        window.location.href = url
+      },
       isLoggedIn () {
         return isLoggedIn()
       },

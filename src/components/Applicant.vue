@@ -39,6 +39,8 @@
               </tr>
             </tbody>
           </table>
+
+          <button class="btn btn-warning" @click="back()">Volver</button>
         </div>
       </div>
     </div>
@@ -71,6 +73,9 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      back () {
+        window.history.back()
       }
     },
     mounted: function () {
