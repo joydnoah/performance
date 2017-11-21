@@ -19,16 +19,21 @@
 /*MDL inputs*/
 
 .mdl-textfield.mdl-textfield--floating-label
+  width 100%
 
   // Behavior when is empty
   .mdl-textfield__input
-    border-bottom solid 1px color-border
+    border solid 1px color-border
     color color-text-primary
+    padding 7px 15px
 
   .mdl-textfield__label
     color color-text-disable
+    font-weight regular
+    padding 4px 0 0 15px
     &:after
       background color-secondary
+      bottom 15px
 
   .mdl-textfield__error
     color color-error
@@ -40,14 +45,19 @@
 
     .mdl-textfield__label
       color color-secondary
+      padding 0
+      top 0
       &:after
         background color-secondary
+
 
   // Behavior when is full
   &.is-dirty
     // .mdl-textfield__input
     .mdl-textfield__label
       color color-secondary
+      padding 0
+      top 0
 
   // Behavior when is error
   &.is-invalid.is-focused, &.is-invalid.is-dirty
@@ -67,6 +77,16 @@
       color color-error
       &:after
         background color-error
+
+  &.read-only
+    .mdl-textfield__input
+      border none
+      border-bottom solid 1px color-border
+    .mdl-textfield__label
+      color color-secondary
+      font-size 12px
+      padding 0
+      top 0
 
 /*MDL checkbox*/
 
@@ -151,9 +171,12 @@
 /*MDL select*/
 
 .mdl-selectfield.mdl-selectfield--floating-label
+  width 100%
 
   .mdl-selectfield__select
+    border solid 1px color-border
     color color-text-primary
+    padding 7px 15px
 
   // Behavior when is empty
   .mdl-selectfield__input
@@ -162,8 +185,31 @@
 
   .mdl-selectfield__label
     color color-text-disable
+    font-weight regular
+    padding 4px 0 0 15px
     &:after
       background color-secondary
+      bottom 15px
+    &:before
+      color color-text-disable
+      content 'keyboard_arrow_down'
+      display inline-block
+      bottom 22px
+      font-family 'Material Icons'
+      font-feature-settings "liga" 1
+      font-size 19px
+      -webkit-font-smoothing antialiased
+      -moz-osx-font-smoothing grayscale
+      font-style normal
+      height 19px
+      line-height 1
+      overflow hidden
+      position absolute
+      right 5px
+      text-rendering optimizeLegibility
+      text-transform none
+      width 16px
+      z-index 1
 
   // Behavior when is focused
   &.is-focused
@@ -172,6 +218,8 @@
 
     .mdl-selectfield__label
       color color-secondary
+      padding 0
+      top 0
       &:after
         background color-secondary
 
@@ -180,6 +228,8 @@
     // .mdl-selectfield__input
     .mdl-selectfield__label
       color color-secondary
+      padding 0
+      top 0
 
   // Behavior when is error
   &.is-invalid.is-focused, &.is-invalid.is-dirty

@@ -18,7 +18,12 @@
 .applicant-row-container .bottom-row,
 .actions-dropdown.dropdown.open button,
 .actions-dropdown.dropdown .dropdown-menu,
-.actions-dropdown.dropdown .dropdown-menu li {
+.actions-dropdown.dropdown .dropdown-menu li,
+.create-buttons-bar-container .create-buttons-bar,
+.create-form .collapse-group a .collapse-icon,
+.create-form .collapse-group a .collapse-line,
+.create-form .check-level-container .check-level-item label,
+.create-form .row-action-btn {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -moz-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -o-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -82,15 +87,22 @@
   top: 16px;
   transform: rotate(0deg);
 }
+.mdl-textfield.mdl-textfield--floating-label {
+  width: 100%;
+}
 .mdl-textfield.mdl-textfield--floating-label .mdl-textfield__input {
-  border-bottom: solid 1px #dfdfe1;
+  border: solid 1px #dfdfe1;
   color: #393c41;
+  padding: 7px 15px;
 }
 .mdl-textfield.mdl-textfield--floating-label .mdl-textfield__label {
   color: #aaadb2;
+  font-weight: 400;
+  padding: 4px 0 0 15px;
 }
 .mdl-textfield.mdl-textfield--floating-label .mdl-textfield__label:after {
   background: #007bb6;
+  bottom: 15px;
 }
 .mdl-textfield.mdl-textfield--floating-label .mdl-textfield__error {
   color: #ff0052;
@@ -100,12 +112,16 @@
 }
 .mdl-textfield.mdl-textfield--floating-label.is-focused .mdl-textfield__label {
   color: #007bb6;
+  padding: 0;
+  top: 0;
 }
 .mdl-textfield.mdl-textfield--floating-label.is-focused .mdl-textfield__label:after {
   background: #007bb6;
 }
 .mdl-textfield.mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
   color: #007bb6;
+  padding: 0;
+  top: 0;
 }
 .mdl-textfield.mdl-textfield--floating-label.is-invalid.is-focused .mdl-textfield__input,
 .mdl-textfield.mdl-textfield--floating-label.is-invalid.is-dirty .mdl-textfield__input {
@@ -127,6 +143,16 @@
 }
 .mdl-textfield.mdl-textfield--floating-label.is-invalid .mdl-textfield__label:after {
   background: #ff0052;
+}
+.mdl-textfield.mdl-textfield--floating-label.read-only .mdl-textfield__input {
+  border: none;
+  border-bottom: solid 1px #dfdfe1;
+}
+.mdl-textfield.mdl-textfield--floating-label.read-only .mdl-textfield__label {
+  color: #007bb6;
+  font-size: 12px;
+  padding: 0;
+  top: 0;
 }
 .mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect .mdl-checkbox__label {
   color: #393c41;
@@ -185,8 +211,13 @@
 .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
   background: #007bb6;
 }
+.mdl-selectfield.mdl-selectfield--floating-label {
+  width: 100%;
+}
 .mdl-selectfield.mdl-selectfield--floating-label .mdl-selectfield__select {
+  border: solid 1px #dfdfe1;
   color: #393c41;
+  padding: 7px 15px;
 }
 .mdl-selectfield.mdl-selectfield--floating-label .mdl-selectfield__input {
   border-bottom: solid 1px #dfdfe1;
@@ -194,21 +225,49 @@
 }
 .mdl-selectfield.mdl-selectfield--floating-label .mdl-selectfield__label {
   color: #aaadb2;
+  font-weight: 400;
+  padding: 4px 0 0 15px;
 }
 .mdl-selectfield.mdl-selectfield--floating-label .mdl-selectfield__label:after {
   background: #007bb6;
+  bottom: 15px;
+}
+.mdl-selectfield.mdl-selectfield--floating-label .mdl-selectfield__label:before {
+  color: #aaadb2;
+  content: 'keyboard_arrow_down';
+  display: inline-block;
+  bottom: 22px;
+  font-family: 'Material Icons';
+  font-feature-settings: "liga" 1;
+  font-size: 19px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  height: 19px;
+  line-height: 1;
+  overflow: hidden;
+  position: absolute;
+  right: 5px;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  width: 16px;
+  z-index: 1;
 }
 .mdl-selectfield.mdl-selectfield--floating-label.is-focused .mdl-selectfield__input {
   color: #393c41;
 }
 .mdl-selectfield.mdl-selectfield--floating-label.is-focused .mdl-selectfield__label {
   color: #007bb6;
+  padding: 0;
+  top: 0;
 }
 .mdl-selectfield.mdl-selectfield--floating-label.is-focused .mdl-selectfield__label:after {
   background: #007bb6;
 }
 .mdl-selectfield.mdl-selectfield--floating-label.is-dirty .mdl-selectfield__label {
   color: #007bb6;
+  padding: 0;
+  top: 0;
 }
 .mdl-selectfield.mdl-selectfield--floating-label.is-invalid.is-focused .mdl-selectfield__input,
 .mdl-selectfield.mdl-selectfield--floating-label.is-invalid.is-dirty .mdl-selectfield__input {
@@ -235,7 +294,7 @@
   background: #ff0052;
 }
 html body {
-  font-family: 'Oxygen', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Oxygen', 'Helvetica', 'Arial', sans-serif !important;
   min-width: 1024px;
 }
 html body h1,
@@ -253,8 +312,9 @@ html body span,
 html body button,
 html body select,
 html body input,
-html body textarea {
-  font-family: 'Oxygen', 'Helvetica', 'Arial', sans-serif;
+html body textarea,
+html body label {
+  font-family: 'Oxygen', 'Helvetica', 'Arial', sans-serif !important;
 }
 .body-container {
   background: #fff;
@@ -288,6 +348,149 @@ html body textarea {
 }
 .scroll-hidden-y {
   overflow-y: hidden;
+}
+.datepicker {
+  color: #393c41;
+  font-size: 14px;
+  visibility: visible;
+}
+.datepicker table {
+  margin-bottom: 8px;
+}
+.datepicker .datepicker-days,
+.datepicker .datepicker-months,
+.datepicker .datepicker-years {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.datepicker tr {
+  border-radius: 0;
+}
+.datepicker thead tr:nth-child(2) {
+  border-bottom: 1px solid #aaadb2;
+}
+.datepicker thead tr:nth-child(2) th {
+  font-weight: ;
+  font-size: 15px;
+  padding-top: 9px;
+}
+.datepicker thead th.prev,
+.datepicker thead th.next {
+  position: relative;
+  color: transparent;
+}
+.datepicker thead th.prev::before,
+.datepicker thead th.next::before {
+  font-family: 'Glyphicons Halflings';
+  color: #393c41;
+  position: absolute;
+  left: 8px;
+  top: 7px;
+}
+.datepicker thead th.prev::before {
+  content: "\e079";
+}
+.datepicker thead th.next::before {
+  content: "\e080";
+}
+.datepicker thead .dow {
+  font-weight: 700;
+}
+.datepicker tbody tr td.day {
+  padding: 2px;
+  border-radius: 15px;
+  line-height: 26px;
+}
+.datepicker tbody tr td.day:hover:not(.disabled),
+.datepicker tbody tr td.day.focused:not(.disabled) {
+  background: color-background-hover;
+  color: #007bb6;
+}
+.datepicker tbody tr td.day.today {
+  position: relative;
+  color: #12abd4;
+  font-weight: medium;
+}
+.datepicker tbody tr td.day.today,
+.datepicker tbody tr td.day.today:hover,
+.datepicker tbody tr td.day.today:focus,
+.datepicker tbody tr td.day.today.disabled,
+.datepicker tbody tr td.day.today:hover.disabled,
+.datepicker tbody tr td.day.today:focus.disabled,
+.datepicker tbody tr td.day.today:hover:hover,
+.datepicker tbody tr td.day.today:focus:hover,
+.datepicker tbody tr td.day.today.disabled:hover,
+.datepicker tbody tr td.day.today:hover.disabled:hover,
+.datepicker tbody tr td.day.today:focus.disabled:hover,
+.datepicker tbody tr td.day.today:hover:focus,
+.datepicker tbody tr td.day.today:focus:focus,
+.datepicker tbody tr td.day.today.disabled:focus,
+.datepicker tbody tr td.day.today:hover.disabled:focus,
+.datepicker tbody tr td.day.today:focus.disabled:focus {
+  background-color: transparent;
+}
+.datepicker tbody tr td.day.today::before,
+.datepicker tbody tr td.day.today:hover::before,
+.datepicker tbody tr td.day.today:focus::before,
+.datepicker tbody tr td.day.today.disabled::before,
+.datepicker tbody tr td.day.today:hover.disabled::before,
+.datepicker tbody tr td.day.today:focus.disabled::before,
+.datepicker tbody tr td.day.today:hover:hover::before,
+.datepicker tbody tr td.day.today:focus:hover::before,
+.datepicker tbody tr td.day.today.disabled:hover::before,
+.datepicker tbody tr td.day.today:hover.disabled:hover::before,
+.datepicker tbody tr td.day.today:focus.disabled:hover::before,
+.datepicker tbody tr td.day.today:hover:focus::before,
+.datepicker tbody tr td.day.today:focus:focus::before,
+.datepicker tbody tr td.day.today.disabled:focus::before,
+.datepicker tbody tr td.day.today:hover.disabled:focus::before,
+.datepicker tbody tr td.day.today:focus.disabled:focus::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #12abd4;
+  border-radius: 100%;
+}
+.datepicker tbody tr td.day.active,
+.datepicker tbody tr td.day.active.today,
+.datepicker tbody tr td.day.active:hover,
+.datepicker tbody tr td.day.active.today:hover,
+.datepicker tbody tr td.day.active:focus,
+.datepicker tbody tr td.day.active.today:focus {
+  background-color: #00bcff;
+  color: #fff;
+  text-shadow: none;
+}
+.datepicker tbody tr td.day.active::before,
+.datepicker tbody tr td.day.active.today::before,
+.datepicker tbody tr td.day.active:hover::before,
+.datepicker tbody tr td.day.active.today:hover::before,
+.datepicker tbody tr td.day.active:focus::before,
+.datepicker tbody tr td.day.active.today:focus::before {
+  border: 0;
+}
+.datepicker tbody tr td.new,
+.datepicker tbody tr td.old.day {
+  color: #393c41;
+  opacity: 0.5;
+}
+.datepicker tbody tr td.disabled,
+.datepicker tbody tr td.disabled.today,
+.datepicker tbody tr td.disabled.old,
+.datepicker tbody tr td.disabled:hover,
+.datepicker tbody tr td.disabled.today:hover,
+.datepicker tbody tr td.disabled.old:hover,
+.datepicker tbody tr td.disabled:hover:hover,
+.datepicker tbody tr td.disabled.today:hover:hover,
+.datepicker tbody tr td.disabled.old:hover:hover {
+  color: #f1f1f1;
+}
+.datepicker table tfoot .clear,
+.datepicker table tfoot .today {
+  border-top: 1px solid #bbb;
 }
 .section-header {
   background: #018ad9;
@@ -996,4 +1199,200 @@ html body textarea {
   outline: none;
   padding: 0 20px;
   text-transform: none;
+}
+.create-buttons-bar-container {
+  height: 77px;
+}
+.create-buttons-bar-container .create-buttons-bar {
+  background: #fff;
+  border-bottom: solid 1px #dfdfe1;
+  left: 0;
+  padding: 20px 0;
+  right: 0;
+  top: -77px;
+  z-index: 1;
+}
+.create-buttons-bar-container .create-buttons-bar:hover {
+  box-shadow: 0 7px 17px rgba(0,0,0,0.1);
+}
+.create-buttons-bar-container .create-buttons-bar.magic-scroll {
+  box-shadow: 0 7px 17px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+}
+.create-buttons-bar-container .create-buttons-bar.magic-scroll:hover {
+  box-shadow: 0 7px 24px rgba(0,0,0,0.2);
+}
+.create-buttons-bar-container .create-buttons-bar .buttons-container {
+  text-align: center;
+}
+.create-buttons-bar-container .create-buttons-bar .buttons-container .btn-action {
+  background: #00bcff;
+  border: solid 1px #00bcff;
+  border-radius: 100px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  margin: 0 6px;
+  text-transform: none;
+}
+.create-buttons-bar-container .create-buttons-bar .buttons-container .btn-action.is-success {
+  background: #00bcff;
+  border: solid 1px #00bcff;
+  color: #fff;
+}
+.create-buttons-bar-container .create-buttons-bar .buttons-container .btn-action.is-error {
+  background: #fff;
+  border: solid 1px #ff0052;
+  color: #ff0052;
+}
+.create-form {
+  padding-top: 70px;
+}
+.create-form .separator {
+  background: #dfdfe1;
+  height: 1px;
+}
+.create-form .collapse-group {
+  margin: 26px 0 28px;
+}
+.create-form .collapse-group a .collapse-line {
+  background: color-line;
+  margin-top: 14px;
+}
+.create-form .collapse-group a .collapse-icon {
+  background: #00bcff;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
+  height: 20px;
+  padding-top: 1px;
+  text-align: center;
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  width: 20px;
+}
+.create-form .collapse-group a .collapse-line {
+  background: transparent;
+  margin-top: 20px;
+  height: 1px;
+}
+.create-form .collapse-group a.collapsed .collapse-icon {
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.create-form .collapse-group .form-title {
+  color: #12abd4;
+  font-size: 20px;
+  line-height: 1;
+}
+.create-form .collapse-group .form-subtitle {
+  color: #12abd4;
+  font-size: 20px;
+  line-height: 1;
+  margin: 46px 0 20px;
+}
+.create-form .collapse-group .create-form-container {
+  margin-top: 30px;
+}
+.create-form .collapse-group .create-form-container .mdl-textfield.mdl-textfield--floating-label,
+.create-form .collapse-group .create-form-container .mdl-selectfield.mdl-selectfield--floating-label {
+  margin-bottom: 10px;
+}
+.create-form .check-level-container {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: relative;
+}
+.create-form .check-level-container .check-level-item {
+  padding-top: 20px;
+  width: 100%;
+}
+.create-form .check-level-container .check-level-item:first-child label {
+  border: solid 1px #dfdfe1;
+  border-bottom-left-radius: 100px;
+  border-top-left-radius: 100px;
+}
+.create-form .check-level-container .check-level-item:last-child label {
+  border: solid 1px #dfdfe1;
+  border-bottom-right-radius: 100px;
+  border-top-right-radius: 100px;
+}
+.create-form .check-level-container .check-level-item .check-level {
+  display: none;
+}
+.create-form .check-level-container .check-level-item label {
+  border-bottom: solid 1px #dfdfe1;
+  border-top: solid 1px #dfdfe1;
+  color: #aaadb2;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+  padding: 8px 0;
+  text-align: center;
+  width: 100%;
+}
+.create-form .check-level-container .check-level-item label:hover {
+  background: #dfdfe1;
+  color: #6f747a;
+}
+.create-form .check-level-container .check-level-item input[type=radio]:checked + label {
+  background: #00bcff;
+  border-color: #00bcff;
+  color: #fff;
+}
+.create-form .row-action-btn {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+}
+.create-form .row-action-btn span {
+  font-size: 12px;
+  vertical-align: super;
+}
+.create-form .row-action-btn .material-icons {
+  font-size: 18px;
+}
+.create-form .row-action-btn.remove-btn {
+  color: #ff0052;
+}
+.create-form .abilities .remove-btn {
+  bottom: 6px;
+  right: -60px;
+}
+.create-form .abilities:hover .row-action-btn {
+  opacity: 1;
+}
+.create-form .questions .remove-btn {
+  bottom: 34px;
+  right: -60px;
+}
+.create-form .questions:hover .row-action-btn {
+  opacity: 1;
+}
+.create-form .questions .row-action-btn.add-btn {
+  bottom: 34px;
+  color: #ff9600;
+  opacity: 1;
+  right: -110px;
+}
+.create-form .add-ability-btn {
+  color: #ff9600;
+  cursor: pointer;
+}
+.create-form .add-ability-btn span {
+  font-size: 12px;
+  vertical-align: super;
+}
+.create-form .add-ability-btn .material-icons {
+  font-size: 18px;
 }
