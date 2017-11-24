@@ -170,6 +170,7 @@
 
 /*MDL select*/
 
+
 .mdl-selectfield.mdl-selectfield--floating-label
   width 100%
 
@@ -222,6 +223,9 @@
       top 0
       &:after
         background color-secondary
+    &.no-dirty-label
+      .mdl-selectfield__label
+        opacity 0
 
   // Behavior when is full
   &.is-dirty
@@ -230,6 +234,9 @@
       color color-secondary
       padding 0
       top 0
+    &.no-dirty-label
+      .mdl-selectfield__label
+        opacity 0
 
   // Behavior when is error
   &.is-invalid.is-focused, &.is-invalid.is-dirty

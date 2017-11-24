@@ -264,10 +264,16 @@
 .mdl-selectfield.mdl-selectfield--floating-label.is-focused .mdl-selectfield__label:after {
   background: #007bb6;
 }
+.mdl-selectfield.mdl-selectfield--floating-label.is-focused.no-dirty-label .mdl-selectfield__label {
+  opacity: 0;
+}
 .mdl-selectfield.mdl-selectfield--floating-label.is-dirty .mdl-selectfield__label {
   color: #007bb6;
   padding: 0;
   top: 0;
+}
+.mdl-selectfield.mdl-selectfield--floating-label.is-dirty.no-dirty-label .mdl-selectfield__label {
+  opacity: 0;
 }
 .mdl-selectfield.mdl-selectfield--floating-label.is-invalid.is-focused .mdl-selectfield__input,
 .mdl-selectfield.mdl-selectfield--floating-label.is-invalid.is-dirty .mdl-selectfield__input {
@@ -1304,6 +1310,11 @@ html body label {
 .create-form .collapse-group .create-form-container .mdl-textfield.mdl-textfield--floating-label,
 .create-form .collapse-group .create-form-container .mdl-selectfield.mdl-selectfield--floating-label {
   margin-bottom: 10px;
+}
+.create-form .static-label {
+  color: #007bb6;
+  font-size: 12px;
+  position: absolute;
 }
 .create-form .check-level-container {
   display: -ms-flexbox;
