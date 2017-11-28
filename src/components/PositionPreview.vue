@@ -5,13 +5,13 @@
         <div class="panel-body position-panel">
           <h3>{{ name }} - {{ city }}</h3>
 
-          <label>Descripción de la posición</label>
+          <label v-show="isEmpty( description )">Descripción de la posición</label>
           <p>{{ description }}</p>
 
-          <label>Descripción del equipo de trabajo</label>
+          <label v-show="isEmpty( work_team_description )">Descripción del equipo de trabajo</label>
           <p>{{ work_team_description }}</p>
 
-          <label>Características que estamos buscando en un empleado</label>
+          <label v-show="isEmpty( candidate_characteristics )">Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
 
           <a href="/positions" class="btn btn-warning">Regresar</a>
@@ -22,7 +22,7 @@
 </template>
 <script>
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
-  
+
   export default {
     components: {
     },
@@ -48,6 +48,9 @@
       },
       exit () {
         window.location.href = '/positions'
+      },
+      isEmpty (str) {
+        return !!str
       }
     },
     mounted () {

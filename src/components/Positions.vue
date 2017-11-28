@@ -268,11 +268,7 @@
         window.location.href = url
       },
       make_visible () {
-        if (this.positions.length > 0) {
-          return true
-        } else {
-          return false
-        }
+        return this.positions.length > 0
       },
       get_positions () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
