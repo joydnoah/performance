@@ -135,7 +135,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
                   <li @click="go_to('/position?id=' + item.id)">Editar</li>
                   <li @click="go_to('/position-preview/' + item.id)">Vista previa</li>
-                  <li @click="go_to('/position-apply/' + item.id)">Link</li>
+                  <li v-clipboard:copy="copy_to_clipboard(item.id)">Link</li>
                   <li @click="go_to('/applicants/' + item.id)">Candidatos</li>
                   <li @click="set_status_position(item.id, 'publish')">Publicar</li>
                   <li @click="go_to('/filters/' + item.id)">Filtros</li>
@@ -286,6 +286,9 @@
         } else if (status === 'closed') {
           return 'Cerrada'
         }
+      },
+      copy_to_clipboard (text) {
+        return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
       },
       set_status_position (id, status) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
