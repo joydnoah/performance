@@ -1,13 +1,29 @@
 <template>
   <div id="general-container">
     <toolbar></toolbar>
-    
+
     <!-- body-container start -->
+
+    <!-- only visible when there is no position created - start-->
     <div class="body-container">
       <layout-header title="Panel de ofertas laborales"></layout-header>
 
+      <div class="general-container" v-show="!make_visible()">
+        <div class="result-status-container">
+          <div class="results-status-message">Crea una nueva oferta laboral</div>
+        </div>
+      </div>
+      <div class="general-container" v-show="!make_visible()">
+        <div class="right-side">
+          <button v-show="isLoggedIn()" @click="go_to('/position')" class="btn btn-success">
+            <i class="material-icons">note_add</i>Crear posición
+          </button>
+        </div>
+      </div>
+      <!-- only visible when there is no position created - end -->
+
       <!-- results-status start -->
-      <div class="general-container">
+      <div class="general-container" v-show="make_visible()">
         <div class="row">
           <div class="col-xs-12">
             <div class="result-status-container">
@@ -17,8 +33,8 @@
           </div>
         </div>
       </div><!-- results-status end -->
-      
-      <div class="general-container">
+
+      <div class="general-container" v-show="make_visible()">
         <!-- offer-header start -->
         <div class="offer-header-container">
           <div class="row">
@@ -216,7 +232,7 @@
             </tr>
           </tbody>
         </table>
-        
+
       </div>
     </div> -->
   </div>
@@ -227,7 +243,7 @@
   import LayoutHeader from './LayoutHeader'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Tooltip, Dropdown } from 'uiv'
-  
+
   export default {
     components: {
       Toolbar,
@@ -250,6 +266,13 @@
       },
       go_to (url) {
         window.location.href = url
+      },
+      make_visible () {
+        if (this.positions.length > 0) {
+          return true
+        } else {
+          return false
+        }
       },
       get_positions () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
@@ -299,6 +322,10 @@
   }
 </script>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <style scoped>
-  
+  button{
+    display: inline-block;
+  }
 </style>

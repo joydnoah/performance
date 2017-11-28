@@ -14,9 +14,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "auth0-js": "^8.8.0",
+    "auth0-js": "^8.11.3",
     "auth0-lock": "^10.19.0",
     "axios": "^0.16.2",
+    "dev-tools": "^0.1.6",
     "google-autocomplete-vue": "^1.0.17",
     "jwt-decode": "^2.2.0",
     "moment": "^2.18.1",

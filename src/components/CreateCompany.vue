@@ -59,7 +59,7 @@
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn, getUserInfo } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
-  
+
   export default {
     components: {
       AppNav
@@ -117,11 +117,13 @@
               window.location.href = '/positions'
             })
             .catch(error => {
+              console.log('hola')
               console.log(error)
               document.getElementsByClassName('alert-danger')[1].style.display = 'block'
             })
           })
           .catch(error => {
+            console.log('hola2')
             console.log(error)
             document.getElementsByClassName('alert-danger')[1].style.display = 'block'
           })

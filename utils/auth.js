@@ -8,11 +8,18 @@ const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 
 const CLIENT_ID = process.env.CLIENT_ID;
+//const CLIENT_ID = 'EKbh7yLSevJt2ULk4h7qovx0RpgLX5nV';
+//const CLIENT_ID = 'pjPxxqNeyebnz5H3n6mUYlJv-AdOqbZJ';
 const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN;
+//const CLIENT_DOMAIN = 'ingesql.auth0.com';
+//const CLIENT_DOMAIN = 'cotopaxi-auth0-development.auth0.com';
 const AUTH0_CALLBACK_REDIRECT = process.env.AUTH0_CALLBACK_REDIRECT;
+//const AUTH0_CALLBACK_REDIRECT = 'http://localhost:8080/callback';
+//const AUTH0_CALLBACK_REDIRECT = 'http://localhost:8080/callback';
 const SCOPE = "full_access";
 const AUDIENCE = process.env.AUTH0_AUDIENCE;
-
+//const AUDIENCE = 'https://cotopaxi-auth0-development.auth0.com/userinfo';
+//const AUDIENCE = `https://ingesql.auth0.com/userinfo`;
 
 var auth = new auth0.WebAuth({
   clientID: CLIENT_ID,
