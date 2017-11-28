@@ -59,7 +59,7 @@
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn, getUserInfo } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
-  
+
   export default {
     components: {
       AppNav

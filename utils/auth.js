@@ -13,7 +13,6 @@ const AUTH0_CALLBACK_REDIRECT = process.env.AUTH0_CALLBACK_REDIRECT;
 const SCOPE = "full_access";
 const AUDIENCE = process.env.AUTH0_AUDIENCE;
 
-
 var auth = new auth0.WebAuth({
   clientID: CLIENT_ID,
   domain: CLIENT_DOMAIN
