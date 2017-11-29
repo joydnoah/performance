@@ -92,7 +92,7 @@
               </p>
             </div>
             <div class="col-xs-2">
-              <p class="row-info row-title-link">
+              <p class="row-info row-title-link" @click="go_to('/applicants/' + item.id)">
                 {{ item.name }}
               </p>
             </div>
