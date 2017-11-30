@@ -8,13 +8,13 @@
           </tooltip>
           <h3>{{ name }} - {{ city }}</h3>
 
-          <label>Descripción de la posición</label>
+          <label v-show="isEmpty( description )">Descripción de la posición</label>
           <p>{{ description }}</p>
 
-          <label>Descripción del equipo de trabajo</label>
+          <label v-show="isEmpty( work_team_description )">Descripción del equipo de trabajo</label>
           <p>{{ work_team_description }}</p>
 
-          <label>Características que estamos buscando en un empleado</label>
+          <label v-show="isEmpty( candidate_characteristics )">Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
 
           <application-form :position="id" :status="status_type"></application-form>
@@ -25,7 +25,7 @@
 </template>
 <script>
   import ApplicationForm from './ApplicationForm'
-  
+
   export default {
     components: {
       ApplicationForm
@@ -51,6 +51,9 @@
     methods: {
       exit () {
         window.location.href = '/positions'
+      },
+      isEmpty (str) {
+        return !!str
       }
     },
     mounted () {
