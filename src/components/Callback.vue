@@ -45,7 +45,6 @@
             }
           })
           .catch(error => {
-            // clearInterval(this.interval)
             console.log(error)
           })
         })
