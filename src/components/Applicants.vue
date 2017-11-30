@@ -109,10 +109,12 @@
                      It is a long established fact that reader will distracted looking at the readable content pag will distracted looking at the readable content looking at the readable content
                   </p>
                   ” -->
+
                 </div>
               </div>
             </div>
           </div><!-- applicant-row end -->
+          <a href="/positions" class="btn btn-warning">Regresar</a>
         </div>
       </div>
   </div>
