@@ -36,7 +36,6 @@
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.get('/user/' + JSON.parse(localStorage['user_info']).user_id)
           .then((response) => {
-            // clearInterval(this.interval)
             if (response.data.data.user === '[]') {
               window.location.href = '/create-company'
             } else {
