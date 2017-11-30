@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div class="col-xs-3">
-                <p class="row-info row-name-link">
+                <p @click="go_to(item.applicant_id)" class="row-info row-name-link">
                   {{ item.applicant_first_name }} {{ item.applicant_last_name }}
                 </p>
               </div>
@@ -143,6 +143,10 @@
       },
       make_visible () {
         return this.applicants.length > 0
+      },
+      go_to (go) {
+        console.log('/applicant/' + go)
+        window.location.href = '/applicant/' + go
       },
       get_applicants () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
