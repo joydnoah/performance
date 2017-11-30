@@ -4,9 +4,11 @@
       <!-- body-container start -->
       <div class="body-container">
         <layout-header :title="position.name"></layout-header>
-        
+        <div class="general-container" v-show="!make_visible()">
+          No hay candidatos para esta oferta
+        </div>
         <!-- results-status start -->
-        <div class="general-container">
+        <div class="general-container" v-show="make_visible()">
           <div class="row">
             <div class="col-xs-12">
               <div class="result-status-container">
@@ -17,7 +19,7 @@
           </div>
         </div><!-- results-status end -->
 
-        <div class="general-container">
+        <div class="general-container" v-show="make_visible()">
           <!-- offer-header start -->
           <div class="offer-header-container">
             <div class="row">
@@ -120,7 +122,7 @@
   import Toolbar from './Toolbar'
   import LayoutHeader from './LayoutHeader'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
-  
+
   export default {
     components: {
       Toolbar,
@@ -136,6 +138,9 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      make_visible () {
+        return this.applicants.length > 0
       },
       get_applicants () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
@@ -187,5 +192,5 @@
 </script>
 
 <style scoped>
-  
+
   </style>
