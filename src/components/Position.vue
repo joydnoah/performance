@@ -504,8 +504,6 @@
         }
       },
       get_filters (iid) {
-        console.log('1')
-        console.log(iid)
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id + '/filter')
         .then((response) => {
