@@ -145,7 +145,6 @@
         return this.applicants.length > 0
       },
       go_to (go) {
-        console.log('/applicant/' + go)
         window.location.href = '/applicant/' + go
       },
       get_applicants () {

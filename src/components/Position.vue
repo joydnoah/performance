@@ -218,11 +218,7 @@
 
           <div style="display: none;" id="alert-error" class="alert alert-danger" role="alert">
             <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Error</strong>
-            <p>Por favor diligencie todos los campos requeridos (*)</p>
-          </div>
-          <div style="display: none;" id="alert-error1" class="alert alert-danger" role="alert">
-            <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Error</strong>
-            <p>Cambie el numero de años de experiencia a un valor valido entre 0 - 50.</p>
+            <p>Error</p>
           </div>
           <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
             <strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong>
@@ -373,10 +369,13 @@
           console.log(error)
         })
       },
+      valid_form (v) {
+        return !v.$error && this.is_valid_expiration_date && this.valid
+      },
       put (v) {
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
-        if (!v.$error && this.is_valid_expiration_date && this.valid) {
+        if (this.valid_form(v)) {
           document.getElementById('submit').disabled = true
           this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
@@ -406,7 +405,7 @@
       post (v) {
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
-        if (!v.$error && this.is_valid_expiration_date && this.valid) {
+        if (this.valid_form(v)) {
           document.getElementById('submit').disabled = true
           this.departments = []
           for (var item in this.department) {
@@ -438,10 +437,11 @@
         }
       },
       show_error () {
+        document.getElementById('alert-error').style.display = 'block'
         if (this.valid) {
-          document.getElementById('alert-error').style.display = 'block'
+          document.getElementById('alert-error').innerHTML = 'Por favor diligencie todos los campos requeridos (*)'
         } else {
-          document.getElementById('alert-error1').style.display = 'block'
+          document.getElementById('alert-error').innerHTML = 'Cambie el numero de años de experiencia a un valor valido entre 0 - 50.'
         }
       },
       show_success () {
@@ -452,7 +452,6 @@
       },
       hide_alerts () {
         document.getElementById('alert-error').style.display = 'none'
-        document.getElementById('alert-error1').style.display = 'none'
         document.getElementById('alert-success').style.display = 'none'
       },
       validate_expiration_date () {
@@ -563,7 +562,7 @@
         this.experience_years = ''
       },
       set_experience_years (item, event) {
-        var yrs = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value.trim(' ')
+        var yrs = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value
         if (yrs > 0 && yrs < 50) {
           item.value = yrs
           this.valid = true

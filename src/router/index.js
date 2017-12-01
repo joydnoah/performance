@@ -5,7 +5,6 @@ import Position from '@/components/Position'
 import PositionPreview from '@/components/PositionPreview'
 import PositionApply from '@/components/PositionApply'
 import EmailTemplates from '@/components/EmailTemplates'
-import Filters from '@/components/Filters'
 import Positions from '@/components/Positions'
 import SocialPosition from '@/components/SocialPosition'
 import TwitterCallback from '@/components/TwitterCallback'
@@ -76,12 +75,6 @@ export default new Router({
       name: 'EmailTemplates',
       beforeEnter: requireAuth,
       component: EmailTemplates
-    },
-    {
-      path: '/filters/:position_id',
-      name: 'Filters',
-      beforeEnter: requireAuth,
-      component: Filters
     },
     {
       path: '/applicants/:position_id',
