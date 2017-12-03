@@ -300,8 +300,8 @@
         if (this.copyn) {
           document.getElementById('copy_link').style.display = 'block'
           this.copyn = false
-          return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
         }
+        return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
       },
       set_status_position (id, status) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
