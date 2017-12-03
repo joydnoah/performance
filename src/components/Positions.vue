@@ -138,7 +138,6 @@
                   <li v-clipboard:copy="copy_to_clipboard(item.id)">Link</li>
                   <li @click="go_to('/applicants/' + item.id)">Candidatos</li>
                   <li @click="set_status_position(item.id, 'publish')">Publicar</li>
-                  <li @click="go_to('/filters/' + item.id)">Filtros</li>
                   <li @click="go_to('/email-templates/' + item.id)">Correos</li>
                   <li @click="go_to('/social-position/' + item.id)">Redes sociales</li>
                   <li @click="set_status_position(item.id, 'closed')" class="is-negative">Cerrar posición</li><!-- .is-negative add error color to negative acctions -->
