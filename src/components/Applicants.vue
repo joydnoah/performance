@@ -4,9 +4,11 @@
       <!-- body-container start -->
       <div class="body-container">
         <layout-header :title="position.name"></layout-header>
-        
+        <div class="general-container" v-show="!make_visible()">
+          No hay candidatos para esta oferta
+        </div>
         <!-- results-status start -->
-        <div class="general-container">
+        <div class="general-container" v-show="make_visible()">
           <div class="row">
             <div class="col-xs-12">
               <div class="result-status-container">
@@ -17,7 +19,7 @@
           </div>
         </div><!-- results-status end -->
 
-        <div class="general-container">
+        <div class="general-container" v-show="make_visible()">
           <!-- offer-header start -->
           <div class="offer-header-container">
             <div class="row">
@@ -61,7 +63,7 @@
                 </div>
               </div>
               <div class="col-xs-3">
-                <p class="row-info row-name-link">
+                <p @click="go_to(item.applicant_id)" class="row-info row-name-link">
                   {{ item.applicant_first_name }} {{ item.applicant_last_name }}
                 </p>
               </div>
@@ -107,10 +109,12 @@
                      It is a long established fact that reader will distracted looking at the readable content pag will distracted looking at the readable content looking at the readable content
                   </p>
                   ” -->
+
                 </div>
               </div>
             </div>
           </div><!-- applicant-row end -->
+          <a href="/positions" class="btn btn-warning">Regresar</a>
         </div>
       </div>
   </div>
@@ -120,7 +124,7 @@
   import Toolbar from './Toolbar'
   import LayoutHeader from './LayoutHeader'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
-  
+
   export default {
     components: {
       Toolbar,
@@ -136,6 +140,13 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      make_visible () {
+        return this.applicants.length > 0
+      },
+      go_to (go) {
+        console.log('/applicant/' + go)
+        window.location.href = '/applicant/' + go
       },
       get_applicants () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
@@ -187,5 +198,5 @@
 </script>
 
 <style scoped>
-  
+
   </style>

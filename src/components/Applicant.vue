@@ -40,6 +40,9 @@
             </tbody>
           </table>
         </div>
+        <div id="general-container">
+          <a @click="go_back()" class="btn btn-warning">Regresar</a>
+        </div>
       </div>
     </div>
   </div>
@@ -48,7 +51,7 @@
 <script>
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
-  
+
   export default {
     components: {
       AppNav
@@ -71,6 +74,9 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      go_back () {
+        history.go(-1)
       }
     },
     mounted: function () {

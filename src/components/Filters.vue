@@ -159,7 +159,7 @@
 <script>
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
-  
+
   export default {
     components: {
       AppNav
@@ -181,7 +181,8 @@
         value: '',
         type: 'education_level',
         importance: -1,
-        radioValue: 1
+        radioValue: 1,
+        valid: true
       }
     },
     methods: {
@@ -206,17 +207,21 @@
         this.post()
       },
       post () {
-        this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.post('/position/' + this.position_id + '/filter', {
-          'filters': JSON.stringify(this.filters)
-        })
-        .then(response => {
-          window.location.href = '/positions'
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
+        if (this.valid) {
+          this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
+          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+          this.axios.post('/position/' + this.position_id + '/filter', {
+            'filters': JSON.stringify(this.filters)
+          })
+          .then(response => {
+            window.location.href = '/positions'
+          })
+          .catch(error => {
+            console.log(error.response)
+          })
+        } else {
+          alert('Cambie el numero de años de experiencia a un valor valido entre 0 - 50.')
+        }
       },
       put (id) {
       },
@@ -302,7 +307,13 @@
         this.experience_years = ''
       },
       set_experience_years (item, event) {
-        item.value = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value.trim(' ')
+        var yrs = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value.trim(' ')
+        if (yrs > 0 && yrs < 50) {
+          item.value = yrs
+          this.valid = true
+        } else {
+          this.valid = false
+        }
       }
     },
     mounted: function () {
