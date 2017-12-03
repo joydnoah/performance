@@ -36,6 +36,12 @@
 
       <div class="general-container" v-show="make_visible()">
         <!-- offer-header start -->
+
+        <div style="display: none;" id="copy_link" class="alert alert-success" role="alert">
+          <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Link Copiado</strong>
+          <p></p>
+        </div>
+
         <div class="offer-header-container">
           <div class="row">
             <div class="col-xs-1">
@@ -135,7 +141,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
                   <li @click="go_to('/position?id=' + item.id)">Editar</li>
                   <li @click="go_to('/position-preview/' + item.id)">Vista previa</li>
-                  <li v-clipboard:copy="copy_to_clipboard(item.id)">Link</li>
+                  <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Link</li>
                   <li @click="go_to('/applicants/' + item.id)">Candidatos</li>
                   <li @click="set_status_position(item.id, 'publish')">Publicar</li>
                   <li @click="go_to('/email-templates/' + item.id)">Correos</li>
@@ -256,12 +262,16 @@
         publish_problem: false,
         company_id: localStorage['company_id'],
         company: {},
+        copyn: false,
         bootstrap_min_js: null
       }
     },
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      copy_now () {
+        this.copyn = true
       },
       go_to (url) {
         window.location.href = url
@@ -287,7 +297,11 @@
         }
       },
       copy_to_clipboard (text) {
-        return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
+        if (this.copyn) {
+          document.getElementById('copy_link').style.display = 'block'
+          this.copyn = false
+          return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
+        }
       },
       set_status_position (id, status) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`

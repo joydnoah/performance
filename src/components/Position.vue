@@ -563,7 +563,7 @@
       },
       set_experience_years (item, event) {
         var yrs = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value
-        if (yrs > 0 && yrs < 50) {
+        if (yrs >= 0 && yrs <= 50) {
           item.value = yrs
           this.valid = true
         } else {
