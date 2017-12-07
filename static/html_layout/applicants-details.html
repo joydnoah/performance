@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Cotopaxi</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="external-libs/animate/animate.css">
+  <link rel="stylesheet" href="external-libs/mdl-selectfield/mdl-selectfield.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script defer src="external-libs/mdl-selectfield/mdl-selectfield.min.js"></script>
+  <script src="external-libs/wow/wow.min.js"></script>
+  <script src="external-libs/wow/setup.js"></script>
+  <script src="external-libs/scrollmagic/ScrollMagic.js"></script>
+  <script src="external-libs/scrollmagic/debug.addIndicators.js"></script>
+
+  <script type="text/javascript">
+    function determineDropDirection(){
+      $(".dropdown-menu").each( function(){
+        
+        $(this).parent().removeClass("dropup");
+        
+        if ($(this).offset().top + $(this).outerHeight() > $(window).innerHeight() + $(window).scrollTop()){
+          $(this).parent().addClass("dropup");
+        }
+        
+        $(this).removeAttr("style");
+      });
+    }
+
+    determineDropDirection();
+
+    $(window).scroll(determineDropDirection);
+  </script>
+
+</head>
+
+<body class="visibility-hidden wow fadeIn" data-wow-duration="1s">
+
+  <!-- Application agreement modal -->
+  <div class="modal fade modal-general modal-details" id="modal-details">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="general-container">
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1">
+                <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="applicant-modal-header-container">
+            
+            <div class="general-container">
+              <div class="row">
+                <div class="col-xs-offset-1 col-xs-4">
+                  <div class="header-bookmark"><!-- add .is-active to add blue color as bookmarked -->
+                    <i class="material-icons">thumb_up</i>
+                  </div>
+                  <p class="header-name">
+                    Yoshini Shumada
+                  </p>
+                </div>
+                <div class="col-xs-2">
+                  <p class="header-info">Status:</p>
+                  <p class="header-info">Activo sin acciones</p>
+                </div>
+                <div class="col-xs-2">
+                  <p class="header-info">Activo desde:</p>
+                  <p class="header-info">02/09/2016</p>
+                </div>
+                <div class="col-xs-2">
+                  <div class="header-compatibility is-high"><!-- .is-high .is-medium .is-low change color compatibility -->
+                    <p>Compatibilidad Alto</p>
+                    <div class="compatibility-container">
+                      <div class="compatibility-level"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="applicant-modal-buttons">
+            <div class="general-container">
+              <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                  <div class="buttons-container">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Invitar a entrevista telefonica</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Invitar a entrevista presencial</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Marcar como contratado</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error">Rechazar candidato</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="applicant-modal-content">
+            <div class="general-container">
+              <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                  <div class="content-title">Description</div>
+                </div>
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="content-text">The customers are athletes who do not yet have large commercial contracts - these are aspiring and young dedicated and focussed individuals, many of whom have Tokyo 2020 in mind. The other side of the market is brands, who are looking to get involved in the lives of the athletes, and are looking to reach the fans and followers of these athletes.</div>
+                </div>
+                <div class="col-xs-offset-1 col-xs-10">
+                  <div class="content-separator"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="applicant-modal-content">
+            <div class="general-container">
+              <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                  <div class="content-title">habilidades</div>
+                </div>
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="content-tag">Análisis financiero</div>
+                  <div class="content-tag">Servicio al cliente</div>
+                  <div class="content-tag">Análisis financiero</div>
+                  <div class="content-tag">Servicio al cliente</div>
+                  <div class="content-tag">Análisis financiero</div>
+                  <div class="content-tag">Servicio al cliente</div>
+                  <div class="content-tag">Análisis financiero</div>
+                  <div class="content-tag">Servicio al cliente</div>
+                </div>
+                <div class="col-xs-offset-1 col-xs-10">
+                  <div class="content-separator"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="applicant-modal-content">
+            <div class="general-container">
+              <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                  <div class="content-title">Educación</div>
+                </div>
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="content-item">Nivel: Universitario</div>
+                  <div class="content-item">Lugar: Universidad de Mexico</div>
+                  <div class="content-item">Nivel: Universitario</div>
+                  <div class="content-item">Lugar: Universidad de Mexico</div>
+                </div>
+                <div class="col-xs-offset-1 col-xs-10">
+                  <div class="content-separator"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="applicant-modal-download">
+            <div class="general-container">
+              <div class="row">
+                <div class="col-xs-offset-1 col-xs-8">
+                  <div class="download-title">Educación</div>
+                </div>
+                <div class="col-xs-2">
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent download-button">Descargar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdf-viewer">
+            
+          </div>
+
+        </div><!-- modal-body ends -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <script src="external-libs/scrollmagic/setup.js"></script> -->
+  <script src="external-libs/wow/start-setup.js"></script>
+  <script>
+    // Div is shown when document is ready to avoid a lag with the animation
+    $(document).ready(function () {
+      $('#modal-details').modal('show')
+    });
+  </script>
+</body>
+</html>
