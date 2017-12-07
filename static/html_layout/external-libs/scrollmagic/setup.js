@@ -3,9 +3,10 @@ var controller = new ScrollMagic.Controller();
 
 // build scenes
 new ScrollMagic.Scene({
-	triggerElement: '#body-container',
+	triggerElement: '#create-form-container',
 	triggerHook: 0,
-	offset: 60
-})
-.setClassToggle("#topbar", "magic-scroll") // add .addIndicators() to check trigger position
-.addTo(controller);
+	offset: 0
+	})
+	.setClassToggle("#create-buttons-bar", "magic-scroll") // add .addIndicators() to check trigger position
+	.addTo(controller);
+

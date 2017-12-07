@@ -1,0 +1,40 @@
+.modal-open .modal {
+  padding: 0 !important;
+}
+.modal-general .modal-dialog {
+  bottom: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.modal-general .modal-dialog .modal-content {
+  border-radius: 0;
+  height: 100%;
+}
+.modal-general .modal-dialog .modal-content .modal-header {
+  background: color-primary;
+  border: none;
+  color: color-white;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+.modal-general .modal-dialog .modal-content .modal-header .modal-title {
+  font-size: 22px;
+  font-weight: regular;
+  line-height: 1;
+  padding: 0;
+}
+.modal-general .modal-dialog .modal-content .modal-header .close {
+  opacity: 1;
+}
+.modal-general .modal-dialog .modal-content .modal-header .close .material-icons {
+  color: color-white;
+}
+.modal-general .modal-dialog .modal-content .modal-body {
+  background: color-white;
+  color: color-text-primary;
+  margin-top: 55px;
+  padding: 0;
+}

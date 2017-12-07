@@ -1,0 +1,148 @@
+
+.create-form
+	padding-top 70px
+	.separator
+		background color-border
+		height 1px
+	.collapse-group
+		margin 26px 0 28px
+		a
+			.collapse-line
+				background color-line
+				margin-top 14px
+
+			.collapse-icon
+				@extends .transition-mdl-elements
+				background color-third
+				border-radius 50%
+				color color-white
+				cursor pointer
+				float right
+				font-size 20px
+				height 20px
+				padding-top 1px
+				text-align center
+				-ms-transform rotate(0deg)
+				-webkit-transform rotate(0deg)
+				transform rotate(0deg)
+				width 20px
+
+			.collapse-line
+				@extends .transition-mdl-elements
+				background transparent
+				margin-top 20px
+				height 1px
+			&.collapsed
+				.collapse-icon
+					-ms-transform rotate(90deg)
+					-webkit-transform rotate(90deg)
+					transform rotate(90deg)
+		.form-title
+			color color-primary
+			font-size 20px
+			line-height 1
+		.form-subtitle
+			color color-primary
+			font-size 20px
+			line-height 1
+			margin 46px 0 20px
+		.create-form-container
+			margin-top 30px
+			.mdl-textfield.mdl-textfield--floating-label, .mdl-selectfield.mdl-selectfield--floating-label
+				margin-bottom 10px
+
+	.static-label
+		color color-secondary
+		font-size 12px
+		position absolute
+
+	.check-level-container
+		display-flex()
+		position relative
+		.check-level-item
+			padding-top 20px
+			width 100%
+			&:first-child
+				label
+					border solid 1px color-border
+					border-bottom-left-radius 100px
+					border-top-left-radius 100px
+			&:last-child
+				label
+					border solid 1px color-border
+					border-bottom-right-radius 100px
+					border-top-right-radius 100px
+
+			.check-level
+				display none
+
+			label
+				@extends .transition-mdl-elements
+				border-bottom solid 1px color-border
+				border-top solid 1px color-border
+				color color-text-disable
+				cursor pointer
+				font-size 14px
+				font-weight regular
+				margin 0
+				padding 8px 0
+				text-align center
+				width 100%
+
+				&:hover
+					background color-border
+					color color-text-secondary
+
+			input[type=radio]:checked + label 
+				background color-third
+				border-color color-third
+				color color-white
+
+	.row-action-btn
+		@extends .transition-mdl-elements
+		cursor pointer
+		opacity 0
+		position absolute
+
+		span
+			font-size 12px
+			vertical-align super
+
+		.material-icons
+			font-size 18px
+
+		&.remove-btn
+			color color-error
+
+	.abilities
+		.remove-btn
+			bottom 6px
+			right -60px
+		&:hover
+			.row-action-btn
+				opacity 1
+
+	.questions
+		.remove-btn
+			bottom 34px
+			right -60px
+		&:hover
+			.row-action-btn
+				opacity 1
+		.row-action-btn
+			&.add-btn
+				bottom 34px
+				color color-warning
+				opacity 1
+				right -110px
+
+	.add-ability-btn
+		color color-warning
+		cursor pointer
+
+		span
+			font-size 12px
+			vertical-align super
+
+		.material-icons
+			font-size 18px
