@@ -590,6 +590,8 @@
         } else {
           this.city.push(addressData.position_city)
         }
+
+        document.getElementById('cities').value = null
       },
       save (v) {
         this.hide_alerts()
