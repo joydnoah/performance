@@ -73,6 +73,7 @@
                     <span class="mdl-textfield__error">Error message</span>
                   </div>
                 </div>
+
                 <div class="col-xs-4">
                   <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                     <multiselect id="department_create" v-model="department" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department"></multiselect>
@@ -337,8 +338,16 @@
                 </div>
               </div>
 
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                  <multiselect id="skills" v-model="skills" :options="skills_list" tag-placeholder="Agregar habilidad" placeholder="Buscar o agregar habilidades" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_skills"></multiselect>
+                  <span class="mdl-textfield__error">Error message</span>
+                </div>
+              </div>
+
             </div>
           </div>
+
           <div class="row">
             <div class="col-xs-offset-2 col-xs-8">
               <div class="separator"></div>
@@ -486,7 +495,9 @@
         name: '',
         new_department: '',
         department_list: [],
+        skills_list: [],
         department: '',
+        skills: '',
         departments: [],
         department_update: '',
         position_type_id: '',
@@ -574,6 +585,14 @@
         this.department_list.push(tag)
         this.department_update = tag
       },
+      add_skills (newTag) {
+        const tag = {
+          name: newTag,
+          id: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+        }
+        this.skills_list.push(tag)
+        this.skills = tag
+      },
       getAddressData: function (addressData, placeResultData) {
         addressData.position_city = ''
         if (addressData.locality !== undefined) {
@@ -604,6 +623,16 @@
         this.axios.get('/departments/' + localStorage['company_id'])
         .then((response) => {
           this.department_list = response.data.data.departments
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+      get_skills () {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.get('/departments/' + localStorage['company_id'])
+        .then((response) => {
+          this.skills_list = response.data.data.departments
         })
         .catch(error => {
           console.log(error)
@@ -828,6 +857,7 @@
     },
     mounted () {
       this.get_departments()
+      this.get_skills()
       if (this.$route.query.id !== undefined) {
         document.getElementsByClassName('multiselect')[0].style.display = 'none'
         if (document.getElementById('cities_table') !== null) {
