@@ -94,7 +94,7 @@
           <div class="row">
             <div class="col-xs-1">
               <p class="row-info row-title">
-                {{ item.id }}
+                {{ item.position_number }}
               </p>
             </div>
             <div class="col-xs-2">
