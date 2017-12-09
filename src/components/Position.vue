@@ -629,14 +629,7 @@
         })
       },
       get_skills () {
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/departments/' + localStorage['company_id'])
-        .then((response) => {
-          this.skills_list = response.data.data.departments
-        })
-        .catch(error => {
-          console.log(error)
-        })
+        this.skills_list = [{name: 'leadership'}, {name: 'sales'}, {name: 'project management'}]
       },
       valid_form (v) {
         console.log(!v.$error)
