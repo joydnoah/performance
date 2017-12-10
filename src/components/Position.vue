@@ -76,9 +76,7 @@
 
                 <div class="col-xs-4">
                   <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                    <multiselect id="department_create" v-model="department" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department"></multiselect>
-
-                    <multiselect id="department_update" v-model="department_update" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="false" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department_update"></multiselect>
+                    <multiselect id="department_create" v-model="department" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="false" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department"></multiselect>
                     <span class="mdl-textfield__error">Error message</span>
                   </div>
                 </div>
@@ -134,6 +132,7 @@
                   </div>
                 </div>
 
+
                 <div class="col-xs-offset-2 col-xs-8">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
                     <textarea class="mdl-textfield__input" type="text" rows= "2" id="info06" v-model='work_team_description' name='work_team_description'></textarea>
@@ -150,10 +149,9 @@
                 </div>
 
                 <div class="col-xs-offset-2 col-xs-4">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <label class="mdl-textfield__label" for="datepicker-end" v-if="id === null">Fecha de caducidad de la oferta</label>
-                    <input required v-model='expiration_date' class="mdl-textfield__input" type="text" id='expiration_date' name="datepicker-end" autocomplete="off">
-                    <span class="mdl-textfield__error" v-if="id === null">Error message</span>
+                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                    Fecha de caducidad de la oferta
+                    <datepicker required v-model='expiration_date' id='expiration_date' name='expiration_date' :disabled="disabled" language="es" format="dd/MM/yyyy" input-class="form-control form__input"></datepicker>
                   </div>
                 </div>
 
@@ -305,46 +303,6 @@
                 </div>
               </div>
 
-              <div class="row abilities">
-                <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <label class="mdl-textfield__label" for="abilitiesp">Digite una habilidad tecnica y luego enter</label>
-                    <input class="mdl-textfield__input" type='text' v-model="technical_skill" @keyup.enter="add_technical_skill()" id="abilitiesp" name="abilitiesp">
-                  </div>
-                </div>
-              </div>
-
-              <div class="row abilities" v-for="(item, index) in filters_technical_skill">
-                <div class="col-xs-offset-2 col-xs-4">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input type='text' class="form-control" v-model="item.value">
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <div class="check-level-container">
-                    <div class="check-level-item">
-                      <input type="radio" v-model="item.importance" value="0" autocomplete="off" class="check-level" :id="'technical_skill' + index + '1'" :name="'technical_skill' + index + '1'">
-                      <label v-bind:class="{ 'active': parseInt(item.importance) === 0 ? 'active' : '' }" :for="'technical_skill' + index + '1'"> Baja </label>
-                    </div>
-                    <div class="check-level-item">
-                      <input type="radio" v-model="item.importance" value="1" autocomplete="off" class="check-level" :id="'technical_skill' + index + '2'" :name="'technical_skill' + index + '2'">
-                      <label v-bind:class="{ 'active': parseInt(item.importance) === 1 ? 'active' : '' }" :for="'technical_skill' + index + '2'"> Media </label>
-                    </div>
-                    <div class="check-level-item">
-                      <input type="radio" v-model="item.importance" value="2" autocomplete="off" class="check-level" :id="'technical_skill' + index + '3'" :name="'technical_skill' + index + '3'">
-                      <label v-bind:class="{ 'active': parseInt(item.importance) === 2 ? 'active' : '' }" :for="'technical_skill' + index + '3'"> Alta </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-xs-offset-2 col-xs-8">
-                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                  <multiselect id="skills" v-model="skills" :options="skills_list" tag-placeholder="Agregar habilidad" placeholder="Buscar o agregar habilidades" label="name" :multiple="true" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_skills"></multiselect>
-                  <span class="mdl-textfield__error">Error message</span>
-                </div>
-              </div>
-
             </div>
           </div>
 
@@ -353,8 +311,6 @@
               <div class="separator"></div>
             </div>
           </div>
-
-
 
           <div class="collapse-group" role="tablist" aria-multiselectable="true" v-if="false">
             <div class="" role="tab" id="headingThree">
@@ -575,15 +531,7 @@
           id: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
         }
         this.department_list.push(tag)
-        this.department.push(tag)
-      },
-      add_department_update (newTag) {
-        const tag = {
-          name: newTag,
-          id: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-        }
-        this.department_list.push(tag)
-        this.department_update = tag
+        this.department = tag
       },
       add_skills (newTag) {
         const tag = {
@@ -603,13 +551,7 @@
         }
 
         addressData.position_city += addressData.country
-
-        if (this.$route.query.id !== undefined) {
-          this.city_update = addressData.position_city
-        } else {
-          this.city.push(addressData.position_city)
-        }
-
+        this.city_update = addressData.position_city
         document.getElementById('cities').value = null
       },
       save (v) {
@@ -634,9 +576,6 @@
         this.skills_list = [{name: 'leadership'}, {name: 'sales'}, {name: 'project management'}]
       },
       valid_form (v) {
-        console.log(!v.$error)
-        console.log(this.is_valid_expiration_date)
-        console.log(this.valid)
         return !v.$error && this.is_valid_expiration_date && this.valid
       },
       put (v) {
@@ -649,7 +588,7 @@
           this.axios.put('/position/' + this.id, {
             'name': this.name,
             'company_id': localStorage['company_id'],
-            'department': this.department_update.name,
+            'department': this.department.name,
             'description': this.description,
             'city': this.city_update,
             'work_team_description': this.work_team_description,
@@ -684,8 +623,8 @@
             'company_id': localStorage['company_id'],
             'name': this.name,
             'description': this.description,
-            'department': JSON.stringify(this.departments),
-            'city': JSON.stringify(this.city),
+            'department': JSON.stringify([this.department.name]),
+            'city': JSON.stringify([this.city_update]),
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
             'expiration_date': this.expiration_date,
@@ -820,7 +759,6 @@
         this.education_level = ''
       },
       add_experience_years () {
-        console.log('valid ' + this.valid_years(this.experience_years_min))
         if (this.valid_years(this.experience_years_min)) {
           this.filters_experience_years.push({
             importance: -1,
@@ -854,7 +792,6 @@
       this.get_departments()
       this.get_skills()
       if (this.$route.query.id !== undefined) {
-        document.getElementsByClassName('multiselect')[0].style.display = 'none'
         if (document.getElementById('cities_table') !== null) {
           document.getElementById('cities_table').style.display = 'none'
         }
@@ -864,7 +801,7 @@
         .then((response) => {
           this.id = response.data.data.position.id
           this.name = response.data.data.position.name
-          this.department_update = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
+          this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
           this.city_update = response.data.data.position.city
           this.description = response.data.data.position.description
           if (this.description !== '') {
@@ -879,14 +816,9 @@
             this.candidate_characteristics_empty = false
           }
           this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
-          console.log(this.description_empty)
-          console.log(this.description)
-          console.log(this.work_team_description_empty)
-          console.log(this.candidate_characteristics_empty)
         })
         .catch(error => { console.log(error.response) })
       } else {
-        document.getElementsByClassName('multiselect')[1].style.display = 'none'
         document.getElementById('cities_update').style.display = 'none'
         document.getElementById('preview-button').style.display = 'none'
       }
