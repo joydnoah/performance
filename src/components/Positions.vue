@@ -45,43 +45,61 @@
         <div class="offer-header-container">
           <div class="row">
             <div class="col-xs-1">
-              <p class="header-title">
-                ID
+              <p class="header-title" @click="change_order($event.target.id)" id="id" v-show="visible_tittle('id')">
+                ID&#9660
+              </p>
+              <p class="header-title" @click="change_order($event.target.id)" id="id" v-show="!visible_tittle('id')">
+                ID&#9650
               </p>
             </div>
             <div class="col-xs-2">
-              <p class="header-title">
-                Posición
+              <p class="header-title" @click="change_order($event.target.id)" id="name" v-show="visible_tittle('name')">
+                Posición&#9660
+              </p>
+              <p class="header-title" @click="change_order($event.target.id)" id="name" v-show="!visible_tittle('name')">
+                Posición&#9650
               </p>
             </div>
             <div class="col-xs-2">
-              <p class="header-title"><!-- .descending add sort down icon -->
-                Ubicación
+              <p class="header-title" @click="change_order($event.target.id)" id="city" v-show="visible_tittle('city')"><!-- .descending add sort down icon -->
+                Ubicación&#9660
+              </p>
+              <p class="header-title" @click="change_order($event.target.id)" id="city" v-show="!visible_tittle('city')"><!-- .descending add sort down icon -->
+                Ubicación&#9650
               </p>
             </div>
             <div class="col-xs-1">
-              <p class="header-title"><!-- .ascending add sort up icon -->
-                Fecha de creación
+              <p class="header-title" @click="change_order($event.target.id)" id="created_at" v-show="visible_tittle('created_at')"><!-- .ascending add sort up icon -->
+                Fecha de creación&#9660
+              </p>
+              <p class="header-title" @click="change_order($event.target.id)" id="created_at" v-show="!visible_tittle('created_at')"><!-- .ascending add sort up icon -->
+                Fecha de creación&#9650
+              </p>
+            </div>
+            <div class="col-xs-1">
+              <p class="header-title" @click="change_order($event.target.id)" id="publication_date" v-show="visible_tittle('publication_date')">
+                Fecha de publicación&#9660
+              </p>
+              <p class="header-title" @click="change_order($event.target.id)" id="publication_date" v-show="!visible_tittle('publication_date')">
+                Fecha de publicación&#9650
+              </p>
+            </div>
+            <div class="col-xs-1">
+              <p class="header-title" @click="change_order($event.target.id)" id="status" v-show="visible_tittle('status')">
+                Estatus de solicitud&#9660
+              </p>
+              <p class="header-title" @click="change_order($event.target.id)" id="status" v-show="!visible_tittle('status')">
+                Estatus de solicitud&#9650
               </p>
             </div>
             <div class="col-xs-1">
               <p class="header-title">
-                Fecha de publicación
+                Solicitudes recibidas&#9660
               </p>
             </div>
             <div class="col-xs-1">
               <p class="header-title">
-                Estatus de solicitud
-              </p>
-            </div>
-            <div class="col-xs-1">
-              <p class="header-title">
-                Solicitudes recibidas
-              </p>
-            </div>
-            <div class="col-xs-1">
-              <p class="header-title">
-                Candidatos activos
+                Candidatos activos&#9660
               </p>
             </div>
             <div class="col-xs-2">
@@ -159,87 +177,6 @@
       </modal>
     </div>
 
-<!-- <div id="container-positions" class="panel panel-default">
-      <div class="panel-heading"><h3 id="header-positions">Posiciones:</h3></div>
-      <div class="panel-body">
-        <div id="add-section">
-          <router-link to="/position" class="btn btn-success">Agregar Posición</router-link>
-          <router-link to="/company-jobs" class="btn btn-warning">Editar Página de Posiciones</router-link>
-          <router-link v-bind:to="'/' + company.uri" target="_blank" class="btn btn-success">Página Empresa</router-link>
-        </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Departamento</th>
-              <th>Ciudad</th>
-              <th>Estado</th>
-              <th>Cantidad Candidatos</th>
-              <th>Fecha de Creación</th>
-              <th>Fecha de Publicación</th>
-              <th>Fecha de Vencimiento</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in positions">
-              <td>
-                {{ item.name }}
-              </td>
-              <td>
-                {{ item.department_name }}
-              </td>
-              <td>
-                {{ item.city }}
-              </td>
-              <td>
-                {{ get_status(item.status_type) }}
-              </td>
-              <td>
-                {{ item.applicants_number }}
-              </td>
-              <td>
-                {{ item.created_at.substring(0, 10) }}
-              </td>
-              <td>
-                {{ item.status_type !== "publish" ? "Sin Publicar" : item.publication_date_str.substring(0, 16) }}
-              </td>
-              <td>
-                {{ item.expiration_date.substring(0, 10) }}
-              </td>
-              <td>
-                <dropdown>
-                  <button data-role="trigger" class="btn btn-warning dropdown-toggle" type="button">
-                    <span>Acciones</span>
-                    <span class="caret"></span>
-                  </button>
-                  <template slot="dropdown">
-                    <li><a v-bind:href="'/position?id=' + item.id" title="Editar">Editar</a></li>
-                    <li><a v-bind:href="'/position-preview/' + item.id" target="_blank" title="Previsualizar">Previsualizar</a></li>
-                    <li><a target="_blank" v-bind:href="'/position-apply/' + item.id" title="Link Posición">Link de posición</a></li>
-                    <li><a v-bind:href="'/applicants/' + item.id" title="Canditatos">Ver Candidatos</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a target="_blank" v-bind:href="'/filters/' + item.id" title="Filtros">Filtros</a></li>
-                    <li><a target="_blank" v-bind:href="'/email-templates/' + item.id" title="Plantillas de email">Plantillas de email</a></li>
-                    <li><a v-bind:href="'/social-position/' + item.id" title="Plantillas de email">Publicar en redes sociales</a></li>
-                  </template>
-                </dropdown>
-              </td>
-              <td>
-                <tooltip text="Publicar">
-                  <button @click="set_status_position(item.id, 'publish')" class="btn btn-success"><i class="glyphicon glyphicon-bullhorn"></i></button>
-                </tooltip>
-                <tooltip text="Cerrar">
-                  <button @click="set_status_position(item.id, 'closed')" class="btn btn-danger"><i class="glyphicon glyphicon-ban-circle"></i></button>
-                </tooltip>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -263,12 +200,17 @@
         company_id: localStorage['company_id'],
         company: {},
         copyn: false,
-        bootstrap_min_js: null
+        bootstrap_min_js: null,
+        list: { 'id': true, 'name': true, 'city': true, 'created_at': true, 'publication_date': true, 'status': true }
       }
     },
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      change_order (id) {
+        this.get_positions(id, this.list[id])
+        this.list[id] = !this.list[id]
       },
       copy_now () {
         this.copyn = true
@@ -279,9 +221,12 @@
       make_visible () {
         return this.positions.length > 0
       },
-      get_positions () {
+      visible_tittle (id) {
+        return this.list[id]
+      },
+      get_positions (order, inc) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/position', {params: {'company_id': localStorage['company_id']}})
+        this.axios.get('/position', {params: {'company_id': localStorage['company_id'], 'order_by': order, 'asc_or_desc': inc}})
         .then(response => {
           this.positions = response.data.data.positions
         })
@@ -316,7 +261,7 @@
       }
     },
     mounted: function () {
-      this.get_positions()
+      this.get_positions('created_at', true)
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/company/' + this.company_id)
