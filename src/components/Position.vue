@@ -276,7 +276,7 @@
               <div class="row abilities">
                 <div class="col-xs-offset-2 col-xs-8">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <label class="mdl-textfield__label" for="abilitiesp">Digite una habilidad de negocios y luego enter</label>
+                    <label class="mdl-textfield__label" for="abilitiesp">Digite una habilidad y luego enter</label>
                     <input class="mdl-textfield__input" type='text' v-model="business_skill" @keyup.enter="add_business_skill()" id="abilitiesp" name="abilitiesp">
                   </div>
                 </div>
