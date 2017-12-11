@@ -492,7 +492,7 @@
         importance: -1,
         radioValue: 1,
         valid: true,
-        valid_asign: true,
+        valid_asign: false,
         bootstrap_min_js: null
       }
     },
@@ -610,7 +610,7 @@
           })
         } else {
           this.show_error('Por favor diligencie todos los campos requeridos (*)')
-          if (!this.valid_years(document.getElementById('info04').value)) {
+          if (!this.valid_years(document.getElementById('info04').value) && this.valid_asign) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
           }
         }
@@ -647,7 +647,7 @@
           })
         } else {
           this.show_error('Por favor diligencie todos los campos requeridos (*)')
-          if (!this.valid_years(document.getElementById('info04').value)) {
+          if (!this.valid_years(document.getElementById('info04').value) && this.valid_asign) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
           }
         }
@@ -786,10 +786,10 @@
         if (this.valid_years(yrs)) {
           item.value = yrs
           this.valid = true
-          this.valid_asign = true
+          this.valid_asign = false
         } else {
           this.valid = false
-          this.valid_asign = false
+          this.valid_asign = true
         }
       }
     },
