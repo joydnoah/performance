@@ -68,7 +68,7 @@
               <div class="row">
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.name.$error }">
-                    <label class="mdl-textfield__label" for='name' v-if="id === null">Nombre de la posiciòn</label>
+                    <label class="mdl-textfield__label" for='name' v-if="id === null">Nombre de la posiciòn *</label>
                     <input class="mdl-textfield__input" type="text" id='name' name='name' v-on:input="$v.name.$touch" v-model='name'>
                     <span class="mdl-textfield__error">Error message</span>
                   </div>
@@ -153,7 +153,7 @@
 
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    Fecha de caducidad de la oferta
+                    Fecha de caducidad de la oferta *
                     <datepicker required v-model='expiration_date' id='expiration_date' name='expiration_date' :disabled="disabled" language="es" format="dd/MM/yyyy" input-class="form-control form__input"></datepicker>
                   </div>
                 </div>
