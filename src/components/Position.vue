@@ -76,7 +76,20 @@
 
                 <div class="col-xs-4">
                   <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                    <multiselect id="department_create" v-model="department" :options="department_list" tag-placeholder="Agregar departamento" placeholder="Buscar o agregar departamento" label="name" :multiple="false" :hide-selected="true" track-by="name" @input="onChange" :taggable="true"  @tag="add_department"></multiselect>
+                    <multiselect
+                      id="department_create"
+                      v-model="department"
+                      :options="department_list"
+                      tag-placeholder="Agregar departamento"
+                      placeholder="Buscar o agregar departamento"
+                      label="name"
+                      :multiple="false"
+                      :hide-selected="true"
+                      track-by="name"
+                      @input="onChange"
+                      :taggable="true"
+                      @tag="add_department">
+                    </multiselect>
                     <span class="mdl-textfield__error">Error message</span>
                   </div>
                 </div>
@@ -91,7 +104,7 @@
                         v-on:placechanged="getAddressData"
                     >
                     </vue-google-autocomplete>
-                    <div v-if="city.length > 0">
+                    <div v-if="city.length > 0 && city[0] !== '' && city[0] !== null">
                       <table id="cities_table" class="table">
                         <thead>
                           <tr>
@@ -105,22 +118,12 @@
                         </thead>
                         <tbody>
                           <tr v-for="(item, index) in city">
-                            <td>{{ item }}</td>
-                            <td><button class="btn btn-danger btn-xs" v-on:click="remove_city(index)"><i class="glyphicon glyphicon-remove"></i></button></td>
+                            <td v-if="item !== '' && item !== null">{{ item }}</td>
+                            <td><button v-if="item !== '' && item !== null" class="btn btn-danger btn-xs" v-on:click="remove_city(index)"><i class="glyphicon glyphicon-remove"></i></button></td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                    <vue-google-autocomplete
-                        id="cities_update"
-                        classname="form-control"
-                        placeholder="Buscar Lugar de trabajo"
-                        types="geocode"
-                        v-on:placechanged="getAddressData"
-                    >
-                    </vue-google-autocomplete>
-                    <p id="container-city-update">{{ city_update }}</p>
-
                   </div>
                 </div>
 
@@ -458,7 +461,6 @@
         department_update: '',
         position_type_id: '',
         city: [],
-        city_update: '',
         description: '',
         description_empty: true,
         work_team_description: '',
@@ -490,7 +492,7 @@
         importance: -1,
         radioValue: 1,
         valid: true,
-        valid_asign: false,
+        valid_asign: true,
         bootstrap_min_js: null
       }
     },
@@ -551,7 +553,9 @@
         }
 
         addressData.position_city += addressData.country
-        this.city_update = addressData.position_city
+        if (addressData.position_city !== '' && addressData.position_city !== null) {
+          this.city = [addressData.position_city]
+        }
         document.getElementById('cities').value = null
       },
       save (v) {
@@ -571,6 +575,7 @@
         .catch(error => {
           console.log(error)
         })
+        console.log(this.department_list)
       },
       get_skills () {
         this.skills_list = [{name: 'leadership'}, {name: 'sales'}, {name: 'project management'}]
@@ -590,7 +595,7 @@
             'company_id': localStorage['company_id'],
             'department': this.department.name,
             'description': this.description,
-            'city': this.city_update,
+            'city': this.city,
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
             'expiration_date': this.expiration_date,
@@ -605,7 +610,10 @@
             this.show_error()
           })
         } else {
-          this.show_error()
+          if (!this.valid_years(document.getElementById('info04').value)) {
+            this.show_error('Digite un valor valido de años entre 0 y 50')
+          }
+          this.show_error('Por favor diligencie todos los campos requeridos (*)')
         }
       },
       post (v) {
@@ -624,7 +632,7 @@
             'name': this.name,
             'description': this.description,
             'department': JSON.stringify([this.department.name]),
-            'city': JSON.stringify([this.city_update]),
+            'city': JSON.stringify(this.city),
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
             'expiration_date': this.expiration_date,
@@ -636,19 +644,18 @@
           .catch(error => {
             console.log(error.response)
             document.getElementById('submit').disabled = false
-            this.show_error()
+            this.show_error(error.response)
           })
         } else {
-          this.show_error()
+          if (!this.valid_years(document.getElementById('info04').value)) {
+            this.show_error('Digite un valor valido de años entre 0 y 50')
+          }
+          this.show_error('Por favor diligencie todos los campos requeridos (*)')
         }
       },
-      show_error () {
+      show_error (msg) {
         document.getElementById('alert-error').style.display = 'block'
-        if (this.valid && this.valid_asign) {
-          document.getElementById('alert-error').innerHTML = 'Por favor diligencie todos los campos requeridos (*)'
-        } else {
-          document.getElementById('alert-error').innerHTML = 'Cambie el numero de años de experiencia a un valor valido entre 0 - 50.'
-        }
+        document.getElementById('alert-error').innerHTML = msg
       },
       show_success () {
         document.getElementById('alert-success').style.display = 'block'
@@ -759,7 +766,7 @@
         this.education_level = ''
       },
       add_experience_years () {
-        if (this.valid_years(this.experience_years_min)) {
+        if (this.valid_years(document.getElementById('info04').value)) {
           this.filters_experience_years.push({
             importance: -1,
             position_id: this.id,
@@ -767,13 +774,15 @@
             value: this.experience_years_min
           })
           this.experience_years = ''
+          this.hide_alerts()
         } else {
-          this.show_error()
+          console.log('error')
+          this.show_error('Digite un valor valido de años entre 0 y 50')
         }
       },
       valid_years (y) {
         console.log('y ' + y + ' bool ' + (y >= 0 && y <= 50 && y !== ''))
-        return y >= 0 && y <= 50 && y !== ''
+        return (y >= 0 && y <= 50) && y !== ''
       },
       set_experience_years (item, event) {
         var yrs = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value
@@ -795,14 +804,13 @@
         if (document.getElementById('cities_table') !== null) {
           document.getElementById('cities_table').style.display = 'none'
         }
-        document.getElementById('cities').style.display = 'none'
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
           this.id = response.data.data.position.id
           this.name = response.data.data.position.name
           this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
-          this.city_update = response.data.data.position.city
+          this.city = [response.data.data.position.city]
           this.description = response.data.data.position.description
           if (this.description !== '') {
             this.description_empty = false
@@ -819,7 +827,6 @@
         })
         .catch(error => { console.log(error.response) })
       } else {
-        document.getElementById('cities_update').style.display = 'none'
         document.getElementById('preview-button').style.display = 'none'
       }
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
