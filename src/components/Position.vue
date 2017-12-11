@@ -575,7 +575,6 @@
         .catch(error => {
           console.log(error)
         })
-        console.log(this.department_list)
       },
       get_skills () {
         this.skills_list = [{name: 'leadership'}, {name: 'sales'}, {name: 'project management'}]
@@ -776,17 +775,14 @@
           this.experience_years = ''
           this.hide_alerts()
         } else {
-          console.log('error')
           this.show_error('Digite un valor valido de años entre 0 y 50')
         }
       },
       valid_years (y) {
-        console.log('y ' + y + ' bool ' + (y >= 0 && y <= 50 && y !== ''))
         return (y >= 0 && y <= 50) && y !== ''
       },
       set_experience_years (item, event) {
         var yrs = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value
-        console.log('yrs' + yrs)
         if (this.valid_years(yrs)) {
           item.value = yrs
           this.valid = true
