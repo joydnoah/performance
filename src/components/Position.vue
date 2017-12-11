@@ -609,10 +609,10 @@
             this.show_error()
           })
         } else {
+          this.show_error('Por favor diligencie todos los campos requeridos (*)')
           if (!this.valid_years(document.getElementById('info04').value)) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
           }
-          this.show_error('Por favor diligencie todos los campos requeridos (*)')
         }
       },
       post (v) {
@@ -646,10 +646,10 @@
             this.show_error(error.response)
           })
         } else {
+          this.show_error('Por favor diligencie todos los campos requeridos (*)')
           if (!this.valid_years(document.getElementById('info04').value)) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
           }
-          this.show_error('Por favor diligencie todos los campos requeridos (*)')
         }
       },
       show_error (msg) {
