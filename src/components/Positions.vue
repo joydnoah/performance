@@ -45,10 +45,10 @@
         <div class="offer-header-container">
           <div class="row">
             <div class="col-xs-1">
-              <p class="header-title" @click="change_order($event.target.id)" id="id" v-show="visible_tittle('id')">
+              <p class="header-title" @click="change_order($event.target.id)" id="position_number" v-show="visible_tittle('position_number')">
                 ID&#9660
               </p>
-              <p class="header-title" @click="change_order($event.target.id)" id="id" v-show="!visible_tittle('id')">
+              <p class="header-title" @click="change_order($event.target.id)" id="position_number" v-show="!visible_tittle('position_number')">
                 ID&#9650
               </p>
             </div>
@@ -201,7 +201,7 @@
         company: {},
         copyn: false,
         bootstrap_min_js: null,
-        list: { 'id': true, 'name': true, 'city': true, 'created_at': true, 'publication_date': true, 'status': true }
+        list: { 'position_number': true, 'name': true, 'city': true, 'created_at': true, 'publication_date': true, 'status': true }
       }
     },
     methods: {
