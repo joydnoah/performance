@@ -306,6 +306,28 @@
                 </div>
               </div>
 
+              <div class="col-xs-4">
+                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                  <multiselect
+                    id="skills_select"
+                    v-model="skills_info"
+                    :options="skills_list"
+                    tag-placeholder="Agregar habilidades"
+                    placeholder="Buscar o agregar habilidades"
+                    label="name"
+                    :multiple="false"
+                    :hide-selected="true"
+                    track-by="name"
+                    @input="onChange"
+                    :taggable="true"
+                    @tag="add_skills">
+                    @keyup.enter="add_skill()"
+                    @click="add_skill()"
+                  </multiselect>
+                  <span class="mdl-textfield__error">Error message</span>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -456,6 +478,7 @@
         department_list: [],
         skills_list: [],
         department: '',
+        skills_info: '',
         skills: '',
         departments: [],
         department_update: '',
@@ -517,6 +540,8 @@
         window.location.href = '/positions'
       },
       onChange () {
+        this.skills = this.skills_info.name
+        this.add_skills()
       },
       remove_city (index) {
         this.city.splice(index, 1)
@@ -535,13 +560,14 @@
         this.department_list.push(tag)
         this.department = tag
       },
-      add_skills (newTag) {
-        const tag = {
-          name: newTag,
-          id: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-        }
-        this.skills_list.push(tag)
-        this.skills = tag
+      add_skills () {
+        this.filters_business_skill.push({
+          importance: -1,
+          position_id: this.id,
+          type_filter: 'business_skill',
+          value: this.skills
+        })
+        this.business_skill = ''
       },
       getAddressData: function (addressData, placeResultData) {
         addressData.position_city = ''
@@ -577,7 +603,12 @@
         })
       },
       get_skills () {
-        this.skills_list = [{name: 'leadership'}, {name: 'sales'}, {name: 'project management'}]
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.get('/skills')
+        .then((response) => {
+          this.skills_list = response.data.data.skills
+        })
+        console.log(this.skills_list)
       },
       valid_form (v) {
         return !v.$error && this.is_valid_expiration_date && this.valid
