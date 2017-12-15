@@ -275,9 +275,24 @@
 
               <div class="row abilities">
                 <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <label class="mdl-textfield__label" for="abilitiesp">Digite una habilidad y luego enter</label>
-                    <input class="mdl-textfield__input" type='text' v-model="business_skill" @keyup.enter="add_business_skill()" id="abilitiesp" name="abilitiesp">
+                  <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                    <multiselect
+                      id="skills_select"
+                      v-model="skills_info"
+                      :options="skills_list"
+                      tag-placeholder="Agregar habilidades"
+                      placeholder="Buscar o agregar habilidades"
+                      label="name"
+                      :multiple="false"
+                      :hide-selected="true"
+                      track-by="name"
+                      @input="onChange"
+                      :taggable="true"
+                      @tag="add_skills">
+                      @keyup.enter="add_skill()"
+                      @click="add_skill()"
+                    </multiselect>
+                    <span class="mdl-textfield__error">Error message</span>
                   </div>
                 </div>
               </div>
@@ -303,28 +318,6 @@
                       <label v-bind:class="{ 'active': parseInt(item.importance) === 2 ? 'active' : '' }" :for="'business_skill' + index + '3'"> Alta </label>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              <div class="col-xs-4">
-                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                  <multiselect
-                    id="skills_select"
-                    v-model="skills_info"
-                    :options="skills_list"
-                    tag-placeholder="Agregar habilidades"
-                    placeholder="Buscar o agregar habilidades"
-                    label="name"
-                    :multiple="false"
-                    :hide-selected="true"
-                    track-by="name"
-                    @input="onChange"
-                    :taggable="true"
-                    @tag="add_skills">
-                    @keyup.enter="add_skill()"
-                    @click="add_skill()"
-                  </multiselect>
-                  <span class="mdl-textfield__error">Error message</span>
                 </div>
               </div>
 
@@ -608,7 +601,6 @@
         .then((response) => {
           this.skills_list = response.data.data.skills
         })
-        console.log(this.skills_list)
       },
       valid_form (v) {
         return !v.$error && this.is_valid_expiration_date && this.valid
