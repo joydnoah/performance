@@ -76,7 +76,6 @@
         this.user_info = JSON.parse(getUserInfo())
       },
       go_to (url) {
-        console.log(url)
         window.location.href = url
       }
     },
