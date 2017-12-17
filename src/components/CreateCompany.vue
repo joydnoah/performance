@@ -44,9 +44,9 @@
               <option value="Otro">Otro</option>
             </select>
           </div>
-          <div class="form-group" v-show="false">
-            <label>¿Cuál es el nombre de tu empresa?</label>
-            <input type="text" class="form-control" v-model="name" id="name" name="name" />
+          <div class="form-group" v-bind:class="{ 'has-error': $v.name.$error }">
+            <label>¿Cuál es el nombre de tu empresa? <span class="required-span">*</span></label>
+            <input type="text" class="form-control" v-on:input="$v.name.$touch" v-model="name" id="name" name="name" />
           </div>
           <button class="btn btn-success" @click="create_company($v)">Continuar</button>
         </div>
@@ -82,6 +82,9 @@
       },
       company_role: {
         required
+      },
+      name: {
+        required
       }
     },
     methods: {
@@ -100,7 +103,8 @@
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.post('/companies', {
             'number_employees': this.number_employees,
-            'industry': this.industry
+            'industry': this.industry,
+            'name': this.name
           })
           .then(response => {
             localStorage.setItem('company_id', response.data.data.company_id)
