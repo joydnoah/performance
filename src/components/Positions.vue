@@ -252,7 +252,7 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/position/' + id + '/' + status)
         .then(response => {
-          this.get_positions()
+          this.get_positions('created_at', true)
         })
         .catch(error => {
           this.publish_problem = true
