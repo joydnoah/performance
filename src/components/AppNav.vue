@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <router-link to="/" class="navbar-brand">Cotopaxi-io</router-link>
+        <router-link to="/positions" class="navbar-brand" @click="redirect()">Cotopaxi-io</router-link>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->

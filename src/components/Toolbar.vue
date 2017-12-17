@@ -6,7 +6,7 @@
         <div class="col-xs-12">
           <div class="left-side">
             <div class="logo">
-              <a href="">
+              <a href="/positions">
                 <img :src="'/static/html_layout/images/company-logo.svg'">
               </a>
             </div>
