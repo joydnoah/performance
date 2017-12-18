@@ -555,11 +555,14 @@
       },
       add_skills () {
         this.skills = this.skills_info.name
-        var already = false
+        var existingskill = false
         for (var i = 0; i < this.filters_business_skill.length; i++) {
-          already = this.filters_business_skill[i]['value'] === this.skills
+          if (this.filters_business_skill[i]['value'] === this.skills) {
+            existingskill = true
+            break
+          }
         }
-        if (this.skills !== undefined && !already) {
+        if (this.skills !== undefined && !existingskill) {
           this.filters_business_skill.push({
             importance: -1,
             position_id: this.id,
@@ -569,7 +572,7 @@
           this.business_skill = ''
         } else {
           if (!(this.skills !== undefined)) { this.show_error('Seleccione una habilidad primero.') }
-          if (already) { this.show_error('La habilidad ' + this.skills + ' ya esta en la lista de habilidades.') }
+          if (existingskill) { this.show_error('La habilidad ' + this.skills + ' ya esta en la lista de habilidades.') }
         }
       },
       getAddressData: function (addressData, placeResultData) {
