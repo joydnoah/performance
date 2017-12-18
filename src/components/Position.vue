@@ -819,13 +819,12 @@
       },
       set_experience_years (item, event) {
         var yrs = event.target.parentElement.parentElement.getElementsByTagName('input')[0].value
+        item.value = yrs
+        this.valid = false
+        this.valid_asign = true
         if (this.valid_years(yrs)) {
-          item.value = yrs
-          this.valid = true
-          this.valid_asign = false
-        } else {
-          this.valid = false
-          this.valid_asign = true
+          this.valid = !this.valid
+          this.valid_asign = !this.valid_asign
         }
       }
     },
