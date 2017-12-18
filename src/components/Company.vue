@@ -6,7 +6,7 @@
           <p>
             {{ company.description }}
           </p>
-          <h3> Pocisiones Abiertas Actualmente en {{ company.name }}</h3>
+          <h3> Pocisiones abiertas actualmente:</h3>
           <div class="form-group">
             <label></label>
             <select id="departments-list" class="form-control" v-model="department_to_filter" v-on:change="filter_department">
@@ -17,8 +17,8 @@
                 {{ item.name }}
               </option>
             </select>
-            
-            
+
+
             <div v-for="item in department_list" class="department-container" v-bind:id="'department-' + item.id">
               <h4>{{ item.name }}</h4>
               <div v-for="item_position in positions">
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
 </template>
 <script>
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
-  
+
   export default {
     components: {
     },
