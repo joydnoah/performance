@@ -824,6 +824,7 @@
           this.valid = true
           this.valid_asign = false
         } else {
+          item.value = yrs
           this.valid = false
           this.valid_asign = true
         }
