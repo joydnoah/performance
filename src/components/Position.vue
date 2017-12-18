@@ -535,8 +535,6 @@
         window.location.href = '/positions'
       },
       onChange () {
-        this.skills = this.skills_info.name
-        this.add_skills()
       },
       remove_city (index) {
         this.city.splice(index, 1)
