@@ -274,7 +274,7 @@
               </div>
 
               <div class="row abilities">
-                <div class="col-xs-offset-2 col-xs-8">
+                <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                     <multiselect
                       id="skills_select"
@@ -286,13 +286,15 @@
                       :multiple="false"
                       :hide-selected="true"
                       track-by="name"
-                      @input="onChange"
-                      :taggable="true"
-                      @tag="add_skills">
-                      @keyup.enter="add_skill()"
-                      @click="add_skill()"
+                      :taggable="false"
+                      @tag="">
                     </multiselect>
                     <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                </div>
+                <div class="col-xs-4">
+                  <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                    <button class="btn btn-default" @click="add_skills()">Asignar</button>
                   </div>
                 </div>
               </div>
@@ -300,7 +302,7 @@
               <div class="row abilities" v-for="(item, index) in filters_business_skill">
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input type='text' class="form-control" v-model="item.value">
+                    <label type='text' class="form-control">{{ item.value }}</label>
                   </div>
                 </div>
                 <div class="col-xs-3">
@@ -554,13 +556,19 @@
         this.department = tag
       },
       add_skills () {
-        this.filters_business_skill.push({
-          importance: -1,
-          position_id: this.id,
-          type_filter: 'business_skill',
-          value: this.skills
-        })
-        this.business_skill = ''
+        this.skills = this.skills_info.name
+        console.log(this.skills)
+        if (this.skills !== undefined) {
+          this.filters_business_skill.push({
+            importance: -1,
+            position_id: this.id,
+            type_filter: 'business_skill',
+            value: this.skills
+          })
+          this.business_skill = ''
+        } else {
+          this.show_error('Seleccione un skill')
+        }
       },
       getAddressData: function (addressData, placeResultData) {
         addressData.position_city = ''
