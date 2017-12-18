@@ -274,7 +274,7 @@
               </div>
 
               <div class="row abilities">
-                <div class="col-xs-offset-2 col-xs-4">
+                <div class="col-xs-offset-2 col-xs-6">
                   <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                     <multiselect
                       id="skills_select"
