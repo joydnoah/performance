@@ -14,7 +14,7 @@
           <label v-show="isEmpty( candidate_characteristics )">Características que estamos buscando en un empleado</label>
           <p>{{ candidate_characteristics }}</p>
 
-          <a href="/positions" class="btn btn-warning">Regresar</a>
+          <a @click="go_back()" class="btn btn-warning">Regresar</a>
         </div>
       </div>
     </div>
@@ -45,6 +45,9 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      go_back () {
+        window.history.back()
       },
       exit () {
         window.location.href = '/positions'
