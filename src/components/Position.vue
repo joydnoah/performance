@@ -43,15 +43,8 @@
         </div><!-- create buttons bar end -->
       </div>
 
-
-
       <div id="create-form-container" class="general-container">
         <div class="create-form">
-          <div class="row">
-            <div class="col-xs-offset-2 col-xs-8">
-              <div class="separator"></div>
-            </div>
-          </div>
           <div class="collapse-group" role="tablist" aria-multiselectable="true">
             <div class="" role="tab" id="headingOne">
               <a role="button" data-toggle="collapse" data-parent="#accordion" href="#general-info" aria-expanded="false" aria-controls="collapseOne" class="">
@@ -917,7 +910,6 @@
     #container-position{
       width: 80%;
       margin: 0 auto;
-      margin-bottom: 1em;
     }
     input, label, textarea, select, button{
       display: block;
@@ -929,5 +921,8 @@
     #container-city-update{
       margin-top: 1em;
       padding-left: 0.5em;
+    }
+    .create-form{
+      padding-top: 0px;
     }
 </style>
