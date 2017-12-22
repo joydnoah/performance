@@ -36,10 +36,8 @@
         </div>
         <div class="form-group" v-bind:class="{ 'has-error': $v.phone_number.$error }">
           <label class="col-sm-2 control-label" >Teléfono *</label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" v-on:input="$v.phone_code.$touch" v-model='phone_code' id="phone_code" >
-          </div>
-          <div class="col-sm-8">
+
+          <div class="col-sm-10">
             <input type="text" class="form-control" v-on:input="$v.phone_number.$touch" v-model='phone_number' id="phone_number" >
           </div>
         </div>
@@ -56,7 +54,7 @@
           <input type="text" class="form-control" v-model='twitter_user' id="twitter_user" >
         </div>
       </div>
-      
+
       <div class="form form-horizontal">
         <legend></legend>
         <div class="form-group">
@@ -102,7 +100,7 @@
         first_name: '',
         last_name: '',
         email: '',
-        phone_code: '',
+        phone_code: '0',
         phone_number: '',
         linkedin_user: '',
         twitter_user: '',
