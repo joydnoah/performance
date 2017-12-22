@@ -297,6 +297,13 @@
                 </div>
               </div>
 
+              <div class="col-xs-offset-2 col-xs-7">
+                <div style="display: none;" id="alert-error-skills" class="alert alert-danger" role="alert">
+                  <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Error</strong>
+                  <p>Error</p>
+                </div>
+              </div>
+
               <div class="row abilities" v-for="(item, index) in filters_business_skill">
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -573,13 +580,21 @@
           })
           this.business_skill = ''
         } else {
-          if (!(this.skills !== undefined)) { this.show_error('Seleccione una habilidad primero.') }
-          if (existingSkill) { this.show_error('La habilidad ' + this.skills + ' ya esta en la lista de habilidades.') }
-          if (this.filters_business_skill.length >= 6) { this.show_error('No puede agregar mas habilidades') }
+          if (!(this.skills !== undefined)) {
+            this.show_error('Seleccione una habilidad primero.')
+            this.show_error_skills('Seleccione una habilidad primero.')
+          }
+          if (existingSkill) {
+            this.show_error('La habilidad ' + this.skills + ' ya esta en la lista de habilidades.')
+            this.show_error_skills('La habilidad ' + this.skills + ' ya esta en la lista de habilidades.')
+          }
+          if (this.filters_business_skill.length >= 6) {
+            this.show_error('No puede agregar mas habilidades')
+            this.show_error_skills('No puede agregar mas habilidades')
+          }
         }
       },
       remove_skill (index) {
-        console.log(index)
         this.filters_business_skill.splice(index, 1)
       },
       getAddressData: function (addressData, placeResultData) {
@@ -711,8 +726,11 @@
           }
         }
       },
+      show_error_skills (msg) {
+        document.getElementById('alert-error-skills').style.display = 'block'
+        document.getElementById('alert-error-skills').innerHTML = msg
+      },
       show_error (msg) {
-        console.log(document.getElementById('create-form-container').style)
         document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
