@@ -63,7 +63,7 @@
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.name.$error }">
                     <label id="name_label" class="mdl-textfield__label" for='name'>Nombre de la posiciòn *</label>
                     <input class="mdl-textfield__input" type="text" id='name' name='name' v-on:input="$v.name.$touch" v-model='name'>
-                    <span class="mdl-textfield__error">Error message</span>
+                    <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
                   </div>
                 </div>
 
@@ -228,7 +228,7 @@
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <label id="years_label" class="mdl-textfield__label" for="abilities05" >Años de experiencia minimos</label>
                     <input class="mdl-textfield__input" type="text" id="info04" name="abilities05" v-model="experience_years_min" >
-                    <span class="mdl-textfield__error">Error message</span>
+                    <span class="mdl-textfield__error">Digite un numero valido de años de experiencia minimos</span>
                   </div>
                 </div>
 
@@ -712,16 +712,20 @@
         }
       },
       show_error (msg) {
+        console.log(document.getElementById('create-form-container').style)
+        document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
       },
       show_success () {
+        document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-success').style.display = 'block'
         setTimeout(function () {
           window.location.href = '/positions'
         }, 500)
       },
       hide_alerts () {
+        document.getElementById('create-form-container').style.paddingTop = '0px'
         document.getElementById('alert-error').style.display = 'none'
         document.getElementById('alert-success').style.display = 'none'
       },
