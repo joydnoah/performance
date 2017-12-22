@@ -43,15 +43,8 @@
         </div><!-- create buttons bar end -->
       </div>
 
-
-
       <div id="create-form-container" class="general-container">
         <div class="create-form">
-          <div class="row">
-            <div class="col-xs-offset-2 col-xs-8">
-              <div class="separator"></div>
-            </div>
-          </div>
           <div class="collapse-group" role="tablist" aria-multiselectable="true">
             <div class="" role="tab" id="headingOne">
               <a role="button" data-toggle="collapse" data-parent="#accordion" href="#general-info" aria-expanded="false" aria-controls="collapseOne" class="">
@@ -68,9 +61,9 @@
               <div class="row">
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.name.$error }">
-                    <label class="mdl-textfield__label" for='name' v-if="id === null">Nombre de la posiciòn *</label>
+                    <label id="name_label" class="mdl-textfield__label" for='name'>Nombre de la posiciòn *</label>
                     <input class="mdl-textfield__input" type="text" id='name' name='name' v-on:input="$v.name.$touch" v-model='name'>
-                    <span class="mdl-textfield__error">Error message</span>
+                    <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
                   </div>
                 </div>
 
@@ -97,13 +90,17 @@
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <vue-google-autocomplete
-                        id="cities"
-                        classname="form-control"
+                        id='cities'
+                        name='cities'
+                        class="mdl-textfield__input"
                         placeholder="Buscar Lugar de trabajo"
+                        type="text"
                         types="geocode"
                         v-on:placechanged="getAddressData"
                     >
                     </vue-google-autocomplete>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <div v-if="city.length > 0 && city[0] !== '' && city[0] !== null">
                       <table id="cities_table" class="table">
                         <thead>
@@ -153,7 +150,7 @@
 
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    Fecha de caducidad de la oferta *
+                    <div id="date">Fecha de caducidad de la oferta *</div>
                     <datepicker required v-model='expiration_date' id='expiration_date' name='expiration_date' :disabled="disabled" language="es" format="dd/MM/yyyy" input-class="form-control form__input"></datepicker>
                   </div>
                 </div>
@@ -186,6 +183,7 @@
                     <tbody>
                       <div v-if="filters_education_level.length === 0" class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                           <select id="abilitiesaux" v-model="education_level" class="mdl-selectfield__select" v-on:change="add_education_level()">
+                            <option value="" disabled selected hidden>Grado academico...</option>
                             <option value="Bachiller">Bachiller</option>
                             <option value="Ténico">Técnico</option>
                             <option value="Universitario">Universitario</option>
@@ -228,9 +226,9 @@
               <div class="row abilities">
                 <div class="col-xs-offset-2 col-xs-4" v-if="filters_experience_years.length === 0">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <label class="mdl-textfield__label" for="abilities04">Años de experiencia</label>
-                    <input class="mdl-textfield__input" type="text" id="info04" name="abilities04" v-model="experience_years_min">
-                    <span class="mdl-textfield__error">Error message</span>
+                    <label id="years_label" class="mdl-textfield__label" for="abilities05" >Años de experiencia minimos</label>
+                    <input class="mdl-textfield__input" type="text" id="info04" name="abilities05" v-model="experience_years_min" >
+                    <span class="mdl-textfield__error">Digite un numero valido de años de experiencia minimos</span>
                   </div>
                 </div>
 
@@ -319,6 +317,10 @@
                       <input type="radio" v-model="item.importance" value="2" autocomplete="off" class="check-level" :id="'business_skill' + index + '3'" :name="'business_skill' + index + '3'">
                       <label v-bind:class="{ 'active': parseInt(item.importance) === 2 ? 'active' : '' }" :for="'business_skill' + index + '3'"> Alta </label>
                     </div>
+                  </div>
+                  <div class="row-action-btn remove-btn" @click="remove_skill(index)">
+                    <i class="material-icons">cancel</i>
+                    <span>Eliminar</span>
                   </div>
                 </div>
               </div>
@@ -562,7 +564,7 @@
             break
           }
         }
-        if (this.skills !== undefined && !existingSkill) {
+        if (this.skills !== undefined && !existingSkill && this.filters_business_skill.length < 6) {
           this.filters_business_skill.push({
             importance: -1,
             position_id: this.id,
@@ -573,7 +575,12 @@
         } else {
           if (!(this.skills !== undefined)) { this.show_error('Seleccione una habilidad primero.') }
           if (existingSkill) { this.show_error('La habilidad ' + this.skills + ' ya esta en la lista de habilidades.') }
+          if (this.filters_business_skill.length >= 6) { this.show_error('No puede agregar mas habilidades') }
         }
+      },
+      remove_skill (index) {
+        console.log(index)
+        this.filters_business_skill.splice(index, 1)
       },
       getAddressData: function (addressData, placeResultData) {
         addressData.position_city = ''
@@ -619,6 +626,7 @@
         return !v.$error && this.is_valid_expiration_date && this.valid
       },
       put (v) {
+        if (this.name === ' ') { this.name = '' }
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
@@ -645,6 +653,13 @@
             this.show_error()
           })
         } else {
+          if (this.expiration_date === '') {
+            document.getElementById('date').style.color = 'red'
+          }
+          if (this.name === '') {
+            this.name = ' '
+            document.getElementById('name_label').parentElement.classList.add('is-invalid')
+          }
           this.show_error('Por favor diligencie todos los campos requeridos (*)')
           if (!this.valid_years(document.getElementById('info04').value) && this.valid_asign) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
@@ -652,6 +667,7 @@
         }
       },
       post (v) {
+        if (this.name === ' ') { this.name = '' }
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
@@ -682,6 +698,13 @@
             this.show_error(error.response)
           })
         } else {
+          if (this.expiration_date === '') {
+            document.getElementById('date').style.color = 'red'
+          }
+          if (this.name === '') {
+            this.name = ' '
+            document.getElementById('name_label').parentElement.classList.add('is-invalid')
+          }
           this.show_error('Por favor diligencie todos los campos requeridos (*)')
           if (!this.valid_years(document.getElementById('info04').value) && this.valid_asign) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
@@ -689,16 +712,20 @@
         }
       },
       show_error (msg) {
+        console.log(document.getElementById('create-form-container').style)
+        document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
       },
       show_success () {
+        document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-success').style.display = 'block'
         setTimeout(function () {
           window.location.href = '/positions'
         }, 500)
       },
       hide_alerts () {
+        document.getElementById('create-form-container').style.paddingTop = '0px'
         document.getElementById('alert-error').style.display = 'none'
         document.getElementById('alert-success').style.display = 'none'
       },
@@ -811,6 +838,7 @@
           this.experience_years = ''
           this.hide_alerts()
         } else {
+          document.getElementById('years_label').parentElement.classList.add('is-invalid')
           this.show_error('Digite un valor valido de años entre 0 y 50')
         }
       },
@@ -839,6 +867,7 @@
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
           this.id = response.data.data.position.id
+          document.getElementById('name_label').parentElement.classList.add('is-focused')
           this.name = response.data.data.position.name
           this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
           this.city = [response.data.data.position.city]
@@ -885,7 +914,6 @@
     #container-position{
       width: 80%;
       margin: 0 auto;
-      margin-bottom: 1em;
     }
     input, label, textarea, select, button{
       display: block;
@@ -897,5 +925,8 @@
     #container-city-update{
       margin-top: 1em;
       padding-left: 0.5em;
+    }
+    .create-form{
+      padding-top: 0px;
     }
 </style>
