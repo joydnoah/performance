@@ -165,9 +165,7 @@
         if (this.applicant_id === 0) {
           if (!v.$error) {
             this.save()
-            console.log('enviar1')
           }
-          console.log('enviar2')
         } else {
           this.save()
         }
