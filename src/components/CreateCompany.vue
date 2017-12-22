@@ -17,10 +17,10 @@
             <label>¿Cuantos empledos tiene su empresa? <span class="required-span">*</span></label>
             <select v-on:input="$v.number_employees.$touch" v-model="number_employees" class="form-control" id="number_employees" name="number_employees">
               <option value="">Seleccionar</option>
-              <option value="1-10">1-10</option>
-              <option value="11-50">11-50</option>
-              <option value="51-250">51-250</option>
-              <option value="Más de 250">Más de 250</option>
+              <option value="1-50">1-50</option>
+              <option value="51-150">51-150</option>
+              <option value="151-500">151-500</option>
+              <option value="Más de 500">Más de 500</option>
             </select>
           </div>
           <div class="form-group" v-bind:class="{ 'has-error': $v.industry.$error }">

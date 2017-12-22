@@ -14,7 +14,7 @@
           <div class="right-side">
             <div class="main-nav">
               <div v-show="isLoggedIn()" @click="go_to('/positions')" class="nav-item">
-                <i class="material-icons">dashboard</i>Panel de ofertas
+                <i class="material-icons">dashboard</i>Panel de Ofertas
               </div>
               <div v-show="isLoggedIn()" @click="go_to('/' + company.uri)" class="nav-item">
                 <i class="material-icons">dashboard</i>Página Empresa
@@ -23,7 +23,7 @@
                 <i class="material-icons">account_circle</i>Login
               </div>
               <div v-show="isLoggedIn()" @click="go_to('/position')" class="nav-item">
-                <i class="material-icons">note_add</i>Crear posición
+                <i class="material-icons">note_add</i>Crear Posición
               </div>
               <div v-show="isLoggedIn()" class="nav-item item-nav-dropdown">
                 <i class="material-icons">account_circle</i>{{ user_info.name }}

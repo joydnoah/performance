@@ -61,7 +61,7 @@
               <div class="row">
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.name.$error }">
-                    <label id="name_label" class="mdl-textfield__label" for='name'>Nombre de la posiciòn *</label>
+                    <label id="name_label" class="mdl-textfield__label" for='name' v-if="id === null">Nombre de la posición *</label>
                     <input class="mdl-textfield__input" type="text" id='name' name='name' v-on:input="$v.name.$touch" v-model='name'>
                     <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
                   </div>
