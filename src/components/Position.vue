@@ -23,8 +23,8 @@
             <div class="row">
               <div class="col-xs-offset-1 col-xs-10">
                 <div class="buttons-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" :href="'/position-preview/' + id">Vista previa</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="save($v)" id="submit">Guardar y salir</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" @click="preview()">Vista previa</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="submit">Guardar y salir</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Cancelar</button>
                 </div>
 
@@ -538,7 +538,7 @@
         }
       },
       preview () {
-        window.location.href = '/position-preview?id=' + this.id
+        window.location.href = '/position-preview/' + this.id
       },
       exit () {
         window.location.href = '/positions'
