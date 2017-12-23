@@ -18,6 +18,9 @@
           <li>[*POSICION*] = Nombre de la posición</li>
         </ul>
       </alert>
+      <div class="form-group" align="left">
+        <label><input type="checkbox" name="automatic_send" v-model="status.automatic_send"/> Activar envio de email automatico </label><br>
+      </div>
       <div class="form-group">
         <label>Asunto: </label>
         <input type='text' name='name' v-model="status.subject" class="form-control" />
@@ -36,7 +39,7 @@
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Alert } from 'uiv'
   import VueFroala from 'vue-froala-wysiwyg'
-  
+
   export default {
     components: {
       Alert,
@@ -58,7 +61,8 @@
           from_address: '',
           subject: '',
           body: '',
-          id: 0
+          id: 0,
+          automatic_send: true
         }
       }
     },
@@ -80,7 +84,8 @@
           'from_address': this.status.from_address,
           'type': this.type_prop,
           'subject': this.status.subject,
-          'body': this.status.body
+          'body': this.status.body,
+          'automatic_send': this.status.automatic_send
         })
         .then(response => {
           window.location.href = '/positions'
@@ -94,7 +99,8 @@
         this.axios.put('/email_template/' + this.status.id, {
           'from_address': this.status.from_address,
           'subject': this.status.subject,
-          'body': this.status.body
+          'body': this.status.body,
+          'automatic_send': this.status.automatic_send
         })
         .then(response => {
           window.location.href = '/positions'
