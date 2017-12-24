@@ -661,7 +661,7 @@
             'filters': JSON.stringify(this.filters)
           })
           .then(response => {
-            this.show_success()
+            this.show_waiting()
           })
           .catch(error => {
             console.log(error.response)
@@ -744,7 +744,6 @@
       show_success () {
         document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-success').style.display = 'block'
-        document.getElementById('alert-error').innerHTML = 'La posición se almaceno correctamente.'
         setTimeout(function () {
           window.location.href = '/positions'
         }, 500)
