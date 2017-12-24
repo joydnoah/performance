@@ -645,6 +645,7 @@
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
+          this.show_waiting()
           document.getElementById('submit').disabled = true
           this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
@@ -686,6 +687,7 @@
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
+          this.show_waiting()
           document.getElementById('submit').disabled = true
           this.departments = []
           for (var item in this.department) {
@@ -735,9 +737,14 @@
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
       },
+      show_waiting () {
+        document.getElementById('submit').innerHTML = 'Guardando...'
+        document.getElementById('submit').style.color = 'white'
+      },
       show_success () {
         document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-success').style.display = 'block'
+        document.getElementById('alert-error').innerHTML = 'La posición se almaceno correctamente.'
         setTimeout(function () {
           window.location.href = '/positions'
         }, 500)
