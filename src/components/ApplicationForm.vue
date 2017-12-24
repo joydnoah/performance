@@ -107,10 +107,10 @@
         curriculum_vitae: '',
         presentation_letter: '',
         form_data: null,
-        valid_file_type_c: true,
-        valid_file_size_c: true,
-        valid_file_type_p: true,
-        valid_file_size_p: true
+        valid_file_type_curriculum: true,
+        valid_file_size_curriculum: true,
+        valid_file_type_presentation_letter: true,
+        valid_file_size_presentation_letter: true
       }
     },
     validations: {
@@ -142,14 +142,14 @@
         console.log(event.target.files[0]['size'])
         switch (type) {
           case 'curriculum_vitae':
-            this.valid_file_type_c = validType
-            this.valid_file_size_c = validSize
+            this.valid_file_type_curriculum = validType
+            this.valid_file_size_curriculum = validSize
             this.curriculum_vitae = event.target.files[0]
             break
 
           case 'presentation_letter':
-            this.valid_file_type_p = validType
-            this.valid_file_size_p = validSize
+            this.valid_file_type_presentation_letter = validType
+            this.valid_file_size_presentation_letter = validSize
             this.presentation_letter = event.target.files[0]
             break
         }
@@ -174,7 +174,7 @@
       post (v) {
         document.getElementsByClassName('alert')[3].style.display = 'none'
         v.$touch()
-        if (this.valid_file_type_c && this.valid_file_size_c && this.valid_file_type_p && this.valid_file_size_p) {
+        if (this.valid_file_type_curriculum && this.valid_file_size_curriculum && this.valid_file_type_presentation_letter && this.valid_file_size_presentation_letter) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
               this.save()
@@ -184,10 +184,10 @@
           }
         } else {
           var msg = 'Solo se pueden adjuntar archivos'
-          if (!this.valid_file_size_c || !this.valid_file_size_p) {
+          if (!this.valid_file_size_curriculum || !this.valid_file_size_presentation_letter) {
             msg = msg + ' menores a 7MB '
           }
-          if (!this.valid_file_type_c || !this.valid_file_type_p) {
+          if (!this.valid_file_type_curriculum || !this.valid_file_type_presentation_letter) {
             msg = msg + ' en formato PDF. '
           }
           document.getElementById('alert-error').style.display = 'block'
