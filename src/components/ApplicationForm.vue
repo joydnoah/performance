@@ -107,8 +107,10 @@
         curriculum_vitae: '',
         presentation_letter: '',
         form_data: null,
-        valid_file_curricukum: true,
-        valid_file_letter: true
+        valid_file_type_c: true,
+        valid_file_size_c: true,
+        valid_file_type_p: true,
+        valid_file_size_p: true
       }
     },
     validations: {
@@ -134,17 +136,20 @@
         return isLoggedIn()
       },
       set_files (type, event) {
-        var validFile = event.target.files[0]['type'] === 'application/pdf' && event.target.files[0]['size'] <= 7000000
+        var validSize = event.target.files[0]['size'] <= 7000000
+        var validType = event.target.files[0]['type'] === 'application/pdf'
         console.log(event.target.files[0]['type'])
         console.log(event.target.files[0]['size'])
         switch (type) {
           case 'curriculum_vitae':
-            this.valid_file_curricukum = validFile
+            this.valid_file_type_c = validType
+            this.valid_file_size_c = validSize
             this.curriculum_vitae = event.target.files[0]
             break
 
           case 'presentation_letter':
-            this.valid_file_letter = validFile
+            this.valid_file_type_p = validType
+            this.valid_file_size_p = validSize
             this.presentation_letter = event.target.files[0]
             break
         }
@@ -169,7 +174,7 @@
       post (v) {
         document.getElementsByClassName('alert')[3].style.display = 'none'
         v.$touch()
-        if (this.valid_file_letter && this.valid_file_curricukum) {
+        if (this.valid_file_type_c && this.valid_file_size_c && this.valid_file_type_p && this.valid_file_size_p) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
               this.save()
@@ -178,8 +183,15 @@
             this.save()
           }
         } else {
+          var msg = 'Solo se pueden adjuntar archivos'
+          if (!this.valid_file_size_c || !this.valid_file_size_p) {
+            msg = msg + ' menores a 7MB '
+          }
+          if (!this.valid_file_type_c || !this.valid_file_type_p) {
+            msg = msg + ' en formato PDF. '
+          }
           document.getElementById('alert-error').style.display = 'block'
-          document.getElementById('alert-error').innerHTML = 'Uno de los archivos no cumple con los requerimientos.'
+          document.getElementById('alert-error').innerHTML = msg
         }
       },
       save () {
