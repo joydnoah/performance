@@ -242,7 +242,7 @@
                 <div class="col-xs-3" v-if="filters_experience_years.length === 0">
                   <div class="check-level-container">
                     <div class="check-level-item">
-                      <button class="btn btn-default" @click='add_experience_years()'>Asignar</button>
+                      <button class="btn btn-default" @click='add_experience_years()'>Incluir</button>
                     </div>
                   </div>
                 </div>
@@ -292,7 +292,7 @@
                 </div>
                 <div class="col-xs-4">
                   <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                    <button class="btn btn-default" @click="add_skills()">Asignar</button>
+                    <button class="btn btn-default" @click="add_skills()">Incluir</button>
                   </div>
                 </div>
               </div>
