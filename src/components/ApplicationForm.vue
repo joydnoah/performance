@@ -56,7 +56,7 @@
       </div>
 
       <div class="form form-horizontal">
-        <legend></legend>
+        <legend>Los archivos que se adjunten deben ser PDF con maximo 7mb</legend>
         <div class="form-group">
           <label class="col-sm-2 control-label" >Curriculum Vitae</label>
           <div class="col-sm-10">
@@ -76,7 +76,7 @@
         <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
         <br/>
         <br/>
-        <div style="display: none;" class="alert alert-danger">
+        <div style="display: none;" class="alert alert-danger" id="alert-error">
           <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
           <p id="error_message"></p>
         </div>
@@ -106,7 +106,9 @@
         twitter_user: '',
         curriculum_vitae: '',
         presentation_letter: '',
-        form_data: null
+        form_data: null,
+        valid_file_curricukum: true,
+        valid_file_letter: true
       }
     },
     validations: {
@@ -132,12 +134,16 @@
         return isLoggedIn()
       },
       set_files (type, event) {
+        var validFile = event.target.files[0]['type'] === 'application/pdf' && event.target.files[0]['size'] <= 7000000
+        console.log(validFile)
         switch (type) {
           case 'curriculum_vitae':
+            this.valid_file_curricukum = validFile
             this.curriculum_vitae = event.target.files[0]
             break
 
           case 'presentation_letter':
+            this.valid_file_letter = validFile
             this.presentation_letter = event.target.files[0]
             break
         }
@@ -162,12 +168,17 @@
       post (v) {
         document.getElementsByClassName('alert')[3].style.display = 'none'
         v.$touch()
-        if (this.applicant_id === 0) {
-          if (!v.$error) {
+        if (this.valid_file_letter && this.valid_file_curricukum) {
+          if (this.applicant_id === 0) {
+            if (!v.$error) {
+              this.save()
+            }
+          } else {
             this.save()
           }
         } else {
-          this.save()
+          document.getElementById('alert-error').style.display = 'block'
+          document.getElementById('alert-error').innerHTML = 'Uno de los archivos no cumple con los requerimientos.'
         }
       },
       save () {
