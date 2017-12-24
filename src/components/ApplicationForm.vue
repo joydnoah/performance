@@ -63,11 +63,19 @@
             <input type="file" class="form-control" id="name" v-on:change="set_files('curriculum_vitae', $event)" />
           </div>
         </div>
+        <div style="display: none;" class="alert alert-danger" id="alert-error1">
+          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
+          <p id="error_message"></p>
+        </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" >Carta de presentación</label>
           <div class="col-sm-10">
             <input type="file" class="form-control" id="name" v-on:change="set_files('presentation_letter', $event)" />
           </div>
+        </div>
+        <div style="display: none;" class="alert alert-danger" id="alert-error2">
+          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
+          <p id="error_message"></p>
         </div>
       </div>
 
@@ -76,10 +84,6 @@
         <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
         <br/>
         <br/>
-        <div style="display: none;" class="alert alert-danger" id="alert-error">
-          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
-          <p id="error_message"></p>
-        </div>
       </div>
     </div>
   </div>
@@ -169,13 +173,27 @@
           .catch(error => { console.log(error.response) })
         }
       },
-      validate_file () {
-        return this.valid_file_type_curriculum && this.valid_file_size_curriculum && this.valid_file_type_presentation_letter && this.valid_file_size_presentation_letter
+      validate_file (validType, validSize, errorId) {
+        var validation = validSize && validType
+        if (!validation) {
+          var msg = 'Solo se pueden adjuntar archivos'
+          if (!validSize) {
+            msg = msg + ' menores a 7MB '
+          }
+          if (!validType) {
+            msg = msg + ' en formato PDF. '
+          }
+          document.getElementById('alert-error' + errorId).style.display = 'block'
+          document.getElementById('alert-error' + errorId).innerHTML = msg
+        }
+        return validation
       },
       post (v) {
         document.getElementsByClassName('alert')[3].style.display = 'none'
         v.$touch()
-        if (this.validate_file()) {
+        var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
+        var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
+        if (validCurriculum && validLetter) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
               this.save()
@@ -183,16 +201,6 @@
           } else {
             this.save()
           }
-        } else {
-          var msg = 'Solo se pueden adjuntar archivos'
-          if (!this.valid_file_size_curriculum || !this.valid_file_size_presentation_letter) {
-            msg = msg + ' menores a 7MB '
-          }
-          if (!this.valid_file_type_curriculum || !this.valid_file_type_presentation_letter) {
-            msg = msg + ' en formato PDF. '
-          }
-          document.getElementById('alert-error').style.display = 'block'
-          document.getElementById('alert-error').innerHTML = msg
         }
       },
       save () {
