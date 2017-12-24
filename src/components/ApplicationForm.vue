@@ -56,18 +56,26 @@
       </div>
 
       <div class="form form-horizontal">
-        <legend></legend>
+        <legend>Los archivos que se adjunten deben ser PDF con maximo 7mb</legend>
         <div class="form-group">
           <label class="col-sm-2 control-label" >Curriculum Vitae</label>
           <div class="col-sm-10">
             <input type="file" class="form-control" id="name" v-on:change="set_files('curriculum_vitae', $event)" />
           </div>
         </div>
+        <div style="display: none;" class="alert alert-danger" id="alert-error1">
+          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
+          <p id="error_message"></p>
+        </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" >Carta de presentación</label>
           <div class="col-sm-10">
             <input type="file" class="form-control" id="name" v-on:change="set_files('presentation_letter', $event)" />
           </div>
+        </div>
+        <div style="display: none;" class="alert alert-danger" id="alert-error2">
+          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
+          <p id="error_message"></p>
         </div>
       </div>
 
@@ -76,10 +84,6 @@
         <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
         <br/>
         <br/>
-        <div style="display: none;" class="alert alert-danger">
-          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
-          <p id="error_message"></p>
-        </div>
       </div>
     </div>
   </div>
@@ -106,7 +110,11 @@
         twitter_user: '',
         curriculum_vitae: '',
         presentation_letter: '',
-        form_data: null
+        form_data: null,
+        valid_file_type_curriculum: true,
+        valid_file_size_curriculum: true,
+        valid_file_type_presentation_letter: true,
+        valid_file_size_presentation_letter: true
       }
     },
     validations: {
@@ -132,12 +140,18 @@
         return isLoggedIn()
       },
       set_files (type, event) {
+        var validSize = event.target.files[0]['size'] <= 7000000
+        var validType = event.target.files[0]['type'] === 'application/pdf'
         switch (type) {
           case 'curriculum_vitae':
+            this.valid_file_type_curriculum = validType
+            this.valid_file_size_curriculum = validSize
             this.curriculum_vitae = event.target.files[0]
             break
 
           case 'presentation_letter':
+            this.valid_file_type_presentation_letter = validType
+            this.valid_file_size_presentation_letter = validSize
             this.presentation_letter = event.target.files[0]
             break
         }
@@ -159,15 +173,34 @@
           .catch(error => { console.log(error.response) })
         }
       },
+      validate_file (validType, validSize, errorId) {
+        var validation = validSize && validType
+        if (!validation) {
+          var msg = 'Solo se pueden adjuntar archivos'
+          if (!validSize) {
+            msg = msg + ' menores a 7MB '
+          }
+          if (!validType) {
+            msg = msg + ' en formato PDF. '
+          }
+          document.getElementById('alert-error' + errorId).style.display = 'block'
+          document.getElementById('alert-error' + errorId).innerHTML = msg
+        }
+        return validation
+      },
       post (v) {
         document.getElementsByClassName('alert')[3].style.display = 'none'
         v.$touch()
-        if (this.applicant_id === 0) {
-          if (!v.$error) {
+        var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
+        var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
+        if (validCurriculum && validLetter) {
+          if (this.applicant_id === 0) {
+            if (!v.$error) {
+              this.save()
+            }
+          } else {
             this.save()
           }
-        } else {
-          this.save()
         }
       },
       save () {
