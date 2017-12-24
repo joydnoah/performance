@@ -661,7 +661,7 @@
             'filters': JSON.stringify(this.filters)
           })
           .then(response => {
-            this.show_waiting()
+            this.show_success()
           })
           .catch(error => {
             console.log(error.response)
