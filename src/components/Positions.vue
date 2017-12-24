@@ -46,10 +46,10 @@
           <div class="row">
             <div class="col-xs-1">
               <p class="header-title" @click="change_order($event.target.id)" id="position_number" v-show="visible_tittle('position_number')">
-                ID&#9660
+                Consecutivo&#9660
               </p>
               <p class="header-title" @click="change_order($event.target.id)" id="position_number" v-show="!visible_tittle('position_number')">
-                ID&#9650
+                Consecutivo&#9650
               </p>
             </div>
             <div class="col-xs-2">

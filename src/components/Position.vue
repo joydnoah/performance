@@ -242,7 +242,7 @@
                 <div class="col-xs-3" v-if="filters_experience_years.length === 0">
                   <div class="check-level-container">
                     <div class="check-level-item">
-                      <button class="btn btn-default" @click='add_experience_years()'>Asignar</button>
+                      <button class="btn btn-default" @click='add_experience_years()'>Incluir</button>
                     </div>
                   </div>
                 </div>
@@ -292,7 +292,7 @@
                 </div>
                 <div class="col-xs-4">
                   <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                    <button class="btn btn-default" @click="add_skills()">Asignar</button>
+                    <button class="btn btn-default" @click="add_skills()">Incluir</button>
                   </div>
                 </div>
               </div>
@@ -645,6 +645,7 @@
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
+          this.show_waiting()
           document.getElementById('submit').disabled = true
           this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
@@ -686,6 +687,7 @@
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
+          this.show_waiting()
           document.getElementById('submit').disabled = true
           this.departments = []
           for (var item in this.department) {
@@ -731,12 +733,20 @@
         document.getElementById('alert-error-skills').innerHTML = msg
       },
       show_error (msg) {
-        document.getElementById('create-form-container').style.paddingTop = '70px'
+        this.restoreSaveButton()
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
       },
-      show_success () {
+      show_waiting () {
+        document.getElementById('submit').innerHTML = 'Guardando...'
+        document.getElementById('submit').style.color = 'white'
+      },
+      restoreSaveButton () {
+        document.getElementById('submit').innerHTML = 'Guardar y salir'
         document.getElementById('create-form-container').style.paddingTop = '70px'
+      },
+      show_success () {
+        this.restoreSaveButton()
         document.getElementById('alert-success').style.display = 'block'
         setTimeout(function () {
           window.location.href = '/positions'
