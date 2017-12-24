@@ -733,8 +733,7 @@
         document.getElementById('alert-error-skills').innerHTML = msg
       },
       show_error (msg) {
-        document.getElementById('submit').innerHTML = 'Guardar y salir'
-        document.getElementById('create-form-container').style.paddingTop = '70px'
+        this.restoreSaveButton()
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
       },
@@ -742,9 +741,12 @@
         document.getElementById('submit').innerHTML = 'Guardando...'
         document.getElementById('submit').style.color = 'white'
       },
-      show_success () {
+      restoreSaveButton () {
         document.getElementById('submit').innerHTML = 'Guardar y salir'
         document.getElementById('create-form-container').style.paddingTop = '70px'
+      },
+      show_success () {
+        this.restoreSaveButton()
         document.getElementById('alert-success').style.display = 'block'
         setTimeout(function () {
           window.location.href = '/positions'
