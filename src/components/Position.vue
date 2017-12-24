@@ -742,6 +742,7 @@
         document.getElementById('submit').style.color = 'white'
       },
       show_success () {
+        document.getElementById('submit').innerHTML = 'Guardar y salir'
         document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-success').style.display = 'block'
         setTimeout(function () {
