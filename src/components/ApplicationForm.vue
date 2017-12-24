@@ -135,7 +135,8 @@
       },
       set_files (type, event) {
         var validFile = event.target.files[0]['type'] === 'application/pdf' && event.target.files[0]['size'] <= 7000000
-        console.log(validFile)
+        console.log(event.target.files[0]['type'])
+        console.log(event.target.files[0]['size'])
         switch (type) {
           case 'curriculum_vitae':
             this.valid_file_curricukum = validFile
