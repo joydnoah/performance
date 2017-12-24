@@ -733,6 +733,7 @@
         document.getElementById('alert-error-skills').innerHTML = msg
       },
       show_error (msg) {
+        document.getElementById('submit').innerHTML = 'Guardar y salir'
         document.getElementById('create-form-container').style.paddingTop = '70px'
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
