@@ -169,10 +169,13 @@
           .catch(error => { console.log(error.response) })
         }
       },
+      validate_file () {
+        return this.valid_file_type_curriculum && this.valid_file_size_curriculum && this.valid_file_type_presentation_letter && this.valid_file_size_presentation_letter
+      },
       post (v) {
         document.getElementsByClassName('alert')[3].style.display = 'none'
         v.$touch()
-        if (this.valid_file_type_curriculum && this.valid_file_size_curriculum && this.valid_file_type_presentation_letter && this.valid_file_size_presentation_letter) {
+        if (this.validate_file()) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
               this.save()
