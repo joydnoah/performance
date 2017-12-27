@@ -95,7 +95,7 @@
         return isLoggedIn()
       },
       show (item) {
-        this.src = 'http://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + item.original_name.split('.')[1]
+        this.src = 'https://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + item.original_name.split('.')[1]
         this.$modal.show('show-pdf')
       },
       hide () {
