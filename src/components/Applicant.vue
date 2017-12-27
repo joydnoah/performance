@@ -56,8 +56,6 @@
         <div id="general-container">
           <a @click="go_back()" class="btn btn-warning">Regresar</a>
         </div>
-        <div v-for="item in documents">
-        </div>
       </div>
     </div>
   </div>
@@ -123,7 +121,6 @@
       .catch(error => { console.log(error.response) })
       this.axios.get('/applicant/documents/' + this.id)
       .then((response) => {
-        console.log('document1')
         console.log(response.data.data)
         this.documents = response.data.data.documents
       })
