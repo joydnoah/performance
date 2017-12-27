@@ -1,5 +1,18 @@
 <template>
   <div id="general-container">
+    <modal height="auto" :scrollable="true" name="show-pdf">
+      <div class="window-header">
+        <button @click="$modal.hide('show-pdf')" class="close-button">
+          ❌
+        </button>
+      </div>
+      <div>
+        <div>
+          <pdf ref="myPdfComponent" :page="page" @numPages="numPages = $event" :src="src"></pdf>
+        </div>
+        <input v-model.number="page" type="number" style="width: 5em"> /{{numPages}}
+      </div>
+    </modal>
     <app-nav></app-nav>
     <div id="container-positions" class="panel panel-default">
       <div class="panel-heading"><h3>Detalles del candidato</h3></div>
@@ -34,7 +47,7 @@
                 <td>{{ item.original_name }}</td>
                 <td>{{ item.type_file == 'presentation_letter'? 'Carta de presentación': 'Curriculum Vitae' }}</td>
                 <td>
-                  <a target="_blank" v-bind:href='"http://" + bucket + ".s3.amazonaws.com/" + item.id + "." + item.original_name.split(".")[1]'>Link</a>
+                  <button @click="show(item)">Open</button>
                 </td>
               </tr>
             </tbody>
@@ -43,6 +56,8 @@
         <div id="general-container">
           <a @click="go_back()" class="btn btn-warning">Regresar</a>
         </div>
+        <div v-for="item in documents">
+        </div>
       </div>
     </div>
   </div>
@@ -50,11 +65,13 @@
 
 <script>
   import AppNav from './AppNav'
+  import pdf from 'vue-pdf'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
 
   export default {
     components: {
-      AppNav
+      AppNav,
+      pdf
     },
     data: function () {
       return {
@@ -68,12 +85,23 @@
         twitter_user: '',
         created_at: '',
         documents: [],
-        bucket: process.env.AWS_S3_BUCKET
+        bucket: process.env.AWS_S3_BUCKET,
+        page: 1,
+        numPages: 0,
+        rotate: 0,
+        src: ''
       }
     },
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      show (item) {
+        this.src = 'http://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + item.original_name.split('.')[1]
+        this.$modal.show('show-pdf')
+      },
+      hide () {
+        this.$modal.hide('show-pdf')
       },
       go_back () {
         history.go(-1)
@@ -93,9 +121,9 @@
         this.created_at = response.data.data.applicant.created_at
       })
       .catch(error => { console.log(error.response) })
-
       this.axios.get('/applicant/documents/' + this.id)
       .then((response) => {
+        console.log('document1')
         console.log(response.data.data)
         this.documents = response.data.data.documents
       })
@@ -116,5 +144,8 @@
   }
   .required-span{
     color: #a94442;
+  }
+  .v--modal-overlay {
+    background: rgba(0,0,0,0.8) ;
   }
 </style>

@@ -22,6 +22,7 @@ import VueClipboard from 'vue-clipboard2'
 import Multiselect from 'vue-multiselect'
 import VueFroala from 'vue-froala-wysiwyg'
 import FBSignInButton from 'vue-facebook-signin-button'
+import VModal from 'vue-js-modal'
 
 Vue.use(uiv)
 Vue.use(Vuelidate)
@@ -30,6 +31,7 @@ Vue.use(VueClipboard)
 Vue.use(VueAxios, axios)
 Vue.component(Multiselect)
 Vue.use(FBSignInButton)
+Vue.use(VModal, { dialog: true })
 
 Vue.config.productionTip = false
 
