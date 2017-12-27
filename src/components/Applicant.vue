@@ -121,7 +121,6 @@
       .catch(error => { console.log(error.response) })
       this.axios.get('/applicant/documents/' + this.id)
       .then((response) => {
-        console.log(response.data.data)
         this.documents = response.data.data.documents
       })
       .catch(error => { console.log(error.response) })
