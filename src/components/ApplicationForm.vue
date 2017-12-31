@@ -12,7 +12,7 @@
       </div>
       <div style="display: none;" class="alert alert-info">
         <i class="glyphicon glyphicon-ok"></i> <strong>Candidato Existente!</strong>
-        <p>Existe un candidato registrado como <strong>{{ email }}</strong>, ¿Desea enviar la solicitud?</p>
+        <p>Existe un candidato registrado con ese correo</p>
       </div>
 
       <div class="form form-horizontal">
@@ -84,6 +84,10 @@
         <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
         <br/>
         <br/>
+      </div>
+      <div style="display: none;" class="alert alert-danger" id="alert-error">
+        <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
+        <p id="error_message"></p>
       </div>
     </div>
   </div>
@@ -164,8 +168,6 @@
           .then((response) => {
             if (response.data.data.applicant !== '{}') {
               this.applicant_id = response.data.data.applicant.id
-              document.getElementsByClassName('form')[0].style.display = 'none'
-              document.getElementsByClassName('form')[1].style.display = 'none'
               document.getElementsByClassName('form')[2].style.display = 'block'
               document.getElementsByClassName('alert')[2].style.display = 'block'
             }
@@ -189,7 +191,7 @@
         return validation
       },
       post (v) {
-        document.getElementsByClassName('alert')[3].style.display = 'none'
+        document.getElementsByClassName('alert')[5].style.display = 'none'
         v.$touch()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
@@ -233,7 +235,7 @@
         })
         .catch(error => {
           document.getElementById('error_message').innerHTML = error.response.data.message
-          document.getElementsByClassName('alert')[3].style.display = 'block'
+          document.getElementsByClassName('alert')[5].style.display = 'block'
           document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
           document.getElementsByTagName('button')[1].disabled = false
         })
