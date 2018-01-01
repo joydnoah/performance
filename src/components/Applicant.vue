@@ -8,7 +8,7 @@
       </div>
       <div>
         <div>
-          <pdf ref="myPdfComponent" :page="page" @numPages="numPages = $event" :src="src"></pdf>
+          <pdf ref="myPdfComponent" :page="page" @numPages="numPages = $event" :src="src" :max="numPages" min="0"></pdf>
         </div>
         <input v-model.number="page" type="number" style="width: 5em"> /{{numPages}}
       </div>
