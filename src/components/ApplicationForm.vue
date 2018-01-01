@@ -222,7 +222,7 @@
           document.getElementsByTagName('button')[1].disabled = false
         })
         .catch(error => {
-          console.log(error)
+          console.log(error.response)
           document.getElementById('alert-error').innerHTML = 'There was an unexpected error saving the application, please contact technology@cotopaxi.io'
           document.getElementsByClassName('alert')[5].style.display = 'block'
           document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
