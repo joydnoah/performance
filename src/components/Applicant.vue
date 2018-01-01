@@ -7,10 +7,10 @@
         </button>
       </div>
       <div>
-        <div>
+        <div style="height:600px;width:550px;border:1px;overflow:auto;">
           <pdf ref="myPdfComponent" :page="page" @numPages="numPages = $event" :src="src"></pdf>
         </div>
-        <input v-model.number="page" type="number" style="width: 5em" :max="numPages" min="0"> /{{numPages}}
+        <input v-model.number="page" type="number" style="width: 5em" :max="numPages" min="1"> /{{numPages}}
       </div>
     </modal>
     <app-nav></app-nav>
