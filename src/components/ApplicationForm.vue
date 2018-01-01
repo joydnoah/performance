@@ -19,7 +19,7 @@
         <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
           <label class="col-sm-2 control-label" >Correo Electrónico *</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" v-on:change="get_applicant()" v-on:input="$v.email.$touch" v-model='email' id="email" >
+            <input type="text" class="form-control" v-on:input="$v.email.$touch" v-model='email' id="email" >
           </div>
         </div>
         <div class="form-group" v-bind:class="{ 'has-error': $v.first_name.$error }">
@@ -87,7 +87,7 @@
       </div>
       <div style="display: none;" class="alert alert-danger" id="alert-error">
         <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
-        <p id="error_message"></p>
+        <p id="error_message1"></p>
       </div>
     </div>
   </div>
@@ -118,7 +118,8 @@
         valid_file_type_curriculum: true,
         valid_file_size_curriculum: true,
         valid_file_type_presentation_letter: true,
-        valid_file_size_presentation_letter: true
+        valid_file_size_presentation_letter: true,
+        required_file: false
       }
     },
     validations: {
@@ -151,6 +152,7 @@
             this.valid_file_type_curriculum = validType
             this.valid_file_size_curriculum = validSize
             this.curriculum_vitae = event.target.files[0]
+            this.required_file = true
             break
 
           case 'presentation_letter':
@@ -158,21 +160,6 @@
             this.valid_file_size_presentation_letter = validSize
             this.presentation_letter = event.target.files[0]
             break
-        }
-      },
-      get_applicant () {
-        if (this.email.trim() !== '') {
-          this.email = this.email.trim().toLowerCase()
-          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.get('/applicant/' + this.email + '/verify')
-          .then((response) => {
-            if (response.data.data.applicant !== '{}') {
-              this.applicant_id = response.data.data.applicant.id
-              document.getElementsByClassName('form')[2].style.display = 'block'
-              document.getElementsByClassName('alert')[2].style.display = 'block'
-            }
-          })
-          .catch(error => { console.log(error.response) })
         }
       },
       validate_file (validType, validSize, errorId) {
@@ -195,7 +182,8 @@
         v.$touch()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
-        if (validCurriculum && validLetter) {
+        console.log(this.required_file)
+        if (validCurriculum && validLetter && this.required_file) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
               this.save()
@@ -203,6 +191,9 @@
           } else {
             this.save()
           }
+        } else {
+          document.getElementById('alert-error').style.display = 'block'
+          document.getElementById('alert-error').innerHTML = 'Es necesario anexar un Curriculum Vitae'
         }
       },
       save () {
@@ -234,7 +225,7 @@
           document.getElementsByTagName('button')[1].disabled = false
         })
         .catch(error => {
-          document.getElementById('error_message').innerHTML = error.response.data.message
+          document.getElementById('error_message1').innerHTML = error.response.data.message
           document.getElementsByClassName('alert')[5].style.display = 'block'
           document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
           document.getElementsByTagName('button')[1].disabled = false
