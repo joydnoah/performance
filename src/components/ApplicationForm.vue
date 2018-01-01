@@ -12,14 +12,14 @@
       </div>
       <div style="display: none;" class="alert alert-info">
         <i class="glyphicon glyphicon-ok"></i> <strong>Candidato Existente!</strong>
-        <p>Existe un candidato registrado como <strong>{{ email }}</strong>, ¿Desea enviar la solicitud?</p>
+        <p>Existe un candidato registrado con ese correo</p>
       </div>
 
       <div class="form form-horizontal">
         <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
           <label class="col-sm-2 control-label" >Correo Electrónico *</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" v-on:change="get_applicant()" v-on:input="$v.email.$touch" v-model='email' id="email" >
+            <input type="text" class="form-control" v-on:input="$v.email.$touch" v-model='email' id="email" >
           </div>
         </div>
         <div class="form-group" v-bind:class="{ 'has-error': $v.first_name.$error }">
@@ -85,6 +85,8 @@
         <br/>
         <br/>
       </div>
+      <div style="display: none;" class="alert alert-danger" id="alert-error">
+      </div>
     </div>
   </div>
 </template>
@@ -114,7 +116,8 @@
         valid_file_type_curriculum: true,
         valid_file_size_curriculum: true,
         valid_file_type_presentation_letter: true,
-        valid_file_size_presentation_letter: true
+        valid_file_size_presentation_letter: true,
+        required_file: false
       }
     },
     validations: {
@@ -147,6 +150,7 @@
             this.valid_file_type_curriculum = validType
             this.valid_file_size_curriculum = validSize
             this.curriculum_vitae = event.target.files[0]
+            this.required_file = true
             break
 
           case 'presentation_letter':
@@ -154,23 +158,6 @@
             this.valid_file_size_presentation_letter = validSize
             this.presentation_letter = event.target.files[0]
             break
-        }
-      },
-      get_applicant () {
-        if (this.email.trim() !== '') {
-          this.email = this.email.trim().toLowerCase()
-          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-          this.axios.get('/applicant/' + this.email + '/verify')
-          .then((response) => {
-            if (response.data.data.applicant !== '{}') {
-              this.applicant_id = response.data.data.applicant.id
-              document.getElementsByClassName('form')[0].style.display = 'none'
-              document.getElementsByClassName('form')[1].style.display = 'none'
-              document.getElementsByClassName('form')[2].style.display = 'block'
-              document.getElementsByClassName('alert')[2].style.display = 'block'
-            }
-          })
-          .catch(error => { console.log(error.response) })
         }
       },
       validate_file (validType, validSize, errorId) {
@@ -189,11 +176,11 @@
         return validation
       },
       post (v) {
-        document.getElementsByClassName('alert')[3].style.display = 'none'
+        document.getElementsByClassName('alert')[5].style.display = 'none'
         v.$touch()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
-        if (validCurriculum && validLetter) {
+        if (validCurriculum && validLetter && this.required_file) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
               this.save()
@@ -201,6 +188,9 @@
           } else {
             this.save()
           }
+        } else {
+          document.getElementById('alert-error').style.display = 'block'
+          document.getElementById('alert-error').innerHTML = 'Es necesario anexar un Curriculum Vitae'
         }
       },
       save () {
@@ -232,8 +222,10 @@
           document.getElementsByTagName('button')[1].disabled = false
         })
         .catch(error => {
-          document.getElementById('error_message').innerHTML = error.response.data.message
-          document.getElementsByClassName('alert')[3].style.display = 'block'
+          // TODO: identify how to avoid setting a console.log to prevent error ...
+          console.log(error.response)
+          document.getElementById('alert-error').innerHTML = 'There was an unexpected error saving the application, please contact technology@cotopaxi.io'
+          document.getElementsByClassName('alert')[5].style.display = 'block'
           document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
           document.getElementsByTagName('button')[1].disabled = false
         })
