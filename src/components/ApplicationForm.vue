@@ -86,8 +86,6 @@
         <br/>
       </div>
       <div style="display: none;" class="alert alert-danger" id="alert-error">
-        <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
-        <p id="error_message1"></p>
       </div>
     </div>
   </div>
@@ -182,7 +180,6 @@
         v.$touch()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
-        console.log(this.required_file)
         if (validCurriculum && validLetter && this.required_file) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
@@ -225,7 +222,8 @@
           document.getElementsByTagName('button')[1].disabled = false
         })
         .catch(error => {
-          document.getElementById('error_message1').innerHTML = error.response.data.message
+          console.log(error)
+          document.getElementById('alert-error').innerHTML = 'There was an unexpected error saving the application, please contact technology@cotopaxi.io'
           document.getElementsByClassName('alert')[5].style.display = 'block'
           document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
           document.getElementsByTagName('button')[1].disabled = false
