@@ -222,6 +222,7 @@
           document.getElementsByTagName('button')[1].disabled = false
         })
         .catch(error => {
+          // TODO: identify how to avoid setting a console.log to prevent error ...
           console.log(error.response)
           document.getElementById('alert-error').innerHTML = 'There was an unexpected error saving the application, please contact technology@cotopaxi.io'
           document.getElementsByClassName('alert')[5].style.display = 'block'
