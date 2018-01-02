@@ -38,7 +38,7 @@
           <label class="col-sm-2 control-label" >Teléfono *</label>
 
           <div class="col-sm-10">
-            <input type="text" class="form-control" v-on:input="$v.phone_number.$touch" v-model='phone_number' id="phone_number" >
+            <input placeholder="Ie. +1 541 754 3010" type="text" class="form-control" v-on:change="validatePhone(phone_number)" v-on:input="$v.phone_number.$touch" v-model='phone_number' id="phone_number" >
           </div>
         </div>
         <legend></legend>
@@ -117,7 +117,8 @@
         valid_file_size_curriculum: true,
         valid_file_type_presentation_letter: true,
         valid_file_size_presentation_letter: true,
-        required_file: false
+        required_file: false,
+        valid_phone: false
       }
     },
     validations: {
@@ -141,6 +142,10 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      validatePhone (phone) {
+        var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/
+        this.valid_phone = regex.test(phone)
       },
       set_files (type, event) {
         var validSize = event.target.files[0]['size'] <= 7000000
@@ -175,12 +180,27 @@
         }
         return validation
       },
+      validate_form (validCurriculum, validLetter) {
+        var msg = ''
+        var validation = validCurriculum && validLetter && this.required_file && this.valid_phone
+        if (!this.required_file) {
+          msg = msg + '<div> Es necesario anexar un Curriculum Vitae. </div>'
+        }
+        if (!this.valid_phone) {
+          msg = msg + '<div> El campo de telefono no tiene un numero valido. </div>'
+        }
+        if (!validation) {
+          document.getElementById('alert-error').style.display = 'block'
+          document.getElementById('alert-error').innerHTML = msg
+        }
+        return validation
+      },
       post (v) {
         document.getElementsByClassName('alert')[5].style.display = 'none'
         v.$touch()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
-        if (validCurriculum && validLetter && this.required_file) {
+        if (this.validate_form(validCurriculum, validLetter)) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
               this.save()
@@ -188,9 +208,6 @@
           } else {
             this.save()
           }
-        } else {
-          document.getElementById('alert-error').style.display = 'block'
-          document.getElementById('alert-error').innerHTML = 'Es necesario anexar un Curriculum Vitae'
         }
       },
       save () {
