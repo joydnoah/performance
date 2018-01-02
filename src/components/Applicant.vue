@@ -1,16 +1,13 @@
 <template>
   <div id="general-container">
-    <modal height="auto" :scrollable="true" name="show-pdf">
-      <div class="window-header">
+    <modal :scrollable="false" :adaptive="true" width="60%" height="100%" name="show-pdf">
+      <div slot="top-right">
         <button @click="$modal.hide('show-pdf')" class="close-button">
           ❌
         </button>
       </div>
-      <div>
-        <div style="height:600px;width:550px;border:1px;overflow:auto;">
-          <pdf ref="myPdfComponent" :page="page" @numPages="numPages = $event" :src="src"></pdf>
-        </div>
-        <input v-model.number="page" type="number" style="width: 5em" :max="numPages" min="1"> /{{numPages}}
+      <div style="width:100%; height:100%;">
+        <iframe :src="src" style="width:100%; height:100%;" frameborder="0"></iframe>
       </div>
     </modal>
     <app-nav></app-nav>
@@ -63,13 +60,11 @@
 
 <script>
   import AppNav from './AppNav'
-  import pdf from 'vue-pdf'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
 
   export default {
     components: {
-      AppNav,
-      pdf
+      AppNav
     },
     data: function () {
       return {
