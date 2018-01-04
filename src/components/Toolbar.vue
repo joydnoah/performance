@@ -16,7 +16,7 @@
               <div v-show="isLoggedIn()" @click="go_to('/positions')" class="nav-item">
                 <i class="material-icons">dashboard</i>Panel de Ofertas
               </div>
-              <div v-show="isLoggedIn()" @click="go_to('/' + company.uri)" class="nav-item">
+              <div v-show="isLoggedIn()" @click="go_to('/company-jobs')" class="nav-item">
                 <i class="material-icons">dashboard</i>Página Empresa
               </div>
               <div v-show="!isLoggedIn()" @click="handleLogin()" class="nav-item">
@@ -32,7 +32,7 @@
                   <div class="dropdown-nav arrow-right">
                     <span class="dropdown-list-title">Opciones de usuario</span>
                     <ul class="dropdown-list">
-                      <li><a href="/company-jobs">Informacion empresarial</a></li>
+                      <li><a @click="go_to('/' + company.uri)">Informacion empresarial</a></li>
                       <li><a @click="handleLogout()" href="#">Cerrar sesión</a></li>
                     </ul>
                   </div>
