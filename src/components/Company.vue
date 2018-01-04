@@ -14,16 +14,17 @@
                 Todos
               </option>
               <option v-for="item in department_list" v-bind:value="item.id">
-                {{ item.name }}
+                <div> {{ item.name }} </div>
               </option>
             </select>
 
-
             <div v-for="item in department_list" class="department-container" v-bind:id="'department-' + item.id">
-              <h4>{{ item.name }}</h4>
-              <div v-for="item_position in positions">
-                <div v-if="item_position.department_name === item.name">
-                  <a v-bind:href="'/position-apply/' + item_position.id">{{ item_position.name }} - {{ item_position.city }}</a>
+              <div v-if="test_position(item)">
+                <h4>{{ item.name }}</h4>
+                <div v-for="item_position in positions">
+                  <div v-if="item_position.department_name === item.name">
+                    <a v-bind:href="'/position-apply/' + item_position.id">{{ item_position.name }} - {{ item_position.city }}</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -56,6 +57,13 @@
         return isLoggedIn()
       },
       exit () {
+      },
+      test_position (position) {
+        for (var i = 0; i < this.positions.length; i++) {
+          if (this.positions[i].department_name === position.name) {
+            return true
+          }
+        }
       },
       get_positions () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`

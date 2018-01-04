@@ -21,10 +21,6 @@
             <label>Danos una descripción corta de tu empresa. (Máximo 200 palabras)</label>
             <textarea rows="10" class="form-control" v-model="description" id="description" name="description"></textarea>
           </div>
-          <div class="form-group">
-            <label>Danos una descripción corta de tu empresa. (Máximo 200 palabras)</label>
-            <textarea rows="10" class="form-control" v-model="work_with_us" id="work_with_us" name="work_with_us"></textarea>
-          </div>
           <div class="form-group" v-bind:class="{ 'has-error': $v.uri.$error }">
             <label>Enlace de página de empresa <span class="required-span">*</span></label>
             <div class="input-group">
@@ -51,7 +47,7 @@
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
-  
+
   export default {
     components: {
       AppNav
