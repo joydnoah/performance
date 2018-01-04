@@ -27,7 +27,12 @@
       </div>
       <div class="form-group">
         <label>Cuerpo del mensaje: </label>
-        <froala :tag="'textarea'" :config="config" v-model="status.body"></froala>
+        <quill-editor v-model="status.body"
+                ref="myQuillEditor"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @ready="onEditorReady($event)"></quill-editor>
       </div>
     </div>
     <button v-on:click="save()" class="btn btn-success">Guardar y Salir</button>
@@ -36,27 +41,24 @@
 </template>
 
 <script>
+  import 'quill/dist/quill.core.css'
+  import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
+
+  import { quillEditor } from 'vue-quill-editor'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Alert } from 'uiv'
-  import VueFroala from 'vue-froala-wysiwyg'
 
   export default {
     components: {
       Alert,
-      VueFroala
+      quillEditor
     },
     props: ['position_id', 'status_prop', 'type_prop'],
     name: 'email-control-template',
     data: function () {
       return {
         email_templates: [],
-        config: {
-          placeholderText: 'Edita tu contenido aquí!',
-          events: {
-            'froalaEditor.initialized': function () {
-            }
-          }
-        },
         status: {
           from_address: '',
           subject: '',
