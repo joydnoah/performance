@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Cotopaxi</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="external-libs/animate/animate.css">
+  <link rel="stylesheet" href="external-libs/mdl-selectfield/mdl-selectfield.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script defer src="external-libs/mdl-selectfield/mdl-selectfield.min.js"></script>
+  <script src="external-libs/wow/wow.min.js"></script>
+  <script src="external-libs/wow/setup.js"></script>
+  <script src="external-libs/scrollmagic/ScrollMagic.js"></script>
+  <script src="external-libs/scrollmagic/debug.addIndicators.js"></script>
+  <!-- Datepicker https://github.com/eternicode/bootstrap-datepicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.en-GB.min.js"></script>
+
+  <script type="text/javascript">
+    function determineDropDirection(){
+      $(".dropdown-menu").each( function(){
+        
+        $(this).parent().removeClass("dropup");
+        
+        if ($(this).offset().top + $(this).outerHeight() > $(window).innerHeight() + $(window).scrollTop()){
+          $(this).parent().addClass("dropup");
+        }
+        
+        $(this).removeAttr("style");
+      });
+    }
+
+    determineDropDirection();
+
+    $(window).scroll(determineDropDirection);
+  </script>
+
+
+  <script>
+    $(window).ready(function() {
+      $('#datepicker-end').datepicker({
+        format: "dd/mm/yyyy",
+        startDate: "0d",
+        endDate: "+90d",
+        maxViewMode: 1,
+        clearBtn: true,
+        autoclose: true,
+        toggleActive: true,
+      });
+      
+      // input recognice is-dirty when select datepicker day
+      $("#datepicker-end").click(function() {
+        if (document.contains($('.datepicker')[0]))
+        {
+          $('.day').not(".disabled").click(function () {
+            $('#datepicker-end').parent().addClass('is-dirty');
+          });
+          $('.today').not(".disabled").click(function () {
+            $('#datepicker-end').parent().addClass('is-dirty');
+          });
+        }
+      });
+    });
+
+  </script>
+
+</head>
+
+<body class="visibility-hidden wow fadeIn" data-wow-duration="1s">
+  <!-- topbar -->
+  <div class="topbar wow fadeIn" data-wow-delay="0.4s" data-wow-duration="1.2s">
+    <div class="topbar-container general-container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="left-side">
+            <div class="logo">
+              <a href="">
+                <img src="images/company-logo.svg">
+              </a>
+            </div>
+          </div>
+          <div class="right-side">
+            <div class="main-nav">
+              <div class="nav-item">
+                <i class="material-icons">dashboard</i>Panel de ofertas
+              </div>
+              <div class="nav-item">
+                <i class="material-icons">note_add</i>Crear posición
+              </div>
+              <div class="nav-item item-nav-dropdown">
+                <i class="material-icons">account_circle</i>Yoshini Shumada
+                <i class="material-icons icon-row">keyboard_arrow_down</i>
+                <div class="dropdown-nav-container">
+                  <div class="dropdown-nav arrow-right">
+                    <span class="dropdown-list-title">Opciones de usuario</span>
+                    <ul class="dropdown-list">
+                      <li><a href="">Informacion empresarial</a></li>
+                      <li><a href="">Cerrar sesión</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- row end -->
+    </div>
+  </div>
+  <!-- topbar end -->
+
+  <!-- body-container start -->
+  <div class="body-container">
+    <!-- header start -->
+    <div class="section-header">
+      <div class="general-container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1 class="header-title wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Crear nueva posición</h1>
+            <span class="header-title-message wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Analista de finanzas (N-2)</span>
+            <span class="header-title-link wow fadeInRight" data-wow-delay="0.4s" data-wow-duration="1.2s">
+              <div class="link-message">Enlace para publicar manualmente</div>
+              <div class="link-url">http://bitly.coto.2dhe5</div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div><!-- header end -->
+
+    
+    <div class="general-container">
+
+      <div class="create-form">
+        <div class="row">
+          <div class="col-xs-offset-2 col-xs-8">
+            <div class="separator"></div>
+          </div>
+        </div>
+        <div class="collapse-group" role="tablist" aria-multiselectable="true">
+          <div class="" role="tab" id="headingOne">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#twitter" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+              <div class="row">
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="form-title">Publicar en Twitter
+                    <i class="material-icons collapse-icon">keyboard_arrow_down</i>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div id="twitter" class="panel-collapse collapse create-form-container" role="tabpanel" aria-labelledby="headingOne">
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="social-connection-container">
+                  <!-- Delete .is-active to hide the div content -->
+                  <div class="connection-content is-active">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-twitter "><span class="btn-social-icon"></span>Conectar a Twitter</button>
+                  </div>
+                  <div class="connected-content is-active">
+                    <div class="connected-user-name user-name-twitter">
+                      <span class="user-name-icon"></span>
+                      Soyelhijo
+                    </div>
+                    <div class="connected-message">Esta cuenta se encuentra activa</div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout">Desconectar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="social-form-container is-active">
+                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="socialtext01" ></textarea>
+                    <label class="mdl-textfield__label" for="socialtext01">Texto para la publicación</label>
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="form-note-message">
+                    <strong>Nota: </strong>
+                    El enlace de la publicación se agregara al final del texto automaticamente
+                  </div>
+                  <div class="form-btn-container">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish">Guardar y publicar</button>
+                    <div class="switch-container">
+                      <span class="switch-message">Re-publicar cada 48 horas</span>
+
+                      <div class="switch-content">
+                        <div class="onoffswitch">
+                          <input id="switchitem-1" type="checkbox" name="switchitem" class="onoffswitch-checkbox">
+                          <label class="onoffswitch-label" for="switchitem-1">
+                            <span class="onoffswitch-inner">
+                              <span class="onoffswitch-active">
+                                <span class="onoffswitch-switch transition-mdl-elements">SI</span>
+                              </span>
+                              <span class="onoffswitch-inactive">
+                                <span class="onoffswitch-switch transition-mdl-elements">NO</span>
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-2 col-xs-8">
+            <div class="separator"></div>
+          </div>
+        </div>
+
+
+
+
+        <div class="collapse-group" role="tablist" aria-multiselectable="true">
+          <div class="" role="tab" id="headingTwo">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#facebook" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+              <div class="row">
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="form-title">Publicar en Facebook
+                    <i class="material-icons collapse-icon">keyboard_arrow_down</i>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div id="facebook" class="panel-collapse collapse create-form-container" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="social-connection-container">
+                  <!-- Delete .is-active to hide the div content -->
+                  <div class="connection-content is-active">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "><span class="btn-social-icon"></span>Conectar a Facebook</button>
+                  </div>
+                  <div class="social-table-content is-active">
+                    <table class="mdl-data-table mdl-js-data-table social-table">
+                      <thead>
+                        <tr>
+                          <th class="mdl-data-table__cell--non-numeric">Name</th>
+                          <th class="mdl-data-table__cell--non-numeric">Age</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Soy el hijo</td>
+                          <td class="mdl-data-table__cell--non-numeric cell-category">Company</td>
+                          <td>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social">Vincular página</button>
+                          </td>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Project</td>
+                          <td class="mdl-data-table__cell--non-numeric cell-category">Company</td>
+                          <td>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social">Vincular página</button>
+                          </td>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Company fan page</td>
+                          <td class="mdl-data-table__cell--non-numeric cell-category">Company</td>
+                          <td>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social">Vincular página</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="connected-content is-active">
+                    <div class="connected-user-name user-name-facebook">
+                      <span class="user-name-icon"></span>
+                      Soyelhijo
+                    </div>
+                    <div class="connected-message">Esta cuenta se encuentra activa</div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout">Desconectar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" rows= "3" id="socialtext02" ></textarea>
+                  <label class="mdl-textfield__label" for="socialtext02">Texto para la publicación</label>
+                  <span class="mdl-textfield__error">Error message</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-2 col-xs-8">
+            <div class="separator"></div>
+          </div>
+        </div>
+
+
+
+
+        <div class="collapse-group" role="tablist" aria-multiselectable="true">
+          <div class="" role="tab" id="headingThree">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#linkedin" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+              <div class="row">
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="form-title">Publicar en LinkedIn
+                    <i class="material-icons collapse-icon">keyboard_arrow_down</i>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div id="linkedin" class="panel-collapse collapse create-form-container" role="tabpanel" aria-labelledby="headingThree">
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="social-connection-container">
+                  <!-- Delete .is-active to hide the div content -->
+                  <div class="connection-content is-active">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-linkedin "><span class="btn-social-icon"></span>Conectar a LinkedIn</button>
+                  </div>
+                  <div class="connected-content is-active">
+                    <div class="connected-user-name user-name-linkedin">
+                      <span class="user-name-icon"></span>
+                      Soyelhijo
+                    </div>
+                    <div class="connected-message">Esta cuenta se encuentra activa</div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout">Desconectar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" rows= "3" id="socialtext01" ></textarea>
+                  <label class="mdl-textfield__label" for="socialtext01">Texto para la publicación</label>
+                  <span class="mdl-textfield__error">Error message</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-2 col-xs-8">
+            <div class="separator"></div>
+          </div>
+        </div>
+
+      </div><!-- create-form end -->
+    </div><!-- create-form-container end -->
+
+
+  </div><!-- body-container end -->
+  <script src="external-libs/scrollmagic/setup.js"></script>
+  <script src="external-libs/wow/start-setup.js"></script>
+</body>
+</html>
