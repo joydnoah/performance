@@ -35,7 +35,8 @@
               <div class="social-connection-container">
                 <!-- Delete .is-active to hide the div content -->
                 <div class="connection-content is-active" v-if="twitter_status !== 'connected'">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-twitter " @click='post_twitter($event)'><span class="btn-social-icon"></span>Conectar a Twitter</button>
+                  <button v-if="!connecting_twitter" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-twitter " @click="post_twitter()"><span class="btn-social-icon"></span>Conectar a Twitter</button>
+                  <div v-if="connecting_twitter" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-twitter "><span class="btn-social-icon"></span>Conectando...</div>
                 </div>
                 <div class="connected-content is-active" v-if="twitter_status === 'connected'">
                   <div class="connected-message">Esta cuenta se encuentra activa</div>
@@ -92,13 +93,22 @@
             <div class="col-xs-offset-2 col-xs-8">
               <div class="social-connection-container">
                 <!-- Delete .is-active to hide the div content -->
-                <div class="connection-content is-active" v-if="pages.length <= 0 && facebook_status !== 'connected'">
+                <div v-on:click="facebook_connect_button_change()" class="connection-content is-active" v-if="pages.length <= 0 && facebook_status !== 'connected' && !connecting_facebook">
                   <fb-signin-button id="facebook-button"
                     :params="fbSignInParams"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "
                     @success="onSignInSuccess"
                     @error="onSignInError">
-                    <div v-on:click="connect_button_change($event)"><span class="btn-social-icon"></span>Conectar a Facebook</div>
+                    <span class="btn-social-icon"></span>Conectar a Facebook
+                  </fb-signin-button>
+                </div>
+                <div class="connection-content is-active" v-if="pages.length <= 0 && facebook_status !== 'connected' && connecting_facebook">
+                  <fb-signin-button id="facebook-button"
+                    :params="fbSignInParams"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "
+                    @success="onSignInSuccess"
+                    @error="onSignInError">
+                    <span class="btn-social-icon"></span>Conectando...
                   </fb-signin-button>
                 </div>
                 <div class="social-table-content is-active" v-if="pages.length > 0 && facebook_status !== 'connected'">
@@ -181,7 +191,8 @@
               <div class="social-connection-container">
                 <!-- Delete .is-active to hide the div content -->
                 <div class="connection-content is-active" v-if="linkedin_status !== 'connected'">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-linkedin " @click="send_linkedin($event)"><span class="btn-social-icon"></span>Conectar a LinkedIn</button>
+                  <button v-if="!connecting_linkedin" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-linkedin " @click="send_linkedin()"><span class="btn-social-icon"></span>Conectar a LinkedIn</button>
+                  <div v-if="connecting_linkedin" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-linkedin "><span class="btn-social-icon"></span>Conectando...</div>
                 </div>
                 <div class="connected-content is-active" v-if="linkedin_status === 'connected'">
                   <div class="connected-message">Esta cuenta se encuentra activa</div>
@@ -253,7 +264,10 @@
         text_post_twitter: '',
         counter_characters_facebook: 0,
         counter_characters_linkedin: 0,
-        counter_characters_twitter: 0
+        counter_characters_twitter: 0,
+        connecting_twitter: false,
+        connecting_facebook: false,
+        connecting_linkedin: false
       }
     },
     methods: {
@@ -262,11 +276,12 @@
           this.pages = dude.data
         })
       },
-      connect_button_change (event) {
-        event.target.innerHTML = '<span class="btn-social-icon"></span>Conectando...'
+      facebook_connect_button_change () {
+        this.connecting_facebook = true
       },
       onSignInError (error) {
         console.log('La cuenta no ha sido autorizada!', error)
+        this.connecting_facebook = false
       },
       set_token (token, id, event) {
         event.target.innerHTML = 'Vinculando...'
@@ -348,8 +363,8 @@
         })
         .catch(error => { console.log(error.response) })
       },
-      post_twitter (event) {
-        this.connect_button_change(event)
+      post_twitter () {
+        this.connecting_twitter = true
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/social-network/twitter/company/' + localStorage['company_id'] + '/connection')
         .then(response => {
@@ -359,8 +374,8 @@
         })
         .catch(error => { console.log(error.response) })
       },
-      send_linkedin (event) {
-        this.connect_button_change(event)
+      send_linkedin () {
+        this.connecting_linkedin = true
         window.localStorage.setItem('position_url_social_return', window.location.href)
         window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?client_id=' + process.env.LINKEDIN_CLIENT_ID + '&redirect_uri=' + process.env.LINKEDIN_CALLBACK + '&state=f1576406b382b7d1c8c2607f7c563d4f&response_type=code&scope=r_basicprofile w_share'
       },
