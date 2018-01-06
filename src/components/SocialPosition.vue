@@ -284,7 +284,6 @@
         })
       },
       publish (provider) {
-        console.log(this.social_network_connections[0])
         switch (provider) {
           case 'facebook':
             this.text_post = this.text_post_facebook + ' ' + this.text_post_link
