@@ -1,0 +1,124 @@
+
+.social-connection-container
+	background color-background
+	margin-bottom 30px
+	.connection-content
+		display none
+		padding 20px
+		&.is-active
+			display block
+		.mdl-button.btn-social
+			border-radius 100px
+			box-shadow 0px 2px 8px rgba(0,0,0,0.13)
+			color color-white
+			font-size 16px
+			height 36px
+			padding 0 20px
+			text-transform none
+			&.btn-twitter
+				background #1da1f2
+				.btn-social-icon
+					background url("../images/icon-twitter-white.svg") no-repeat center center
+					background-size contain
+			&.btn-facebook
+				background #3b5998
+				.btn-social-icon
+					background url("../images/icon-facebook-white.svg") no-repeat center center
+					background-size contain
+			&.btn-linkedin
+				background #0077b5
+				.btn-social-icon
+					background url("../images/icon-linkedin-white.svg") no-repeat center center
+					background-size contain
+			.btn-social-icon
+				display inline-block
+				height 20px
+				margin-right 13px
+				vertical-align text-top
+				width 20px
+	.connected-content 
+		display none
+		padding 20px 20px 25px
+		&.is-active
+			display block
+		.connected-user-name
+			display inline-block
+			font-size 16px
+			margin-right 20px
+			margin-top 7px
+			max-width 200px 
+			overflow hidden
+			text-overflow ellipsis
+			white-space nowrap
+			&.user-name-twitter
+				color #1da1f2
+				.user-name-icon
+					background url("../images/icon-twitter.svg") no-repeat center center
+					background-size contain
+			&.user-name-facebook
+				color #3b5998
+				.user-name-icon
+					background url("../images/icon-facebook.svg") no-repeat center center
+					background-size contain
+			&.user-name-linkedin
+				color #0077b5
+				.user-name-icon
+					background url("../images/icon-linkedin.svg") no-repeat center center
+					background-size contain
+			.user-name-icon
+				display inline-block
+				height 20px
+				margin-right 7px
+				vertical-align text-top
+				width 20px
+		.connected-message
+			color color-text-secondary
+			display inline-block
+			font-size 16px
+			margin-top 7px
+			vertical-align top
+		.mdl-button.btn-social-logout
+			background color-white
+			border solid 1px color-error
+			border-radius 100px
+			box-shadow none
+			color color-error
+			float right
+			font-size 16px
+			height 36px
+			padding 0 25px
+			text-transform none
+
+.social-form-container
+	display none
+	&.is-active
+		display block
+	.form-note-message
+		color color-text-secondary
+		font-size 14px
+		font-weight regular
+		margin -15px 0 40px
+		strong
+			font-weight bold
+	.form-btn-container
+		margin-bottom 20px
+		.mdl-button.btn-social-publish
+			background color-primary
+			border-radius 100px
+			box-shadow 0px 2px 8px rgba(0,0,0,0.13)
+			color color-white
+			font-size 16px
+			height 36px
+			padding 0 25px
+			text-transform none
+		.switch-container
+			float right
+			padding-top 7px
+			.switch-message
+				color color-text-secondary
+				font-size 14px
+				font-weight regular
+				line-height 1.7
+				margin-right 15px
+				text-align right
+				vertical-align top

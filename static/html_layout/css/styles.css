@@ -355,6 +355,92 @@ html body label {
 .scroll-hidden-y {
   overflow-y: hidden;
 }
+.switch-content {
+  display: inline-block;
+}
+.switch-content .onoffswitch {
+  position: relative;
+  width: 48px;
+}
+.switch-content .onoffswitch .onoffswitch-checkbox {
+  display: none;
+}
+.switch-content .onoffswitch .onoffswitch-label {
+  border-radius: 100px;
+  cursor: pointer;
+  display: block;
+  height: 26px;
+  margin: 0;
+  width: 48px;
+}
+.switch-content .onoffswitch .onoffswitch-inner {
+  display: block;
+  width: 200%;
+}
+.switch-content .onoffswitch .onoffswitch-inner .onoffswitch-active {
+  background-color: #dfdfe1;
+  border-radius: 12px;
+  color: #fff;
+  padding-right: 11px;
+  position: relative;
+}
+.switch-content .onoffswitch .onoffswitch-inner .onoffswitch-active .onoffswitch-switch {
+  background: #ff9600;
+  border-radius: 100%;
+  opacity: 0;
+  position: absolute;
+  right: 24px;
+}
+.switch-content .onoffswitch .onoffswitch-inner .onoffswitch-inactive {
+  color: #fff;
+  padding-left: 11px;
+  position: absolute;
+}
+.switch-content .onoffswitch .onoffswitch-inner .onoffswitch-inactive .onoffswitch-switch {
+  background: #ff0052;
+  border-radius: 100%;
+  left: 0;
+  opacity: 1;
+  position: absolute;
+}
+.switch-content .onoffswitch .onoffswitch-inner > span {
+  box-sizing: border-box;
+  color: #fff;
+  display: block;
+  float: left;
+  font-size: 10px;
+  font-weight: medium;
+  height: 24px;
+  line-height: 24px;
+  padding: 0;
+  position: relative;
+  text-transform: uppercase;
+  width: 50%;
+}
+.switch-content .onoffswitch .onoffswitch-switch {
+  border: 0px;
+  bottom: 0;
+  display: block;
+  font-size: 10px;
+  font-weight: medium;
+  height: 22px;
+  line-height: 23px;
+  margin: 1px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  width: 22px;
+}
+.switch-content .onoffswitch .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner .onoffswitch-active .onoffswitch-switch {
+  background: #00c4b6;
+  left: 24px;
+  opacity: 1;
+  right: 0;
+}
+.switch-content .onoffswitch .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner .onoffswitch-inactive .onoffswitch-switch {
+  left: 24px;
+  opacity: 0;
+}
 .datepicker {
   color: #393c41;
   font-size: 14px;
@@ -517,6 +603,22 @@ html body label {
   font-weight: 400;
   line-height: 1.2;
   margin-top: 6px;
+}
+.section-header .header-title-link {
+  color: #fff;
+  float: right;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-top: -35px;
+  text-align: right;
+}
+.section-header .header-title-link .link-message {
+  font-weight: 400;
+}
+.section-header .header-title-link .link-url {
+  font-weight: 700;
+  margin-top: 10px;
 }
 .topbar {
   background: transparent;
@@ -1406,4 +1508,199 @@ html body label {
 }
 .create-form .add-ability-btn .material-icons {
   font-size: 18px;
+}
+.social-connection-container {
+  background: #fafafc;
+  margin-bottom: 30px;
+}
+.social-connection-container .connection-content {
+  display: none;
+  padding: 20px;
+}
+.social-connection-container .connection-content.is-active {
+  display: block;
+}
+.social-connection-container .connection-content .mdl-button.btn-social {
+  border-radius: 100px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.13);
+  color: #fff;
+  font-size: 16px;
+  height: 36px;
+  padding: 0 20px;
+  text-transform: none;
+}
+.social-connection-container .connection-content .mdl-button.btn-social.btn-twitter {
+  background: #1da1f2;
+}
+.social-connection-container .connection-content .mdl-button.btn-social.btn-twitter .btn-social-icon {
+  background: url("../images/icon-twitter-white.svg") no-repeat center center;
+  background-size: contain;
+}
+.social-connection-container .connection-content .mdl-button.btn-social.btn-facebook {
+  background: #3b5998;
+}
+.social-connection-container .connection-content .mdl-button.btn-social.btn-facebook .btn-social-icon {
+  background: url("../images/icon-facebook-white.svg") no-repeat center center;
+  background-size: contain;
+}
+.social-connection-container .connection-content .mdl-button.btn-social.btn-linkedin {
+  background: #0077b5;
+}
+.social-connection-container .connection-content .mdl-button.btn-social.btn-linkedin .btn-social-icon {
+  background: url("../images/icon-linkedin-white.svg") no-repeat center center;
+  background-size: contain;
+}
+.social-connection-container .connection-content .mdl-button.btn-social .btn-social-icon {
+  display: inline-block;
+  height: 20px;
+  margin-right: 13px;
+  vertical-align: text-top;
+  width: 20px;
+}
+.social-connection-container .connected-content {
+  display: none;
+  padding: 20px 20px 25px;
+}
+.social-connection-container .connected-content.is-active {
+  display: block;
+}
+.social-connection-container .connected-content .connected-user-name {
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 20px;
+  margin-top: 7px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.social-connection-container .connected-content .connected-user-name.user-name-twitter {
+  color: #1da1f2;
+}
+.social-connection-container .connected-content .connected-user-name.user-name-twitter .user-name-icon {
+  background: url("../images/icon-twitter.svg") no-repeat center center;
+  background-size: contain;
+}
+.social-connection-container .connected-content .connected-user-name.user-name-facebook {
+  color: #3b5998;
+}
+.social-connection-container .connected-content .connected-user-name.user-name-facebook .user-name-icon {
+  background: url("../images/icon-facebook.svg") no-repeat center center;
+  background-size: contain;
+}
+.social-connection-container .connected-content .connected-user-name.user-name-linkedin {
+  color: #0077b5;
+}
+.social-connection-container .connected-content .connected-user-name.user-name-linkedin .user-name-icon {
+  background: url("../images/icon-linkedin.svg") no-repeat center center;
+  background-size: contain;
+}
+.social-connection-container .connected-content .connected-user-name .user-name-icon {
+  display: inline-block;
+  height: 20px;
+  margin-right: 7px;
+  vertical-align: text-top;
+  width: 20px;
+}
+.social-connection-container .connected-content .connected-message {
+  color: #6f747a;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 7px;
+  vertical-align: top;
+}
+.social-connection-container .connected-content .mdl-button.btn-social-logout {
+  background: #fff;
+  border: solid 1px #ff0052;
+  border-radius: 100px;
+  box-shadow: none;
+  color: #ff0052;
+  float: right;
+  font-size: 16px;
+  height: 36px;
+  padding: 0 25px;
+  text-transform: none;
+}
+.social-form-container {
+  display: none;
+}
+.social-form-container.is-active {
+  display: block;
+}
+.social-form-container .form-note-message {
+  color: #6f747a;
+  font-size: 14px;
+  font-weight: 400;
+  margin: -15px 0 40px;
+}
+.social-form-container .form-note-message strong {
+  font-weight: 700;
+}
+.social-form-container .form-btn-container {
+  margin-bottom: 20px;
+}
+.social-form-container .form-btn-container .mdl-button.btn-social-publish {
+  background: #12abd4;
+  border-radius: 100px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.13);
+  color: #fff;
+  font-size: 16px;
+  height: 36px;
+  padding: 0 25px;
+  text-transform: none;
+}
+.social-form-container .form-btn-container .switch-container {
+  float: right;
+  padding-top: 7px;
+}
+.social-form-container .form-btn-container .switch-container .switch-message {
+  color: #6f747a;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin-right: 15px;
+  text-align: right;
+  vertical-align: top;
+}
+.social-connection-container .social-table-content {
+  display: none;
+  padding: 10px 20px 20px;
+}
+.social-connection-container .social-table-content.is-active {
+  display: block;
+}
+.social-connection-container .social-table-content table.social-table {
+  background: none;
+  border: none;
+  width: 100%;
+}
+.social-connection-container .social-table-content table.social-table thead tr th {
+  color: #007bb6;
+  font-size: 14px;
+  font-weight: 700;
+}
+.social-connection-container .social-table-content table.social-table tbody tr {
+  background: #fff;
+}
+.social-connection-container .social-table-content table.social-table tbody tr:hover {
+  background: #fafafc;
+}
+.social-connection-container .social-table-content table.social-table tbody tr td {
+  color: #393c41;
+  font-size: 14px;
+  font-weight: 400;
+}
+.social-connection-container .social-table-content table.social-table tbody tr td.cell-category {
+  color: #6f747a;
+}
+.social-connection-container .social-table-content table.social-table .mdl-button.btn-social {
+  background: #12abd4;
+  border-radius: 100px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.13);
+  color: #fff;
+  font-size: 14px;
+  height: 28px;
+  line-height: 1;
+  padding: 0 20px;
+  text-transform: none;
 }
