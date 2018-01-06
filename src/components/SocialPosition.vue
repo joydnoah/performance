@@ -1,92 +1,232 @@
 <template>
   <div id="general-container">
-    <app-nav></app-nav>
-    <div id="container-positions" class="panel panel-default">
-      <div class="panel-heading"><h3>Redes Sociales</h3></div>
-      <div class="panel-body">
-        <legend>Conexión con redes sociales</legend>
-        <h4>Facebook</h4>
-        <div v-if="facebook_status !== 'connected'">
-          <fb-signin-button id="facebook-button"
-            :params="fbSignInParams"
-            @success="onSignInSuccess"
-            @error="onSignInError">
-            Sign in with Facebook
-          </fb-signin-button>
-
-          <table class="table table-striped">
-            <caption>
-              Listado de paginas relacionadas con la cuenta actual
-            </caption>
-            <thead>
-              <tr>
-                <th>Página</th>
-                <th>Categoría</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in pages">
-                <td>{{ item.name }}</td>
-                <td>{{ item.category }}</td>
-                <td><button class="btn btn-warning" @click="set_token(item.access_token, item.id)">Vincular Página</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div v-if="facebook_status === 'connected'">
-          <div id="facebook-connected" class="alert alert-info">
-            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect('facebook')">Desconectar</button>
+    <toolbar></toolbar>
+    <!-- header start -->
+    <div class="section-header">
+      <div class="general-container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1 class="header-title wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Redes sociales</h1>
           </div>
         </div>
-        <br/>
-        <h4>Iniciar Sesión Twitter</h4>
-        <div v-if="twitter_status !== 'connected'">
-          <button class="btn btn-info" @click='post_twitter'>Login Twitter</button>
+      </div>
+    </div><!-- header end -->
+    <div class="create-form">
+      <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+          <div class="separator"></div>
         </div>
-        <div v-if="twitter_status === 'connected'">
-          <div id="twitter-connected" class="alert alert-info">
-            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect('twitter')">Desconectar</button>
-          </div>
+      </div>
+      <div class="collapse-group" role="tablist" aria-multiselectable="true">
+        <div class="" role="tab" id="headingOne">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#twitter" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="form-title">Publicar en Twitter
+                  <i class="material-icons collapse-icon">keyboard_arrow_down</i>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
-        <br/>
-        <h4>LinkedIn</h4>
-        <div v-if="linkedin_status !== 'connected'">
-          <button @click="send_linkedin" class="btn btn-primary">Iniciar Sesión LinkedIn</button>
-        </div>
-        <div v-if="linkedin_status === 'connected'">
-          <div id="linkedin-connected" class="alert alert-info">
-            <strong>Cuenta Conectada!</strong> <button class="btn btn-default" @click="disconnect('linkedin')">Desconectar</button>
-          </div>
-        </div>
-        <div v-if="social_network_connections.length > 0">
-          <legend>Contenido del post</legend>
-          <div class="form">
-            <div class="form-group">
-              <label>Texto</label>
-              <textarea v-model="text_post" v-on:keyup="get_counter_characters()" class="form-control" rows="10"></textarea>
-              <div id="counter_characters">{{ counter_characters }}</div>
+        <div id="twitter" class="panel-collapse collapse create-form-container" role="tabpanel" aria-labelledby="headingOne">
+          <div class="row">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="social-connection-container">
+                <!-- Delete .is-active to hide the div content -->
+                <div class="connection-content is-active" v-if="twitter_status !== 'connected'">
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-twitter " @click='post_twitter'><span class="btn-social-icon"></span>Conectar a Twitter</button>
+                </div>
+                <div class="connected-content is-active" v-if="twitter_status === 'connected'">
+                  <div class="connected-message">Esta cuenta se encuentra activa</div>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" >Desconectar</button>
+                </div>
+              </div>
             </div>
           </div>
-          <div style="display: none;" id="success-post" class="alert alert-info">La publicación se ha realizado correctamente!</div>
-          <button v-if="facebook_status === 'connected'" @click="publish('facebook')" class="btn btn-primary">Publicar en Facebook</button>
-          <button v-if="twitter_status === 'connected'" @click="publish('twitter')" class="btn btn-primary">Publicar en Twitter</button>
-          <button v-if="linkedin_status === 'connected'" @click="publish('linkedin')" class="btn btn-primary">Publicar en Linkedin</button>
-          <legend></legend>
+          <div class="row" v-if="twitter_status === 'connected'">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="social-form-container is-active">
+                <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" rows= "3" id="socialtext01" v-model="text_post_twitter" v-on:keyup="get_counter_characters('twitter')"></textarea>
+                  <label id="twitter_label" class="mdl-textfield__label" for="socialtext01">Texto para la publicación</label>
+                  <span class="mdl-textfield__error">Error message</span>
+                </div>
+                <div id="counter_characters">{{ counter_characters_twitter }}</div>
+                <div class="form-note-message">
+                  <strong>Nota: </strong>
+                  El enlace de la publicación se agregara al final del texto automaticamente
+                </div>
+                <div class="form-btn-container">
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('twitter')">Guardar y publicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <a href="/positions" class="btn btn-danger">Salir</a>
       </div>
-    </div>
+      <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+          <div class="separator"></div>
+        </div>
+      </div>
+
+
+
+
+      <div class="collapse-group" role="tablist" aria-multiselectable="true">
+        <div class="" role="tab" id="headingTwo">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#facebook" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="form-title">Publicar en Facebook
+                  <i class="material-icons collapse-icon">keyboard_arrow_down</i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div id="facebook" class="panel-collapse collapse create-form-container" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="row">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="social-connection-container">
+                <!-- Delete .is-active to hide the div content -->
+                <div class="connection-content is-active" v-if="facebook_status !== 'connected'">
+                  <fb-signin-button id="facebook-button"
+                    :params="fbSignInParams"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "
+                    @success="onSignInSuccess"
+                    @error="onSignInError">
+                    <span class="btn-social-icon"></span>Conectar a Facebook
+                  </fb-signin-button>
+                </div>
+                <div class="social-table-content is-active" v-if="pages.length > 0">
+                  <table class="mdl-data-table mdl-js-data-table social-table">
+                    <caption>
+                      Listado de paginas relacionadas con la cuenta actual
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Página</th>
+                        <th class="mdl-data-table__cell--non-numeric">Categoría</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in pages">
+                        <td class="mdl-data-table__cell--non-numeric">{{ item.name }}</td>
+                        <td class="mdl-data-table__cell--non-numeric cell-category">{{ item.category }}</td>
+                        <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social" @click="set_token(item.access_token, item.id)">Vincular Página</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="connected-content is-active" v-if="facebook_status === 'connected'">
+                  <div id="facebook-connected" class="connected-content is-active">
+                    <div class="connected-message">Esta cuenta se encuentra activa</div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" @click="disconnect('facebook')">Desconectar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" v-if="facebook_status === 'connected'">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="social-form-container is-active">
+                <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" rows= "3" id="socialtext02" v-model="text_post_facebook" v-on:keyup="get_counter_characters('facebook')"></textarea>
+                  <label id="facebook_label" class="mdl-textfield__label">Texto para la publicación</label>
+                  <span class="mdl-textfield__error">Error message</span>
+                </div>
+                <div id="counter_characters">{{ counter_characters_facebook }}</div>
+                <div class="form-note-message">
+                  <strong>Nota: </strong>
+                  El enlace de la publicación se agregara al final del texto automaticamente
+                </div>
+                <div style="display: none;" id="success-post" class="alert alert-info">La publicación se ha realizado correctamente!</div>
+                <div class="form-btn-container">
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish"  @click="publish('facebook')">Guardar y publicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+          <div class="separator"></div>
+        </div>
+      </div>
+
+
+
+
+      <div class="collapse-group" role="tablist" aria-multiselectable="true">
+        <div class="" role="tab" id="headingThree">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#linkedin" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="form-title">Publicar en LinkedIn
+                  <i class="material-icons collapse-icon">keyboard_arrow_down</i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div id="linkedin" class="panel-collapse collapse create-form-container" role="tabpanel" aria-labelledby="headingThree">
+          <div class="row">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="social-connection-container">
+                <!-- Delete .is-active to hide the div content -->
+                <div class="connection-content is-active" v-if="linkedin_status !== 'connected'">
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-linkedin " @click="send_linkedin"><span class="btn-social-icon"></span>Conectar a LinkedIn</button>
+                </div>
+                <div class="connected-content is-active" v-if="linkedin_status === 'connected'">
+                  <div class="connected-message">Esta cuenta se encuentra activa</div>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" @click="disconnect('linkedin')">Desconectar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" v-if="linkedin_status === 'connected'">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="social-form-container is-active">
+                <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" rows= "3" id="socialtext03" v-model="text_post_linkedin" v-on:keyup="get_counter_characters('linkedin')"></textarea>
+                  <label id="linkedin_label" class="mdl-textfield__label" for="socialtext03">Texto para la publicación</label>
+                  <span class="mdl-textfield__error">Error message</span>
+                </div>
+                <div id="counter_characters">{{ counter_characters_linkedin }}</div>
+                <div class="form-note-message">
+                  <strong>Nota: </strong>
+                  El enlace de la publicación se agregara al final del texto automaticamente
+                </div>
+                <div class="form-btn-container">
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('linkedin')">Guardar y publicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+          <div class="separator"></div>
+        </div>
+      </div>
+    </div><!-- create-form end -->
   </div>
 </template>
 <script>
-  import AppNav from './AppNav'
+  import Toolbar from './Toolbar'
   import FBSignInButton from 'vue-facebook-signin-button'
   import { getAccessToken, getIdToken } from '../../utils/auth'
-  
+
   export default {
     components: {
-      AppNav,
+      Toolbar,
       FBSignInButton
     },
     data: function () {
@@ -105,7 +245,13 @@
         linkedin_status: 'not_connected',
         position: {},
         text_post: '',
-        counter_characters: 200
+        text_post_link: '',
+        text_post_facebook: '',
+        text_post_linkedin: '',
+        text_post_twitter: '',
+        counter_characters_facebook: 0,
+        counter_characters_linkedin: 0,
+        counter_characters_twitter: 0
       }
     },
     methods: {
@@ -138,6 +284,18 @@
         })
       },
       publish (provider) {
+        console.log(this.social_network_connections[0])
+        switch (provider) {
+          case 'facebook':
+            this.text_post = this.text_post_facebook + ' ' + this.text_post_link
+            break
+          case 'twitter':
+            this.text_post = this.text_post_twitter + ' ' + this.text_post_link
+            break
+          case 'linkedin':
+            this.text_post = this.text_post_linkedin + ' ' + this.text_post_link
+            break
+        }
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/social-network/' + provider + '/company/' + window.localStorage['company_id'] + '/publish', {
           'text_post': this.text_post
@@ -199,13 +357,26 @@
         this.axios.get('/position/' + this.$route.params.position_id)
         .then((response) => {
           this.position = response.data.data.position
-          this.text_post = this.position.name + ' - ' + process.env.HOST + '/position-apply/' + this.position.id
+          this.text_post_link = this.position.name + ' - ' + process.env.HOST + '/position-apply/' + this.position.id
           this.get_counter_characters()
         })
         .catch(error => { console.log(error.response) })
       },
-      get_counter_characters () {
-        this.counter_characters = this.text_post.length
+      get_counter_characters (provider) {
+        switch (provider) {
+          case 'facebook':
+            document.getElementById('facebook_label').parentElement.classList.add('is-focused')
+            this.counter_characters_facebook = this.text_post_facebook.length
+            break
+          case 'twitter':
+            document.getElementById('twitter_label').parentElement.classList.add('is-focused')
+            this.counter_characters_twitter = this.text_post_twitter.length
+            break
+          case 'linkedin':
+            document.getElementById('linkedin_label').parentElement.classList.add('is-focused')
+            this.counter_characters_linkedin = this.text_post_linkedin.length
+            break
+        }
       }
     },
     created: function () {
@@ -229,6 +400,11 @@
       this.script_html += '}(document, "script", "facebook-jssdk"));\n'
       this.facebook_plugin.innerHTML = this.script_html
       document.body.appendChild(this.facebook_plugin)
+      this.bootstrap_min_js = document.createElement('script')
+      this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
+      this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
+      document.head.appendChild(this.bootstrap_min_js)
     },
     mounted: function () {
       this.get_position()
@@ -237,6 +413,8 @@
     }
   }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
   #container-positions{
