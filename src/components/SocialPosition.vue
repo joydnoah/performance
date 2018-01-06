@@ -362,20 +362,22 @@
         .catch(error => { console.log(error.response) })
       },
       get_counter_characters (provider) {
+        var selected_label = ''
         switch (provider) {
           case 'facebook':
-            document.getElementById('facebook_label').parentElement.classList.add('is-focused')
+            selected_label = 'facebook_label'
             this.counter_characters_facebook = this.text_post_facebook.length
             break
           case 'twitter':
-            document.getElementById('twitter_label').parentElement.classList.add('is-focused')
+            selected_label = 'twitter_label'
             this.counter_characters_twitter = this.text_post_twitter.length
             break
           case 'linkedin':
-            document.getElementById('linkedin_label').parentElement.classList.add('is-focused')
+            selected_label = 'linkedin_label'
             this.counter_characters_linkedin = this.text_post_linkedin.length
             break
         }
+        document.getElementById(selected_label).parentElement.classList.add('is-focused')
       }
     },
     created: function () {
