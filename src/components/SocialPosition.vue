@@ -57,6 +57,7 @@
                   <strong>Nota: </strong>
                   El enlace de la publicación se agregara al final del texto automaticamente
                 </div>
+                <div style="display: none;" id="success-post-twitter" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('twitter')">Guardar y publicar</button>
                 </div>
@@ -144,7 +145,7 @@
                   <strong>Nota: </strong>
                   El enlace de la publicación se agregara al final del texto automaticamente
                 </div>
-                <div style="display: none;" id="success-post" class="alert alert-info">La publicación se ha realizado correctamente!</div>
+                <div style="display: none;" id="success-post-facebook" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish"  @click="publish('facebook')">Guardar y publicar</button>
                 </div>
@@ -202,6 +203,7 @@
                   <strong>Nota: </strong>
                   El enlace de la publicación se agregara al final del texto automaticamente
                 </div>
+                <div style="display: none;" id="success-post-linkedin" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('linkedin')">Guardar y publicar</button>
                 </div>
@@ -300,9 +302,9 @@
           'text_post': this.text_post
         })
         .then(response => {
-          document.getElementById('success-post').style.display = 'block'
+          document.getElementById('success-post-' + provider).style.display = 'block'
           setTimeout(function () {
-            document.getElementById('success-post').style.display = 'none'
+            document.getElementById('success-post-' + provider).style.display = 'none'
           }, 2500)
         })
         .catch(error => {
