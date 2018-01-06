@@ -93,17 +93,23 @@
             <div class="col-xs-offset-2 col-xs-8">
               <div class="social-connection-container">
                 <!-- Delete .is-active to hide the div content -->
-                <div class="connection-content is-active" v-if="pages.length <= 0 && facebook_status !== 'connected' && !connecting_facebook">
+                <div v-on:click="facebook_connect_button_change()" class="connection-content is-active" v-if="pages.length <= 0 && facebook_status !== 'connected' && !connecting_facebook">
                   <fb-signin-button id="facebook-button"
                     :params="fbSignInParams"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "
                     @success="onSignInSuccess"
                     @error="onSignInError">
-                    <div v-on:click="connect_button_change()"><span class="btn-social-icon"></span>Conectar a Facebook</div>
+                    <span class="btn-social-icon"></span>Conectar a Facebook
                   </fb-signin-button>
                 </div>
                 <div class="connection-content is-active" v-if="pages.length <= 0 && facebook_status !== 'connected' && connecting_facebook">
-                  <div class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "><span class="btn-social-icon"></span>Conectando...</div>
+                  <fb-signin-button id="facebook-button"
+                    :params="fbSignInParams"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "
+                    @success="onSignInSuccess"
+                    @error="onSignInError">
+                    <span class="btn-social-icon"></span>Conectando...
+                  </fb-signin-button>
                 </div>
                 <div class="social-table-content is-active" v-if="pages.length > 0 && facebook_status !== 'connected'">
                   <table class="mdl-data-table mdl-js-data-table social-table">
@@ -270,7 +276,7 @@
           this.pages = dude.data
         })
       },
-      connect_button_change () {
+      facebook_connect_button_change () {
         this.connecting_facebook = true
       },
       onSignInError (error) {
