@@ -35,7 +35,7 @@
               <div class="social-connection-container">
                 <!-- Delete .is-active to hide the div content -->
                 <div class="connection-content is-active" v-if="twitter_status !== 'connected'">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-twitter " @click='post_twitter'><span class="btn-social-icon"></span>Conectar a Twitter</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-twitter " @click='post_twitter($event)'><span class="btn-social-icon"></span>Conectar a Twitter</button>
                 </div>
                 <div class="connected-content is-active" v-if="twitter_status === 'connected'">
                   <div class="connected-message">Esta cuenta se encuentra activa</div>
@@ -92,13 +92,13 @@
             <div class="col-xs-offset-2 col-xs-8">
               <div class="social-connection-container">
                 <!-- Delete .is-active to hide the div content -->
-                <div class="connection-content is-active" v-if="facebook_status !== 'connected'">
+                <div class="connection-content is-active" v-if="pages.length <= 0 && facebook_status !== 'connected'">
                   <fb-signin-button id="facebook-button"
                     :params="fbSignInParams"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-facebook "
                     @success="onSignInSuccess"
                     @error="onSignInError">
-                    <span class="btn-social-icon"></span>Conectar a Facebook
+                    <div v-on:click="connect_button_change($event)"><span class="btn-social-icon"></span>Conectar a Facebook</div>
                   </fb-signin-button>
                 </div>
                 <div class="social-table-content is-active" v-if="pages.length > 0 && facebook_status !== 'connected'">
@@ -181,7 +181,7 @@
               <div class="social-connection-container">
                 <!-- Delete .is-active to hide the div content -->
                 <div class="connection-content is-active" v-if="linkedin_status !== 'connected'">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-linkedin " @click="send_linkedin"><span class="btn-social-icon"></span>Conectar a LinkedIn</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social btn-linkedin " @click="send_linkedin($event)"><span class="btn-social-icon"></span>Conectar a LinkedIn</button>
                 </div>
                 <div class="connected-content is-active" v-if="linkedin_status === 'connected'">
                   <div class="connected-message">Esta cuenta se encuentra activa</div>
@@ -261,6 +261,9 @@
         window.FB.api('/me/accounts', dude => {
           this.pages = dude.data
         })
+      },
+      connect_button_change (event) {
+        event.target.innerHTML = '<span class="btn-social-icon"></span>Conectando...'
       },
       onSignInError (error) {
         console.log('La cuenta no ha sido autorizada!', error)
@@ -345,7 +348,8 @@
         })
         .catch(error => { console.log(error.response) })
       },
-      post_twitter () {
+      post_twitter (event) {
+        this.connect_button_change(event)
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/social-network/twitter/company/' + localStorage['company_id'] + '/connection')
         .then(response => {
@@ -355,7 +359,8 @@
         })
         .catch(error => { console.log(error.response) })
       },
-      send_linkedin () {
+      send_linkedin (event) {
+        this.connect_button_change(event)
         window.localStorage.setItem('position_url_social_return', window.location.href)
         window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?client_id=' + process.env.LINKEDIN_CLIENT_ID + '&redirect_uri=' + process.env.LINKEDIN_CALLBACK + '&state=f1576406b382b7d1c8c2607f7c563d4f&response_type=code&scope=r_basicprofile w_share'
       },
