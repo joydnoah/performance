@@ -39,7 +39,7 @@
                 </div>
                 <div class="connected-content is-active" v-if="twitter_status === 'connected'">
                   <div class="connected-message">Esta cuenta se encuentra activa</div>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" >Desconectar</button>
+                  <button id="twitter-disconnect-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" @click="disconnect('twitter')">Desconectar</button>
                 </div>
               </div>
             </div>
@@ -59,7 +59,7 @@
                 </div>
                 <div style="display: none;" id="success-post-twitter" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('twitter')">Guardar y publicar</button>
+                  <button id="twitter-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('twitter')">Guardar y publicar</button>
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@
                     <span class="btn-social-icon"></span>Conectar a Facebook
                   </fb-signin-button>
                 </div>
-                <div class="social-table-content is-active" v-if="pages.length > 0">
+                <div class="social-table-content is-active" v-if="pages.length > 0 && facebook_status !== 'connected'">
                   <table class="mdl-data-table mdl-js-data-table social-table">
                     <caption>
                       Listado de paginas relacionadas con la cuenta actual
@@ -117,7 +117,7 @@
                       <tr v-for="item in pages">
                         <td class="mdl-data-table__cell--non-numeric">{{ item.name }}</td>
                         <td class="mdl-data-table__cell--non-numeric cell-category">{{ item.category }}</td>
-                        <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social" @click="set_token(item.access_token, item.id)">Vincular Página</button></td>
+                        <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social" @click="set_token(item.access_token, item.id, $event)">Vincular Página</button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -125,7 +125,7 @@
                 <div class="connected-content is-active" v-if="facebook_status === 'connected'">
                   <div id="facebook-connected" class="connected-content is-active">
                     <div class="connected-message">Esta cuenta se encuentra activa</div>
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" @click="disconnect('facebook')">Desconectar</button>
+                    <button id="facebook-disconnect-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" @click="disconnect('facebook')">Desconectar</button>
                   </div>
                 </div>
               </div>
@@ -147,7 +147,7 @@
                 </div>
                 <div style="display: none;" id="success-post-facebook" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish"  @click="publish('facebook')">Guardar y publicar</button>
+                  <button id="facebook-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish"  @click="publish('facebook')">Guardar y publicar</button>
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@
                 </div>
                 <div class="connected-content is-active" v-if="linkedin_status === 'connected'">
                   <div class="connected-message">Esta cuenta se encuentra activa</div>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" @click="disconnect('linkedin')">Desconectar</button>
+                  <button id="linkedin-disconnect-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-logout" @click="disconnect('linkedin')">Desconectar</button>
                 </div>
               </div>
             </div>
@@ -205,7 +205,7 @@
                 </div>
                 <div style="display: none;" id="success-post-linkedin" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('linkedin')">Guardar y publicar</button>
+                  <button id="linkeind-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('linkedin')">Guardar y publicar</button>
                 </div>
               </div>
             </div>
@@ -265,7 +265,8 @@
       onSignInError (error) {
         console.log('La cuenta no ha sido autorizada!', error)
       },
-      set_token (token, id) {
+      set_token (token, id, event) {
+        event.target.innerHTML = 'Vinculando...'
         this.facebook_auth_response.access_token = token
         this.facebook_auth_response.id = id
 
@@ -279,6 +280,7 @@
           'oauth_verifier': '0'
         })
         .then(response => {
+          event.target.innerHTML = 'Vincular Página'
           this.get_connections()
         })
         .catch(error => {
@@ -286,6 +288,8 @@
         })
       },
       publish (provider) {
+        var buttonId = provider + '-save-button'
+        document.getElementById(buttonId).innerHTML = 'Publicando...'
         switch (provider) {
           case 'facebook':
             this.text_post = this.text_post_facebook + ' ' + this.text_post_link
@@ -306,12 +310,14 @@
           setTimeout(function () {
             document.getElementById('success-post-' + provider).style.display = 'none'
           }, 2500)
+          document.getElementById(buttonId).innerHTML = 'Guardar y Publicar'
         })
         .catch(error => {
           console.log(error.response)
         })
       },
       disconnect (provider) {
+        document.getElementById(provider + '-disconnect-button').innerHTML = 'Desconectando...'
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.delete('/social-network/' + provider + '/company/' + window.localStorage['company_id'] + '/connection', {
         })
