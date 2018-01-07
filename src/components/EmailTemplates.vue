@@ -80,9 +80,6 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
-      },
-      change_tab (event) {
-        console.log(event)
       }
     },
     mounted: function () {
