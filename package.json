@@ -38,9 +38,7 @@
     "vue-router": "^3.0.1",
     "vuejs-datepicker": "^0.9.9",
     "vuelidate": "^0.6.1",
-    "vuemit": "^1.0.3"
-  },
-  "devDependencies": {
+    "vuemit": "^1.0.3",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.1.2",
@@ -108,6 +106,9 @@
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-merge": "^4.1.0"
+  },
+  "devDependencies": {
+
   },
   "engines": {
     "node": "4.8.4",
