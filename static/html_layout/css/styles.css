@@ -23,7 +23,8 @@
 .create-form .collapse-group a .collapse-icon,
 .create-form .collapse-group a .collapse-line,
 .create-form .check-level-container .check-level-item label,
-.create-form .row-action-btn {
+.create-form .row-action-btn,
+.email-template-content .template-body {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -moz-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -o-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -196,21 +197,6 @@
 .mdl-message__error {
   color: #ff0052;
 }
-.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar {
-  border-bottom: 1px solid #dfdfe1;
-}
-.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab {
-  color: #aaadb2;
-}
-.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab.is-active {
-  color: #007bb6;
-}
-.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab.is-active:after {
-  background: #007bb6;
-}
-.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
-  background: #007bb6;
-}
 .mdl-selectfield.mdl-selectfield--floating-label {
   width: 100%;
 }
@@ -299,6 +285,39 @@
 .mdl-selectfield.mdl-selectfield--floating-label.is-invalid .mdl-selectfield__label:after {
   background: #ff0052;
 }
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar {
+  border-bottom: 1px solid #dfdfe1;
+  height: 63px;
+}
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar .mdl-tabs__tab {
+  border-right: 1px solid #dfdfe1;
+  color: #aaadb2;
+  font-size: 16px;
+  font-weight: 400;
+  height: 63px;
+  line-height: 63px;
+  text-transform: none;
+  width: 100%;
+}
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar .mdl-tabs__tab:hover {
+  text-decoration: none;
+}
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar .mdl-tabs__tab:focus {
+  text-decoration: none;
+}
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar .mdl-tabs__tab:first-child {
+  border-left: 1px solid #dfdfe1;
+}
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar .mdl-tabs__tab.is-active {
+  background: #fff;
+  color: #007bb6;
+}
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar .mdl-tabs__tab.is-active:after {
+  background: #fff;
+}
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect .mdl-tabs__tab-bar .mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
+  background: #007bb6;
+}
 html body {
   font-family: 'Oxygen', 'Helvetica', 'Arial', sans-serif !important;
   min-width: 1024px;
@@ -354,6 +373,20 @@ html body label {
 }
 .scroll-hidden-y {
   overflow-y: hidden;
+}
+.separator {
+  background: #dfdfe1;
+  height: 1px;
+}
+.switch-container .switch-message {
+  color: #6f747a;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: right;
+  vertical-align: top;
 }
 .switch-content {
   display: inline-block;
@@ -1356,12 +1389,13 @@ html body label {
   border: solid 1px #ff0052;
   color: #ff0052;
 }
+.create-buttons-bar-container .create-buttons-bar .buttons-container .btn-action.is-action {
+  background: #fff;
+  border: solid 1px #12abd4;
+  color: #12abd4;
+}
 .create-form {
   padding-top: 70px;
-}
-.create-form .separator {
-  background: #dfdfe1;
-  height: 1px;
 }
 .create-form .collapse-group {
   margin: 26px 0 28px;
@@ -1653,15 +1687,6 @@ html body label {
   float: right;
   padding-top: 7px;
 }
-.social-form-container .form-btn-container .switch-container .switch-message {
-  color: #6f747a;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.7;
-  margin-right: 15px;
-  text-align: right;
-  vertical-align: top;
-}
 .social-connection-container .social-table-content {
   display: none;
   padding: 10px 20px 20px;
@@ -1702,5 +1727,94 @@ html body label {
   height: 28px;
   line-height: 1;
   padding: 0 20px;
+  text-transform: none;
+}
+.email-tabs-container {
+  background: #fafafc;
+  border-bottom: solid 1px #dfdfe1;
+  height: 63px;
+}
+.email-template-content .template-header {
+  margin-bottom: 30px;
+  padding-top: 60px;
+}
+.email-template-content .template-header .template-title-container {
+  margin-bottom: 70px;
+}
+.email-template-content .template-header .template-title-container .template-title {
+  color: #007bb6;
+  float: left;
+  font-size: 20px;
+  line-height: 1;
+}
+.email-template-content .template-header .template-title-container .switch-container {
+  float: right;
+}
+.email-template-content .template-header .template-instructions-container {
+  background: #fafafc;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.email-template-content .template-header .template-instructions-container .instructions-title {
+  color: #ff9600;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.email-template-content .template-header .template-instructions-container .instructions-message {
+  color: #393c41;
+  font-size: 16px;
+  font-weight: 400;
+}
+.email-template-content .template-body {
+  height: 0;
+  margin-top: -20px;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+.email-template-content .template-body.is-active {
+  height: auto;
+  margin-top: 0;
+  opacity: 1;
+  visibility: visible;
+}
+.email-template-content .template-body .template-explanation-container {
+  padding: 20px 0;
+}
+.email-template-content .template-body .template-explanation-container .explanation-title {
+  color: #393c41;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 30px;
+}
+.email-template-content .template-body .template-explanation-container .explanation-text {
+  color: #6f747a;
+  font-size: 14px;
+  font-weight: 400;
+}
+.email-template-content .template-body .template-explanation-container .explanation-text strong {
+  font-weight: 700;
+}
+.email-template-content .template-body .separator {
+  margin: 10px 0 20px;
+}
+.email-template-content .template-body .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label {
+  margin-bottom: 10px;
+}
+.email-template-content .template-body .form-btn-container {
+  padding: 20px 0;
+  text-align: center;
+}
+.email-template-content .template-body .form-btn-container .mdl-button.btn-confirm {
+  background: #00bcff;
+  border-radius: 100px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.13);
+  color: #fff;
+  font-size: 16px;
+  height: 36px;
+  margin: 0 15px;
+  padding: 0 25px;
   text-transform: none;
 }
