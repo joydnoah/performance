@@ -147,26 +147,6 @@
 .mdl-message__error
   color color-error
 
-/*Tabs*/
-.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
-
-
-  .mdl-tabs__tab-bar
-    border-bottom 1px solid color-border
-
-  .mdl-tabs__tab
-    color color-text-disable
-
-    &.is-active
-      color color-secondary
-
-      &:after
-        background color-secondary
-
-    .mdl-tabs__ripple-container
-      .mdl-ripple
-        background color-secondary
-
 
 /*MDL select*/
 
@@ -259,3 +239,41 @@
       color color-error
       &:after
         background color-error
+
+
+/*MDL tabs*/
+
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
+  .mdl-tabs__tab-bar
+    border-bottom 1px solid color-border
+    height 63px
+
+    .mdl-tabs__tab
+      border-right 1px solid color-border
+      color color-text-disable
+      font-size 16px
+      font-weight regular
+      height 63px
+      line-height 63px
+      text-transform none
+      width 100%
+
+      &:hover
+        text-decoration none
+
+      &:focus
+        text-decoration none
+
+      &:first-child
+        border-left 1px solid color-border
+
+      &.is-active
+        background color-white
+        color color-secondary
+
+        &:after
+          background color-white
+
+      .mdl-tabs__ripple-container
+        .mdl-ripple
+          background color-secondary

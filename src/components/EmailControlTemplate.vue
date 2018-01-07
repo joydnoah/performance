@@ -1,42 +1,82 @@
 <template>
   <div>
-    <div>
-      <br/>
-      <alert :closable="false" type="info">
-        <strong>Nota:</strong> Este correo electrónico será enviado automáticamente a los candidatos que se rechazan en el proceso de entrevistas de esta posición
-      </alert>
-      <div class="form-group">
-        <label>Correo de: </label>
-        <input type='text' name='name' v-model="status.from_address" class="form-control" />
+    <div class="email-template-content">
+      <div class="template-header">
+        <div class="template-title-container">
+          <div class="template-title">Plantilla para invitar candidato a llamada</div>
+          <div class="switch-container">
+            <span class="switch-message">Activar plantilla</span>
+
+            <div class="switch-content">
+              <div class="onoffswitch">
+                <input v-model="status.automatic_send" id="tab-switch-02" type="checkbox" name="switchitem" class="onoffswitch-checkbox">
+                <label class="onoffswitch-label" for="tab-switch-02">
+                  <span class="onoffswitch-inner">
+                    <span class="onoffswitch-active">
+                      <span class="onoffswitch-switch transition-mdl-elements">SI</span>
+                    </span>
+                    <span class="onoffswitch-inactive">
+                      <span class="onoffswitch-switch transition-mdl-elements">NO</span>
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-instructions-container">
+          <div class="instructions-title">Instrucciones</div>
+          <div class="instructions-message">Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de entrevistas de esta posición</div>
+        </div>
+
       </div>
-      <alert :closable="false" type="info">
-        <strong>Elementos Automáticos:</strong> Inserta estos elementos en el correo y nosotros los personalizaremos automáticamente.
-        <br/>
-        <ul>
-          <li>[*NOMBRE*] = Primer nombre del candidato</li>
-          <li>[*NOMBRE COMPLETO*] = Nombre completo del candidato</li>
-          <li>[*POSICION*] = Nombre de la posición</li>
-        </ul>
-      </alert>
-      <div class="form-group" align="left">
-        <label><input type="checkbox" name="automatic_send" v-model="status.automatic_send"/> Activar envio de email automatico </label><br>
-      </div>
-      <div class="form-group">
-        <label>Asunto: </label>
-        <input type='text' name='name' v-model="status.subject" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label>Cuerpo del mensaje: </label>
-        <quill-editor v-model="status.body"
-                ref="myQuillEditor"
-                :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @ready="onEditorReady($event)"></quill-editor>
+      <div class="separator"></div>
+      <div class="template-body is-active">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <div class="offer-header-container">
+            <label class="header-title" for="email">Correo del remitente</label>
+            <input v-model="status.from_address" class="mdl-textfield__input" type="text" id="email" name="email" autofocus>
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+        </div>
+        <div class="separator"></div>
+        <div class="template-explanation-container">
+          <div class="explanation-title">Elementos automáticos</div>
+          <div class="explanation-text">
+            Inserta estos elementos en el correo y nosotros los personalizaremos automáticamente.
+            <br><br>
+            <strong>[*NOMBRE*]</strong> = Primer nombre del candidato
+            <br><br>
+            <strong>[*NOMBRE COMPLETO*]</strong> = Nombre completo del candidato
+            <br><br>
+            <strong>[*POSICION*]</strong> = Nombre de la posición
+          </div>
+        </div>
+        <div class="separator"></div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <div class="offer-header-container">
+            <label class="header-title" for="template02">Asunto</label>
+            <input v-model="status.subject" class="mdl-textfield__input" type="text" id="template02" name="template02" autofocus>
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cuerpo del mensaje: </label>
+          <quill-editor v-model="status.body"
+                  ref="myQuillEditor"
+                  :options="editorOption"
+                  @blur="onEditorBlur($event)"
+                  @focus="onEditorFocus($event)"
+                  @ready="onEditorReady($event)"></quill-editor>
+        </div>
+        <div class="separator"></div>
+        <div class="form-btn-container">
+          <button v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y Salir</button>
+          <button v-on:click="go_back()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+        </div>
       </div>
     </div>
-    <button v-on:click="save()" class="btn btn-success">Guardar y Salir</button>
-    <a href="/positions" class="btn btn-danger">Salir sin guardar</a>
   </div>
 </template>
 
@@ -71,6 +111,9 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      go_back () {
+        window.location.href = '/positions'
       },
       save () {
         if (this.status.id === 0) {
@@ -118,7 +161,11 @@
       }
     },
     mounted: function () {
-      console.log(this.type_prop)
+      this.bootstrap_min_js = document.createElement('script')
+      this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
+      this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
+      document.head.appendChild(this.bootstrap_min_js)
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/position/' + this.position_id)
       .then((response) => {
@@ -139,6 +186,8 @@
     }
   }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
   #container-positions{
