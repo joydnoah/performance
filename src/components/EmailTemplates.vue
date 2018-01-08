@@ -86,19 +86,22 @@
         document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty')
       }
     },
+    create: function () {
+
+    },
     mounted: function () {
+      this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+      this.axios.get('/position/' + this.position_id)
+      .then((response) => {
+        this.position = response.data.data.position
+        this.make_dirty('in_process')
+      })
+      .catch(error => { console.log(error.response) })
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
       this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
       document.head.appendChild(this.bootstrap_min_js)
-      this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-      this.axios.get('/position/' + this.position_id)
-      .then((response) => {
-        this.position = response.data.data.position
-      })
-      .catch(error => { console.log(error.response) })
-      this.make_dirty('in_process')
     }
   }
 </script>
