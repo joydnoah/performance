@@ -93,7 +93,9 @@
       .then((response) => {
         this.position = response.data.data.position
       })
-      .catch(error => { console.log(error.response) })
+      .catch(error => {
+        console.log(error.response)
+      })
     }
   }
 </script>
