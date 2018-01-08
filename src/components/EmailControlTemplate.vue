@@ -33,12 +33,10 @@
       </div>
       <div class="separator"></div>
       <div class="template-body is-active">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <div class="offer-header-container">
-            <label class="header-title" for="email">Correo del remitente</label>
-            <input v-model="status.from_address" class="mdl-textfield__input" type="text" id="email" name="email" autofocus>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty">
+            <label class="mdl-textfield__label" :for="email_id">Correo del remitente</label>
+            <input v-model="status.from_address" class="mdl-textfield__input" type="text" :id="email_id" :name="email_id" autofocus>
             <span class="mdl-textfield__error">Error message</span>
-          </div>
         </div>
         <div class="separator"></div>
         <div class="template-explanation-container">
@@ -54,12 +52,10 @@
           </div>
         </div>
         <div class="separator"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <div class="offer-header-container">
-            <label class="header-title" for="template02">Asunto</label>
-            <input v-model="status.subject" class="mdl-textfield__input" type="text" id="template02" name="template02" autofocus>
-            <span class="mdl-textfield__error">Error message</span>
-          </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty">
+          <label class="mdl-textfield__label" :for="subject_id">Asunto</label>
+          <input v-model="status.subject" class="mdl-textfield__input" type="text" :id="subject_id" :name="subject_id" autofocus>
+          <span class="mdl-textfield__error">Error message</span>
         </div>
         <div class="form-group">
           <label>Cuerpo del mensaje: </label>
@@ -105,7 +101,9 @@
           body: '',
           id: 0,
           automatic_send: true,
-          check_box_id: ''
+          check_box_id: '',
+          subject_id: '',
+          email_id: ''
         }
       }
     },
@@ -163,6 +161,8 @@
     },
     mounted: function () {
       this.check_box_id = 'checkbox-' + this.type_prop
+      this.subject_id = 'subject-' + this.type_prop
+      this.email_id = 'email-' + this.type_prop
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
