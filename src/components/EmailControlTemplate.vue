@@ -152,6 +152,10 @@
         .catch(error => {
           console.log(error)
         })
+      },
+      make_dirty () {
+        document.getElementById(this.subject_id).parentElement.classList.add('is-dirty')
+        document.getElementById(this.email_id).parentElement.classList.add('is-dirty')
       }
     },
     watch: {
@@ -176,6 +180,10 @@
             this.status = this.email_templates[item]
           }
         }
+        // TODO: Email and subject values are being overlaped with their lables.
+        // TODO: Find out why 'setTimeout(() => { this.make_dirty() }, 0)' solves the problem
+        // TODO: While 'this.make_dirty()' does not solve it.
+        setTimeout(() => { this.make_dirty() }, 0)
       })
       .catch(error => { console.log(error.response) })
     }
