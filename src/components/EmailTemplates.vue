@@ -20,10 +20,10 @@
         <div class="general-container">
           <div class="row">
             <div class="mdl-tabs__tab-bar">
-              <a href="#regards-template" class="mdl-tabs__tab is-active" @click="make_dirty('in_process')">Agradecer solicitud</a>
-              <a href="#reject-template" class="mdl-tabs__tab" @click="make_dirty('reject')">Rechazar candidato</a>
-              <a href="#call-template" class="mdl-tabs__tab" @click="make_dirty('scheduled_call')">Invitar candidato a llamada</a>
-              <a href="#interview-template" class="mdl-tabs__tab" @click="make_dirty('scheduled_interview')">Invitar candidato a entrevista</a>
+              <a href="#regards-template" class="mdl-tabs__tab is-active" >Agradecer solicitud</a>
+              <a href="#reject-template" class="mdl-tabs__tab">Rechazar candidato</a>
+              <a href="#call-template" class="mdl-tabs__tab">Invitar candidato a llamada</a>
+              <a href="#interview-template" class="mdl-tabs__tab">Invitar candidato a entrevista</a>
             </div>
           </div>
         </div><!-- general-container end -->
@@ -80,10 +80,6 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
-      },
-      make_dirty (typeProp) {
-        document.getElementById('email-' + typeProp).parentElement.classList.add('is-dirty')
-        document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty')
       }
     },
     mounted: function () {
@@ -96,7 +92,6 @@
       this.axios.get('/position/' + this.position_id)
       .then((response) => {
         this.position = response.data.data.position
-        this.make_dirty('in_process')
       })
       .catch(error => {
         console.log(error.response)
