@@ -96,9 +96,11 @@
       this.axios.get('/position/' + this.position_id)
       .then((response) => {
         this.position = response.data.data.position
+        this.make_dirty('in_process')
       })
-      .catch(error => { console.log(error.response) })
-      this.make_dirty('in_process')
+      .catch(error => {
+        console.log(error.response)
+      })
     }
   }
 </script>
