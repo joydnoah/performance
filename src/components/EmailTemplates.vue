@@ -82,9 +82,12 @@
         return isLoggedIn()
       },
       make_dirty (typeProp) {
-        document.getElementById('email-' + typeProp).parentElement.classList.add('is-dirty')
-        document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty')
+        document.getElementById('email-' + typeProp).parentElement.classList.add('is-dirty is-upgraded')
+        document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty is-upgraded')
       }
+    },
+    created: function () {
+      this.make_dirty('in_process')
     },
     mounted: function () {
       this.bootstrap_min_js = document.createElement('script')
@@ -98,7 +101,6 @@
         this.position = response.data.data.position
       })
       .catch(error => { console.log(error.response) })
-      this.make_dirty('in_process')
     }
   }
 </script>
