@@ -86,9 +86,6 @@
         document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty is-upgraded')
       }
     },
-    created: function () {
-      this.make_dirty('in_process')
-    },
     mounted: function () {
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
@@ -99,6 +96,7 @@
       this.axios.get('/position/' + this.position_id)
       .then((response) => {
         this.position = response.data.data.position
+        this.make_dirty('in_process')
       })
       .catch(error => { console.log(error.response) })
     }
