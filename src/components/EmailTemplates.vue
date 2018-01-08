@@ -82,8 +82,8 @@
         return isLoggedIn()
       },
       make_dirty (typeProp) {
-        document.getElementById('email-' + typeProp).parentElement.classList.add('is-dirty is-upgraded')
-        document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty is-upgraded')
+        document.getElementById('email-' + typeProp).parentElement.classList.add('is-dirty')
+        document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty')
       }
     },
     mounted: function () {
