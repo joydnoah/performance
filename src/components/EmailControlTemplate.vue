@@ -8,48 +8,9 @@
             <span class="switch-message">Activar plantilla</span>
 
             <div class="switch-content">
-              <div class="onoffswitch" v-if="type_prop === 'in_process'">
-                <input v-model="status.automatic_send" id="tab-switch-01" type="checkbox" name="switchitem1" class="onoffswitch-checkbox"">
-                <label class="onoffswitch-label" for="tab-switch-01">
-                  <span class="onoffswitch-inner">
-                    <span class="onoffswitch-active">
-                      <span class="onoffswitch-switch transition-mdl-elements">SI</span>
-                    </span>
-                    <span class="onoffswitch-inactive">
-                      <span class="onoffswitch-switch transition-mdl-elements">NO</span>
-                    </span>
-                  </span>
-                </label>
-              </div>
-              <div class="onoffswitch" v-if="type_prop === 'reject'">
-                <input v-model="status.automatic_send" id="tab-switch-02" type="checkbox" name="switchitem2" class="onoffswitch-checkbox">
-                <label class="onoffswitch-label" for="tab-switch-02">
-                  <span class="onoffswitch-inner">
-                    <span class="onoffswitch-active">
-                      <span class="onoffswitch-switch transition-mdl-elements">SI</span>
-                    </span>
-                    <span class="onoffswitch-inactive">
-                      <span class="onoffswitch-switch transition-mdl-elements">NO</span>
-                    </span>
-                  </span>
-                </label>
-              </div>
-              <div class="onoffswitch" v-if="type_prop === 'scheduled_call'">
-                <input v-model="status.automatic_send" id="tab-switch-03" type="checkbox" name="switchitem3" class="onoffswitch-checkbox">
-                <label class="onoffswitch-label" for="tab-switch-03">
-                  <span class="onoffswitch-inner">
-                    <span class="onoffswitch-active">
-                      <span class="onoffswitch-switch transition-mdl-elements">SI</span>
-                    </span>
-                    <span class="onoffswitch-inactive">
-                      <span class="onoffswitch-switch transition-mdl-elements">NO</span>
-                    </span>
-                  </span>
-                </label>
-              </div>
-              <div class="onoffswitch" v-if="type_prop === 'scheduled_interview'">
-                <input v-model="status.automatic_send" id="tab-switch-04" type="checkbox" name="switchitem4" class="onoffswitch-checkbox">
-                <label class="onoffswitch-label" for="tab-switch-04">
+              <div class="onoffswitch">
+                <input v-model="status.automatic_send" :id="check_box_id" type="checkbox" name="switchitem1" class="onoffswitch-checkbox"">
+                <label class="onoffswitch-label" :for="check_box_id">
                   <span class="onoffswitch-inner">
                     <span class="onoffswitch-active">
                       <span class="onoffswitch-switch transition-mdl-elements">SI</span>
@@ -143,7 +104,8 @@
           subject: '',
           body: '',
           id: 0,
-          automatic_send: true
+          automatic_send: true,
+          check_box_id: ''
         }
       }
     },
@@ -200,6 +162,7 @@
       }
     },
     mounted: function () {
+      this.check_box_id = 'checkbox-' + this.type_prop
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
