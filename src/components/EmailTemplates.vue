@@ -86,9 +86,6 @@
         document.getElementById('subject-' + typeProp).parentElement.classList.add('is-dirty')
       }
     },
-    create: function () {
-
-    },
     mounted: function () {
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/position/' + this.position_id)
