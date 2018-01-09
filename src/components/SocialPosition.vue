@@ -216,7 +216,7 @@
                 </div>
                 <div style="display: none;" id="success-post-linkedin" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
-                  <button id="linkedin-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('linkedin')">Guardar y publicar</button>
+                  <button id="linkedin-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('linkedin')">Publicar</button>
                 </div>
               </div>
             </div>
