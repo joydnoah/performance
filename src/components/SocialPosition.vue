@@ -60,7 +60,7 @@
                 </div>
                 <div style="display: none;" id="success-post-twitter" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
-                  <button id="twitter-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('twitter')">Guardar y publicar</button>
+                  <button id="twitter-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish" @click="publish('twitter')">Publicar</button>
                 </div>
               </div>
             </div>
@@ -157,7 +157,7 @@
                 </div>
                 <div style="display: none;" id="success-post-facebook" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
-                  <button id="facebook-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish"  @click="publish('facebook')">Guardar y publicar</button>
+                  <button id="facebook-save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-social-publish"  @click="publish('facebook')">Publicar</button>
                 </div>
               </div>
             </div>
