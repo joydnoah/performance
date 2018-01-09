@@ -121,7 +121,7 @@
         valid_phone: false
       }
     },
-    head: {
+    metaInfo: {
       meta: [
         { property: 'og:site_name', content: 'contenido 1' },
         { property: 'og:title', content: 'contenido 2' },
