@@ -8,6 +8,8 @@
 .mdl-button--fab.action-btn,
 .mdl-button--fab.action-btn .material-icons,
 .mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect .mdl-checkbox__box-outline,
+.alert-message-container,
+.alert-message-container .alert-message,
 .topbar .dropdown-nav-container,
 .topbar .dropdown-nav-container .dropdown-nav,
 .topbar .dropdown-nav-container .dropdown-nav .dropdown-list li a,
@@ -19,6 +21,8 @@
 .actions-dropdown.dropdown.open button,
 .actions-dropdown.dropdown .dropdown-menu,
 .actions-dropdown.dropdown .dropdown-menu li,
+.modal-email-template .modal-dialog .modal-content,
+.modal-confirmation .modal-dialog .modal-content,
 .create-buttons-bar-container .create-buttons-bar,
 .create-form .collapse-group a .collapse-icon,
 .create-form .collapse-group a .collapse-line,
@@ -616,6 +620,61 @@ html body label {
 .datepicker table tfoot .clear,
 .datepicker table tfoot .today {
   border-top: 1px solid #bbb;
+}
+.alert-message-container {
+  left: 50%;
+  opacity: 0;
+  position: fixed;
+  text-align: center;
+  top: -50px;
+  transform: translate(-50%, 0);
+  visibility: hidden;
+  z-index: 25;
+}
+.alert-message-container.is-active {
+  opacity: 1;
+  top: 0;
+  visibility: visible;
+}
+.alert-message-container .alert-message {
+  border-radius: 0;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.21);
+  display: inline-block;
+  height: 47px;
+  margin: 0 auto;
+  padding: 0 28px 0 25px;
+  box-shadow: 0 7px 17px rgba(0,0,0,0.1);
+}
+.alert-message-container .alert-message:hover {
+  box-shadow: 0 7px 24px rgba(0,0,0,0.2);
+}
+.alert-message-container .alert-message p {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 10px 0 0 0;
+}
+.alert-message-container .alert-message p span {
+  color: #fff;
+  font-weight: 700;
+}
+.alert-message-container .alert-message p .material-icons {
+  color: color-text-nav;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  margin-left: 12px;
+  vertical-align: sub;
+}
+.alert-message-container .alert-message.is-success {
+  background: #00c4b6;
+}
+.alert-message-container .alert-message.is-warning {
+  background: #ff9600;
+}
+.alert-message-container .alert-message.is-error {
+  background: #ff0052;
 }
 .section-header {
   background: #018ad9;
@@ -1340,6 +1399,79 @@ html body label {
   outline: none;
   padding: 0 20px;
   text-transform: none;
+}
+.modal-email-template .modal-dialog {
+  width: 750px;
+}
+.modal-email-template .modal-dialog .modal-content {
+  border-radius: 0;
+  box-shadow: 0 7px 17px rgba(0,0,0,0.1);
+}
+.modal-email-template .modal-dialog .modal-content:hover {
+  box-shadow: 0 7px 24px rgba(0,0,0,0.2);
+}
+.modal-email-template .modal-dialog .modal-content .modal-header {
+  border-bottom: solid 1px #dfdfe1;
+  padding: 15px 25px;
+}
+.modal-email-template .modal-dialog .modal-content .modal-header .modal-title {
+  color: #007bb6;
+  font-size: 20px;
+  padding: 0;
+}
+.modal-email-template .modal-dialog .modal-content .modal-header button.close {
+  color: #6f747a;
+}
+.modal-email-template .modal-dialog .modal-content .modal-body {
+  padding: 0 25px 25px;
+}
+.modal-confirmation .modal-dialog {
+  width: 700px;
+}
+.modal-confirmation .modal-dialog .modal-content {
+  border-radius: 0;
+  box-shadow: 0 7px 17px rgba(0,0,0,0.1);
+}
+.modal-confirmation .modal-dialog .modal-content:hover {
+  box-shadow: 0 7px 24px rgba(0,0,0,0.2);
+}
+.modal-confirmation .modal-dialog .modal-content .modal-body {
+  padding: 0;
+}
+.modal-confirmation .modal-dialog .modal-content .confirmation-message-container {
+  background: #fafafc;
+  padding: 35px 35px 25px;
+}
+.modal-confirmation .modal-dialog .modal-content .confirmation-message-container .confirmation-message {
+  color: #393c41;
+  font-size: 19px;
+  line-height: 1.2;
+  text-align: center;
+}
+.modal-confirmation .modal-dialog .modal-content .confirmation-btn-container {
+  padding: 25px 0;
+  text-align: center;
+}
+.modal-confirmation .modal-dialog .modal-content .confirmation-btn-container .mdl-button.mdl-js-button {
+  border-radius: 100px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.13);
+  font-size: 16px;
+  height: 36px;
+  margin: 0 15px;
+  padding: 0 20px;
+  text-align: center;
+  text-transform: none;
+  width: 250px;
+}
+.modal-confirmation .modal-dialog .modal-content .confirmation-btn-container .mdl-button.mdl-js-button.btn-cancel {
+  background: #fff;
+  border: solid 1px #00bcff;
+  color: #00bcff;
+}
+.modal-confirmation .modal-dialog .modal-content .confirmation-btn-container .mdl-button.mdl-js-button.btn-confirm {
+  background: #00bcff;
+  border: solid 1px #00bcff;
+  color: #fff;
 }
 .create-buttons-bar-container {
   height: 77px;
