@@ -328,7 +328,7 @@
           setTimeout(function () {
             document.getElementById('success-post-' + provider).style.display = 'none'
           }, 2500)
-          document.getElementById(buttonId).innerHTML = 'Guardar y Publicar'
+          document.getElementById(buttonId).innerHTML = 'Publicar'
         })
         .catch(error => {
           console.log(error.response)
