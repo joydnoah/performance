@@ -121,6 +121,22 @@
         valid_phone: false
       }
     },
+    head: {
+      meta: [
+        { property: 'og:site_name', content: 'contenido 1' },
+        { property: 'og:title', content: 'contenido 2' },
+        { property: 'og:description', content: 'contenido 3' },
+        { property: 'og:image', content: 'http://placeme.life/images/opimage.jpg' },
+        { property: 'og:url', content: 'contenido 3' },
+        { property: 'og:type', content: 'website' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:site', content: '@user' },
+        { name: 'twitter:creator', content: '@soyelhijo' },
+        { name: 'twitter:title', content: 'contenido 4' },
+        { name: 'twitter:description', content: 'contenido 5' },
+        { name: 'twitter:image', content: 'http://placeme.life/images/opimage.jpg' }
+      ]
+    },
     validations: {
       first_name: {
         required
