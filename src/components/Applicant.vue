@@ -27,7 +27,10 @@
           <p>{{ linkedin_user }}</p>
           <label>Usuario Twitter</label>
           <p>{{ twitter_user }}</p>
-
+          <label>Status</label>
+          <p>{{ status }}</p>
+          <label>Score</label>
+          <p>{{ score }}</p>
           <table class="table">
             <caption>Documentos Adjuntos</caption>
             <thead>
@@ -82,7 +85,10 @@
         page: 1,
         numPages: 0,
         rotate: 0,
-        src: ''
+        src: '',
+        parse: null,
+        score: null,
+        status: 'No parseado'
       }
     },
     methods: {
@@ -117,6 +123,23 @@
       this.axios.get('/applicant/documents/' + this.id)
       .then((response) => {
         this.documents = response.data.data.documents
+        this.axios.get('/parse/' + this.documents[0].id)
+        .then((response) => {
+          if (response.data.data.parse[1] !== null) {
+            this.status = 'Parseado'
+            this.axios.get('/score/' + this.documents[0].id)
+            .then((response) => {
+              this.score = response.data.data.score[2]
+              if (this.score === null) {
+                this.status = 'Esperando para calificar'
+              } else {
+                this.status = 'Calificado'
+              }
+            })
+            .catch(error => { console.log(error.response) })
+          }
+        })
+        .catch(error => { console.log(error.response) })
       })
       .catch(error => { console.log(error.response) })
     }
