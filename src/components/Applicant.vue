@@ -104,6 +104,28 @@
       },
       go_back () {
         history.go(-1)
+      },
+      get_parser_status () {
+        this.axios.get('/parse/' + this.documents[0].id)
+        .then((response) => {
+          if (response.data.data.parse[1] !== null) {
+            this.status = 'Parseado'
+            this.get_score()
+          }
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      get_score () {
+        this.axios.get('/score/' + this.documents[0].id)
+        .then((response) => {
+          this.score = response.data.data.score[2]
+          if (this.score === null) {
+            this.status = 'Esperando para calificar'
+          } else {
+            this.status = 'Calificado'
+          }
+        })
+        .catch(error => { console.log(error.response) })
       }
     },
     mounted: function () {
@@ -123,23 +145,7 @@
       this.axios.get('/applicant/documents/' + this.id)
       .then((response) => {
         this.documents = response.data.data.documents
-        this.axios.get('/parse/' + this.documents[0].id)
-        .then((response) => {
-          if (response.data.data.parse[1] !== null) {
-            this.status = 'Parseado'
-            this.axios.get('/score/' + this.documents[0].id)
-            .then((response) => {
-              this.score = response.data.data.score[2]
-              if (this.score === null) {
-                this.status = 'Esperando para calificar'
-              } else {
-                this.status = 'Calificado'
-              }
-            })
-            .catch(error => { console.log(error.response) })
-          }
-        })
-        .catch(error => { console.log(error.response) })
+        this.get_parser_status()
       })
       .catch(error => { console.log(error.response) })
     }
