@@ -159,7 +159,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
                   <li @click="go_to('/position?id=' + item.id)">Editar</li>
                   <li @click="go_to('/position-preview/' + item.id)">Vista previa</li>
-                  <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Link</li>
+                  <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Copiar Enlace</li>
                   <li @click="go_to('/applicants/' + item.id)">Candidatos</li>
                   <li @click="set_status_position(item.id, 'publish')">Publicar</li>
                   <li @click="go_to('/email-templates/' + item.id)">Correos</li>
