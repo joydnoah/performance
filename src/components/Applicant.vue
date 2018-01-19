@@ -104,21 +104,14 @@
         </div>
       </div>
 
-      <div v-if="false"  class="applicant-modal-content">
+      <div v-if="skills_list.length > 0"  class="applicant-modal-content">
         <div class="general-container">
           <div class="row">
             <div class="col-xs-offset-1 col-xs-10">
               <div class="content-title">Habilidades</div>
             </div>
             <div class="col-xs-offset-2 col-xs-8">
-              <div class="content-tag">Análisis financiero</div>
-              <div class="content-tag">Servicio al cliente</div>
-              <div class="content-tag">Análisis financiero</div>
-              <div class="content-tag">Servicio al cliente</div>
-              <div class="content-tag">Análisis financiero</div>
-              <div class="content-tag">Servicio al cliente</div>
-              <div class="content-tag">Análisis financiero</div>
-              <div class="content-tag">Servicio al cliente</div>
+              <div v-for="items in skills_list" class="content-tag">{{ items[1] }}</div>
             </div>
             <div class="col-xs-offset-1 col-xs-10">
               <div class="content-separator"></div>
@@ -127,17 +120,17 @@
         </div>
       </div>
 
-      <div v-if="false"  class="applicant-modal-content">
+      <div v-if="degree.length > 0"  class="applicant-modal-content">
         <div class="general-container">
           <div class="row">
             <div class="col-xs-offset-1 col-xs-10">
               <div class="content-title">Educación</div>
             </div>
             <div class="col-xs-offset-2 col-xs-8">
-              <div class="content-item">Nivel: Universitario</div>
-              <div class="content-item">Lugar: Universidad de Mexico</div>
-              <div class="content-item">Nivel: Universitario</div>
-              <div class="content-item">Lugar: Universidad de Mexico</div>
+              <div v-for="items in degree">
+                <div class="content-item">Nivel: {{ items.Degree.DegreeMajor.Name[0] }}</div>
+                <div class="content-item">Lugar: {{ items.School.SchoolName }}</div>
+              </div>
             </div>
             <div class="col-xs-offset-1 col-xs-10">
               <div class="content-separator"></div>
@@ -256,7 +249,9 @@
         parse: null,
         score: null,
         score_status: 'No parseado',
-        status: ''
+        status: '',
+        skills_list: [],
+        degree: []
       }
     },
     methods: {
@@ -299,6 +294,9 @@
         .then((response) => {
           if (response.data.data.parse[1] !== null) {
             this.score_status = 'Parseado'
+            this.skills_list = response.data.data.skills_list
+            this.degree = response.data.data.education_history
+            console.log(this.degree)
             this.get_score()
           }
         })
