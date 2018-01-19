@@ -83,7 +83,7 @@ export default new Router({
       component: Applicants
     },
     {
-      path: '/applicant/:id',
+      path: '/applicant/:position_id/:id/:applications_id',
       name: 'Applicant',
       beforeEnter: requireAuth,
       component: Applicant

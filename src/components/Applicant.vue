@@ -2,7 +2,7 @@
   <div id="general-container">
     <modal :scrollable="false" :adaptive="true" width="60%" height="100%" name="show-pdf">
       <div slot="top-right">
-        <button @click="$modal.hide('show-pdf')" class="close-button">
+        <button style="padding-right: 20px;" @click="$modal.hide('show-pdf')" class="close-button">
           ❌
         </button>
       </div>
@@ -10,6 +10,169 @@
         <iframe :src="src" style="width:100%; height:100%;" frameborder="0"></iframe>
       </div>
     </modal>
+    <toolbar></toolbar>
+    <div class="body-container">
+      <div class="section-header">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-12">
+              <h1 class="header-title wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Detalle del aplicante</h1>
+            </div>
+          </div>
+        </div>
+      </div><!-- header end -->
+      <div class="applicant-modal-header-container">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-4">
+              <div class="header-bookmark is-active"><!-- add .is-active to add blue color as bookmarked -->
+                <i class="material-icons">thumb_up</i>
+              </div>
+              <p class="header-name">
+                {{ first_name }} {{ last_name }}
+              </p>
+            </div>
+            <div class="col-xs-2">
+              <p class="header-info">Status:</p>
+              <p class="header-info">{{ status }}</p>
+            </div>
+            <div class="col-xs-2">
+              <p class="header-info">Score Status:</p>
+              <p class="header-info">{{ score_status }}</p>
+            </div>
+            <div class="col-xs-2">
+              <div id="compatibility" class="header-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
+                <p id="compatibility-text">Compatibilidad Alto</p>
+                <div class="compatibility-container">
+                  <div class="compatibility-level"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="applicant-modal-buttons">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="buttons-container">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_call')">Invitar a entrevista telefonica</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_interview')">Invitar a entrevista presencial</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('approved')">Marcar como contratado</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" @click="set_status_application('rejection')">Rechazar candidato</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="applicant-modal-content">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-title">Datos Personales</div>
+            </div>
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="content-item">e-Mail: {{ email }}</div>
+              <div class="content-item">Teléfono: {{ phone_number }}</div>
+            </div>
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="content-item">Usuario Linkedin: {{ linkedin_user }}</div>
+              <div class="content-item">Usuario Twitter: {{ twitter_user }}</div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-separator"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="false" class="applicant-modal-content">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-title">Description</div>
+            </div>
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="content-text">The customers are athletes who do not yet have large commercial contracts - these are aspiring and young dedicated and focussed individuals, many of whom have Tokyo 2020 in mind. The other side of the market is brands, who are looking to get involved in the lives of the athletes, and are looking to reach the fans and followers of these athletes.</div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-separator"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="false"  class="applicant-modal-content">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-title">Habilidades</div>
+            </div>
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="content-tag">Análisis financiero</div>
+              <div class="content-tag">Servicio al cliente</div>
+              <div class="content-tag">Análisis financiero</div>
+              <div class="content-tag">Servicio al cliente</div>
+              <div class="content-tag">Análisis financiero</div>
+              <div class="content-tag">Servicio al cliente</div>
+              <div class="content-tag">Análisis financiero</div>
+              <div class="content-tag">Servicio al cliente</div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-separator"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="false"  class="applicant-modal-content">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-title">Educación</div>
+            </div>
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="content-item">Nivel: Universitario</div>
+              <div class="content-item">Lugar: Universidad de Mexico</div>
+              <div class="content-item">Nivel: Universitario</div>
+              <div class="content-item">Lugar: Universidad de Mexico</div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-10">
+              <div class="content-separator"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="applicant-modal-download">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-8">
+              <div class="download-title">Documentos</div>
+            </div>
+          </div>
+          <div  v-for="item in documents" class="row">
+            <div style="padding-top: 30px;" class="col-xs-offset-2 col-xs-4">
+              <div class="content-item">{{ item.original_name }}</div>
+            </div>
+            <div style="padding-top: 30px;" class="col-xs-4">
+              <div class="content-item">{{ item.type_file == 'presentation_letter'? 'Carta de presentación': 'Curriculum Vitae' }}</div>
+            </div>
+            <div style="padding-top: 30px;" class="col-xs-2">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent download-button" @click="show(item)">Ver</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdf-viewer">
+
+      </div>
+
+    </div><!-- modal-body ends -->
+    <!--
     <app-nav></app-nav>
     <div id="container-positions" class="panel panel-default">
       <div class="panel-heading"><h3>Detalles del candidato</h3></div>
@@ -58,19 +221,23 @@
         </div>
       </div>
     </div>
+    -->
   </div>
 </template>
 
 <script>
   import AppNav from './AppNav'
+  import Toolbar from './Toolbar'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
 
   export default {
     components: {
+      Toolbar,
       AppNav
     },
     data: function () {
       return {
+        applicant_id: this.$route.params.position_id,
         id: this.$route.params.id,
         first_name: '',
         last_name: '',
@@ -88,7 +255,8 @@
         src: '',
         parse: null,
         score: null,
-        status: 'No parseado'
+        score_status: 'No parseado',
+        status: ''
       }
     },
     methods: {
@@ -105,32 +273,80 @@
       go_back () {
         history.go(-1)
       },
+      get_applicants_status (status) {
+        if (status === 'approved') {
+          return 'Aprobado'
+        } else if (status === 'in_process' || status === null) {
+          return 'En Proceso'
+        } else if (status === 'rejection') {
+          return 'Rechazado'
+        } else if (status === 'scheduled_call') {
+          return 'Invitación a LLamada'
+        } else if (status === 'scheduled_interview') {
+          return 'Invitación a Entrevista'
+        }
+      },
+      set_status_application (status) {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.post('/application/' + this.id + '/' + status)
+        .then(response => {
+          this.get_status()
+        })
+        .catch(error => { console.log(error.response) })
+      },
       get_parser_status () {
         this.axios.get('/parse/' + this.documents[0].id)
         .then((response) => {
           if (response.data.data.parse[1] !== null) {
-            this.status = 'Parseado'
+            this.score_status = 'Parseado'
             this.get_score()
           }
         })
         .catch(error => { console.log(error.response) })
+      },
+      change_compatibility (score) {
+        if (score < 40.0) {
+          document.getElementById('compatibility-text').innerHTML = 'Compatibilidad baja'
+          document.getElementById('compatibility').classList.add('is-low')
+        }
+        if (score > 40.0 && score < 70.0) {
+          document.getElementById('compatibility-text').innerHTML = 'Compatibilidad media'
+          document.getElementById('compatibility').classList.add('is-medium')
+        }
+        if (score > 70.0) {
+          document.getElementById('compatibility-text').innerHTML = 'Compatibilidad alta'
+          document.getElementById('compatibility').classList.add('is-high')
+        }
       },
       get_score () {
         this.axios.get('/score/' + this.documents[0].id)
         .then((response) => {
           this.score = response.data.data.score[2]
           if (this.score === null) {
-            this.status = 'Esperando para calificar'
+            this.score_status = 'Esperando para calificar'
           } else {
-            this.status = 'Calificado'
+            this.score_status = 'Calificado'
+            this.change_compatibility(this.score)
+          }
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      get_status () {
+        this.axios.get('/applications/' + this.$route.params.applications_id)
+        .then((response) => {
+          for (var i = 0; i < response.data.data.applicants.length; i++) {
+            if (response.data.data.applicants[i].id === this.id) {
+              this.status = this.get_applicants_status(response.data.data.applicants[i].status_application)
+            }
           }
         })
         .catch(error => { console.log(error.response) })
       }
     },
     mounted: function () {
+      this.get_status()
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-      this.axios.get('/applicant/' + this.id)
+      this.axios.get('/applicant/' + this.applicant_id)
       .then((response) => {
         this.first_name = response.data.data.applicant.first_name
         this.last_name = response.data.data.applicant.last_name
@@ -142,15 +358,23 @@
         this.created_at = response.data.data.applicant.created_at
       })
       .catch(error => { console.log(error.response) })
-      this.axios.get('/applicant/documents/' + this.id)
+      this.axios.get('/applicant/documents/' + this.applicant_id)
       .then((response) => {
         this.documents = response.data.data.documents
         this.get_parser_status()
       })
       .catch(error => { console.log(error.response) })
+
+      this.bootstrap_min_js = document.createElement('script')
+      this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
+      this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
+      document.head.appendChild(this.bootstrap_min_js)
     }
   }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
   #container-positions{
