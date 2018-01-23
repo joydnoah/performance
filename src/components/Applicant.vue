@@ -128,8 +128,9 @@
             </div>
             <div class="col-xs-offset-2 col-xs-8">
               <div v-for="items in degree">
-                <div class="content-item">Nivel: {{ items.Degree.DegreeMajor.Name[0] }}</div>
-                <div class="content-item">Lugar: {{ items.School.SchoolName }}</div>
+                <div v-if="items.Degree !== undefined" class="content-item">Nivel: {{ items.Degree["@degreeType"] }}</div>
+                <div v-if="items.School !== undefined" class="content-item">Lugar: {{ items.School.SchoolName }}</div>
+                <div class="content-item">{{ items.Degree.Comments }}</div>
               </div>
             </div>
             <div class="col-xs-offset-1 col-xs-10">
@@ -259,7 +260,7 @@
         return isLoggedIn()
       },
       show (item) {
-        this.src = 'https://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + item.original_name.split('.')[1]
+        this.src = 'https://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + item.original_name.split('.').slice(-1)[0]
         this.$modal.show('show-pdf')
       },
       hide () {
@@ -296,7 +297,6 @@
             this.score_status = 'Parseado'
             this.skills_list = response.data.data.skills_list
             this.degree = response.data.data.education_history
-            console.log(this.degree)
             this.get_score()
           }
         })
