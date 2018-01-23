@@ -42,7 +42,7 @@
             </div>
             <div class="col-xs-2">
               <div id="compatibility" class="header-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
-                <p id="compatibility-text">Compatibilidad Alto</p>
+                <p id="compatibility-text">Esperando a ser calificado</p>
                 <div class="compatibility-container">
                   <div class="compatibility-level"></div>
                 </div>
