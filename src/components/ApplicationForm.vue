@@ -149,7 +149,7 @@
       },
       set_files (type, event) {
         var validSize = event.target.files[0]['size'] <= 7000000
-        var validType = event.target.files[0]['type'] === 'application/pdf'
+        var validType = event.target.files[0]['type'] === 'application/pdf' || event.target.files[0]['type'] === 'application/msword' || event.target.files[0]['type'] === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         switch (type) {
           case 'curriculum_vitae':
             this.valid_file_type_curriculum = validType

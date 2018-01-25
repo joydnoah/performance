@@ -260,7 +260,17 @@
         return isLoggedIn()
       },
       show (item) {
-        this.src = 'https://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + item.original_name.split('.').slice(-1)[0]
+        var extension = item.original_name.split('.').slice(-1)[0]
+        if (extension === 'pdf') {
+          this.src = 'https://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + extension
+        } else {
+          var wordUrl = 'https://view.officeapps.live.com/op/view.aspx?src='
+          var file = 'https%3A%2F%2F' + this.bucket + '.s3.amazonaws.com%2F' + item.id + '.' + extension
+          this.src = wordUrl + file
+        }
+        console.log(this.src)
+        // this.src = 'https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fdocuments-development-environment-cotopaxi.s3.amazonaws.com%2F6d8ea471-b8f7-4a39-8ad8-b9069fe15004.docx'
+        console.log(this.src)
         this.$modal.show('show-pdf')
       },
       hide () {
@@ -291,7 +301,7 @@
         .catch(error => { console.log(error.response) })
       },
       get_parser_status () {
-        this.axios.get('/parse/' + this.documents[0].id)
+        this.axios.get('/parse/' + this.documents[0].id + '.' + this.documents[0].original_name.split('.').slice(-1)[0])
         .then((response) => {
           if (response.data.data.parse[1] !== null) {
             this.score_status = 'Parseado'
@@ -317,7 +327,7 @@
         }
       },
       get_score () {
-        this.axios.get('/score/' + this.documents[0].id)
+        this.axios.get('/score/' + this.documents[0].id + '.' + this.documents[0].original_name.split('.').slice(-1)[0])
         .then((response) => {
           this.score = response.data.data.score[2]
           if (this.score === null) {
