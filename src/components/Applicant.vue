@@ -268,9 +268,6 @@
           var file = 'https%3A%2F%2F' + this.bucket + '.s3.amazonaws.com%2F' + item.id + '.' + extension
           this.src = wordUrl + file
         }
-        console.log(this.src)
-        // this.src = 'https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fdocuments-development-environment-cotopaxi.s3.amazonaws.com%2F6d8ea471-b8f7-4a39-8ad8-b9069fe15004.docx'
-        console.log(this.src)
         this.$modal.show('show-pdf')
       },
       hide () {
