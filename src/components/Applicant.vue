@@ -320,11 +320,11 @@
           document.getElementById('compatibility-text').innerHTML = 'Compatibilidad baja'
           document.getElementById('compatibility').classList.add('is-low')
         }
-        if (score >= 40.0 && score < 70.0) {
+        if (score > 40.0 && score < 70.0) {
           document.getElementById('compatibility-text').innerHTML = 'Compatibilidad media'
           document.getElementById('compatibility').classList.add('is-medium')
         }
-        if (score >= 70.0) {
+        if (score > 70.0) {
           document.getElementById('compatibility-text').innerHTML = 'Compatibilidad alta'
           document.getElementById('compatibility').classList.add('is-high')
         }
