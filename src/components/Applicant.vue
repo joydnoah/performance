@@ -296,14 +296,13 @@
         }
       },
       set_status_application (status) {
-        var buttonMessage = document.getElementById('button_' + status).innerHTML
-        document.getElementById('button_' + status).disabled = true
-        document.getElementById('button_' + status).innerHTML = 'Enviando...'
+        var defaultButtonMessage = document.getElementById('button_' + status).innerHTML
+        this.changeButtonMessage('button_' + status, 'Enviando...')
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/application/' + this.id + '/' + status)
         .then(response => {
           this.get_status()
-          this.change_button_msg('button_' + status, buttonMessage)
+          this.changeButtonMessage('button_' + status, defaultButtonMessage)
         })
         .catch(error => { console.log(error.response) })
       },
@@ -346,8 +345,8 @@
         })
         .catch(error => { console.log(error.response) })
       },
-      change_button_msg (buttonId, message) {
-        document.getElementById(buttonId).disabled = false
+      changeButtonMessage (buttonId, message) {
+        document.getElementById(buttonId).disabled = !document.getElementById(buttonId).disabled
         document.getElementById(buttonId).innerHTML = message
       },
       get_status () {
