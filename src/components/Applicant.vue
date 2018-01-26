@@ -259,14 +259,20 @@
       isLoggedIn () {
         return isLoggedIn()
       },
+      pdfUrl (id, extension) {
+        return 'https://' + this.bucket + '.s3.amazonaws.com/' + id
+      },
+      docUrl (id, extension) {
+        var wordUrl = 'https://view.officeapps.live.com/op/view.aspx?src='
+        var file = 'https%3A%2F%2F' + this.bucket + '.s3.amazonaws.com%2F' + id
+        return wordUrl + file
+      },
       show (item) {
         var extension = item.original_name.split('.').slice(-1)[0]
         if (extension === 'pdf') {
-          this.src = 'https://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + extension
+          this.src = this.pdfUrl(item.id, extension)
         } else {
-          var wordUrl = 'https://view.officeapps.live.com/op/view.aspx?src='
-          var file = 'https%3A%2F%2F' + this.bucket + '.s3.amazonaws.com%2F' + item.id + '.' + extension
-          this.src = wordUrl + file
+          this.src = this.docUrl(item.id, extension)
         }
         this.$modal.show('show-pdf')
       },
@@ -298,7 +304,7 @@
         .catch(error => { console.log(error.response) })
       },
       get_parser_status () {
-        this.axios.get('/parse/' + this.documents[0].id + '.' + this.documents[0].original_name.split('.').slice(-1)[0])
+        this.axios.get('/parse/' + this.documents[0].id)
         .then((response) => {
           if (response.data.data.parse[1] !== null) {
             this.score_status = 'Parseado'
@@ -324,7 +330,7 @@
         }
       },
       get_score () {
-        this.axios.get('/score/' + this.documents[0].id + '.' + this.documents[0].original_name.split('.').slice(-1)[0])
+        this.axios.get('/score/' + this.documents[0].id)
         .then((response) => {
           this.score = response.data.data.score[2]
           if (this.score === null) {
