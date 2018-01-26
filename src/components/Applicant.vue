@@ -270,9 +270,9 @@
       show (item) {
         var extension = item.original_name.split('.').slice(-1)[0]
         if (extension === 'pdf') {
-          this.src = this.pdfUrl(item.id, extension)
+          this.src = this.buildPdfUrl(item.id, extension)
         } else {
-          this.src = this.docUrl(item.id, extension)
+          this.src = this.buildDocUrl(item.id, extension)
         }
         this.$modal.show('show-pdf')
       },
