@@ -352,7 +352,6 @@
         if (buttonElement.childNodes[1] !== undefined) {
           buttonElement.removeChild(buttonElement.childNodes[1])
         }
-        console.log(buttonElement.childNodes[1])
       },
       get_status () {
         this.axios.get('/applications/' + this.$route.params.applications_id)
