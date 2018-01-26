@@ -346,8 +346,13 @@
         .catch(error => { console.log(error.response) })
       },
       changeButtonMessage (buttonId, message) {
-        document.getElementById(buttonId).disabled = !document.getElementById(buttonId).disabled
-        document.getElementById(buttonId).innerHTML = message
+        var buttonElement = document.getElementById(buttonId)
+        buttonElement.disabled = !document.getElementById(buttonId).disabled
+        buttonElement.innerHTML = message
+        if (buttonElement.childNodes[1] !== undefined) {
+          buttonElement.removeChild(buttonElement.childNodes[1])
+        }
+        console.log(buttonElement.childNodes[1])
       },
       get_status () {
         this.axios.get('/applications/' + this.$route.params.applications_id)
