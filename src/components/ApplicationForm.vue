@@ -147,9 +147,15 @@
         var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/
         this.valid_phone = regex.test(phone)
       },
+      validateFileType (fileType) {
+        var pdf = fileType === 'application/pdf'
+        var doc = fileType === 'application/msword'
+        var docx = fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        return pdf || doc || docx
+      },
       set_files (type, event) {
         var validSize = event.target.files[0]['size'] <= 7000000
-        var validType = event.target.files[0]['type'] === 'application/pdf'
+        var validType = this.validateFileType(event.target.files[0]['type'])
         switch (type) {
           case 'curriculum_vitae':
             this.valid_file_type_curriculum = validType

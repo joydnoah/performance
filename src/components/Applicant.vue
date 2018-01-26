@@ -259,8 +259,21 @@
       isLoggedIn () {
         return isLoggedIn()
       },
+      buildPdfUrl (id, extension) {
+        return 'https://' + this.bucket + '.s3.amazonaws.com/' + id
+      },
+      buildDocUrl (id, extension) {
+        var wordUrl = 'https://view.officeapps.live.com/op/view.aspx?src='
+        var file = 'https%3A%2F%2F' + this.bucket + '.s3.amazonaws.com%2F' + id
+        return wordUrl + file
+      },
       show (item) {
-        this.src = 'https://' + this.bucket + '.s3.amazonaws.com/' + item.id + '.' + item.original_name.split('.').slice(-1)[0]
+        var extension = item.original_name.split('.').slice(-1)[0]
+        if (extension === 'pdf') {
+          this.src = this.pdfUrl(item.id, extension)
+        } else {
+          this.src = this.docUrl(item.id, extension)
+        }
         this.$modal.show('show-pdf')
       },
       hide () {
