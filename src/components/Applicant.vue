@@ -259,10 +259,10 @@
       isLoggedIn () {
         return isLoggedIn()
       },
-      pdfUrl (id, extension) {
+      buildPdfUrl (id, extension) {
         return 'https://' + this.bucket + '.s3.amazonaws.com/' + id
       },
-      docUrl (id, extension) {
+      buildDocUrl (id, extension) {
         var wordUrl = 'https://view.officeapps.live.com/op/view.aspx?src='
         var file = 'https%3A%2F%2F' + this.bucket + '.s3.amazonaws.com%2F' + id
         return wordUrl + file
