@@ -57,10 +57,10 @@
           <div class="row">
             <div class="col-xs-offset-1 col-xs-10">
               <div class="buttons-container">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_call')">Invitar a entrevista telefonica</button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_interview')">Invitar a entrevista presencial</button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('approved')">Marcar como contratado</button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" @click="set_status_application('rejection')">Rechazar candidato</button>
+                <button id="button_scheduled_call" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_call')">Invitar a entrevista telefonica</button>
+                <button id="button_scheduled_interview" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_interview')">Invitar a entrevista presencial</button>
+                <button id="button_approved" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('approved')">Marcar como contratado</button>
+                <button id="button_rejection" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" @click="set_status_application('rejection')">Rechazar candidato</button>
               </div>
             </div>
           </div>
@@ -296,10 +296,13 @@
         }
       },
       set_status_application (status) {
+        var defaultButtonMessage = document.getElementById('button_' + status).innerHTML
+        this.changeButtonMessage('button_' + status, 'Enviando...')
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/application/' + this.id + '/' + status)
         .then(response => {
           this.get_status()
+          this.changeButtonMessage('button_' + status, defaultButtonMessage)
         })
         .catch(error => { console.log(error.response) })
       },
@@ -341,6 +344,10 @@
           }
         })
         .catch(error => { console.log(error.response) })
+      },
+      changeButtonMessage (buttonId, message) {
+        document.getElementById(buttonId).disabled = !document.getElementById(buttonId).disabled
+        document.getElementById(buttonId).innerHTML = message
       },
       get_status () {
         this.axios.get('/applications/' + this.$route.params.applications_id)
