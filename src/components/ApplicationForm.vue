@@ -150,13 +150,19 @@
         this.meta_tag.setAttribute('content', content)
         document.head.appendChild(this.meta_tag)
       },
+      addComment (comment) {
+        this.meta_tag = document.createComment(comment)
+        document.head.appendChild(this.meta_tag)
+      },
       addHeader () {
+        this.addComment('Facebook')
         this.addMetaTag('property', 'og:title', 'Cotopaxi')
         this.addMetaTag('property', 'og:site_name', 'Cotopaxi')
         this.addMetaTag('property', 'og:description', 'contenido 3')
         this.addMetaTag('property', 'og:image', 'http://placeme.life/images/opimage.jpg')
         this.addMetaTag('property', 'og:url', document.URL)
         this.addMetaTag('property', 'og:type', 'website')
+        this.addComment('Twitter')
         this.addMetaTag('name', 'twitter:card', 'summary_large_image')
         this.addMetaTag('name', 'twitter:site', '@user')
         this.addMetaTag('name', 'twitter:creator', '@soyelhijo')
@@ -292,13 +298,15 @@
       }
     },
     mounted () {
-      this.addHeader()
       if (this.status !== 'publish') {
         document.getElementsByClassName('form')[0].style.display = 'none'
         document.getElementsByClassName('form')[1].style.display = 'none'
         document.getElementsByClassName('form')[2].style.display = 'none'
         document.getElementsByClassName('alert')[1].style.display = 'block'
       }
+    },
+    created: function () {
+      this.addHeader()
     }
   }
 </script>
