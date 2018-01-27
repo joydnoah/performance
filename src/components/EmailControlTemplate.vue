@@ -179,6 +179,7 @@
           if (this.email_templates[item].type_template === this.type_prop) {
             this.status = this.email_templates[item]
           }
+          console.log(this.email_templates)
         }
         // TODO: Email and subject values are being overlaped with their lables.
         // TODO: Find out why 'setTimeout(() => { this.make_dirty() }, 0)' solves the problem
