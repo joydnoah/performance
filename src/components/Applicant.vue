@@ -349,6 +349,7 @@
         var buttonElement = document.getElementById(buttonId)
         buttonElement.disabled = !document.getElementById(buttonId).disabled
         buttonElement.innerHTML = message
+        // The following code is to remove the additional span created when the button is clicked, if removed after click the button would look brigther.
         if (buttonElement.childNodes[1] !== undefined) {
           buttonElement.removeChild(buttonElement.childNodes[1])
         }
