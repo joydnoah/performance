@@ -23,6 +23,8 @@ import Multiselect from 'vue-multiselect'
 import VueFroala from 'vue-froala-wysiwyg'
 import FBSignInButton from 'vue-facebook-signin-button'
 import VModal from 'vue-js-modal'
+import Meta from 'vue-meta'
+import Router from 'vue-router'
 
 Vue.use(uiv)
 Vue.use(Vuelidate)
@@ -32,6 +34,8 @@ Vue.use(VueAxios, axios)
 Vue.component(Multiselect)
 Vue.use(FBSignInButton)
 Vue.use(VModal, { dialog: true })
+Vue.use(Router)
+Vue.use(Meta)
 
 Vue.config.productionTip = false
 
