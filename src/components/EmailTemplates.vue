@@ -24,6 +24,7 @@
               <a href="#reject-template" class="mdl-tabs__tab">Rechazar candidato</a>
               <a href="#call-template" class="mdl-tabs__tab">Invitar candidato a llamada</a>
               <a href="#interview-template" class="mdl-tabs__tab">Invitar candidato a entrevista</a>
+              <a href="#approved-template" class="mdl-tabs__tab">Contratado</a>
             </div>
           </div>
         </div><!-- general-container end -->
@@ -43,6 +44,9 @@
             </div>
             <div class="mdl-tabs__panel" id="interview-template">
               <email-control-template :position_id="position_id" :type_prop="'scheduled_interview'"></email-control-template>
+            </div>
+            <div class="mdl-tabs__panel" id="approved-template">
+              <email-control-template :position_id="position_id" :type_prop="'approved'"></email-control-template>
             </div>
           </div>
         </div>
