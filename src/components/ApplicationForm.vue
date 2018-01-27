@@ -118,16 +118,17 @@
         valid_file_type_presentation_letter: true,
         valid_file_size_presentation_letter: true,
         required_file: false,
-        valid_phone: false
+        valid_phone: false,
+        meta_tag: ''
       }
     },
     metaInfo: {
       meta: [
-        { property: 'og:site_name', content: 'contenido 1' },
-        { property: 'og:title', content: 'contenido 2' },
+        { property: 'og:site_name', content: 'Cotopaxi' },
+        { property: 'og:title', content: 'Cotopaxi' },
         { property: 'og:description', content: 'contenido 3' },
         { property: 'og:image', content: 'http://placeme.life/images/opimage.jpg' },
-        { property: 'og:url', content: 'contenido 3' },
+        { property: 'og:url', content: document.URL },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@user' },
@@ -270,6 +271,15 @@
         })
       }
     },
+    addMetaTag (type, element, content) {
+      this.meta_tag = document.createElement('meta')
+      this.meta_tag.setAttribute(type, element)
+      this.meta_tag.setAttribute('content', content)
+      document.head.appendChild(this.meta_tag)
+    },
+    addMetaTags () {
+      this.addMetaTag('property', 'og:title', 'Cotopaxi')
+    },
     watch: {
       status: function () {
         if (this.status !== 'publish') {
@@ -287,6 +297,7 @@
       }
     },
     mounted () {
+      this.addMetaTags()
       if (this.status !== 'publish') {
         document.getElementsByClassName('form')[0].style.display = 'none'
         document.getElementsByClassName('form')[1].style.display = 'none'
