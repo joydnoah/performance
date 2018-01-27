@@ -92,7 +92,7 @@
                     <i class="material-icons">keyboard_arrow_down</i>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    <li><a  @click="go_to(item.applicant_id, item.id)">Ver detalle</a></li>
+                    <li @click="go_to(item.applicant_id, item.id)">Ver detalle</li>
                     <li @click="set_status_application(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li>
                     <li @click="set_status_application(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li>
                     <li @click="set_status_application(item.id, 'approved')">Marcar como contratado</li>
