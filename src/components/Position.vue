@@ -184,10 +184,10 @@
                       <div v-if="filters_education_level.length === 0" class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                           <select id="abilitiesaux" v-model="education_level" class="mdl-selectfield__select" v-on:change="add_education_level()">
                             <option value="" disabled selected hidden>Grado academico...</option>
-                            <option value="Bachiller">Bachiller</option>
-                            <option value="Técnico">Técnico</option>
-                            <option value="Universitario">Universitario</option>
-                            <option value="Post-grado">Post-grado</option>
+                            <option value="bachiller">Bachiller</option>
+                            <option value="tecnico">Técnico</option>
+                            <option value="licenciatura">Universitario</option>
+                            <option value="postgrado">Post-grado</option>
                           </select>
                           <label class="mdl-selectfield__label" for="abilitiesaux"></label>
                       </div>
