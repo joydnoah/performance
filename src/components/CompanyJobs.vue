@@ -61,8 +61,7 @@
         description: '',
         work_with_us: '',
         uri: '',
-        server: process.env.HOST,
-        copiedCompanyLink: false
+        server: process.env.HOST
       }
     },
     validations: {
