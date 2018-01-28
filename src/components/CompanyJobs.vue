@@ -62,7 +62,7 @@
         work_with_us: '',
         uri: '',
         server: process.env.HOST,
-        copyn: false
+        copiedCompanyLink: false
       }
     },
     validations: {
@@ -78,12 +78,12 @@
         window.location.href = '/positions'
       },
       copy_now () {
-        this.copyn = true
+        this.copiedCompanyLink = true
       },
       copy_to_clipboard (text) {
-        if (this.copyn) {
+        if (this.copiedCompanyLink) {
           document.getElementById('copy_link').style.display = 'block'
-          this.copyn = false
+          this.copiedCompanyLink = false
         }
         return text
       },
