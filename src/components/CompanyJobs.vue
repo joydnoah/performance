@@ -27,7 +27,7 @@
               <span class="input-group-addon">{{ server }}/</span>
               <input type="text" class="form-control" v-on:input="$v.uri.$touch" v-model="uri" id="uri" name="uri" />
             </div>
-            <button @click="copy_now()" v-clipboard:copy="copy_to_clipboard(server + '/' + uri)">Copiar enlace</button>
+            <button @click="copieToClipboard()" v-clipboard:copy="server + '/' + uri">Copiar enlace</button>
           </div>
 
           <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
@@ -77,15 +77,8 @@
       exit () {
         window.location.href = '/positions'
       },
-      copy_now () {
-        this.copiedCompanyLink = true
-      },
-      copy_to_clipboard (text) {
-        if (this.copiedCompanyLink) {
-          document.getElementById('copy_link').style.display = 'block'
-          this.copiedCompanyLink = false
-        }
-        return text
+      copieToClipboard () {
+        document.getElementById('copy_link').style.display = 'block'
       },
       update_company (v) {
         document.getElementsByClassName('alert-danger')[0].style.display = 'none'
