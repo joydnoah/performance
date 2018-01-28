@@ -81,7 +81,6 @@
         this.copyn = true
       },
       copy_to_clipboard (text) {
-        console.log(text)
         if (this.copyn) {
           document.getElementById('copy_link').style.display = 'block'
           this.copyn = false
