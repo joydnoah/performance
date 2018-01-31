@@ -25,6 +25,7 @@ import FBSignInButton from 'vue-facebook-signin-button'
 import VModal from 'vue-js-modal'
 import Meta from 'vue-meta'
 import Router from 'vue-router'
+import KsVueScrollMagic from 'ks-vue-scrollmagic'
 
 Vue.use(uiv)
 Vue.use(Vuelidate)
@@ -36,6 +37,7 @@ Vue.use(FBSignInButton)
 Vue.use(VModal, { dialog: true })
 Vue.use(Router)
 Vue.use(Meta)
+Vue.use(KsVueScrollMagic)
 
 Vue.config.productionTip = false
 
