@@ -61,10 +61,7 @@
           <label>Cuerpo del mensaje: </label>
           <quill-editor v-model="status.body"
                   ref="myQuillEditor"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)"></quill-editor>
+                  :options="{ placeholder: '' }"></quill-editor>
         </div>
         <div class="separator"></div>
         <div class="form-btn-container">
@@ -77,18 +74,12 @@
 </template>
 
 <script>
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
-
-  import { quillEditor } from 'vue-quill-editor'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Alert } from 'uiv'
 
   export default {
     components: {
-      Alert,
-      quillEditor
+      Alert
     },
     props: ['position_id', 'status_prop', 'type_prop'],
     name: 'email-control-template',
