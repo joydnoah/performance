@@ -116,9 +116,9 @@
               </p>
             </div>
             <div class="col-xs-2">
-              <p class="row-info row-title-link" @click="go_to('/applicants/' + item.id)">
+              <a :href="'applicants/' + item.id" class="row-info row-title-link">
                 {{ item.name }}
-              </p>
+              </a>
             </div>
             <div class="col-xs-2">
               <p class="row-info row-text">
