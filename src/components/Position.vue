@@ -130,7 +130,7 @@
                           ref="myQuillEditor"
                           :options="{placeholder: 'Descripción...'}"></quill-editor>
                 </div>
-
+                <!--
                 <div class="col-xs-offset-2 col-xs-8">
                   <label>Características que estas buscando en un empleado</label>
                   <quill-editor v-model='candidate_characteristics'
@@ -144,6 +144,7 @@
                           ref="myQuillEditor"
                           :options="{placeholder: 'Informacion adicional...'}"></quill-editor>
                 </div>
+                -->
 
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
