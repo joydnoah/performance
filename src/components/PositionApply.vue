@@ -55,7 +55,7 @@
       isEmpty (str) {
         return !!str
       },
-      setValues () {
+      setContentOnScreen () {
         document.getElementById('description_id').innerHTML = this.description
         document.getElementById('work_team_description_id').innerHTML = this.work_team_description
         document.getElementById('candidate_characteristics_id').innerHTML = this.candidate_characteristics
@@ -72,7 +72,7 @@
         this.work_team_description = response.data.data.position.work_team_description
         this.candidate_characteristics = response.data.data.position.candidate_characteristics
         this.status_type = response.data.data.position.status_type
-        this.setValues()
+        this.setContentOnScreen()
       })
       .catch(error => { console.log(error.response) })
     }
