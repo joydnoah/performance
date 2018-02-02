@@ -884,7 +884,7 @@
           this.valid_asign = !this.valid_asign
         }
       },
-      lockButtonsBar () {
+      setupLockButtonsBar () {
         var controller = new this.$scrollmagic.Controller()
         new this.$scrollmagic.Scene({ triggerElement: '#create-form-container', triggerHook: 0, offset: 0 })
         .setClassToggle('#create-buttons-bar', 'magic-scroll') // add .addIndicators() to check trigger position
@@ -894,7 +894,7 @@
     mounted () {
       this.get_departments()
       this.get_skills()
-      this.lockButtonsBar()
+      this.setupLockButtonsBar()
       if (this.$route.query.id !== undefined) {
         if (document.getElementById('cities_table') !== null) {
           document.getElementById('cities_table').style.display = 'none'
