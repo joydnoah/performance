@@ -55,7 +55,7 @@
       isEmpty (str) {
         return !!str
       },
-      setContentOnScreen () {
+      setDescriptionContent () {
         document.getElementById('description_id').innerHTML = this.description
         document.getElementById('work_team_description_id').innerHTML = this.work_team_description
         document.getElementById('candidate_characteristics_id').innerHTML = this.candidate_characteristics
