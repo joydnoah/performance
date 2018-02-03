@@ -29,17 +29,17 @@
                 </p>
               </div>
               <div class="col-xs-3">
-                <p class="header-title">
+                <p id='first_name' class="header-title" @click="change_order($event.target.id)">
                   Nombre
                 </p>
               </div>
               <div class="col-xs-2">
-                <p class="header-title"><!-- .descending add sort down icon -->
+                <p id="created_at" class="header-title" @click="change_order($event.target.id)"><!-- .descending add sort down icon -->
                   Fecha de solicitud
                 </p>
               </div>
               <div class="col-xs-2">
-                <p class="header-title"><!-- .ascending add sort up icon -->
+                <p id="status_application" class="header-title"  @click="change_order($event.target.id)"><!-- .ascending add sort up icon -->
                   Status
                 </p>
               </div>
@@ -63,9 +63,9 @@
                 </div>
               </div>
               <div class="col-xs-3">
-                <p @click="go_to(item.applicant_id, item.id)" class="row-info row-name-link">
+                <a @click="go_to(item.applicant_id, item.id)" class="row-info row-name-link">
                   {{ item.applicant_first_name }} {{ item.applicant_last_name }}
-                </p>
+                </a>
               </div>
               <div class="col-xs-2">
                 <p class="row-info row-text">
@@ -78,11 +78,11 @@
                 </p>
               </div>
               <div class="col-xs-2">
-                <div class="row-compatibility is-high"><!-- .is-high .is-medium .is-low change color compatibility -->
-                  <!--<p>Alto</p>
+                <div :id="'id-' + item.applicant_id" class="row-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
+                  <p :id="'label-' + item.applicant_id">Sin Parsear</p>
                   <div class="compatibility-container">
-                    <div class="compatibility-level"></div>
-                  </div>-->
+                    <div class="compatibility-level">{{ setScoreBar(item.applicant_id) }}</div>
+                  </div>
                 </div>
               </div>
               <div class="col-xs-2">
@@ -134,12 +134,62 @@
       return {
         applicants: {},
         position: {},
-        bootstrap_min_js: null
+        bootstrap_min_js: null,
+        list: { 'first_name': true, 'created_at': true, 'status_application': true }
       }
     },
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      change_order (id) {
+        this.get_applicants(id, this.list[id])
+        this.list[id] = !this.list[id]
+      },
+      setScoreBar (id) {
+        this.axios.get('/applicant/documents/' + id)
+        .then((response) => {
+          this.get_parser_status(response.data.data.documents[0].id, id)
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      get_parser_status (documentId, id) {
+        this.axios.get('/parse/' + documentId)
+        .then((response) => {
+          if (response.data.data.parse[1] !== null) {
+            this.get_score(documentId, id)
+          }
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      get_score (documentId, id) {
+        this.axios.get('/score/' + documentId)
+        .then((response) => {
+          var score = response.data.data.score[2]
+          if (score === null) {
+            document.getElementById('label-' + id).innerHTML = 'Esperando para calificar'
+          } else {
+            this.change_compatibility(score, id)
+          }
+        })
+        .catch(error => { console.log(error.response) })
+      },
+      change_compatibility (score, id) {
+        if (document.getElementById('label-' + id) !== null) {
+          document.getElementById('id-' + id).className = 'row-compatibility'
+          if (score < 40.0) {
+            document.getElementById('id-' + id).classList.add('is-low')
+            document.getElementById('label-' + id).innerHTML = 'Compatibilidad baja'
+          }
+          if (score >= 40.0 && score < 70.0) {
+            document.getElementById('id-' + id).classList.add('is-medium')
+            document.getElementById('label-' + id).innerHTML = 'Compatibilidad media'
+          }
+          if (score >= 70.0) {
+            document.getElementById('id-' + id).classList.add('is-high')
+            document.getElementById('label-' + id).innerHTML = 'Compatibilidad alta'
+          }
+        }
       },
       make_visible () {
         return this.applicants.length > 0
@@ -147,9 +197,9 @@
       go_to (positionId, id) {
         window.location.href = '/applicant/' + positionId + '/' + id + '/' + this.$route.params.position_id
       },
-      get_applicants () {
+      get_applicants (order, ascDesc) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/applications/' + this.$route.params.position_id)
+        this.axios.get('/applications/' + this.$route.params.position_id + '/' + order + '/' + ascDesc)
         .then(response => {
           this.applicants = response.data.data.applicants
         })
@@ -178,7 +228,7 @@
       }
     },
     mounted: function () {
-      this.get_applicants()
+      this.get_applicants('created_at', 'false')
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/position/' + this.$route.params.position_id)
