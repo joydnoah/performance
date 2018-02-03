@@ -11,7 +11,7 @@
 		.template-title-container
 			margin-bottom 70px
 			.template-title
-				color color-secondary
+				color color-primary
 				float left
 				font-size 20px
 				line-height 1
@@ -45,7 +45,7 @@
 		.template-explanation-container
 			padding 20px 0
 			.explanation-title
-				color color-text-primary
+				color color-primary
 				font-size 18px
 				font-weight regular
 				line-height 1
@@ -73,3 +73,75 @@
 				margin 0 15px
 				padding 0 25px
 				text-transform none
+
+	.logo-upload-container
+		padding 30px 0 40px
+		.upload-title
+			color color-secondary
+			font-size 13px
+			font-weight regular
+			margin-bottom 10px
+		.upload-container
+			background color-background
+			border dashed 1.5px color-border
+			cursor pointer
+			height 120px
+			padding 15px 30px 0
+			text-align center
+			.upload-sub-title
+				color color-third
+				font-size 17px
+				font-weight regular
+				.material-icons
+					height 30px
+					margin-right 5px
+					vertical-align middle
+			.upload-text
+				color color-text-secondary
+				font-size 13px
+				font-weight regular
+				margin-bottom 7px
+			.upload-note
+				color color-text-secondary
+				font-size 12px
+				font-weight regular
+				padding 0px 25px
+		.uploaded-content
+			background color-white
+			border solid 1px color-border
+			cursor default
+			height 120px
+			padding 0
+			text-align center
+			img
+				display inline-block
+				height auto
+				max-width -webkit-fill-available
+				max-height 120px
+				width auto
+		.buttons-container
+			padding-top 27px
+			width 115px
+			.mdl-button
+				&.btn-action
+					border solid 1px
+					border-radius 100px
+					box-shadow none
+					font-size 14px
+					height 30px
+					line-height 1
+					margin-bottom 12px
+					text-transform none
+					width 100%
+					&.is-action
+						background color-white
+						color color-third
+						border-color color-third
+					&.is-success
+						background color-third
+						color color-white
+						border-color color-third
+					&.is-error
+						background color-white
+						color color-error
+						border-color color-error
