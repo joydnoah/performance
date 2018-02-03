@@ -518,7 +518,8 @@
         radioValue: 1,
         valid: true,
         valid_asign: false,
-        bootstrap_min_js: null
+        bootstrap_min_js: null,
+        scrollmagic: null
       }
     },
     validations: {
@@ -881,11 +882,18 @@
           this.valid = !this.valid
           this.valid_asign = !this.valid_asign
         }
+      },
+      setupLockButtonsBar () {
+        var controller = new this.$scrollmagic.Controller()
+        new this.$scrollmagic.Scene({ triggerElement: '#create-form-container', triggerHook: 0, offset: 0 })
+        .setClassToggle('#create-buttons-bar', 'magic-scroll') // add .addIndicators() to check trigger position
+        .addTo(controller)
       }
     },
     mounted () {
       this.get_departments()
       this.get_skills()
+      this.setupLockButtonsBar()
       if (this.$route.query.id !== undefined) {
         if (document.getElementById('cities_table') !== null) {
           document.getElementById('cities_table').style.display = 'none'
@@ -930,7 +938,6 @@
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
       this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
       document.head.appendChild(this.bootstrap_min_js)
-      this.bootstrap_min_js = document.createElement('link')
     }
   }
 </script>

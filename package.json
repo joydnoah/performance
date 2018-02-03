@@ -20,6 +20,7 @@
     "dev-tools": "^0.1.6",
     "google-autocomplete-vue": "^1.0.17",
     "jwt-decode": "^2.2.0",
+    "ks-vue-scrollmagic": "^1.0.2",
     "moment": "^2.18.1",
     "uiv": "^0.11.8",
     "vee-validate": "^2.0.0-beta.17",
