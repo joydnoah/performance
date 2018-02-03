@@ -46,10 +46,10 @@
           <div class="row">
             <div class="col-xs-1">
               <p class="header-title" @click="change_order($event.target.id)" id="position_number" v-show="visible_tittle('position_number')">
-                Consecutivo&#9660
+                ID&#9660
               </p>
               <p class="header-title" @click="change_order($event.target.id)" id="position_number" v-show="!visible_tittle('position_number')">
-                Consecutivo&#9650
+                ID&#9650
               </p>
             </div>
             <div class="col-xs-2">
@@ -116,9 +116,9 @@
               </p>
             </div>
             <div class="col-xs-2">
-              <p class="row-info row-title-link" @click="go_to('/applicants/' + item.id)">
+              <a :href="'applicants/' + item.id" class="row-info row-title-link">
                 {{ item.name }}
-              </p>
+              </a>
             </div>
             <div class="col-xs-2">
               <p class="row-info row-text">
@@ -157,14 +157,14 @@
                   <i class="material-icons">keyboard_arrow_down</i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
-                  <li @click="go_to('/position?id=' + item.id)">Editar</li>
-                  <li @click="go_to('/position-preview/' + item.id)">Vista previa</li>
-                  <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Copiar Enlace</li>
-                  <li @click="go_to('/applicants/' + item.id)">Candidatos</li>
-                  <li @click="set_status_position(item.id, 'publish')">Publicar</li>
-                  <li @click="go_to('/email-templates/' + item.id)">Correos</li>
-                  <li @click="go_to('/social-position/' + item.id)">Redes sociales</li>
-                  <li @click="set_status_position(item.id, 'closed')" class="is-negative">Cerrar posición</li><!-- .is-negative add error color to negative acctions -->
+                  <li @click="go_to('/position?id=' + item.id)">Editar Posición</li>
+                  <li @click="go_to('/position-preview/' + item.id)">Vista Previa</li>
+                  <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Copiar Enlace de Posición</li>
+                  <li @click="go_to('/applicants/' + item.id)">Ver Candidatos</li>
+                  <li @click="set_status_position(item.id, 'publish')">Publicar Posición en la Web</li>
+                  <li @click="go_to('/email-templates/' + item.id)">Editar Correos a Candidatos</li>
+                  <li @click="go_to('/social-position/' + item.id)">Publicar en Redes Sociales</li>
+                  <li @click="set_status_position(item.id, 'closed')" class="is-negative">Cerrar Posición</li><!-- .is-negative add error color to negative acctions -->
                 </ul>
               </div>
             </div>
