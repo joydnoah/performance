@@ -81,7 +81,7 @@
                 <div :id="'id-' + item.applicant_id" class="row-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
                   <p :id="'label-' + item.applicant_id">Sin Parsear</p>
                   <div class="compatibility-container">
-                    <div class="compatibility-level">{{ setScoreBar(item.applicant_id) }}</div>
+                    <div class="compatibility-level">{{ getDocuments(item.applicant_id) }}</div>
                   </div>
                 </div>
               </div>
@@ -146,48 +146,49 @@
         this.get_applicants(id, this.list[id])
         this.list[id] = !this.list[id]
       },
-      setScoreBar (id) {
+      getDocuments (id) {
         this.axios.get('/applicant/documents/' + id)
         .then((response) => {
-          this.get_parser_status(response.data.data.documents[0].id, id)
+          this.getParserStatus(response.data.data.documents[0].id, id)
         })
         .catch(error => { console.log(error.response) })
       },
-      get_parser_status (documentId, id) {
+      getParserStatus (documentId, id) {
         this.axios.get('/parse/' + documentId)
         .then((response) => {
           if (response.data.data.parse[1] !== null) {
-            this.get_score(documentId, id)
+            this.getScore(documentId, id)
           }
         })
         .catch(error => { console.log(error.response) })
       },
-      get_score (documentId, id) {
+      getScore (documentId, id) {
         this.axios.get('/score/' + documentId)
         .then((response) => {
           var score = response.data.data.score[2]
           if (score === null) {
             document.getElementById('label-' + id).innerHTML = 'Esperando para calificar'
           } else {
-            this.change_compatibility(score, id)
+            this.changeCompatibility(score, id)
           }
         })
         .catch(error => { console.log(error.response) })
       },
-      change_compatibility (score, id) {
+      changeCompatibilityValue (id, value) {
+        document.getElementById('id-' + id).classList.add('is-' + value)
+        document.getElementById('label-' + id).innerHTML = 'Compatibilidad ' + value.replace('low', 'baja').replace('medium', 'media').replace('high', 'alta')
+      },
+      updateCompatibility (score, id) {
         if (document.getElementById('label-' + id) !== null) {
           document.getElementById('id-' + id).className = 'row-compatibility'
           if (score < 40.0) {
-            document.getElementById('id-' + id).classList.add('is-low')
-            document.getElementById('label-' + id).innerHTML = 'Compatibilidad baja'
+            this.changeCompatibilityValue(id, 'low')
           }
           if (score >= 40.0 && score < 70.0) {
-            document.getElementById('id-' + id).classList.add('is-medium')
-            document.getElementById('label-' + id).innerHTML = 'Compatibilidad media'
+            this.changeCompatibilityValue(id, 'medium')
           }
           if (score >= 70.0) {
-            document.getElementById('id-' + id).classList.add('is-high')
-            document.getElementById('label-' + id).innerHTML = 'Compatibilidad alta'
+            this.changeCompatibilityValue(id, 'high')
           }
         }
       },
