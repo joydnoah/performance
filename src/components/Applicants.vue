@@ -29,17 +29,17 @@
                 </p>
               </div>
               <div class="col-xs-3">
-                <p id='first_name' class="header-title" @click="change_order($event.target.id)">
+                <p id='first_name' class="header-title" @click="changeOrder($event.target.id)">
                   Nombre
                 </p>
               </div>
               <div class="col-xs-2">
-                <p id="created_at" class="header-title" @click="change_order($event.target.id)"><!-- .descending add sort down icon -->
+                <p id="created_at" class="header-title" @click="changeOrder($event.target.id)"><!-- .descending add sort down icon -->
                   Fecha de solicitud
                 </p>
               </div>
               <div class="col-xs-2">
-                <p id="status_application" class="header-title"  @click="change_order($event.target.id)"><!-- .ascending add sort up icon -->
+                <p id="status_application" class="header-title"  @click="changeOrder($event.target.id)"><!-- .ascending add sort up icon -->
                   Status
                 </p>
               </div>
@@ -142,7 +142,7 @@
       isLoggedIn () {
         return isLoggedIn()
       },
-      change_order (id) {
+      changeOrder (id) {
         this.get_applicants(id, this.list[id])
         this.list[id] = !this.list[id]
       },
@@ -169,7 +169,7 @@
           if (score === null) {
             document.getElementById('label-' + id).innerHTML = 'Esperando para calificar'
           } else {
-            this.changeCompatibility(score, id)
+            this.updateCompatibility(score, id)
           }
         })
         .catch(error => { console.log(error.response) })
