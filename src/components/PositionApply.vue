@@ -72,7 +72,7 @@
         this.work_team_description = response.data.data.position.work_team_description
         this.candidate_characteristics = response.data.data.position.candidate_characteristics
         this.status_type = response.data.data.position.status_type
-        this.setContentOnScreen()
+        this.setDescriptionContent()
       })
       .catch(error => { console.log(error.response) })
     }
