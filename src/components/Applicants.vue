@@ -135,7 +135,8 @@
         applicants: {},
         position: {},
         bootstrap_min_js: null,
-        list: { 'first_name': true, 'created_at': true, 'status_application': true }
+        list: { 'first_name': true, 'created_at': true, 'status_application': true },
+        actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'}
       }
     },
     methods: {
@@ -143,8 +144,8 @@
         return isLoggedIn()
       },
       changeOrder (id) {
+        this.get_applicants(id)
         this.list[id] = !this.list[id]
-        this.get_applicants(id, this.list[id])
       },
       getDocuments (id) {
         this.axios.get('/applicant/documents/' + id)
@@ -198,9 +199,16 @@
       go_to (positionId, id) {
         window.location.href = '/applicant/' + positionId + '/' + id + '/' + this.$route.params.position_id
       },
-      get_applicants (order, ascDesc) {
+      get_applicants (order) {
+        this.actual_order_attribute.attribute = order
+        this.actual_order_attribute.asc_desc = this.list[order]
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/applications/' + this.$route.params.position_id + '/' + order + '/' + ascDesc)
+        this.axios.get('/applications/' + this.$route.params.position_id, {
+          params: {
+            'order_by': order,
+            'asc_or_desc': this.list[order]
+          }
+        })
         .then(response => {
           this.applicants = response.data.data.applicants
         })
@@ -223,13 +231,13 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/application/' + id + '/' + status)
         .then(response => {
-          this.get_applicants()
+          this.get_applicants(this.actual_order_attribute.attribute, this.actual_order_attribute.asc_desc)
         })
         .catch(error => { console.log(error.response) })
       }
     },
     mounted: function () {
-      this.get_applicants('created_at', 'false')
+      this.get_applicants('created_at')
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/position/' + this.$route.params.position_id)
