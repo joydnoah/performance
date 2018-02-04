@@ -143,8 +143,8 @@
         return isLoggedIn()
       },
       changeOrder (id) {
-        this.get_applicants(id, this.list[id])
         this.list[id] = !this.list[id]
+        this.get_applicants(id, this.list[id])
       },
       getDocuments (id) {
         this.axios.get('/applicant/documents/' + id)
