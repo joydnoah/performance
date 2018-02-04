@@ -26,6 +26,10 @@ import VModal from 'vue-js-modal'
 import Meta from 'vue-meta'
 import Router from 'vue-router'
 import KsVueScrollMagic from 'ks-vue-scrollmagic'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import VueQuillEditor from 'vue-quill-editor'
 
 Vue.use(uiv)
 Vue.use(Vuelidate)
@@ -37,6 +41,7 @@ Vue.use(FBSignInButton)
 Vue.use(VModal, { dialog: true })
 Vue.use(Router)
 Vue.use(Meta)
+Vue.use(VueQuillEditor, { theme: 'snow', placeholder: 'Digite su texto aqui...' })
 Vue.use(KsVueScrollMagic)
 
 Vue.config.productionTip = false

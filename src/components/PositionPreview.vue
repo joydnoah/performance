@@ -6,13 +6,13 @@
           <h3>{{ name }} - {{ city }}</h3>
 
           <label v-show="isEmpty( description )">Descripción de la posición</label>
-          <p>{{ description }}</p>
-
-          <label v-show="isEmpty( work_team_description )">Descripción del equipo de trabajo</label>
-          <p>{{ work_team_description }}</p>
+          <div id="description_id"></div>
 
           <label v-show="isEmpty( candidate_characteristics )">Características que estamos buscando en un empleado</label>
-          <p>{{ candidate_characteristics }}</p>
+          <div id="candidate_characteristics_id"></div>
+
+          <label v-show="isEmpty( work_team_description )">Informacion adicional sobre la posición</label>
+          <div id="work_team_description_id"></div>
 
           <a @click="go_back()" class="btn btn-warning">Regresar</a>
         </div>
@@ -54,6 +54,11 @@
       },
       isEmpty (str) {
         return !!str
+      },
+      setDescriptionContent () {
+        document.getElementById('description_id').innerHTML = this.description
+        document.getElementById('work_team_description_id').innerHTML = this.work_team_description
+        document.getElementById('candidate_characteristics_id').innerHTML = this.candidate_characteristics
       }
     },
     mounted () {
@@ -68,6 +73,7 @@
         this.work_team_description = response.data.data.position.work_team_description
         this.candidate_characteristics = response.data.data.position.candidate_characteristics
         this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
+        this.setDescriptionContent()
       })
       .catch(error => { console.log(error.response) })
     }

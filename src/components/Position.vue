@@ -23,7 +23,7 @@
             <div class="row">
               <div class="col-xs-offset-1 col-xs-10">
                 <div class="buttons-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" @click="preview()">Vista previa</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" @click="preview($v)">Vista previa</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="submit">Guardar y salir</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Cancelar</button>
                 </div>
@@ -125,28 +125,26 @@
                 </div>
 
                 <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "2" id="info05" name='description' v-model='description'></textarea>
-                    <label class="mdl-textfield__label" for="info05" v-if="description_empty">Descripción</label>
-                    <span class="mdl-textfield__error">Error message</span>
-                  </div>
+                  <label>Descripción</label>
+                  <quill-editor v-model='description'
+                          ref="myQuillEditor"
+                          :options="{placeholder: 'Descripción...'}"></quill-editor>
+                </div>
+                <!--
+                <div class="col-xs-offset-2 col-xs-8">
+                  <label>Características que estas buscando en un empleado</label>
+                  <quill-editor v-model='candidate_characteristics'
+                          ref="myQuillEditor"
+                          :options="{placeholder: 'Caracteristicas...'}"></quill-editor>
                 </div>
 
-
                 <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "2" id="info06" v-model='work_team_description' name='work_team_description'></textarea>
-                    <label class="mdl-textfield__label" for="info06" v-if="work_team_description_empty">Descripción  del equipo de trabajo</label>
-                    <span class="mdl-textfield__error">Error message</span>
-                  </div>
+                  <label>Informacion adicional sobre la posición</label>
+                  <quill-editor v-model='work_team_description'
+                          ref="myQuillEditor"
+                          :options="{placeholder: 'Informacion adicional...'}"></quill-editor>
                 </div>
-                <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "2" id="info07" v-model='candidate_characteristics' name='candidate_characteristics'></textarea>
-                    <label class="mdl-textfield__label" for="info07" v-if="candidate_characteristics_empty">Características que estas buscando en un empleado</label>
-                    <span class="mdl-textfield__error">Error message</span>
-                  </div>
-                </div>
+                -->
 
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
@@ -538,7 +536,8 @@
           showCollapse: true
         }
       },
-      preview () {
+      preview (v) {
+        this.save(v)
         window.location.href = '/position-preview/' + this.id
       },
       exit () {
@@ -963,5 +962,9 @@
     }
     .create-form{
       padding-top: 0px;
+    }
+    .quill-editor,
+    .quill-code {
+      padding-bottom: 2em;
     }
 </style>
