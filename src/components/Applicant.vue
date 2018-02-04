@@ -355,7 +355,7 @@
         }
       },
       get_status () {
-        this.axios.get('/applications/' + this.$route.params.applications_id)
+        this.axios.get('/applications/' + this.$route.params.applications_id + '/' + 'created_at' + '/' + 'false')
         .then((response) => {
           for (var i = 0; i < response.data.data.applicants.length; i++) {
             if (response.data.data.applicants[i].id === this.id) {

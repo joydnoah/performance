@@ -135,7 +135,8 @@
         applicants: {},
         position: {},
         bootstrap_min_js: null,
-        list: { 'first_name': true, 'created_at': true, 'status_application': true }
+        list: { 'first_name': true, 'created_at': true, 'status_application': true },
+        actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'}
       }
     },
     methods: {
@@ -199,6 +200,8 @@
         window.location.href = '/applicant/' + positionId + '/' + id + '/' + this.$route.params.position_id
       },
       get_applicants (order, ascDesc) {
+        this.actual_order_attribute.attribute = order
+        this.actual_order_attribute.asc_desc = ascDesc
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/applications/' + this.$route.params.position_id + '/' + order + '/' + ascDesc)
         .then(response => {
@@ -223,7 +226,7 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/application/' + id + '/' + status)
         .then(response => {
-          this.get_applicants()
+          this.get_applicants(this.actual_order_attribute.attribute, this.actual_order_attribute.asc_desc)
         })
         .catch(error => { console.log(error.response) })
       }
