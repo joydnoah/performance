@@ -203,7 +203,12 @@
         this.actual_order_attribute.attribute = order
         this.actual_order_attribute.asc_desc = ascDesc
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/applications/' + this.$route.params.position_id + '/' + order + '/' + ascDesc)
+        this.axios.get('/applications/' + this.$route.params.position_id, {
+          params: {
+            'order_by': order,
+            'asc_or_desc': ascDesc
+          }
+        })
         .then(response => {
           this.applicants = response.data.data.applicants
         })
