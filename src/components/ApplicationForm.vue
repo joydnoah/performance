@@ -144,26 +144,6 @@
       isLoggedIn () {
         return isLoggedIn()
       },
-      addMetaTag (type, element, content) {
-        this.meta_tag = document.createElement('meta')
-        this.meta_tag.setAttribute(type, element)
-        this.meta_tag.setAttribute('content', content)
-        document.head.appendChild(this.meta_tag)
-      },
-      addHeader () {
-        this.addMetaTag('property', 'og:title', 'Cotopaxi')
-        this.addMetaTag('property', 'og:site_name', 'Cotopaxi')
-        this.addMetaTag('property', 'og:description', 'contenido 3')
-        this.addMetaTag('property', 'og:image', 'http://placeme.life/images/opimage.jpg')
-        this.addMetaTag('property', 'og:url', document.URL)
-        this.addMetaTag('property', 'og:type', 'website')
-        this.addMetaTag('name', 'twitter:card', 'summary_large_image')
-        this.addMetaTag('name', 'twitter:site', '@user')
-        this.addMetaTag('name', 'twitter:creator', '@soyelhijo')
-        this.addMetaTag('name', 'twitter:title', 'contenido 4')
-        this.addMetaTag('name', 'twitter:description', 'contenido 5')
-        this.addMetaTag('name', 'twitter:image', 'http://placeme.life/images/opimage.jpg')
-      },
       validatePhone (phone) {
         var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/
         this.valid_phone = regex.test(phone)
@@ -292,7 +272,6 @@
       }
     },
     mounted () {
-      this.addHeader()
       if (this.status !== 'publish') {
         document.getElementsByClassName('form')[0].style.display = 'none'
         document.getElementsByClassName('form')[1].style.display = 'none'
