@@ -23,7 +23,7 @@ import Multiselect from 'vue-multiselect'
 import VueFroala from 'vue-froala-wysiwyg'
 import FBSignInButton from 'vue-facebook-signin-button'
 import VModal from 'vue-js-modal'
-import Meta from 'vue-meta'
+import VueHead from 'vue-head'
 import Router from 'vue-router'
 import KsVueScrollMagic from 'ks-vue-scrollmagic'
 import 'quill/dist/quill.core.css'
@@ -40,7 +40,7 @@ Vue.component(Multiselect)
 Vue.use(FBSignInButton)
 Vue.use(VModal, { dialog: true })
 Vue.use(Router)
-Vue.use(Meta)
+Vue.use(VueHead)
 Vue.use(VueQuillEditor, { theme: 'snow', placeholder: 'Digite su texto aqui...' })
 Vue.use(KsVueScrollMagic)
 
