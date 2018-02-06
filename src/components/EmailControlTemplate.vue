@@ -8,7 +8,7 @@
             <span class="switch-message">Activar plantilla</span>
 
             <div class="switch-content">
-              <div v-on:click="changeTemplateStatus()" class="onoffswitch">
+              <div class="onoffswitch">
                 <input v-model="status.automatic_send" :id="check_box_id" type="checkbox" name="switchitem1" class="onoffswitch-checkbox"">
                 <label class="onoffswitch-label" :for="check_box_id">
                   <span class="onoffswitch-inner">
@@ -99,16 +99,6 @@
       }
     },
     methods: {
-      changeTemplateStatus () {
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.put('/email_template/' + this.status.id, {
-          'automatic_send': !this.status.automatic_send
-        })
-        .catch(error => {
-          console.log(error)
-          this.status.automatic_send = !this.status.automatic_send
-        })
-      },
       isLoggedIn () {
         return isLoggedIn()
       },
