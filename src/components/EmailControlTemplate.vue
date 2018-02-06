@@ -106,6 +106,7 @@
         })
         .catch(error => {
           console.log(error)
+          this.status.automatic_send = !this.status.automatic_send
         })
       },
       isLoggedIn () {
