@@ -27,13 +27,17 @@
               <span class="input-group-addon">{{ server }}/</span>
               <input type="text" class="form-control" v-on:input="$v.uri.$touch" v-model="uri" id="uri" name="uri" />
             </div>
+            <button @click="confirmCopiedCompanyLink()" v-clipboard:copy="server + '/' + uri">Copiar enlace</button>
           </div>
 
           <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
             <strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong>
             <p>La empresa se actualizó correctamente.</p>
           </div>
-
+          <div style="display: none;" id="copy_link" class="alert alert-success" role="alert">
+            <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Link Copiado</strong>
+            <p></p>
+          </div>
           <button id="submit" class="btn btn-success" @click="update_company($v)">Guardar Cambios</button>
           <router-link v-bind:to="'/' + uri" target="_blank" class="btn btn-warning">Vista Preliminar</router-link>
           <button class="btn btn-danger" @click="exit()">Salir sin Guardar</button>
@@ -71,6 +75,9 @@
       },
       exit () {
         window.location.href = '/positions'
+      },
+      confirmCopiedCompanyLink () {
+        document.getElementById('copy_link').style.display = 'block'
       },
       update_company (v) {
         document.getElementsByClassName('alert-danger')[0].style.display = 'none'

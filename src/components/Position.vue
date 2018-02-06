@@ -23,7 +23,7 @@
             <div class="row">
               <div class="col-xs-offset-1 col-xs-10">
                 <div class="buttons-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" @click="preview()">Vista previa</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" @click="preview($v)">Vista previa</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="submit">Guardar y salir</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Cancelar</button>
                 </div>
@@ -125,28 +125,26 @@
                 </div>
 
                 <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "2" id="info05" name='description' v-model='description'></textarea>
-                    <label class="mdl-textfield__label" for="info05" v-if="description_empty">Descripción</label>
-                    <span class="mdl-textfield__error">Error message</span>
-                  </div>
+                  <label>Descripción</label>
+                  <quill-editor v-model='description'
+                          ref="myQuillEditor"
+                          :options="{placeholder: 'Descripción...'}"></quill-editor>
+                </div>
+                <!--
+                <div class="col-xs-offset-2 col-xs-8">
+                  <label>Características que estas buscando en un empleado</label>
+                  <quill-editor v-model='candidate_characteristics'
+                          ref="myQuillEditor"
+                          :options="{placeholder: 'Caracteristicas...'}"></quill-editor>
                 </div>
 
-
                 <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "2" id="info06" v-model='work_team_description' name='work_team_description'></textarea>
-                    <label class="mdl-textfield__label" for="info06" v-if="work_team_description_empty">Descripción  del equipo de trabajo</label>
-                    <span class="mdl-textfield__error">Error message</span>
-                  </div>
+                  <label>Informacion adicional sobre la posición</label>
+                  <quill-editor v-model='work_team_description'
+                          ref="myQuillEditor"
+                          :options="{placeholder: 'Informacion adicional...'}"></quill-editor>
                 </div>
-                <div class="col-xs-offset-2 col-xs-8">
-                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows= "2" id="info07" v-model='candidate_characteristics' name='candidate_characteristics'></textarea>
-                    <label class="mdl-textfield__label" for="info07" v-if="candidate_characteristics_empty">Características que estas buscando en un empleado</label>
-                    <span class="mdl-textfield__error">Error message</span>
-                  </div>
-                </div>
+                -->
 
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
@@ -184,10 +182,10 @@
                       <div v-if="filters_education_level.length === 0" class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                           <select id="abilitiesaux" v-model="education_level" class="mdl-selectfield__select" v-on:change="add_education_level()">
                             <option value="" disabled selected hidden>Grado academico...</option>
-                            <option value="Bachiller">Bachiller</option>
-                            <option value="Técnico">Técnico</option>
-                            <option value="Universitario">Universitario</option>
-                            <option value="Post-grado">Post-grado</option>
+                            <option value="bachiller">Bachiller</option>
+                            <option value="tecnico">Técnico</option>
+                            <option value="licenciatura">Universitario</option>
+                            <option value="postgrado">Post-grado</option>
                           </select>
                           <label class="mdl-selectfield__label" for="abilitiesaux"></label>
                       </div>
@@ -520,7 +518,8 @@
         radioValue: 1,
         valid: true,
         valid_asign: false,
-        bootstrap_min_js: null
+        bootstrap_min_js: null,
+        scrollmagic: null
       }
     },
     validations: {
@@ -537,7 +536,8 @@
           showCollapse: true
         }
       },
-      preview () {
+      preview (v) {
+        this.save(v)
         window.location.href = '/position-preview/' + this.id
       },
       exit () {
@@ -882,11 +882,18 @@
           this.valid = !this.valid
           this.valid_asign = !this.valid_asign
         }
+      },
+      setupLockButtonsBar () {
+        var controller = new this.$scrollmagic.Controller()
+        new this.$scrollmagic.Scene({ triggerElement: '#create-form-container', triggerHook: 0, offset: 0 })
+        .setClassToggle('#create-buttons-bar', 'magic-scroll') // add .addIndicators() to check trigger position
+        .addTo(controller)
       }
     },
     mounted () {
       this.get_departments()
       this.get_skills()
+      this.setupLockButtonsBar()
       if (this.$route.query.id !== undefined) {
         if (document.getElementById('cities_table') !== null) {
           document.getElementById('cities_table').style.display = 'none'
@@ -931,7 +938,6 @@
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
       this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
       document.head.appendChild(this.bootstrap_min_js)
-      this.bootstrap_min_js = document.createElement('link')
     }
   }
 </script>
@@ -956,5 +962,9 @@
     }
     .create-form{
       padding-top: 0px;
+    }
+    .quill-editor,
+    .quill-code {
+      padding-bottom: 2em;
     }
 </style>

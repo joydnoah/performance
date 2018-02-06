@@ -229,6 +229,20 @@
           <div class="separator"></div>
         </div>
       </div>
+      <div class="row bottom-row">
+        <div class="col-xs-12">
+          <div class="row-info">
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+          <div style="padding-top: 30px;">
+            <a href="/positions" class="btn btn-warning">Regresar</a>
+          </div>
+        </div>
+      </div>
     </div><!-- create-form end -->
   </div>
 </template>

@@ -61,14 +61,11 @@
           <label>Cuerpo del mensaje: </label>
           <quill-editor v-model="status.body"
                   ref="myQuillEditor"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)"></quill-editor>
+                  :options="{ placeholder: '' }"></quill-editor>
         </div>
         <div class="separator"></div>
         <div class="form-btn-container">
-          <button v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y Salir</button>
+          <button :id="save_button_id" v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar</button>
           <button v-on:click="go_back()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
         </div>
       </div>
@@ -77,18 +74,12 @@
 </template>
 
 <script>
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
-
-  import { quillEditor } from 'vue-quill-editor'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Alert } from 'uiv'
 
   export default {
     components: {
-      Alert,
-      quillEditor
+      Alert
     },
     props: ['position_id', 'status_prop', 'type_prop'],
     name: 'email-control-template',
@@ -103,7 +94,8 @@
           automatic_send: true,
           check_box_id: '',
           subject_id: '',
-          email_id: ''
+          email_id: '',
+          save_button_id: ''
         }
       }
     },
@@ -121,7 +113,11 @@
           this.put()
         }
       },
+      changeSaveButtonMessage (message) {
+        document.getElementById(this.save_button_id).innerHTML = message
+      },
       post () {
+        this.changeSaveButtonMessage('Guardando...')
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/email_template', {
           'position_id': this.position_id,
@@ -132,13 +128,15 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          window.location.href = '/positions'
+          document.getElementById('tempalteSaved').style.display = 'block'
+          this.changeSaveButtonMessage('Guardar')
         })
         .catch(error => {
           console.log(error)
         })
       },
       put () {
+        this.changeSaveButtonMessage('Guardando...')
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.put('/email_template/' + this.status.id, {
           'from_address': this.status.from_address,
@@ -147,7 +145,8 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          window.location.href = '/positions'
+          document.getElementById('tempalteSaved').style.display = 'block'
+          this.changeSaveButtonMessage('Guardar')
         })
         .catch(error => {
           console.log(error)
@@ -167,6 +166,7 @@
       this.check_box_id = 'checkbox-' + this.type_prop
       this.subject_id = 'subject-' + this.type_prop
       this.email_id = 'email-' + this.type_prop
+      this.save_button_id = 'button-' + this.type_prop
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
