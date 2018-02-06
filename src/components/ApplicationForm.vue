@@ -144,12 +144,6 @@
       isLoggedIn () {
         return isLoggedIn()
       },
-      addMetaTag (type, element, content) {
-        this.meta_tag = document.createElement('meta')
-        this.meta_tag.setAttribute(type, element)
-        this.meta_tag.setAttribute('content', content)
-        document.head.appendChild(this.meta_tag)
-      },
       validatePhone (phone) {
         var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/
         this.valid_phone = regex.test(phone)
@@ -177,26 +171,6 @@
             this.presentation_letter = event.target.files[0]
             break
         }
-      },
-      addComment (comment) {
-        this.meta_tag = document.createComment(comment)
-        document.head.appendChild(this.meta_tag)
-      },
-      addHeader () {
-        this.addComment('Facebook')
-        this.addMetaTag('property', 'og:title', 'Cotopaxi')
-        this.addMetaTag('property', 'og:site_name', 'Cotopaxi')
-        this.addMetaTag('property', 'og:description', 'contenido 3')
-        this.addMetaTag('property', 'og:image', 'http://placeme.life/images/opimage.jpg')
-        this.addMetaTag('property', 'og:url', document.URL)
-        this.addMetaTag('property', 'og:type', 'website')
-        this.addComment('Twitter')
-        this.addMetaTag('name', 'twitter:card', 'summary_large_image')
-        this.addMetaTag('name', 'twitter:site', '@user')
-        this.addMetaTag('name', 'twitter:creator', '@soyelhijo')
-        this.addMetaTag('name', 'twitter:title', 'contenido 4')
-        this.addMetaTag('name', 'twitter:description', 'contenido 5')
-        this.addMetaTag('name', 'twitter:image', 'http://placeme.life/images/opimage.jpg')
       },
       validate_file (validType, validSize, errorId) {
         var validation = validSize && validType
@@ -303,28 +277,6 @@
         document.getElementsByClassName('form')[1].style.display = 'none'
         document.getElementsByClassName('form')[2].style.display = 'none'
         document.getElementsByClassName('alert')[1].style.display = 'block'
-      }
-    },
-    beforeCreate: function () {
-      var metaTags = [
-        ['property', 'og:title', 'Cotopaxi'],
-        ['property', 'og:site_name', 'Cotopaxi'],
-        ['property', 'og:description', 'contenido 3'],
-        ['property', 'og:description', 'contenido 3'],
-        ['property', 'og:image', 'http://placeme.life/images/opimage.jpg'],
-        ['property', 'og:url', document.URL],
-        ['property', 'og:type', 'website'],
-        ['name', 'twitter:card', 'summary'],
-        ['name', 'twitter:site', '@user'],
-        ['name', 'twitter:creator', '@soyelhijo'],
-        ['name', 'twitter:title', 'contenido 4'],
-        ['name', 'twitter:image', 'http://placeme.life/images/opimage.jpg']
-      ]
-      for (var i = 0; i < metaTags.length; i++) {
-        this.meta_tag = document.createElement('meta')
-        this.meta_tag.setAttribute(metaTags[i][0], metaTags[i][1])
-        this.meta_tag.setAttribute('content', metaTags[i][2])
-        document.head.appendChild(this.meta_tag)
       }
     }
   }
