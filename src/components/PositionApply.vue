@@ -48,6 +48,14 @@
         url_position: window.location.href
       }
     },
+    head: {
+      meta: [
+        { property: 'fb:app_id', content: '123456789' },
+        { property: 'og:title', content: 'Content Title' },
+        // with shorthand
+        { p: 'og:image', c: 'https://example.com/image.jpg' }
+      ]
+    },
     methods: {
       exit () {
         window.location.href = '/positions'
@@ -69,7 +77,8 @@
         this.status_type = response.data.data.position.status_type
       })
       .catch(error => { console.log(error.response) })
-    },
+    }
+    /*
     beforeCreate: function () {
       var metaTags = [
         ['property', 'og:title', 'Cotopaxi'],
@@ -92,6 +101,7 @@
         document.head.appendChild(this.meta_tag)
       }
     }
+    */
   }
 </script>
 <style scoped>
