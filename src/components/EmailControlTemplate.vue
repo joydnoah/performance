@@ -8,7 +8,7 @@
             <span class="switch-message">Activar plantilla</span>
 
             <div class="switch-content">
-              <div class="onoffswitch">
+              <div v-on:click="changeTemplateStatus()" class="onoffswitch">
                 <input v-model="status.automatic_send" :id="check_box_id" type="checkbox" name="switchitem1" class="onoffswitch-checkbox"">
                 <label class="onoffswitch-label" :for="check_box_id">
                   <span class="onoffswitch-inner">
@@ -65,7 +65,7 @@
         </div>
         <div class="separator"></div>
         <div class="form-btn-container">
-          <button v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y Salir</button>
+          <button v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar</button>
           <button v-on:click="go_back()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
         </div>
       </div>
@@ -99,6 +99,15 @@
       }
     },
     methods: {
+      changeTemplateStatus () {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.put('/email_template/' + this.status.id, {
+          'automatic_send': !this.status.automatic_send
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
       isLoggedIn () {
         return isLoggedIn()
       },
@@ -123,7 +132,7 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          window.location.href = '/positions'
+          document.getElementById('tempalteSaved').style.display = 'block'
         })
         .catch(error => {
           console.log(error)
@@ -138,7 +147,7 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          window.location.href = '/positions'
+          document.getElementById('tempalteSaved').style.display = 'block'
         })
         .catch(error => {
           console.log(error)
