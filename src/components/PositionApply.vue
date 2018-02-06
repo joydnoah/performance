@@ -50,10 +50,10 @@
     },
     head: {
       meta: [
-        { property: 'fb:app_id', content: '123456789' },
+        { property: 'fb:app_id', content: '1463837437042501' },
         { property: 'og:title', content: 'Content Title' },
         // with shorthand
-        { p: 'og:image', c: 'https://example.com/image.jpg' }
+        { p: 'og:image', c: 'http://placeme.life/images/opimage.jpg' }
       ]
     },
     methods: {
