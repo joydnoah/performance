@@ -50,6 +50,10 @@
             </div>
           </div>
         </div>
+        <div style="display: none;" id="tempalteSaved" class="alert alert-success" role="alert">
+          <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Plantilla Guardada</strong>
+          <p></p>
+        </div>
       </div>
     </div>
   </div>

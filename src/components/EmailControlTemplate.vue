@@ -65,7 +65,7 @@
         </div>
         <div class="separator"></div>
         <div class="form-btn-container">
-          <button v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y Salir</button>
+          <button v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar</button>
           <button v-on:click="go_back()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
         </div>
       </div>
@@ -123,7 +123,7 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          window.location.href = '/positions'
+          document.getElementById('tempalteSaved').style.display = 'block'
         })
         .catch(error => {
           console.log(error)
@@ -138,7 +138,7 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          window.location.href = '/positions'
+          document.getElementById('tempalteSaved').style.display = 'block'
         })
         .catch(error => {
           console.log(error)
