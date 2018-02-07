@@ -34,11 +34,11 @@
             <input type="text" class="form-control" v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name">
           </div>
         </div>
-        <div class="form-group" v-bind:class="{ 'has-error': $v.phone_number.$error }">
-          <label class="col-sm-2 control-label" >Teléfono *</label>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >Teléfono</label>
 
           <div class="col-sm-10">
-            <input placeholder="Ie. +1 541 754 3010" type="text" class="form-control" v-on:change="validatePhone(phone_number)" v-on:input="$v.phone_number.$touch" v-model='phone_number' id="phone_number" >
+            <input placeholder="Ie. +1 541 754 3010" type="text" class="form-control" v-model='phone_number' id="phone_number" >
           </div>
         </div>
         <legend></legend>
@@ -118,7 +118,6 @@
         valid_file_type_presentation_letter: true,
         valid_file_size_presentation_letter: true,
         required_file: false,
-        valid_phone: false,
         meta_tag: ''
       }
     },
@@ -132,21 +131,11 @@
       email: {
         required,
         email
-      },
-      phone_number: {
-        required
-      },
-      phone_code: {
-        required
       }
     },
     methods: {
       isLoggedIn () {
         return isLoggedIn()
-      },
-      validatePhone (phone) {
-        var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/
-        this.valid_phone = regex.test(phone)
       },
       validateFileType (fileType) {
         var pdf = fileType === 'application/pdf'
@@ -189,12 +178,9 @@
       },
       validate_form (validCurriculum, validLetter) {
         var msg = ''
-        var validation = validCurriculum && validLetter && this.required_file && this.valid_phone
+        var validation = validCurriculum && validLetter && this.required_file
         if (!this.required_file) {
           msg = msg + '<div> Es necesario anexar un Curriculum Vitae. </div>'
-        }
-        if (!this.valid_phone) {
-          msg = msg + '<div> El campo de telefono no tiene un numero valido. </div>'
         }
         if (!validation) {
           document.getElementById('alert-error').style.display = 'block'
