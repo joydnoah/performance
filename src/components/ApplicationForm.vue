@@ -38,7 +38,7 @@
           <label class="col-sm-2 control-label" >Teléfono</label>
 
           <div class="col-sm-10">
-            <input placeholder="Ie. +1 541 754 3010" type="text" class="form-control" v-on:input="$v.phone_number.$touch" v-model='phone_number' id="phone_number" >
+            <input placeholder="Ie. +1 541 754 3010" type="text" class="form-control" v-model='phone_number' id="phone_number" >
           </div>
         </div>
         <legend></legend>
