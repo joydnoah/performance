@@ -24,8 +24,9 @@
               <div class="col-xs-offset-1 col-xs-10">
                 <div class="buttons-container">
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" @click="preview($v)">Vista previa</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="submit">Guardar y salir</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Cancelar</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="submit">Guardar</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="set_status_position('publish')" id="publish">Publicar</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Cancelar y salir</button>
                 </div>
 
                 <div style="display: none;" id="alert-error" class="alert alert-danger" role="alert">
@@ -33,8 +34,6 @@
                   <p>Error</p>
                 </div>
                 <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
-                  <strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong>
-                  <p>La posición se almaceno correctamente.</p>
                 </div>
 
               </div>
@@ -164,7 +163,7 @@
 
           <div class="collapse-group" role="tablist" aria-multiselectable="true">
             <div class="" role="tab" id="headingTwo">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#abilities" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#abilities" aria-expanded="false" aria-controls="collapseOne" class="">
                 <div class="row">
                   <div class="col-xs-offset-2 col-xs-8">
                     <div class="form-title">Habilidades y experiencia
@@ -174,7 +173,7 @@
                 </div>
               </a>
             </div>
-            <div id="abilities" class="panel-collapse collapse create-form-container" role="tabpanel" aria-labelledby="headingTwo">
+            <div id="abilities" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
               <div class="row abilities">
                 <div class="col-xs-offset-2 col-xs-4">
                   <table class="table table-striped">
@@ -519,7 +518,9 @@
         valid: true,
         valid_asign: false,
         bootstrap_min_js: null,
-        scrollmagic: null
+        scrollmagic: null,
+        successSave: '<strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong><p>La posición se almaceno correctamente.</p>',
+        successPublish: '<strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong><p>La posición ha sido publicada correctamente.</p>'
       }
     },
     validations: {
@@ -645,7 +646,7 @@
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
-          this.show_waiting()
+          this.show_waiting('submit', 'Guardando...')
           document.getElementById('submit').disabled = true
           this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
@@ -661,7 +662,7 @@
             'filters': JSON.stringify(this.filters)
           })
           .then(response => {
-            this.show_success()
+            this.show_success('submit', 'Guardar', this.successSave)
           })
           .catch(error => {
             console.log(error.response)
@@ -682,12 +683,24 @@
           }
         }
       },
+      set_status_position (status) {
+        this.show_waiting(status, 'Publicando...')
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.post('/position/' + this.id + '/' + status)
+        .then(response => {
+          this.show_success(status, 'Publicar', this.successPublish)
+        })
+        .catch(error => {
+          this.publish_problem = true
+          console.log(error)
+        })
+      },
       post (v) {
         if (this.name === ' ') { this.name = '' }
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
-          this.show_waiting()
+          this.show_waiting('submit', 'Guardando...')
           document.getElementById('submit').disabled = true
           this.departments = []
           for (var item in this.department) {
@@ -707,7 +720,7 @@
             'filters': JSON.stringify(this.filters)
           })
           .then(response => {
-            this.show_success()
+            this.show_success('submit', 'Guardar', this.successSave)
           })
           .catch(error => {
             console.log(error.response)
@@ -737,17 +750,18 @@
         document.getElementById('alert-error').style.display = 'block'
         document.getElementById('alert-error').innerHTML = msg
       },
-      show_waiting () {
-        document.getElementById('submit').innerHTML = 'Guardando...'
-        document.getElementById('submit').style.color = 'white'
+      show_waiting (id, msg) {
+        document.getElementById(id).innerHTML = msg
+        document.getElementById(id).style.color = 'white'
       },
-      restoreSaveButton () {
-        document.getElementById('submit').innerHTML = 'Guardar y salir'
+      restoreButton (id, msg) {
+        document.getElementById(id).innerHTML = msg
         document.getElementById('create-form-container').style.paddingTop = '70px'
       },
-      show_success () {
-        this.restoreSaveButton()
+      show_success (id, buttonMessage, alertMessage) {
+        this.restoreButton(id, buttonMessage)
         document.getElementById('alert-success').style.display = 'block'
+        document.getElementById('alert-success').innerHTML = alertMessage
         setTimeout(function () {
           window.location.href = '/positions'
         }, 500)
@@ -923,6 +937,7 @@
         .catch(error => { console.log(error.response) })
       } else {
         document.getElementById('preview-button').style.display = 'none'
+        document.getElementById('publish').style.display = 'none'
       }
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/position/' + this.id)
@@ -965,6 +980,10 @@
     }
     .quill-editor,
     .quill-code {
-      padding-bottom: 2em;
+      width: 100%;
+      margin: 1;
+      height: 20rem;
+      resize: vertical;
+      padding-bottom: 7rem;
     }
 </style>

@@ -157,11 +157,10 @@
                   <i class="material-icons">keyboard_arrow_down</i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
-                  <li @click="go_to('/position?id=' + item.id)">Editar Posición</li>
+                  <li @click="go_to('/position?id=' + item.id)">Editar y Publicar Posición</li>
                   <li @click="go_to('/position-preview/' + item.id)">Vista Previa</li>
                   <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Copiar Enlace de Posición</li>
                   <li @click="go_to('/applicants/' + item.id)">Ver Candidatos</li>
-                  <li @click="set_status_position(item.id, 'publish')">Publicar Posición en la Web</li>
                   <li @click="go_to('/email-templates/' + item.id)">Editar Plantilla de Correos a Candidatos</li>
                   <li @click="go_to('/social-position/' + item.id)">Publicar en Redes Sociales</li>
                   <li @click="set_status_position(item.id, 'closed')" class="is-negative">Cerrar Posición</li><!-- .is-negative add error color to negative acctions -->
