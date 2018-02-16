@@ -56,7 +56,7 @@
                 <div id="counter_characters">{{ counter_characters_twitter }}</div>
                 <div class="form-note-message">
                   <strong>Nota: </strong>
-                  El enlace de la publicación se agregara al final del texto automaticamente
+                  El nombre y enlace de la posición se agregara automaticamente al final del texto
                 </div>
                 <div style="display: none;" id="success-post-twitter" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
@@ -153,7 +153,7 @@
                 <div id="counter_characters">{{ counter_characters_facebook }}</div>
                 <div class="form-note-message">
                   <strong>Nota: </strong>
-                  El enlace de la publicación se agregara al final del texto automaticamente
+                  El nombre y enlace de la posición se agregara automaticamente al final del texto
                 </div>
                 <div style="display: none;" id="success-post-facebook" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
@@ -212,7 +212,7 @@
                 <div id="counter_characters">{{ counter_characters_linkedin }}</div>
                 <div class="form-note-message">
                   <strong>Nota: </strong>
-                  El enlace de la publicación se agregara al final del texto automaticamente
+                  El nombre y enlace de la posición se agregara automaticamente al final del texto
                 </div>
                 <div style="display: none;" id="success-post-linkedin" class="alert alert-info">La publicación se ha realizado correctamente!</div>
                 <div class="form-btn-container">
