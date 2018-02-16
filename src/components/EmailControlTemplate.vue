@@ -9,7 +9,7 @@
 
             <div class="switch-content">
               <div class="onoffswitch">
-                <input v-model="status.automatic_send" :id="check_box_id" type="checkbox" name="switchitem1" class="onoffswitch-checkbox"">
+                <input v-on:click="changeTemplateStatus()" v-model="status.automatic_send" :id="check_box_id" type="checkbox" name="switchitem1" class="onoffswitch-checkbox"">
                 <label class="onoffswitch-label" :for="check_box_id">
                   <span class="onoffswitch-inner">
                     <span class="onoffswitch-active">
@@ -112,6 +112,16 @@
         } else {
           this.put()
         }
+      },
+      changeTemplateStatus () {
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+        this.axios.put('/email_template/' + this.status.id, {
+          'automatic_send': !this.status.automatic_send
+        })
+        .catch(error => {
+          console.log(error)
+          this.status.automatic_send = !this.status.automatic_send
+        })
       },
       changeSaveButtonMessage (message) {
         document.getElementById(this.save_button_id).innerHTML = message
