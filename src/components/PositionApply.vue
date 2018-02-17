@@ -1,26 +1,59 @@
 <template>
   <div id="general-container">
-    <div id="container-preview">
-      <div class="panel panel-default">
-        <div class="panel-body position-panel">
-          <tooltip text="Copiar enlace">
-            <button id="copy-link" v-clipboard:copy="url_position" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-link"></i></button>
-          </tooltip>
-          <h3>{{ name }} - {{ city }}</h3>
+    <div class="general-container">
+      <div class="public-page-content">
 
-          <label v-show="isEmpty( description )">Descripción de la posición</label>
-          <div id="description_id"></div>
-
-          <label v-show="isEmpty( candidate_characteristics )">Características que estamos buscando en un empleado</label>
-          <div id="candidate_characteristics_id"></div>
-
-          <label v-show="isEmpty( work_team_description )">Informacion adicional sobre la posición</label>
-          <div id="work_team_description_id"></div>
-
-          <application-form :position="id" :status="status_type"></application-form>
+        <div class="row">
+          <div class="col-xs-offset-0 col-xs-8">
+            <div class="page-logo">
+              <img :src="'/static/html_layout/images/logo-color.png'">
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-6">
+            <div class="page-title">Acerca de la posición</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-6">
+            <div class="page-item">
+              <div class="item-label">Nombre de la posiciòn</div>
+              <div class="item-description">{{ name }}</div>
+            </div>
+            <div class="page-item">
+              <div class="item-label">Departamento de la posición</div>
+              <div class="item-description">Departamento de finanzas</div>
+            </div>
+            <div v-show="isEmpty( city )" class="page-item">
+              <div class="item-label">Ubicación de la posición</div>
+              <div class="item-description">{{ city }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-6">
+            <div v-show="isEmpty( description )" class="page-item">
+              <div class="item-label">Descripción de la posición</div>
+              <div id="description_id" class="item-description"></div>
+            </div>
+            <div class="page-item">
+              <div v-show="isEmpty( work_team_description )" class="item-label">Equipo de trabajo</div>
+              <div id="work_team_description_id" class="item-description"></div>
+            </div>
+            <div class="page-item">
+              <div v-show="isEmpty( candidate_characteristics )" class="item-label">Que buscamos</div>
+              <div id="candidate_characteristics_id" class="item-description"></div>
+            </div>
+          </div>
+        </div>
+
+        <application-form :position="id" :status="status_type"></application-form>
+
+      </div><!-- create-form end -->
+    </div><!-- create-form-container end -->
   </div>
 </template>
 <script>
@@ -83,6 +116,13 @@
         this.setDescriptionContent()
       })
       .catch(error => { console.log(error.response) })
+    },
+    created: function () {
+      this.bootstrap_min_js = document.createElement('script')
+      this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
+      this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
+      document.head.appendChild(this.bootstrap_min_js)
     }
     /*
     beforeCreate: function () {
@@ -110,31 +150,9 @@
     */
   }
 </script>
-<style scoped>
-    #container-preview{
-      width: 60%;
-      margin: 3em auto;
-      margin-bottom: 1em;
-    }
-    .position-panel{
-      padding: 3em 3em 3em 3em;
-    }
-    a{
-      margin-bottom: 50px;
-    }
-    label{
-      display: block;
-      margin-top: 2em;
-      margin-bottom: 1em;
-      font-size: 1em;
-    }
 
-    p{
-      display: block;
-      text-align: justify;
-      font-size: 1em;
-    }
-    #copy-link{
-      float: right;
-    }
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+<style scoped>
+
 </style>

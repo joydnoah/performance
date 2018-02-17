@@ -1,90 +1,139 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">Enviar solicitud a esta posición</div>
+  <div>
+    <div id="form-container">
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div class="separator"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div class="page-title">Aplicar a esta posición</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.first_name.$error }">
+            <label class="mdl-textfield__label" for="first_name">Nombre *</label>
+            <input v-on:input="$v.first_name.$touch" v-model='first_name' id="first_name" name="first_name" class="mdl-textfield__input" type="text">
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.last_name.$error }">
+            <label class="mdl-textfield__label" for="last_name">Apellido *</label>
+            <input v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name" name="last_name" class="mdl-textfield__input" type="text">
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.email.$error }">
+            <label class="mdl-textfield__label" for="email">Email *</label>
+            <input v-on:input="$v.email.$touch" v-model='email' id="email" name="email" class="mdl-textfield__input" type="text">
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="phone_number">Teléfono</label>
+            <input v-model='phone_number' id="phone_number" name="phone_number" class="mdl-textfield__input" type="text">
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div class="separator public-form-separator"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="linkedin_user">Perfil de linkedIn (opcional)</label>
+            <input v-model='linkedin_user' id="linkedin_user" name="linkedin_user" class="mdl-textfield__input" type="text">
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="twitter_user">Usuario de Twitter (opcional)</label>
+            <input v-model='twitter_user' id="twitter_user" name="twitter_user" class="mdl-textfield__input" type="text">
+            <span class="mdl-textfield__error">Error message</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div class="separator public-form-separator"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div class="page-subtitle">Los archivos que se adjunten deben ser PDF con maximo 7MB</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div id="curriculum_vitae" class="file-upload-container">
+            <div class="upload-title">Curriculum Vitae</div>
+            <!-- Add .hidden class to hide this div when the file is uploaded -->
+            <div id="curriculum_vitae-container" class="upload-container">
+              <div id="curriculum_vitae-upload" @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
+                <i class="material-icons">cloud_upload</i>
+                Suelta el archivo aqui
+              </div>
+              <div class="upload-note">formatos aceptados .PDF o .docx</div>
+            </div>
+            <div id="curriculum_vitae-file" class="uploaded-file hidden">
+              <i class="material-icons file-icon">description</i>
+              <span class="file-name">{{ curriculum_name }}</span>
+              <i @click="deleteFile($event)" class="material-icons delete-icon">close</i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <div id="presentation_letter" class="file-upload-container">
+            <div class="upload-title">Carta de presentación</div>
+            <!-- Add .hidden class to hide this div when the file is uploaded -->
+            <div id="presentation_letter-container" class="upload-container">
+              <div id="presentation_letter-upload" @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
+                <i class="material-icons">cloud_upload</i>
+                Suelta el archivo aqui
+              </div>
+              <div class="upload-note">formatos aceptados .PDF o .docx</div>
+            </div>
+            <div id="presentation_letter-file" class="uploaded-file hidden">
+              <i class="material-icons file-icon">description</i>
+              <span class="file-name">{{ presentation_letter_name }}</span>
+              <i class="material-icons delete-icon">close</i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-6">
+          <button id="send-button" @click="post($v)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Enviar solicitud</button>
+        </div>
+      </div>
+    </div>
+
     <div class="panel-body">
-      <div style="display: none;" class="alert alert-success">
+      <div id="alert-succes" style="display: none;" class="alert alert-success">
         <i class="glyphicon glyphicon-ok"></i> <strong>Proceso finalizado</strong>
         <p>Se ha enviado tu solicitud de aplicante para la posición actual.</p>
       </div>
-      <div style="display: none;" class="alert alert-warning">
+      <div id="alert-warning" style="display: none;" class="alert alert-warning">
         <i class="glyphicon glyphicon-ok"></i> <strong>Formulario no disponible</strong>
         <p>No es posible aplicar a la posición actual.</p>
       </div>
-      <div style="display: none;" class="alert alert-info">
+      <div id="alert-info" style="display: none;" class="alert alert-info">
         <i class="glyphicon glyphicon-ok"></i> <strong>Candidato Existente!</strong>
         <p>Existe un candidato registrado con ese correo</p>
       </div>
 
-      <div class="form form-horizontal">
-        <div class="form-group" v-bind:class="{ 'has-error': $v.email.$error }">
-          <label class="col-sm-2 control-label" >Correo Electrónico *</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" v-on:input="$v.email.$touch" v-model='email' id="email" >
-          </div>
-        </div>
-        <div class="form-group" v-bind:class="{ 'has-error': $v.first_name.$error }">
-          <label class="col-sm-2 control-label" >Nombre *</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" v-on:input="$v.first_name.$touch" v-model='first_name' id="first_name" >
-          </div>
-        </div>
-        <div class="form-group" v-bind:class="{ 'has-error': $v.last_name.$error }">
-          <label class="col-sm-2 control-label" >Apellido *</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >Teléfono</label>
-
-          <div class="col-sm-10">
-            <input placeholder="Ie. +1 541 754 3010" type="text" class="form-control" v-model='phone_number' id="phone_number" >
-          </div>
-        </div>
-        <legend></legend>
-      </div>
-
-      <div class="form">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Perfil de LinkedIn (opcional)</label>
-          <input type="text" class="form-control" v-model='linkedin_user' id="linkedin_user" >
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Usuario de Twitter (opcional)</label>
-          <input type="text" class="form-control" v-model='twitter_user' id="twitter_user" >
-        </div>
-      </div>
-
-      <div class="form form-horizontal">
-        <legend>Los archivos que se adjunten deben ser PDF con maximo 7mb</legend>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >Curriculum Vitae</label>
-          <div class="col-sm-10">
-            <input type="file" class="form-control" id="name" v-on:change="set_files('curriculum_vitae', $event)" />
-          </div>
-        </div>
-        <div style="display: none;" class="alert alert-danger" id="alert-error1">
-          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
-          <p id="error_message"></p>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >Carta de presentación</label>
-          <div class="col-sm-10">
-            <input type="file" class="form-control" id="name" v-on:change="set_files('presentation_letter', $event)" />
-          </div>
-        </div>
-        <div style="display: none;" class="alert alert-danger" id="alert-error2">
-          <i class="glyphicon glyphicon-ok"></i> <strong>Ops!</strong>
-          <p id="error_message"></p>
-        </div>
-      </div>
-
-      <div class="form" style="display: none;">
-        <legend></legend>
-        <button class="btn btn-success" @click="post($v)">Enviar Solicitud</button>
-        <br/>
-        <br/>
-      </div>
       <div style="display: none;" class="alert alert-danger" id="alert-error">
       </div>
     </div>
@@ -115,8 +164,10 @@
         form_data: null,
         valid_file_type_curriculum: true,
         valid_file_size_curriculum: true,
+        curriculum_name: '',
         valid_file_type_presentation_letter: true,
         valid_file_size_presentation_letter: true,
+        presentation_letter_name: '',
         required_file: false,
         meta_tag: ''
       }
@@ -134,6 +185,38 @@
       }
     },
     methods: {
+      loadFiles (e) {
+        var id = e.path[0].id.split('-')[0]
+        document.getElementById(id + '-container').className += ' hidden'
+        document.getElementById(id + '-upload').className += '.hidden'
+        document.getElementById(id + '-file').classList.remove('hidden')
+        this.set_files(id, e.dataTransfer.files)
+      },
+      deleteFile (e) {
+        var id = e.path[1].id.split('-')[0]
+        document.getElementById(id + '-file').className += ' hidden'
+        document.getElementById(id + '-container').classList.remove('hidden')
+        document.getElementById(id + '-upload').className = 'upload-sub-title'
+        this.unsetFiles(id)
+      },
+      unsetFiles (type) {
+        switch (type) {
+          case 'curriculum_vitae':
+            this.valid_file_type_curriculum = true
+            this.valid_file_size_curriculum = true
+            this.curriculum_vitae = ''
+            this.curriculum_name = ''
+            this.required_file = false
+            break
+
+          case 'presentation_letter':
+            this.valid_file_type_presentation_letter = true
+            this.valid_file_size_presentation_letter = true
+            this.presentation_letter = ''
+            this.presentation_letter_name = ''
+            break
+        }
+      },
       isLoggedIn () {
         return isLoggedIn()
       },
@@ -143,21 +226,23 @@
         var docx = fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         return pdf || doc || docx
       },
-      set_files (type, event) {
-        var validSize = event.target.files[0]['size'] <= 7000000
-        var validType = this.validateFileType(event.target.files[0]['type'])
+      set_files (type, files) {
+        var validSize = files[0]['size'] <= 7000000
+        var validType = this.validateFileType(files[0]['type'])
         switch (type) {
           case 'curriculum_vitae':
             this.valid_file_type_curriculum = validType
             this.valid_file_size_curriculum = validSize
-            this.curriculum_vitae = event.target.files[0]
+            this.curriculum_vitae = files[0]
+            this.curriculum_name = files[0].name
             this.required_file = true
             break
 
           case 'presentation_letter':
             this.valid_file_type_presentation_letter = validType
             this.valid_file_size_presentation_letter = validSize
-            this.presentation_letter = event.target.files[0]
+            this.presentation_letter = files[0]
+            this.presentation_letter_name = files[0].name
             break
         }
       },
@@ -189,7 +274,7 @@
         return validation
       },
       post (v) {
-        document.getElementsByClassName('alert')[5].style.display = 'none'
+        // document.getElementsByClassName('alert')[5].style.display = 'none'
         v.$touch()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
@@ -204,8 +289,8 @@
         }
       },
       save () {
-        document.getElementsByTagName('button')[1].disabled = true
-        document.getElementsByTagName('button')[1].innerHTML = 'Procesando, por favor espere...'
+        document.getElementById('send-button').disabled = true
+        document.getElementById('send-button').innerHTML = 'Procesando, por favor espere...'
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.form_data = new FormData()
         this.form_data.append('curriculum_vitae', this.curriculum_vitae)
@@ -222,51 +307,55 @@
 
         this.axios.post('/application', this.form_data)
         .then(response => {
-          document.getElementsByClassName('form')[0].style.display = 'none'
-          document.getElementsByClassName('form')[1].style.display = 'none'
-          document.getElementsByClassName('form')[2].style.display = 'none'
-          document.getElementsByClassName('form')[3].style.display = 'none'
-          document.getElementsByClassName('alert')[2].style.display = 'none'
           document.getElementsByClassName('alert')[0].style.display = 'block'
-          document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
-          document.getElementsByTagName('button')[1].disabled = false
+          document.getElementById('send-button').disabled = false
+          document.getElementById('send-button').innerHTML = 'Enviar Solicitud'
+          document.getElementById('form-container').style.display = 'none'
         })
         .catch(error => {
           // TODO: identify how to avoid setting a console.log to prevent error ...
           console.log(error.response)
           document.getElementById('alert-error').innerHTML = 'There was an unexpected error saving the application, please contact technology@cotopaxi.io'
           document.getElementsByClassName('alert')[5].style.display = 'block'
-          document.getElementsByTagName('button')[1].innerHTML = 'Enviar Solicitud'
-          document.getElementsByTagName('button')[1].disabled = false
         })
       }
     },
     watch: {
       status: function () {
         if (this.status !== 'publish') {
-          document.getElementsByClassName('form')[0].style.display = 'none'
-          document.getElementsByClassName('form')[1].style.display = 'none'
-          document.getElementsByClassName('form')[2].style.display = 'none'
+          // document.getElementsByClassName('form')[0].style.display = 'none'
+          // document.getElementsByClassName('form')[1].style.display = 'none'
+          // document.getElementsByClassName('form')[2].style.display = 'none'
+          document.getElementById('form-container').style.display = 'none'
           document.getElementsByClassName('alert')[1].style.display = 'block'
         } else {
-          document.getElementsByClassName('form')[0].style.display = 'block'
-          document.getElementsByClassName('form')[1].style.display = 'block'
-          document.getElementsByClassName('form')[2].style.display = 'block'
-          document.getElementsByClassName('form')[3].style.display = 'block'
+          // document.getElementsByClassName('form')[0].style.display = 'block'
+          // document.getElementsByClassName('form')[1].style.display = 'block'
+          // document.getElementsByClassName('form')[2].style.display = 'block'
+          // document.getElementsByClassName('form')[3].style.display = 'block'
+          document.getElementById('form-container').style.display = 'block'
           document.getElementsByClassName('alert')[1].style.display = 'none'
         }
       }
     },
     mounted () {
+      // console.log(this.status)
       if (this.status !== 'publish') {
-        document.getElementsByClassName('form')[0].style.display = 'none'
-        document.getElementsByClassName('form')[1].style.display = 'none'
-        document.getElementsByClassName('form')[2].style.display = 'none'
+        document.getElementById('form-container').style.display = 'none'
         document.getElementsByClassName('alert')[1].style.display = 'block'
       }
+    },
+    created: function () {
+      this.bootstrap_min_js = document.createElement('script')
+      this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
+      this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
+      document.head.appendChild(this.bootstrap_min_js)
     }
   }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
 
