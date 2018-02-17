@@ -1,0 +1,41 @@
+
+.modal-confirmation
+	.modal-dialog
+		width 700px
+		.modal-content
+			@extends .transition-mdl-elements
+			border-radius 0
+			box-shadow 0 7px 17px rgba(0,0,0,0.1)
+			&:hover
+				box-shadow 0 7px 24px rgba(0,0,0,0.2)
+			.modal-body
+				padding 0
+			.confirmation-message-container
+				background color-background
+				padding 35px 35px 25px
+				.confirmation-message
+					color color-text-primary
+					font-size 19px
+					line-height 1.2
+					text-align center
+			.confirmation-btn-container
+				padding 25px 0
+				text-align center
+				.mdl-button.mdl-js-button
+					border-radius 100px
+					box-shadow 0px 2px 8px rgba(0,0,0,0.13)
+					font-size 16px
+					height 36px
+					margin 0 15px
+					padding 0 20px
+					text-align center
+					text-transform none
+					width 250px
+					&.btn-cancel
+						background color-white
+						border solid 1px color-third
+						color color-third
+					&.btn-confirm
+						background color-third
+						border solid 1px color-third
+						color color-white

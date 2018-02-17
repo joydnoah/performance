@@ -1,0 +1,58 @@
+//alert message
+
+.alert-message-container
+	@extends .transition-mdl-elements
+	left 50%
+	opacity 0
+	position fixed
+	text-align center
+	top -50px
+	transform translate(-50%, 0)
+	visibility hidden
+	z-index 25
+
+	&.is-active
+		opacity 1
+		top 0
+		visibility visible
+
+	
+	.alert-message
+		@extends .transition-mdl-elements
+		border-radius 0
+		box-shadow: 0 5px 10px rgba(0,0,0,0.21);
+		display inline-block
+		height 47px
+		margin 0 auto
+		padding 0 28px 0 25px
+		box-shadow 0 7px 17px rgba(0,0,0,0.1)
+		&:hover
+			box-shadow 0 7px 24px rgba(0,0,0,0.2)
+
+		p
+			color color-white
+			font-size 14px
+			font-weight regular
+			margin 10px 0 0 0
+
+			span
+				color color-white
+				font-weight bold
+
+			.material-icons
+				color color-text-nav
+				cursor pointer
+				font-size 15px
+				font-weight bold
+				line-height 1
+				margin-left 12px
+				vertical-align sub
+
+		&.is-success
+			background color-success
+
+		&.is-warning
+			background color-warning
+
+		&.is-error
+			background color-error
