@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Cotopaxi</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="external-libs/animate/animate.css">
+  <link rel="stylesheet" href="external-libs/mdl-selectfield/mdl-selectfield.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script defer src="external-libs/mdl-selectfield/mdl-selectfield.min.js"></script>
+  <script src="external-libs/wow/wow.min.js"></script>
+  <script src="external-libs/wow/setup.js"></script>
+  <script src="external-libs/scrollmagic/ScrollMagic.js"></script>
+  <script src="external-libs/scrollmagic/debug.addIndicators.js"></script>
+  <!-- Datepicker https://github.com/eternicode/bootstrap-datepicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.en-GB.min.js"></script>
+
+  <script type="text/javascript">
+    function determineDropDirection(){
+      $(".dropdown-menu").each( function(){
+        
+        $(this).parent().removeClass("dropup");
+        
+        if ($(this).offset().top + $(this).outerHeight() > $(window).innerHeight() + $(window).scrollTop()){
+          $(this).parent().addClass("dropup");
+        }
+        
+        $(this).removeAttr("style");
+      });
+    }
+
+    determineDropDirection();
+
+    $(window).scroll(determineDropDirection);
+  </script>
+
+
+  <script>
+    $(window).ready(function() {
+      $('#datepicker-end').datepicker({
+        format: "dd/mm/yyyy",
+        startDate: "0d",
+        endDate: "+90d",
+        maxViewMode: 1,
+        clearBtn: true,
+        autoclose: true,
+        toggleActive: true,
+      });
+      
+      // input recognice is-dirty when select datepicker day
+      $("#datepicker-end").click(function() {
+        if (document.contains($('.datepicker')[0]))
+        {
+          $('.day').not(".disabled").click(function () {
+            $('#datepicker-end').parent().addClass('is-dirty');
+          });
+          $('.today').not(".disabled").click(function () {
+            $('#datepicker-end').parent().addClass('is-dirty');
+          });
+        }
+      });
+    });
+
+  </script>
+
+</head>
+
+<body class="visibility-hidden wow fadeIn" data-wow-duration="1s">
+  <!-- topbar -->
+  <div class="topbar wow fadeIn" data-wow-delay="0.4s" data-wow-duration="1.2s">
+    <div class="topbar-container general-container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="left-side">
+            <div class="logo">
+              <a href="">
+                <img src="images/company-logo.svg">
+              </a>
+            </div>
+          </div>
+          <div class="right-side">
+            <div class="main-nav">
+              <div class="nav-item">
+                <i class="material-icons">dashboard</i>Panel de ofertas
+              </div>
+              <div class="nav-item">
+                <i class="material-icons">note_add</i>Crear posición
+              </div>
+              <div class="nav-item item-nav-dropdown">
+                <i class="material-icons">account_circle</i>Yoshini Shumada
+                <i class="material-icons icon-row">keyboard_arrow_down</i>
+                <div class="dropdown-nav-container">
+                  <div class="dropdown-nav arrow-right">
+                    <span class="dropdown-list-title">Opciones de usuario</span>
+                    <ul class="dropdown-list">
+                      <li><a href="">Informacion empresarial</a></li>
+                      <li><a href="">Cerrar sesión</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- row end -->
+    </div>
+  </div>
+  <!-- topbar end -->
+
+  <!-- body-container start -->
+  <div class="body-container">
+    <!-- header start -->
+    <div class="section-header">
+      <div class="general-container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1 class="header-title wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Información empresarial</h1>
+            <span class="header-title-link wow fadeInRight" data-wow-delay="0.4s" data-wow-duration="1.2s">
+              <div class="link-message">Enlace para publicar manualmente</div>
+              <div class="link-url">http://bitly.coto.2dhe5</div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div><!-- header end -->
+
+    <!-- create-buttons-bars start -->
+    <div class="create-buttons-bar-container">
+      <div id="create-buttons-bar" class="create-buttons-bar">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="buttons-container">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success pull-left">Vista previa</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success pull-left">Guardar y salir</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error pull-left">Cancelar</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action pull-right">Completar este paso luego</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- create buttons bar end -->
+    </div>
+
+
+    
+    <div id="create-form-container" class="general-container">
+      <div class="email-template-content">
+        <div class="row">
+          <div class="col-xs-offset-2 col-xs-8">
+            <div class="template-header">
+              <div class="template-title-container">
+                <div class="template-title">Página publica empresarial</div>
+              </div>
+              <div class="template-instructions-container">
+                <div class="instructions-title">Instrucciones</div>
+                <div class="instructions-message">Esta es la información que veran los candidatos cuando busquen tu empresa, tambien aqui se listaran todas las ofertas laborales que tengas disponibles.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-offset-2 col-xs-8">
+            <div class="template-body is-active">
+              <div class="separator"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="logo-upload-container">
+          <div class="row">
+            <div class="col-xs-offset-2 col-xs-4">
+              <div class="upload-title">Logo empresarial</div>
+              <div class="upload-container">
+                <div class="upload-sub-title">
+                  <i class="material-icons">cloud_upload</i>
+                  Suelta el logo aquí
+                </div>
+                <div class="upload-text">O click para seleccionar la imagen</div>
+                <div class="upload-note">Archivos permitidos .jpg o .png tamaño de 600px X 200px</div>
+              </div>
+              <!-- Add .hidden class to hide this div when there is no logo -->
+              <div class="uploaded-content hidden">
+                <img src="images/test.png">
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="buttons-container">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action">Examinar</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error">Borrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-offset-2 col-xs-8">
+            <div class="template-body is-active">
+              <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                <textarea class="mdl-textfield__input" type="text" rows= "4" id="template01"></textarea>
+                <label class="mdl-textfield__label" for="template01">Danos una descripcion corta de tu empresa. (Máximo 200 palabras)</label>
+                <span class="mdl-textfield__error">Error message</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+
+
+  </div><!-- body-container end -->
+  <script src="external-libs/scrollmagic/setup.js"></script>
+  <script src="external-libs/wow/start-setup.js"></script>
+</body>
+</html>

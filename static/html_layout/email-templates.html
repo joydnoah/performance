@@ -167,7 +167,262 @@
                 <div class="template-header">
 
                   <div class="template-title-container">
+                    <div class="template-title">Plantilla para agradecer solicitud</div>
+                    <!-- <div class="switch-container">
+                      <span class="switch-message">Activar plantilla</span>
+
+                      <div class="switch-content">
+                        <div class="onoffswitch">
+                          <input id="tab-switch-02" type="checkbox" name="switchitem" class="onoffswitch-checkbox">
+                          <label class="onoffswitch-label" for="tab-switch-02">
+                            <span class="onoffswitch-inner">
+                              <span class="onoffswitch-active">
+                                <span class="onoffswitch-switch transition-mdl-elements">SI</span>
+                              </span>
+                              <span class="onoffswitch-inactive">
+                                <span class="onoffswitch-switch transition-mdl-elements">NO</span>
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+
+                  <div class="template-instructions-container">
+                    <div class="instructions-title">Instrucciones</div>
+                    <div class="instructions-message">Este correo electrónico será enviado automaticamente a todos los candidatos que apliquen a este oferta laboral</div>
+                  </div>
+                
+                </div><!-- template-header end -->
+
+                <!-- Add is-active to show and hide the content the switch button change -->
+                <div class="template-body is-active">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="template01">Correo del remitente</label>
+                    <input class="mdl-textfield__input" type="text" id="template01" name="template01">
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="template-explanation-container">
+                    <div class="explanation-title">Elementos automáticos</div>
+                    <div class="explanation-text">
+                      Inserta estos elementos en el correo y nosotros los personalizaremos automáticamente.
+                      <br><br>
+                      <strong>[*NOMBRE*]</strong> = Primer nombre del candidato
+                      <br><br>
+                      <strong>[*NOMBRE COMPLETO*]</strong> = Nombre completo del candidato
+                      <br><br>
+                      <strong>[*POSICION*]</strong> = Nombre de la posición
+                    </div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="template02">Asunto</label>
+                    <input class="mdl-textfield__input" type="text" id="template02" name="template02">
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "15" id="template03">
+Muchas gracias [*NOMBRE COMPLETO*] por postularte a la posición [*POSICION*].
+
+Te enviaremos información del proceso.
+
+Atentamente,
+Equipo de reclutamiento
+                    </textarea>
+                    <label class="mdl-textfield__label" for="template03">Mensaje</label>
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="form-btn-container">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y salir</button>
+                  </div>
+                </div><!-- template-body end -->
+
+              </div><!-- email-template-content end -->
+
+
+            </div>
+
+            <div class="mdl-tabs__panel" id="reject-template">
+              <div class="email-template-content">
+                <div class="template-header">
+
+                  <div class="template-title-container">
+                    <div class="template-title">Plantilla para rechazar candidato</div>
+                    <div class="switch-container">
+                      <span class="switch-message">Activar plantilla</span>
+
+                      <div class="switch-content">
+                        <div class="onoffswitch">
+                          <input id="tab-switch-02" type="checkbox" name="switchitem" class="onoffswitch-checkbox">
+                          <label class="onoffswitch-label" for="tab-switch-02">
+                            <span class="onoffswitch-inner">
+                              <span class="onoffswitch-active">
+                                <span class="onoffswitch-switch transition-mdl-elements">SI</span>
+                              </span>
+                              <span class="onoffswitch-inactive">
+                                <span class="onoffswitch-switch transition-mdl-elements">NO</span>
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="template-instructions-container">
+                    <div class="instructions-title">Instrucciones</div>
+                    <div class="instructions-message">Este correo electrónico será enviado automaticamente a los candidatos que se rechacen en el proceso</div>
+                  </div>
+                
+                </div><!-- template-header end -->
+
+                <!-- Add is-active to show and hide the content the switch button change -->
+                <div class="template-body is-active">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="template01">Correo del remitente</label>
+                    <input class="mdl-textfield__input" type="text" id="template01" name="template01">
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="template-explanation-container">
+                    <div class="explanation-title">Elementos automáticos</div>
+                    <div class="explanation-text">
+                      Inserta estos elementos en el correo y nosotros los personalizaremos automáticamente.
+                      <br><br>
+                      <strong>[*NOMBRE*]</strong> = Primer nombre del candidato
+                      <br><br>
+                      <strong>[*NOMBRE COMPLETO*]</strong> = Nombre completo del candidato
+                      <br><br>
+                      <strong>[*POSICION*]</strong> = Nombre de la posición
+                    </div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="template02">Asunto</label>
+                    <input class="mdl-textfield__input" type="text" id="template02" name="template02">
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "15" id="template03">
+[*NOMBRE COMPLETO*]. Lamentamos informarte que ya no continuas en nuestro proceso para la posición [*POSICION*]
+
+Muchas gracias por postularte.
+
+Atentamente,
+Equipo de reclutamiento
+                    </textarea>
+                    <label class="mdl-textfield__label" for="template03">Mensaje</label>
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="form-btn-container">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y salir</button>
+                  </div>
+                </div><!-- template-body end -->
+
+              </div><!-- email-template-content end -->
+            </div>
+
+            <div class="mdl-tabs__panel" id="call-template">
+              <div class="email-template-content">
+                <div class="template-header">
+
+                  <div class="template-title-container">
                     <div class="template-title">Plantilla para invitar candidato a llamada</div>
+                    <div class="switch-container">
+                      <span class="switch-message">Activar plantilla</span>
+
+                      <div class="switch-content">
+                        <div class="onoffswitch">
+                          <input id="tab-switch-02" type="checkbox" name="switchitem" class="onoffswitch-checkbox">
+                          <label class="onoffswitch-label" for="tab-switch-02">
+                            <span class="onoffswitch-inner">
+                              <span class="onoffswitch-active">
+                                <span class="onoffswitch-switch transition-mdl-elements">SI</span>
+                              </span>
+                              <span class="onoffswitch-inactive">
+                                <span class="onoffswitch-switch transition-mdl-elements">NO</span>
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="template-instructions-container">
+                    <div class="instructions-title">Instrucciones</div>
+                    <div class="instructions-message">Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de llamadas de esta posición</div>
+                  </div>
+                
+                </div><!-- template-header end -->
+
+                <!-- Add is-active to show and hide the content the switch button change -->
+                <div class="template-body is-active">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="template01">Correo del remitente</label>
+                    <input class="mdl-textfield__input" type="text" id="template01" name="template01">
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="template-explanation-container">
+                    <div class="explanation-title">Elementos automáticos</div>
+                    <div class="explanation-text">
+                      Inserta estos elementos en el correo y nosotros los personalizaremos automáticamente.
+                      <br><br>
+                      <strong>[*NOMBRE*]</strong> = Primer nombre del candidato
+                      <br><br>
+                      <strong>[*NOMBRE COMPLETO*]</strong> = Nombre completo del candidato
+                      <br><br>
+                      <strong>[*POSICION*]</strong> = Nombre de la posición
+                    </div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="template02">Asunto</label>
+                    <input class="mdl-textfield__input" type="text" id="template02" name="template02">
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "15" id="template03">
+Felicidades [*NOMBRE*]. Has sido seleccionado para continuar en nuestro proceso de
+llamadas para [*POSICION*]
+
+Por favor haz click en el enlace de abajo para confirmar tu participación y programar
+tus entrevistas.
+
+[*LINK*]
+
+Por favor responder a este correo con cualquier pregunta.
+
+Muchas gracias.
+
+Atentamente,
+Equipo de reclutamiento
+                    </textarea>
+                    <label class="mdl-textfield__label" for="template03">Mensaje</label>
+                    <span class="mdl-textfield__error">Error message</span>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="form-btn-container">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y salir</button>
+                  </div>
+                </div><!-- template-body end -->
+
+              </div><!-- email-template-content end -->
+            </div>
+            <div class="mdl-tabs__panel" id="interview-template">
+              <div class="email-template-content">
+                <div class="template-header">
+
+                  <div class="template-title-container">
+                    <div class="template-title">Plantilla para invitar candidato a entrevista</div>
                     <div class="switch-container">
                       <span class="switch-message">Activar plantilla</span>
 
@@ -197,7 +452,7 @@
                 </div><!-- template-header end -->
 
                 <!-- Add is-active to show and hide the content the switch button change -->
-                <div class="template-body is-active">
+                <div class="template-body">
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <label class="mdl-textfield__label" for="template01">Correo del remitente</label>
                     <input class="mdl-textfield__input" type="text" id="template01" name="template01">
@@ -250,33 +505,6 @@ Equipo de reclutamiento
                 </div><!-- template-body end -->
 
               </div><!-- email-template-content end -->
-
-
-            </div>
-
-            <div class="mdl-tabs__panel" id="reject-template">
-              <ul>
-                <li>Tywin</li>
-                <li>Cersei</li>
-                <li>Jamie</li>
-                <li>Tyrion</li>
-              </ul>
-            </div>
-            <div class="mdl-tabs__panel" id="call-template">
-              <ul>
-                <li>Viserys</li>
-                <li>Daenerys</li>
-              </ul>
-            </div>
-            <div class="mdl-tabs__panel" id="interview-template">
-              <ul>
-                <li>Daenerys</li>
-                <li>Viserys</li>
-                <li>Daenerys</li>
-                <li>Viserys</li>
-                <li>Daenerys</li>
-                <li>Viserys</li>
-              </ul>
             </div>
 
           </div>
