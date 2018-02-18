@@ -4,8 +4,17 @@
       <!-- body-container start -->
       <div class="body-container">
         <layout-header :title="position.name"></layout-header>
-        <div class="general-container" v-show="!make_visible()">
-          No hay candidatos para esta oferta
+        <div class="empty-message-container" v-show="!make_visible()">
+
+          <div class="row">
+            <div class="col-xs-offset-4 col-xs-4">
+              <div class="empty-icon">
+                <i class="material-icons">account_circle</i>
+              </div>
+              <div class="empty-message">En este momento no hay candidatos que hayan aplicado a esta oferta</div>
+            </div>
+          </div>
+
         </div>
         <!-- results-status start -->
         <div class="general-container" v-show="make_visible()">
