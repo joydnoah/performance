@@ -8,17 +8,18 @@
     <div class="body-container">
       <layout-header title="Panel de ofertas laborales"></layout-header>
 
-      <div class="general-container" v-show="!make_visible()">
-        <div class="result-status-container">
-          <div class="results-status-message">Crea una nueva oferta laboral</div>
+      <div class="empty-message-container" v-show="!make_visible()">
+
+        <div class="row">
+          <div class="col-xs-offset-4 col-xs-4">
+            <div class="empty-icon">
+              <i class="material-icons">note_add</i>
+            </div>
+            <div class="empty-message">En este momento no tienes ofertas laborales creadas</div>
+            <button v-show="isLoggedIn()" @click="go_to('/position')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent empty-btn">Crear posición</button>
+          </div>
         </div>
-      </div>
-      <div class="general-container" v-show="!make_visible()">
-        <div class="right-side">
-          <button v-show="isLoggedIn()" @click="go_to('/position')" class="btn btn-success">
-            <i class="material-icons">note_add</i>Crear posición
-          </button>
-        </div>
+
       </div>
       <!-- only visible when there is no position created - end -->
 
