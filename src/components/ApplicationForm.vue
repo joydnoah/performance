@@ -274,7 +274,6 @@
         return validation
       },
       post (v) {
-        // document.getElementsByClassName('alert')[5].style.display = 'none'
         v.$touch()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
@@ -323,23 +322,15 @@
     watch: {
       status: function () {
         if (this.status !== 'publish') {
-          // document.getElementsByClassName('form')[0].style.display = 'none'
-          // document.getElementsByClassName('form')[1].style.display = 'none'
-          // document.getElementsByClassName('form')[2].style.display = 'none'
           document.getElementById('form-container').style.display = 'none'
           document.getElementsByClassName('alert')[1].style.display = 'block'
         } else {
-          // document.getElementsByClassName('form')[0].style.display = 'block'
-          // document.getElementsByClassName('form')[1].style.display = 'block'
-          // document.getElementsByClassName('form')[2].style.display = 'block'
-          // document.getElementsByClassName('form')[3].style.display = 'block'
           document.getElementById('form-container').style.display = 'block'
           document.getElementsByClassName('alert')[1].style.display = 'none'
         }
       }
     },
     mounted () {
-      // console.log(this.status)
       if (this.status !== 'publish') {
         document.getElementById('form-container').style.display = 'none'
         document.getElementsByClassName('alert')[1].style.display = 'block'
