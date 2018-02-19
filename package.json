@@ -14,6 +14,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "acorn-dynamic-import": "^3.0.0",
     "auth0-js": "^8.11.3",
     "auth0-lock": "^10.19.0",
     "axios": "^0.16.2",
@@ -23,6 +24,7 @@
     "jwt-decode": "^2.2.0",
     "ks-vue-scrollmagic": "^1.0.2",
     "moment": "^2.18.1",
+    "tapable": "^0.2.5",
     "uiv": "^0.11.8",
     "vee-validate": "^2.0.0-beta.17",
     "vue": "^2.3.3",
