@@ -18,17 +18,17 @@
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.first_name.$error }">
             <label class="mdl-textfield__label" for="first_name">Nombre *</label>
             <input v-on:input="$v.first_name.$touch" v-model='first_name' id="first_name" name="first_name" class="mdl-textfield__input" type="text">
-            <span class="mdl-textfield__error">Error message</span>
+            <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.last_name.$error }">
             <label class="mdl-textfield__label" for="last_name">Apellido *</label>
             <input v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name" name="last_name" class="mdl-textfield__input" type="text">
-            <span class="mdl-textfield__error">Error message</span>
+            <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.email.$error }">
             <label class="mdl-textfield__label" for="email">Email *</label>
             <input v-on:input="$v.email.$touch" v-model='email' id="email" name="email" class="mdl-textfield__input" type="text">
-            <span class="mdl-textfield__error">Error message</span>
+            <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <label class="mdl-textfield__label" for="phone_number">Teléfono</label>
@@ -246,6 +246,17 @@
             break
         }
       },
+      validateInputs () {
+        if (this.first_name === '') {
+          document.getElementById('first_name').parentElement.classList.add('is-invalid')
+        }
+        if (this.last_name === '') {
+          document.getElementById('last_name').parentElement.classList.add('is-invalid')
+        }
+        if (this.email === '') {
+          document.getElementById('email').parentElement.classList.add('is-invalid')
+        }
+      },
       validate_file (validType, validSize, errorId) {
         var validation = validSize && validType
         if (!validation) {
@@ -275,6 +286,7 @@
       },
       post (v) {
         v.$touch()
+        this.validateInputs()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
         if (this.validate_form(validCurriculum, validLetter)) {
