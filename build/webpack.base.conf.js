@@ -1,4 +1,3 @@
-import { isLoggedIn, login, logout, getUserInfo, getIdToken, getAccessToken } from '../utils/auth'
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
@@ -55,7 +54,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test'), , resolve('utils')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
