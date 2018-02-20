@@ -1,4 +1,4 @@
-import { isLoggedIn, login, logout, getUserInfo, getIdToken, getAccessToken } from '../../utils/auth'
+import { isLoggedIn, login, logout, getUserInfo, getIdToken, getAccessToken } from '../utils/auth'
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
