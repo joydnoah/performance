@@ -4,7 +4,6 @@ var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -13,7 +12,7 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
-  otput: {
+  output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
@@ -54,7 +53,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), , resolve('utils')]
+        include: [resolve('src'), resolve('test'), resolve('utils')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
