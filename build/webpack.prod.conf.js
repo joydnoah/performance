@@ -13,7 +13,19 @@ var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
 
+
+const HOST = process.env.HOST
+const PORT = process.env.PORT && Number(process.env.PORT)
+
+
 var webpackConfig = merge(baseWebpackConfig, {
+  devServer: {
+    disableHostCheck: true,
+    host: HOST || config.dev.host,
+    port: PORT || config.dev.port,
+    publicPath: config.dev.assetsPublicPath
+  },
+
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
