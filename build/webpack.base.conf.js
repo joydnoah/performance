@@ -1,8 +1,10 @@
+import { isLoggedIn, login, logout, getUserInfo, getIdToken, getAccessToken } from '../../utils/auth'
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -12,7 +14,7 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
-  output: {
+  otput: {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
