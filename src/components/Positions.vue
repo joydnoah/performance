@@ -159,7 +159,6 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
                   <li @click="go_to('/position?id=' + item.id)">Editar y Publicar Posición</li>
-                  <li @click="go_to('/position-preview/' + item.id)">Vista Previa</li>
                   <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Copiar Enlace de Posición</li>
                   <li @click="go_to('/applicants/' + item.id)">Ver Candidatos</li>
                   <li @click="go_to('/email-templates/' + item.id)">Editar Plantilla de Correos a Candidatos</li>
