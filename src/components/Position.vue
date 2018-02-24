@@ -458,7 +458,7 @@
   import AppNav from './AppNav'
   import Multiselect from 'vue-multiselect'
   import VueGoogleAutocomplete from 'vue-google-autocomplete'
-  import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
+  import { getAccessToken, getIdToken, isLoggedIn, getUserInfo } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
   import Datepicker from 'vuejs-datepicker'
 
@@ -717,7 +717,8 @@
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
             'expiration_date': this.expiration_date,
-            'filters': JSON.stringify(this.filters)
+            'filters': JSON.stringify(this.filters),
+            'user_info': getUserInfo()
           })
           .then(response => {
             this.show_success('submit', 'Guardar', this.successSave)
