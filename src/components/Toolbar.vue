@@ -17,7 +17,7 @@
                 <i class="material-icons">dashboard</i>Panel de Ofertas
               </div>
               <div v-show="isLoggedIn()" @click="go_to('/company-jobs')" class="nav-item">
-                <i class="material-icons">dashboard</i>Página Empresa
+                <i class="material-icons" data-badge="0" v-bind:class="{ 'pending': testNotification() }">dashboard</i>Página Empresa
               </div>
               <div v-show="!isLoggedIn()" @click="handleLogin()" class="nav-item">
                 <i class="material-icons">account_circle</i>Login
@@ -77,6 +77,9 @@
       },
       go_to (url) {
         window.location.href = url
+      },
+      testNotification () {
+        return window.location.href.split('/').splice(-1)[0] !== 'company-jobs' && this.company.status === 'new'
       }
     },
     mounted: function () {
@@ -95,4 +98,22 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .pending {
+    position:relative;
+  }
+  .pending[data-badge]:after {
+    content:attr(data-badge);
+    position:absolute;
+    top: -10px;
+    right: -10px;
+    font-size: .7em;
+    background: red;
+    color: white;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height:18px;
+    border-radius: 50%;
+    box-shadow: 0 0 1px #333;
+  }
 </style>
