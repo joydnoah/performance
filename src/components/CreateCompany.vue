@@ -1,68 +1,115 @@
 <template>
   <div id="general-container">
-    <app-nav></app-nav>
-    <div id="container-positions" class="panel panel-default">
-      <div class="panel-heading"><h3>Ahora cuéntanos un poco sobre tu empresa</h3></div>
-      <div class="panel-body">
-        <div class="form">
-          <div style="display: none;" class="alert alert-danger">
-            <i class="glyphicon glyphicon-remove-sign"></i> <strong>Campos requeridos</strong>
-            <p>Antes de continuar por favor verifique la información suministrada.</p>
+    <toolbar></toolbar>
+    <!-- body-container start -->
+    <div class="body-container">
+      <!-- header start -->
+      <div class="section-header">
+        <div class="general-container">
+          <div class="row">
+            <div class="col-xs-12">
+              <h1 class="header-title wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Registrar nueva empresa</h1>
+            </div>
           </div>
-          <div style="display: none;" class="alert alert-danger">
-            <i class="glyphicon glyphicon-remove-sign"></i> <strong>Oops!</strong>
-            <p>Ocurrio un error inesperado, por favor contacte al administrador del sistema.</p>
-          </div>
-          <div class="form-group" v-bind:class="{ 'has-error': $v.number_employees.$error }">
-            <label>¿Cuantos empledos tiene su empresa? <span class="required-span">*</span></label>
-            <select v-on:input="$v.number_employees.$touch" v-model="number_employees" class="form-control" id="number_employees" name="number_employees">
-              <option value="">Seleccionar</option>
-              <option value="1-50">1-50</option>
-              <option value="51-150">51-150</option>
-              <option value="151-500">151-500</option>
-              <option value="Más de 500">Más de 500</option>
-            </select>
-          </div>
-          <div class="form-group" v-bind:class="{ 'has-error': $v.industry.$error }">
-            <label>¿En que industria se desempeña tu empresa? <span class="required-span">*</span></label>
-            <select class="form-control" v-on:input="$v.industry.$touch" v-model="industry" id="industry" name="industry" >
-              <option value="">Seleccionar</option>
-              <option value="Banca o Finanzas">Banca o Finanzas</option>
-              <option value="Manufactura">Manufactura</option>
-              <option value="Agricultura">Agricultura</option>
-              <option value="Servicios">Servicios</option>
-              <option value="Importación y Exportación">Importación y Exportación</option>
-            </select>
-          </div>
-          <div class="form-group" v-bind:class="{ 'has-error': $v.company_role.$error }">
-            <label>¿Cuál es tu rol dentro de la empresa? <span class="required-span">*</span></label>
-            <select class="form-control" v-on:input="$v.company_role.$touch" v-model="company_role" id="company_role" name="company_role">
-              <option value="">Seleccionar</option>
-              <option value="Gerente de RRHH">Gerente de RRHH</option>
-              <option value="Especialista de RRHH">Especialista de RRHH</option>
-              <option value="Entrevistador">Entrevistador</option>
-              <option value="Otro">Otro</option>
-            </select>
-          </div>
-          <div class="form-group" v-show="false">
-            <label>¿Cuál es el nombre de tu empresa?</label>
-            <input type="text" class="form-control" v-model="name" id="name" name="name" />
-          </div>
-          <button class="btn btn-success" @click="create_company($v)">Continuar</button>
         </div>
-      </div>
-    </div>
+      </div><!-- header end -->
+
+      <div class="general-container">
+
+        <div class="create-form">
+
+          <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+              <div class="form-header-title">Ahora cuéntanos un poco sobre tu empresa</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" v-bind:class="{ 'is-invalid': $v.number_employees.$error }">
+                <select v-on:input="$v.number_employees.$touch" v-model="number_employees" id="number_employees" name="number_employees" class="mdl-selectfield__select">
+                  <option value=""></option>
+                  <option value="1-50">1-50</option>
+                  <option value="51-150">51-150</option>
+                  <option value="151-500">151-500</option>
+                  <option value="Más de 500">Más de 500</option>
+                </select>
+                <label class="mdl-selectfield__label" for="number_employees">¿Cuantos empledos tiene su empresa? *</label>
+                <span class="mdl-textfield__error">Error message</span>
+              </div>
+            </div>
+            <div class="col-xs-offset-3 col-xs-6">
+              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" v-bind:class="{ 'is-invalid': $v.industry.$error }">
+                <select v-on:input="$v.industry.$touch" v-model="industry" id="industry" name="industry" class="mdl-selectfield__select">
+                  <option value=""></option>
+                  <option value="Banca o Finanzas">Banca o Finanzas</option>
+                  <option value="Manufactura">Manufactura</option>
+                  <option value="Agricultura">Agricultura</option>
+                  <option value="Servicios">Servicios</option>
+                  <option value="Importación y Exportación">Importación y Exportación</option>
+                </select>
+                <label class="mdl-selectfield__label" for="industry">¿En que industria se desempeña tu empresa?*</label>
+                <span class="mdl-textfield__error">Error message</span>
+              </div>
+            </div>
+
+            <div class="col-xs-offset-3 col-xs-6">
+              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" v-bind:class="{ 'is-invalid': $v.company_role.$error }">
+                <select v-on:input="$v.company_role.$touch" v-model="company_role" id="company_role" name="company_role" class="mdl-selectfield__select">
+                  <option value=""></option>
+                  <option value="Gerente de RRHH">Gerente de RRHH</option>
+                  <option value="Especialista de RRHH">Especialista de RRHH</option>
+                  <option value="Entrevistador">Entrevistador</option>
+                  <option value="Otro">Otro</option>
+                </select>
+                <label class="mdl-selectfield__label" for="company_role">¿Cuál es tu rol dentro de la empresa? *</label>
+                <span class="mdl-textfield__error">Error message</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+              <div class="separator separator-btn-container"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display: none;" class="alert alert-danger">
+              <i class="glyphicon glyphicon-remove-sign"></i> <strong>Campos requeridos</strong>
+              <p>Antes de continuar por favor verifique la información suministrada.</p>
+            </div>
+            <div style="display: none;" class="alert alert-danger">
+              <i class="glyphicon glyphicon-remove-sign"></i> <strong>Oops!</strong>
+              <p>Ocurrio un error inesperado, por favor contacte al administrador del sistema.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-offset-4 col-xs-4">
+              <div class="form-btn-container">
+                <button @click="create_company($v)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Continuar</button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- create-form end -->
+      </div><!-- create-form-container end -->
+
+
+    </div><!-- body-container end -->
   </div>
 </template>
 
 <script>
+  import Toolbar from './Toolbar'
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn, getUserInfo } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
 
   export default {
     components: {
-      AppNav
+      AppNav,
+      Toolbar
     },
     data: function () {
       return {
@@ -128,9 +175,16 @@
     },
     mounted: function () {
       this.getUserInfo()
+      this.bootstrap_min_js = document.createElement('script')
+      this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
+      this.bootstrap_min_js.setAttribute('crossorigin', 'anonymous')
+      document.head.appendChild(this.bootstrap_min_js)
     }
   }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
   #container-positions{
