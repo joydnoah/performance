@@ -157,7 +157,7 @@
               'user_id': this.user_id
             })
             .then(response => {
-              window.location.href = '/positions'
+              window.location.href = '/company-jobs'
             })
             .catch(error => {
               console.log(error)
