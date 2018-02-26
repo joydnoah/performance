@@ -40,6 +40,14 @@
               <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Link Copiado</strong>
               <p></p>
             </div>
+            <div style="display: none;" class="alert alert-danger">
+              <i class="glyphicon glyphicon-remove-sign"></i> <strong>Campos requeridos</strong>
+              <p>Antes de continuar por favor verifique la información suministrada.</p>
+            </div>
+            <div style="display: none;" class="alert alert-danger">
+              <i class="glyphicon glyphicon-remove-sign"></i> <strong>Oops!</strong>
+              <p>Ocurrio un error inesperado, por favor contacte al administrador del sistema.</p>
+            </div>
           </div>
         </div><!-- create buttons bar end -->
       </div>
@@ -172,6 +180,7 @@
             console.log(response)
             document.getElementsByClassName('alert-success')[0].style.display = 'block'
             document.getElementById('create-form-container').style.paddingTop = '70px'
+            this.exit()
           })
           .catch(error => {
             console.log(error)
