@@ -17,7 +17,7 @@
                 <i class="material-icons">dashboard</i>Panel de Ofertas
               </div>
               <div v-show="isLoggedIn()" @click="go_to('/company-jobs')" class="nav-item">
-                <i class="material-icons" data-badge="0" v-bind:class="{ 'pending': testNotification() }">dashboard</i>Página Empresa
+                <i class="material-icons">dashboard</i>Página Empresa
               </div>
               <div v-show="!isLoggedIn()" @click="handleLogin()" class="nav-item">
                 <i class="material-icons">account_circle</i>Login
