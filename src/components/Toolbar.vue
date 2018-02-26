@@ -77,9 +77,6 @@
       },
       go_to (url) {
         window.location.href = url
-      },
-      testNotification () {
-        return window.location.href.split('/').splice(-1)[0] !== 'company-jobs' && this.company.status === 'new'
       }
     },
     mounted: function () {
