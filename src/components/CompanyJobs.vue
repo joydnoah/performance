@@ -118,7 +118,7 @@
           </div>
 
           <div class="row abilities">
-            <div class="col-xs-offset-2 col-xs-7" style="padding-right: 0px; border-right: 0px;">
+            <div class="col-xs-offset-2 col-xs-8" style="padding-bottom: 0px; border-right: 0px;">
               <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                 <div class="offer-header-container" v-bind:class="{ 'has-error': $v.uri.$error }">
                   <label class="header-title">Enlace de página de empresa <span class="required-span">*</span></label>
@@ -129,10 +129,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-2" style="padding-left: 0px">
+            <div class="col-xs-offset-4 col-xs-5">
               <div class="offer-header-container" v-bind:class="{ 'has-error': $v.uri.$error }">
-                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" style="padding-top: 41px; padding-left: 0px">
-                  <button @click="confirmCopiedCompanyLink()" v-clipboard:copy="server + '/' + uri" class="btn btn-default">Copiar link</button>
+                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" style="padding-top: 0px; padding-left: 20%">
+                  <button @click="confirmCopiedCompanyLink()" v-clipboard:copy="server + '/' + uri" class="btn btn-default" style="padding-left: 60px; padding-right: 60px">Copiar link</button>
                 </div>
               </div>
             </div>
