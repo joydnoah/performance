@@ -34,7 +34,10 @@
 
             <div class="row">
               <div class="col-xs-offset-2 col-xs-8">
-                <div class="page-title">Posiciones abiertas</div>
+                <div v-if="openPositions(department_list)" class="page-title">Posiciones abiertas</div>
+              </div>
+              <div class="col-xs-offset-2 col-xs-8">
+                <div v-if="!openPositions(department_list)" class="page-title">Aun no existen posiciones abiertas</div>
               </div>
               <div class="col-xs-offset-2 col-xs-8">
                 <div class="separator"></div>
@@ -93,6 +96,13 @@
       }
     },
     methods: {
+      openPositions (positions) {
+        var aux = false
+        for (var i = 0; i < positions.length; i++) {
+          aux = aux || this.testPosition(positions[i])
+        }
+        return aux
+      },
       goTo (url) {
         window.location.href = url
       },
@@ -108,6 +118,7 @@
             return true
           }
         }
+        return false
       },
       otherPositions () {
         for (var i = 0; i < this.department_list.length; i++) {
