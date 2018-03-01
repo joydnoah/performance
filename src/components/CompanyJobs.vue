@@ -105,8 +105,8 @@
           </div>
 
           <div class="col-xs-offset-2 col-xs-4">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty">
-              <label id="name_label" class="mdl-textfield__label" for='name'>Enlace para publicar manualmente:</label>
+            <div class="offer-header-container">
+              <label id="name_label" class="header-title" for='name'>Enlace para publicar manualmente:</label>
               <input class="mdl-textfield__input" type="text" id='name' name='name' v-model='uri'>
               <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
             </div>
@@ -115,10 +115,11 @@
           <div class="row">
             <div class="col-xs-offset-2 col-xs-8">
               <div class="template-body is-active">
-                <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                  <textarea v-model="description" class="mdl-textfield__input" type="text" rows= "4" id="template01"></textarea>
-                  <label class="mdl-textfield__label" for="template01">Danos una descripcion corta de tu empresa. (Máximo 200 palabras)</label>
-                  <span class="mdl-textfield__error">Error message</span>
+                <div class="offer-header-container">
+                  <label class="header-title" for="template01">Danos una descripcion corta de tu empresa. (Máximo 200 palabras)</label>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea v-model="description" class="mdl-textfield__input" type="text" rows= "4" id="template01"></textarea>
+                  </div>
                 </div>
               </div>
             </div>
