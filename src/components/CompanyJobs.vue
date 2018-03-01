@@ -11,7 +11,7 @@
               <h1 class="header-title wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Información empresarial</h1>
               <span class="header-title-link wow fadeInRight" data-wow-delay="0.4s" data-wow-duration="1.2s">
                 <div class="link-message">Enlace para publicar manualmente</div>
-                <a @click="confirmCopiedCompanyLink()" v-clipboard:copy="server + '/' + uri" class="link-url">{{ server }}/{{ uri }}</a>
+                <router-link v-bind:to="'/' + uri" target="_blank" class="link-url">{{ server }}/{{ uri }}</router-link>
               </span>
             </div>
           </div>
@@ -104,21 +104,48 @@
             </div>
           </div>
 
-          <div class="col-xs-offset-2 col-xs-4">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty">
-              <label id="name_label" class="mdl-textfield__label" for='name'>Enlace para publicar manualmente:</label>
-              <input class="mdl-textfield__input" type="text" id='name' name='name' v-model='uri'>
-              <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
+          <div class="row">
+            <div class="col-xs-offset-2 col-xs-6">
+
+            </div>
+            <div class="col-xs-3">
+              <div class="check-level-container">
+                <div class="check-level-item">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row abilities">
+            <div class="col-xs-offset-2 col-xs-6" style="padding-right: 0px; border-right: 0px;">
+              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                <div class="offer-header-container" v-bind:class="{ 'has-error': $v.uri.$error }">
+                  <label class="header-title">Enlace de página de empresa <span class="required-span">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-addon">{{ server }}/</span>
+                    <input type="text" class="form-control" v-on:input="$v.uri.$touch" v-model="uri" id="uri" name="uri" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4" style="padding-left: 0px">
+              <div class="offer-header-container" v-bind:class="{ 'has-error': $v.uri.$error }">
+                <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" style="padding-top: 41px; padding-left: 0px">
+                  <button @click="confirmCopiedCompanyLink()" v-clipboard:copy="server + '/' + uri" class="btn btn-default">Copiar link</button>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-xs-offset-2 col-xs-8">
               <div class="template-body is-active">
-                <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                  <textarea v-model="description" class="mdl-textfield__input" type="text" rows= "4" id="template01"></textarea>
-                  <label class="mdl-textfield__label" for="template01">Danos una descripcion corta de tu empresa. (Máximo 200 palabras)</label>
-                  <span class="mdl-textfield__error">Error message</span>
+                <div class="offer-header-container">
+                  <label class="header-title" for="template01">Danos una descripcion corta de tu empresa. (Máximo 200 palabras)</label>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea v-model="description" class="form-control" type="text" rows= "4" id="template01"></textarea>
+                  </div>
                 </div>
               </div>
             </div>
