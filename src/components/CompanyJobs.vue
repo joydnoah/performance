@@ -105,7 +105,7 @@
           </div>
 
           <div class="col-xs-offset-2 col-xs-4">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty">
               <label id="name_label" class="mdl-textfield__label" for='name'>Enlace para publicar manualmente:</label>
               <input class="mdl-textfield__input" type="text" id='name' name='name' v-model='uri'>
               <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
