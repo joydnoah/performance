@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-xs-offset-2 col-xs-8">
                 <div class="page-logo">
-                  <img :src="'/static/html_layout/images/logo-color.png'">
+                  <img :src="logo_uri">
                 </div>
               </div>
             </div>
@@ -87,12 +87,14 @@
     data: function () {
       return {
         id: this.$route.params.company_id,
+        bucket: process.env.AWS_S3_BUCKET,
         company: {},
         positions: [],
         department_list: [
         {'id': 0, 'name': 'Todos'}
         ],
-        department_to_filter: '0'
+        department_to_filter: '0',
+        logo_uri: ''
       }
     },
     methods: {
@@ -150,11 +152,19 @@
           console.log(error.response)
         })
       },
+      getLogoUri () {
+        if (this.company.logo !== null && this.company.logo !== undefined && this.company.logo !== '') {
+          this.logo_uri = 'https://' + this.bucket + '.s3.amazonaws.com/' + this.company.logo
+        } else {
+          this.logo_uri = '/static/html_layout/images/logo-color.png'
+        }
+      },
       getCompany () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/company/uri/' + this.$route.params.uri)
         .then((response) => {
           this.company = response.data.data.company
+          this.getLogoUri()
           this.getDepartments()
         })
         .catch(error => { console.log(error.response) })
