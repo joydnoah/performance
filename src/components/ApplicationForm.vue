@@ -71,12 +71,14 @@
         </div>
       </div>
 
+      <input type="file" style="opacity: 0" id="curriculum_vitae-upload" v-on:change="uploadManualFiles('curriculum_vitae', $event)">
+
       <div class="row">
         <div class="col-xs-offset-1 col-xs-6">
           <div id="curriculum_vitae" class="file-upload-container">
             <div class="upload-title">Curriculum Vitae</div>
             <!-- Add .hidden class to hide this div when the file is uploaded -->
-            <div id="curriculum_vitae-container" class="upload-container">
+            <div v-on:click="clickEvent('curriculum_vitae')" id="curriculum_vitae-container" class="upload-container">
               <div id="curriculum_vitae-upload" @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
                 <i class="material-icons">cloud_upload</i>
                 Suelta el archivo aqui
@@ -92,12 +94,14 @@
         </div>
       </div>
 
+      <input type="file" style="opacity: 0" id="presentation_letter-upload" v-on:change="uploadManualFiles('presentation_letter', $event)">
+
       <div class="row">
         <div class="col-xs-offset-1 col-xs-6">
           <div id="presentation_letter" class="file-upload-container">
             <div class="upload-title">Carta de presentación</div>
             <!-- Add .hidden class to hide this div when the file is uploaded -->
-            <div id="presentation_letter-container" class="upload-container">
+            <div v-on:click="clickEvent('presentation_letter')" id="presentation_letter-container" class="upload-container">
               <div id="presentation_letter-upload" @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
                 <i class="material-icons">cloud_upload</i>
                 Suelta el archivo aqui
@@ -107,7 +111,7 @@
             <div id="presentation_letter-file" class="uploaded-file hidden">
               <i class="material-icons file-icon">description</i>
               <span class="file-name">{{ presentation_letter_name }}</span>
-              <i class="material-icons delete-icon">close</i>
+              <i @click="deleteFile($event)" class="material-icons delete-icon">close</i>
             </div>
           </div>
         </div>
@@ -185,6 +189,15 @@
       }
     },
     methods: {
+      clickEvent (type) {
+        document.getElementById(type + '-upload').click()
+      },
+      uploadManualFiles (type, e) {
+        document.getElementById(type + '-container').className += ' hidden'
+        document.getElementById(type + '-upload').className += '.hidden'
+        document.getElementById(type + '-file').classList.remove('hidden')
+        this.set_files(type, e.target.files)
+      },
       loadFiles (e) {
         var id = e.path[0].id.split('-')[0]
         document.getElementById(id + '-container').className += ' hidden'
