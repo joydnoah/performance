@@ -76,12 +76,13 @@
             </div>
           </div>
 
-          <div class="logo-upload-container" style="display: none;">
+          <input type="file" class="form-control" id="logo-file-input" style="display: none;" v-on:change="manualLoadFile($event)" />
+          <div class="logo-upload-container">
             <div class="row">
               <div class="col-xs-offset-2 col-xs-4">
                 <div class="upload-title">Logo empresarial</div>
-                <div class="upload-container">
-                  <div class="upload-sub-title">
+                <div id="logo-uploader" class="upload-container">
+                  <div @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
                     <i class="material-icons">cloud_upload</i>
                     Suelta el logo aquí
                   </div>
@@ -89,16 +90,17 @@
                   <div class="upload-note">Archivos permitidos .jpg o .png tamaño de 600px X 200px</div>
                 </div>
                 <!-- Add .hidden class to hide this div when there is no logo -->
-                <div class="uploaded-content hidden">
-                  <img src="images/test.png">
+                <div id="logo_img_container" class="uploaded-content hidden">
+                  <div>{{ logo['name'] }}</div>
+                  <img id="logo_img" v-on:change="helpFun()">
                 </div>
               </div>
 
               <div class="col-xs-4">
                 <div class="buttons-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action">Examinar</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error">Borrar</button>
+                  <button v-on:click="manualUpload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action">Examinar</button>
+                  <button v-on:click="uploadAndValidateLogo()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
+                  <button v-on:click="showLogoInput()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error">Borrar</button>
                 </div>
               </div>
             </div>
@@ -174,7 +176,13 @@
         description: '',
         work_with_us: '',
         uri: '',
-        server: process.env.HOST
+        server: process.env.HOST,
+        logo: '',
+        logoValidType: true,
+        logoValidSize: true,
+        imageURL: '',
+        data: null,
+        actualLogo: null
       }
     },
     validations: {
@@ -183,6 +191,61 @@
       }
     },
     methods: {
+      manualUpload () {
+        document.getElementById('logo-file-input').click()
+      },
+      manualLoadFile (e) {
+        this.setFile(e.target.files[0])
+      },
+      loadFiles (e) {
+        this.setFile(e.dataTransfer.files[0])
+      },
+      setFile (file) {
+        this.logoValidType = this.validateFileType(file['type'])
+        this.logo = file
+        this.showLogoPreview(file)
+      },
+      validateFileType (fileType) {
+        var png = fileType === 'image/png'
+        var jpeg = fileType === 'image/jpeg'
+        return png || jpeg
+      },
+      showLogoPreview (file) {
+        var reader = new FileReader()
+        var localInstance = this
+        reader.onload = function () {
+          var dataURL = reader.result
+          var output = document.getElementById('logo_img')
+          localInstance.validateSize(dataURL)
+          output.src = dataURL
+        }
+        reader.readAsDataURL(file)
+        this.hiddeLogoInput()
+      },
+      hiddeLogoInput () {
+        document.getElementById('logo-uploader').className += ' hidden'
+        document.getElementById('logo_img_container').classList.remove('hidden')
+      },
+      showLogoInput () {
+        document.getElementById('logo_img_container').className += ' hidden'
+        document.getElementById('logo-uploader').classList.remove('hidden')
+        this.resetLogoValues()
+      },
+      resetLogoValues () {
+        this.logo = ''
+        this.logoValidType = true
+        this.logoValidSize = true
+        this.imageURL = ''
+        this.data = null
+      },
+      validateSize (imageURL) {
+        var localInstance = this
+        var img = new Image()
+        img.onload = function () {
+          localInstance.logoValidSize = this.width <= 600 && this.height <= 200
+        }
+        img.src = imageURL
+      },
       isLoggedIn () {
         return isLoggedIn()
       },
@@ -199,12 +262,76 @@
         .setClassToggle('#create-buttons-bar', 'magic-scroll') // add .addIndicators() to check trigger position
         .addTo(controller)
       },
+      uploadAndValidateLogo () {
+        if (this.validateLogo()) {
+          this.uploadLogo(false, 'El logo ha sido actualizado.')
+        } else {
+          this.showLogoInput()
+          this.showError('La imagen seleccionada no es valida.')
+        }
+      },
+      getLogoUri () {
+        this.axios.get('/company/' + localStorage['company_id'] + '/logo')
+        .then(response => {
+          this.actualLogo = response.data.data.logo.id
+        })
+      },
+      postLogo (exit, msg) {
+        this.axios.post('/company/' + localStorage['company_id'] + '/logo', this.data)
+        .then(response => {
+          this.showSuccess(msg)
+          if (exit) {
+            this.exit()
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+      updateLogo (exit, msg) {
+        this.axios.put('/company/' + localStorage['company_id'] + '/logo', this.data)
+        .then(response => {
+          this.showSuccess(msg)
+          if (exit) {
+            this.exit()
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+      uploadLogo (exit, msg) {
+        this.getLogoUri()
+        this.data = new FormData()
+        this.data.append('logo_file', this.logo)
+        if (this.actualLogo === undefined) {
+          this.postLogo(exit, msg)
+        } else {
+          this.updateLogo(exit, msg)
+        }
+      },
+      validateLogo () {
+        return this.logoValidSize && this.logoValidType
+      },
+      validateDocument (v) {
+        v.$touch()
+        return !v.$error && this.validateLogo()
+      },
+      showError (msg) {
+        document.getElementsByClassName('alert-danger')[1].style.display = 'block'
+        document.getElementsByClassName('alert-danger')[1].innerHTML = msg
+        document.getElementById('create-form-container').style.paddingTop = '70px'
+      },
+      showSuccess (msg) {
+        document.getElementsByClassName('alert-success')[0].style.display = 'block'
+        document.getElementsByClassName('alert-success')[0].innerHTML = msg
+        document.getElementById('create-form-container').style.paddingTop = '70px'
+      },
       update_company (v) {
         document.getElementsByClassName('alert-danger')[0].style.display = 'none'
         document.getElementsByClassName('alert-danger')[1].style.display = 'none'
         document.getElementsByClassName('alert-success')[0].style.display = 'none'
-        v.$touch()
-        if (!v.$error) {
+        if (this.validateDocument(v)) {
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.put('/company/' + localStorage['company_id'], {
             'description': this.description,
@@ -212,19 +339,19 @@
             'uri': this.uri
           })
           .then(response => {
-            console.log(response)
-            document.getElementsByClassName('alert-success')[0].style.display = 'block'
-            document.getElementById('create-form-container').style.paddingTop = '70px'
-            this.exit()
+            if (this.logo !== '') {
+              this.uploadLogo(true, 'La empresa se actualizó correctamente.')
+            } else {
+              this.showSuccess('La empresa se actualizó correctamente.')
+              this.exit()
+            }
           })
           .catch(error => {
             console.log(error)
-            document.getElementsByClassName('alert-danger')[1].style.display = 'block'
-            document.getElementById('create-form-container').style.paddingTop = '70px'
+            this.showError('Ocurrio un error inesperado, por favor contacte al administrador del sistema.')
           })
         } else {
-          document.getElementsByClassName('alert-danger')[0].style.display = 'block'
-          document.getElementById('create-form-container').style.paddingTop = '70px'
+          this.showError('Antes de continuar por favor verifique la información suministrada.')
         }
       }
     },
