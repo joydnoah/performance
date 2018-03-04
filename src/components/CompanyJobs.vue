@@ -181,7 +181,8 @@
         logoValidType: true,
         logoValidSize: true,
         imageURL: '',
-        data: null
+        data: null,
+        actualLogo: null
       }
     },
     validations: {
@@ -269,9 +270,25 @@
           this.showError('La imagen seleccionada no es valida.')
         }
       },
-      uploadLogo (exit, msg) {
-        this.data = new FormData()
-        this.data.append('logo_file', this.logo)
+      getLogoUri () {
+        this.axios.get('/company/' + localStorage['company_id'] + '/logo')
+        .then(response => {
+          this.actualLogo = response.data.data.logo.id
+        })
+      },
+      postLogo (exit, msg) {
+        this.axios.post('/company/' + localStorage['company_id'] + '/logo', this.data)
+        .then(response => {
+          this.showSuccess(msg)
+          if (exit) {
+            this.exit()
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+      updateLogo (exit, msg) {
         this.axios.put('/company/' + localStorage['company_id'] + '/logo', this.data)
         .then(response => {
           this.showSuccess(msg)
@@ -282,6 +299,16 @@
         .catch(error => {
           console.log(error)
         })
+      },
+      uploadLogo (exit, msg) {
+        this.getLogoUri()
+        this.data = new FormData()
+        this.data.append('logo_file', this.logo)
+        if (this.actualLogo === undefined) {
+          this.postLogo(exit, msg)
+        } else {
+          this.updateLogo(exit, msg)
+        }
       },
       validateLogo () {
         return this.logoValidSize && this.logoValidType
