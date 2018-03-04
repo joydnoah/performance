@@ -153,11 +153,14 @@
         })
       },
       getLogoUri () {
-        if (this.company.logo !== null && this.company.logo !== undefined && this.company.logo !== '') {
-          this.logo_uri = 'https://' + this.bucket + '.s3.amazonaws.com/' + this.company.logo
-        } else {
-          this.logo_uri = '/static/html_layout/images/logo-color.png'
-        }
+        this.axios.get('/company/' + this.company.id + '/logo')
+        .then(response => {
+          if (response.data.data.logo.id !== null && response.data.data.logo.id !== undefined && response.data.data.logo.id !== '') {
+            this.logo_uri = 'https://' + this.bucket + '.s3.amazonaws.com/' + response.data.data.logo.id
+          } else {
+            this.logo_uri = '/static/html_layout/images/logo-color.png'
+          }
+        })
       },
       getCompany () {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`

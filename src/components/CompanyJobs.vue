@@ -272,8 +272,7 @@
       uploadLogo (exit, msg) {
         this.data = new FormData()
         this.data.append('logo_file', this.logo)
-        this.data.append('uri', this.uri)
-        this.axios.put('/logo', this.data)
+        this.axios.put('/company/' + localStorage['company_id'] + '/logo', this.data)
         .then(response => {
           this.showSuccess(msg)
           if (exit) {
