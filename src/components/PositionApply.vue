@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-xs-offset-0 col-xs-8">
             <div class="page-logo">
-              <img :src="'/static/html_layout/images/logo-color.png'">
+              <img :src="logo_uri">
             </div>
           </div>
         </div>
@@ -78,7 +78,9 @@
         publication_date: '',
         expiration_date: '',
         status_type: '',
-        url_position: window.location.href
+        bucket: process.env.AWS_S3_BUCKET,
+        url_position: window.location.href,
+        logo_uri: '/static/html_layout/images/logo-color.png'
       }
     },
     head: {
@@ -105,6 +107,9 @@
     mounted () {
       this.axios.get('/position/' + this.$route.params.id)
       .then((response) => {
+        if (response.data.data.logo_id !== null && response.data.data.logo_id !== undefined && response.data.data.logo_id !== '') {
+          this.logo_uri = 'https://' + this.bucket + '.s3.amazonaws.com/' + response.data.data.logo_id
+        }
         this.id = response.data.data.position.id
         this.name = response.data.data.position.name
         this.department_id = response.data.data.position.department_id
