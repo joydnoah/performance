@@ -60,10 +60,10 @@
           </div>
         </div><!-- results-status end -->
 
-        <button v-on:click="show('modal-confirmation')">a</button>
-        <button v-on:click="show('modal-confirmation2')">b</button>
-        <button v-on:click="showmodal()">c</button>
-        <button>d</button>
+        <button v-on:click="show('modal-confirmation')">A</button>
+        <button v-on:click="show('modal-confirmation2')">B</button>
+        <button>C</button>
+        <button>D</button>
 
         <div class="general-container" v-show="make_visible()">
           <!-- offer-header start -->
