@@ -1,5 +1,37 @@
 <template>
   <div id="general-container">
+    <div class="modal fade modal-confirmation" id="modal-confirmation">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="confirmation-message-container">
+              <div class="confirmation-message">¿Desea activar la plantilla de correo electronico que se enviara automaticamente a los candidatos?</div>
+            </div>
+            <div class="confirmation-btn-container">
+              <button v-on:click="hide('modal-confirmation')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-cancel" data-dismiss="modal" aria-label="Close">No enviar correo por ahora</button>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm" data-dismiss="modal" aria-label="Close">Si, activar plantilla</button>
+            </div>
+          </div><!-- modal-body ends -->
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade modal-email-template" id="modal-confirmation2">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-header">
+              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
+              <button v-on:click="hide('modal-confirmation2')"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body">
+              <email-control-template :position_id="position_id" :type_prop="'in_process'"></email-control-template>
+            </div>
+          </div><!-- modal-body ends -->
+        </div>
+      </div>
+    </div>
+
       <toolbar></toolbar>
       <!-- body-container start -->
       <div class="body-container">
@@ -27,6 +59,11 @@
             </div>
           </div>
         </div><!-- results-status end -->
+
+        <button v-on:click="show('modal-confirmation')">a</button>
+        <button v-on:click="show('modal-confirmation2')">b</button>
+        <button v-on:click="showmodal()">c</button>
+        <button>d</button>
 
         <div class="general-container" v-show="make_visible()">
           <!-- offer-header start -->
@@ -132,23 +169,37 @@
 <script>
   import Toolbar from './Toolbar'
   import LayoutHeader from './LayoutHeader'
+  import EmailControlTemplate from './EmailControlTemplate'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
 
   export default {
     components: {
       Toolbar,
+      EmailControlTemplate,
       LayoutHeader
     },
     data: function () {
       return {
         applicants: {},
         position: {},
+        position_id: this.$route.params.position_id,
         bootstrap_min_js: null,
         list: { 'first_name': true, 'created_at': true, 'status_application': true },
         actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'}
       }
     },
     methods: {
+      show (id) {
+        document.getElementById(id).className += ' show'
+        document.getElementById(id).classList.remove('fade')
+      },
+      hide (id) {
+        document.getElementById(id).className += ' fade'
+        document.getElementById(id).classList.remove('show')
+      },
+      showmodal () {
+        this.$modal.show('show-pdf')
+      },
       isLoggedIn () {
         return isLoggedIn()
       },
@@ -265,5 +316,8 @@
 </script>
 
 <style scoped>
-
-  </style>
+  .modal {
+    max-height: calc(100vh);
+    overflow-y: auto;
+  }
+</style>
