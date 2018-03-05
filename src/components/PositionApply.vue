@@ -80,7 +80,7 @@
         status_type: '',
         bucket: process.env.AWS_S3_BUCKET,
         url_position: window.location.href,
-        logo_uri: ''
+        logo_uri: '/static/html_layout/images/logo-color.png'
       }
     },
     head: {
@@ -109,10 +109,7 @@
       .then((response) => {
         if (response.data.data.logo_id !== null && response.data.data.logo_id !== undefined && response.data.data.logo_id !== '') {
           this.logo_uri = 'https://' + this.bucket + '.s3.amazonaws.com/' + response.data.data.logo_id
-        } else {
-          this.logo_uri = '/static/html_layout/images/logo-color.png'
         }
-        console.log(this.logo_uri)
         this.id = response.data.data.position.id
         this.name = response.data.data.position.name
         this.department_id = response.data.data.position.department_id
