@@ -16,83 +16,15 @@
       </div>
     </div>
 
-    <div class="modal fade modal-email-template" id="modal-email-scheduled_call">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-header">
-              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
-              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
-            </div>
-            <div class="modal-body">
-              <div id="scheduled_call">
-                <email-control-template :saveButtonMessage="'Guardar y enviar'" :type="'modal'" :position_id="positionId" :type_prop="'scheduled_call'" @status_change="onEmailUpdate($event, 0)" @saved="sendEmail()" @go_to="hide('modal-email-' + statusAction)"></email-control-template>
-              </div>
-            </div>
-          </div><!-- modal-body ends -->
-        </div>
-      </div>
-    </div>
+    <email-modal externalId="scheduled_interview" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_interview'" @clear="clear()" @saved="sendEmail('scheduled_interview')"></email-modal>
 
-    <div class="modal fade modal-email-template" id="modal-email-scheduled_interview">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-header">
-              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
-              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
-            </div>
-            <div class="modal-body">
+    <email-modal externalId="scheduled_call" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_call'" @clear="clear()" @saved="sendEmail('scheduled_call')"></email-modal>
 
-              <div  id="scheduled_interview'">
-                <email-control-template :saveButtonMessage="'Guardar y enviar'" :type="'modal'" :position_id="positionId" :type_prop="'scheduled_interview'" @status_change="onEmailUpdate($event, 1)" @saved="sendEmail()" @go_to="hide('modal-email-' + statusAction)"></email-control-template>
-              </div>
+    <email-modal externalId="rejection" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'reject'" @clear="clear()" @saved="sendEmail('rejection')"></email-modal>
 
-            </div>
-          </div><!-- modal-body ends -->
-        </div>
-      </div>
-    </div>
+    <email-modal externalId="approved" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'approved'" @clear="clear()" @saved="sendEmail('approved')"></email-modal>
 
-    <div class="modal fade modal-email-template" id="modal-email-approved">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-header">
-              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
-              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
-            </div>
-            <div class="modal-body">
 
-              <div id="approved">
-                <email-control-template :saveButtonMessage="'Guardar y enviar'" :type="'modal'" :position_id="positionId" :type_prop="'approved'" @status_change="onEmailUpdate($event, 2)" @saved="sendEmail()" @go_back="hide('modal-email-' + statusAction)"></email-control-template>
-              </div>
-
-            </div>
-          </div><!-- modal-body ends -->
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade modal-email-template" id="modal-email-rejection">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-header">
-              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
-              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
-            </div>
-            <div class="modal-body">
-
-              <div id="rejection">
-                <email-control-template :saveButtonMessage="'Guardar y enviar'" :type="'modal'" :position_id="positionId" :type_prop="'reject'" @status_change="onEmailUpdate($event, 3)" @saved="sendEmail()" @go_to="hide('modal-email-' + statusAction)"></email-control-template>
-              </div>
-
-            </div>
-          </div><!-- modal-body ends -->
-        </div>
-      </div>
-    </div>
       <toolbar></toolbar>
       <!-- body-container start -->
       <div class="body-container">
@@ -227,16 +159,20 @@
   import Toolbar from './Toolbar'
   import LayoutHeader from './LayoutHeader'
   import EmailControlTemplate from './EmailControlTemplate'
+  import EmailModal from './EmailModal'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
 
   export default {
     components: {
       Toolbar,
       EmailControlTemplate,
-      LayoutHeader
+      LayoutHeader,
+      EmailModal
     },
     data: function () {
       return {
+        showModal: '',
+        hideModal: '',
         applicants: {},
         position: {},
         positionId: this.$route.params.position_id,
@@ -248,8 +184,18 @@
       }
     },
     methods: {
-      sendEmail () {
-        this.set_status_application(this.clickedApplicantId, this.statusAction)
+      openModal (id) {
+        this.showModal = id
+      },
+      closeModal (id) {
+        this.hideModal = id
+      },
+      clear () {
+        this.showModal = ''
+        this.hideModal = ''
+      },
+      sendEmail (id) {
+        this.set_status_application(this.clickedApplicantId, this.statusAction, id)
       },
       openEmailModal (clickedApplicantId, itemAction) {
         this.clickedApplicantId = clickedApplicantId
@@ -258,7 +204,7 @@
       },
       changeModal (idToHide, idToShow) {
         this.hide(idToHide)
-        this.show(idToShow + '-' + this.statusAction)
+        this.openModal(this.statusAction)
       },
       show (id) {
         document.getElementById(id).className += ' show'
@@ -357,12 +303,12 @@
           return 'Invitación a Entrevista'
         }
       },
-      set_status_application (id, status) {
+      set_status_application (id, status, modalId) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/application/' + id + '/' + status)
         .then(response => {
           this.get_applicants(this.actual_order_attribute.attribute, this.actual_order_attribute.asc_desc)
-          this.hide('modal-email-' + this.statusAction)
+          this.hideModal = modalId
         })
         .catch(error => { console.log(error.response) })
       }
