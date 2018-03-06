@@ -1,5 +1,30 @@
 <template>
   <div id="general-container">
+    <div class="modal fade modal-confirmation" id="modal-confirmation">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="confirmation-message-container">
+              <div class="confirmation-message">¿Desea activar la plantilla de correo electronico que se enviara automaticamente a los candidatos?</div>
+            </div>
+            <div class="confirmation-btn-container">
+              <button v-on:click="hide('modal-confirmation')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-cancel" data-dismiss="modal" aria-label="Close">No enviar correo por ahora</button>
+              <button v-on:click="changeModal('modal-confirmation', 'modal-email')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm" data-dismiss="modal" aria-label="Close">Si, activar plantilla</button>
+            </div>
+          </div><!-- modal-body ends -->
+        </div>
+      </div>
+    </div>
+
+    <email-modal externalId="scheduled_interview" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_interview'" @clear="clear()" @saved="sendEmail('scheduled_interview')"></email-modal>
+
+    <email-modal externalId="scheduled_call" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_call'" @clear="clear()" @saved="sendEmail('scheduled_call')"></email-modal>
+
+    <email-modal externalId="rejection" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'reject'" @clear="clear()" @saved="sendEmail('rejection')"></email-modal>
+
+    <email-modal externalId="approved" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'approved'" @clear="clear()" @saved="sendEmail('approved')"></email-modal>
+
+
       <toolbar></toolbar>
       <!-- body-container start -->
       <div class="body-container">
@@ -95,17 +120,17 @@
                 </div>
               </div>
               <div class="col-xs-2">
-                <div class="dropdown actions-dropdown">
-                  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div :id="'buttonMenu-' + item.id" class="dropdown actions-dropdown">
+                  <button :id="'dLabel-' + item.id" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Acciones
                     <i class="material-icons">keyboard_arrow_down</i>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dLabel">
                     <li @click="go_to(item.applicant_id, item.id)">Ver detalle</li>
-                    <li @click="set_status_application(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li>
-                    <li @click="set_status_application(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li>
-                    <li @click="set_status_application(item.id, 'approved')">Marcar como contratado</li>
-                    <li @click="set_status_application(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
+                    <li @click="openEmailModal(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li>
+                    <li @click="openEmailModal(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li>
+                    <li @click="openEmailModal(item.id, 'approved')">Marcar como contratado</li>
+                    <li @click="openEmailModal(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
                   </ul>
                 </div>
               </div>
@@ -129,26 +154,66 @@
   </div>
 </template>
 
+
 <script>
   import Toolbar from './Toolbar'
   import LayoutHeader from './LayoutHeader'
+  import EmailControlTemplate from './EmailControlTemplate'
+  import EmailModal from './EmailModal'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
 
   export default {
     components: {
       Toolbar,
-      LayoutHeader
+      EmailControlTemplate,
+      LayoutHeader,
+      EmailModal
     },
     data: function () {
       return {
+        showModal: '',
+        hideModal: '',
         applicants: {},
         position: {},
+        positionId: this.$route.params.position_id,
         bootstrap_min_js: null,
         list: { 'first_name': true, 'created_at': true, 'status_application': true },
-        actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'}
+        actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'},
+        clickedApplicantId: '',
+        statusAction: 'scheduled_call'
       }
     },
     methods: {
+      openModal (id) {
+        this.showModal = id
+      },
+      closeModal (id) {
+        this.hideModal = id
+      },
+      clear () {
+        this.showModal = ''
+        this.hideModal = ''
+      },
+      sendEmail (id) {
+        this.set_status_application(this.clickedApplicantId, this.statusAction, id)
+      },
+      openEmailModal (clickedApplicantId, itemAction) {
+        this.clickedApplicantId = clickedApplicantId
+        this.statusAction = itemAction
+        this.show('modal-confirmation')
+      },
+      changeModal (idToHide, idToShow) {
+        this.hide(idToHide)
+        this.openModal(this.statusAction)
+      },
+      show (id) {
+        document.getElementById(id).className += ' show'
+        document.getElementById(id).classList.remove('fade')
+      },
+      hide (id) {
+        document.getElementById(id).className += ' fade'
+        document.getElementById(id).classList.remove('show')
+      },
       isLoggedIn () {
         return isLoggedIn()
       },
@@ -170,7 +235,9 @@
             this.getScore(documentId, id)
           }
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => {
+          console.log(error.response)
+        })
       },
       getScore (documentId, id) {
         this.axios.get('/score/' + documentId)
@@ -236,25 +303,24 @@
           return 'Invitación a Entrevista'
         }
       },
-      set_status_application (id, status) {
+      set_status_application (id, status, modalId) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/application/' + id + '/' + status)
         .then(response => {
           this.get_applicants(this.actual_order_attribute.attribute, this.actual_order_attribute.asc_desc)
+          this.hideModal = modalId
         })
         .catch(error => { console.log(error.response) })
       }
     },
     mounted: function () {
       this.get_applicants('created_at')
-
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-      this.axios.get('/position/' + this.$route.params.position_id)
+      this.axios.get('/position/' + this.positionId)
       .then((response) => {
         this.position = response.data.data.position
       })
       .catch(error => { console.log(error.response) })
-
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')
@@ -265,5 +331,8 @@
 </script>
 
 <style scoped>
-
-  </style>
+  .modal {
+    max-height: calc(100vh);
+    overflow-y: auto;
+  }
+</style>
