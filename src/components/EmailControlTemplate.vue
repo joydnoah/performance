@@ -181,9 +181,6 @@
     watch: {
       status_prop: function () {
         this.status = this.status_prop
-      },
-      send: function () {
-        this.put()
       }
     },
     mounted: function () {
