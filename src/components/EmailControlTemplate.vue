@@ -65,7 +65,7 @@
                     :options="{ placeholder: '' }"></quill-editor>
           </div>
           <div class="separator"></div>
-          <div v-if="buttons" class="form-btn-container">
+          <div class="form-btn-container">
             <button :id="save_button_id" v-on:click="save()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar</button>
             <button v-on:click="go_back()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
           </div>
@@ -83,7 +83,7 @@
     components: {
       Alert
     },
-    props: ['position_id', 'status_prop', 'type_prop', 'send', 'buttons'],
+    props: ['position_id', 'status_prop', 'type_prop', 'type', 'saveButtonMessage'],
     name: 'email-control-template',
     data: function () {
       return {
@@ -106,7 +106,7 @@
         return isLoggedIn()
       },
       go_back () {
-        window.location.href = '/positions'
+        this.$emit('go_back', this.status.automatic_send)
       },
       save () {
         if (this.status.id === 0) {
@@ -129,9 +129,7 @@
         })
       },
       changeSaveButtonMessage (message) {
-        if (this.buttons) {
-          document.getElementById(this.save_button_id).innerHTML = message
-        }
+        document.getElementById(this.save_button_id).innerHTML = message
       },
       post () {
         this.changeSaveButtonMessage('Guardando...')
@@ -145,8 +143,10 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          document.getElementById('tempalteSaved').style.display = 'block'
-          this.changeSaveButtonMessage('Guardar')
+          if (this.type === 'template') {
+            document.getElementById('tempalteSaved').style.display = 'block'
+          }
+          this.changeSaveButtonMessage(this.saveButtonMessage)
           this.$emit('saved', true)
         })
         .catch(error => {
@@ -163,10 +163,10 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          if (this.buttons) {
+          if (this.type === 'template') {
             document.getElementById('tempalteSaved').style.display = 'block'
-            this.changeSaveButtonMessage('Guardar')
           }
+          this.changeSaveButtonMessage(this.saveButtonMessage)
           this.$emit('saved', true)
         })
         .catch(error => {
@@ -211,6 +211,7 @@
         if (this.status.automatic_send) {
           setTimeout(() => { this.make_dirty() }, 0)
         }
+        this.changeSaveButtonMessage(this.saveButtonMessage)
         this.$emit('status_change', this.status.automatic_send)
       })
       .catch(error => {
