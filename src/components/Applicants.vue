@@ -9,29 +9,127 @@
             </div>
             <div class="confirmation-btn-container">
               <button v-on:click="hide('modal-confirmation')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-cancel" data-dismiss="modal" aria-label="Close">No enviar correo por ahora</button>
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm" data-dismiss="modal" aria-label="Close">Si, activar plantilla</button>
+              <button v-on:click="changeModal('modal-confirmation', 'modal-email')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm" data-dismiss="modal" aria-label="Close">Si, activar plantilla</button>
             </div>
           </div><!-- modal-body ends -->
         </div>
       </div>
     </div>
 
-    <div class="modal fade modal-email-template" id="modal-confirmation2">
+    <div class="modal fade modal-email-template" id="modal-email-scheduled_call">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <div class="modal-header">
               <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
-              <button v-on:click="hide('modal-confirmation2')"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
+              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
             </div>
             <div class="modal-body">
-              <email-control-template :position_id="position_id" :type_prop="'in_process'"></email-control-template>
+              <div id="scheduled_call">
+                scheduled call
+                <email-control-template :send="saveForm0" :buttons="false" :position_id="position_id" :type_prop="'scheduled_call'" @status_change="onEmailUpdate($event, 0)" @saved="sendEmail()"></email-control-template>
+                <div v-if="status[0]" class="email-template-content">
+                  <div class="template-body is-active">
+                    <div class="form-btn-container">
+                      <button v-on:click="hide('modal-email-' + statusAction)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+                      <button v-on:click="saveFormAction(0)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y salir</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div><!-- modal-body ends -->
         </div>
       </div>
     </div>
 
+    <div class="modal fade modal-email-template" id="modal-email-scheduled_interview">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-header">
+              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
+              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body">
+
+              <div  id="scheduled_interview'">
+                scheduled interview
+                <email-control-template :send="saveForm1" :buttons="false" :position_id="position_id" :type_prop="'scheduled_interview'" @status_change="onEmailUpdate($event, 1)" @saved="sendEmail()"></email-control-template>
+                <div v-if="status[1]" class="email-template-content">
+                  <div class="template-body is-active">
+                    <div class="form-btn-container">
+                      <button v-on:click="hide('modal-email-' + statusAction)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+                      <button v-on:click="saveFormAction(1)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y salir</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- modal-body ends -->
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade modal-email-template" id="modal-email-approved">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-header">
+              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
+              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body">
+
+              <div id="approved">
+                approved
+                <email-control-template :send="saveForm2" :buttons="false" :position_id="position_id" :type_prop="'approved'" @status_change="onEmailUpdate($event, 2)" @saved="sendEmail()"></email-control-template>
+                <div v-if="status[2]" class="email-template-content">
+                  <div class="template-body is-active">
+                    <div class="form-btn-container">
+                      <button v-on:click="hide('modal-email-' + statusAction)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+                      <button v-on:click="saveFormAction(2)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y salir</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- modal-body ends -->
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade modal-email-template" id="modal-email-rejection">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-header">
+              <h4 class="modal-title col-xs-10" id="modal-document-type">Detalle del aplicante</h4>
+              <button v-on:click="hide('modal-email-' + statusAction)"  type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body">
+
+              <div id="rejection">
+                rejection
+                <email-control-template :send="saveForm3" :buttons="false" :position_id="position_id" :type_prop="'reject'" @status_change="onEmailUpdate($event, 3)" @saved="sendEmail()"></email-control-template>
+                <div v-if="status[3]" class="email-template-content">
+                  <div class="template-body is-active">
+                    <div class="form-btn-container">
+                      <button v-on:click="hide('modal-email-' + statusAction)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Salir sin guardar</button>
+                      <button v-on:click="saveFormAction(3)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Guardar y salir</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- modal-body ends -->
+        </div>
+      </div>
+    </div>
       <toolbar></toolbar>
       <!-- body-container start -->
       <div class="body-container">
@@ -59,11 +157,6 @@
             </div>
           </div>
         </div><!-- results-status end -->
-
-        <button v-on:click="show('modal-confirmation')">A</button>
-        <button v-on:click="show('modal-confirmation2')">B</button>
-        <button>C</button>
-        <button>D</button>
 
         <div class="general-container" v-show="make_visible()">
           <!-- offer-header start -->
@@ -132,17 +225,17 @@
                 </div>
               </div>
               <div class="col-xs-2">
-                <div class="dropdown actions-dropdown">
-                  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div :id="'buttonMenu-' + item.id" class="dropdown actions-dropdown">
+                  <button :id="'dLabel-' + item.id" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <!-- @click="openCloseMenu(item.id)"  -->
                     Acciones
                     <i class="material-icons">keyboard_arrow_down</i>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dLabel">
                     <li @click="go_to(item.applicant_id, item.id)">Ver detalle</li>
-                    <li @click="set_status_application(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li>
-                    <li @click="set_status_application(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li>
-                    <li @click="set_status_application(item.id, 'approved')">Marcar como contratado</li>
-                    <li @click="set_status_application(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
+                    <li @click="openEmailModal(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li> <!-- set_status_application(item.id, 'scheduled_call') -->
+                    <li @click="openEmailModal(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li>
+                    <li @click="openEmailModal(item.id, 'approved')">Marcar como contratado</li>
+                    <li @click="openEmailModal(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
                   </ul>
                 </div>
               </div>
@@ -166,6 +259,7 @@
   </div>
 </template>
 
+
 <script>
   import Toolbar from './Toolbar'
   import LayoutHeader from './LayoutHeader'
@@ -185,10 +279,48 @@
         position_id: this.$route.params.position_id,
         bootstrap_min_js: null,
         list: { 'first_name': true, 'created_at': true, 'status_application': true },
-        actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'}
+        actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'},
+        saveForm0: false,
+        saveForm1: false,
+        saveForm2: false,
+        saveForm3: false,
+        status: [true, true, true, true],
+        itemClicked: '',
+        statusAction: 'scheduled_call'
       }
     },
     methods: {
+      sendEmail () {
+        this.set_status_application(this.itemClicked, this.statusAction)
+      },
+      onEmailUpdate (e, num) {
+        this.status[num] = e
+      },
+      saveFormAction (num) {
+        switch (num) {
+          case 0:
+            this.saveForm0 = !this.saveForm0
+            break
+          case 1:
+            this.saveForm1 = !this.saveForm1
+            break
+          case 2:
+            this.saveForm2 = !this.saveForm2
+            break
+          case 3:
+            this.saveForm3 = !this.saveForm3
+            break
+        }
+      },
+      openEmailModal (itemClicked, itemAction) {
+        this.itemClicked = itemClicked
+        this.statusAction = itemAction
+        this.show('modal-confirmation')
+      },
+      changeModal (idToHide, idToShow) {
+        this.hide(idToHide)
+        this.show(idToShow + '-' + this.statusAction)
+      },
       show (id) {
         document.getElementById(id).className += ' show'
         document.getElementById(id).classList.remove('fade')
@@ -196,9 +328,6 @@
       hide (id) {
         document.getElementById(id).className += ' fade'
         document.getElementById(id).classList.remove('show')
-      },
-      showmodal () {
-        this.$modal.show('show-pdf')
       },
       isLoggedIn () {
         return isLoggedIn()
@@ -221,7 +350,9 @@
             this.getScore(documentId, id)
           }
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => {
+          console.log(error.response)
+        })
       },
       getScore (documentId, id) {
         this.axios.get('/score/' + documentId)
@@ -292,20 +423,19 @@
         this.axios.post('/application/' + id + '/' + status)
         .then(response => {
           this.get_applicants(this.actual_order_attribute.attribute, this.actual_order_attribute.asc_desc)
+          this.hide('modal-email-' + this.statusAction)
         })
         .catch(error => { console.log(error.response) })
       }
     },
     mounted: function () {
       this.get_applicants('created_at')
-
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-      this.axios.get('/position/' + this.$route.params.position_id)
+      this.axios.get('/position/' + this.position_id)
       .then((response) => {
         this.position = response.data.data.position
       })
       .catch(error => { console.log(error.response) })
-
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
       this.bootstrap_min_js.setAttribute('integrity', 'sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa')

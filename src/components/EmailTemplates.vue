@@ -34,19 +34,19 @@
         <div class="row">
           <div class="col-xs-offset-2 col-xs-8">
             <div class="mdl-tabs__panel is-active" id="regards-template">
-              <email-control-template :position_id="position_id" :type_prop="'in_process'"></email-control-template>
+              <email-control-template :send="''" :buttons="true" :position_id="position_id" :type_prop="'in_process'"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="reject-template">
-              <email-control-template :position_id="position_id" :type_prop="'reject'"></email-control-template>
+              <email-control-template :send="''" :buttons="true" :position_id="position_id" :type_prop="'reject'"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="call-template">
-              <email-control-template :position_id="position_id" :type_prop="'scheduled_call'"></email-control-template>
+              <email-control-template :send="''" :buttons="true" :position_id="position_id" :type_prop="'scheduled_call'"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="interview-template">
-              <email-control-template :position_id="position_id" :type_prop="'scheduled_interview'"></email-control-template>
+              <email-control-template :send="''" :buttons="true" :position_id="position_id" :type_prop="'scheduled_interview'"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="approved-template">
-              <email-control-template :position_id="position_id" :type_prop="'approved'"></email-control-template>
+              <email-control-template :send="''" :buttons="true" :position_id="position_id" :type_prop="'approved'"></email-control-template>
             </div>
           </div>
         </div>
