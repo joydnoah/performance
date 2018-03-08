@@ -1,6 +1,7 @@
 <template>
   <div id="general-container">
     <!--<app-nav></app-nav>-->
+    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
     <!-- body-container start -->
     <div class="body-container">
@@ -454,6 +455,7 @@
   </div>
 </template>
 <script>
+  import AlertModal from './AlertModal'
   import Toolbar from './Toolbar'
   import AppNav from './AppNav'
   import Multiselect from 'vue-multiselect'
@@ -468,7 +470,8 @@
       Multiselect,
       VueGoogleAutocomplete,
       Toolbar,
-      Datepicker
+      Datepicker,
+      AlertModal
     },
     data: function () {
       return {
@@ -519,8 +522,12 @@
         valid_asign: false,
         bootstrap_min_js: null,
         scrollmagic: null,
-        successSave: '<strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong><p>La posición se almaceno correctamente.</p>',
-        successPublish: '<strong><i class="glyphicon glyphicon-ok"></i> Proceso Finalizado.</strong><p>La posición ha sido publicada correctamente.</p>'
+        showAlert: true,
+        typeOfAlert: '',
+        typeMessage: '',
+        alertMessage: '',
+        successSave: 'La posición se almaceno correctamente.',
+        successPublish: 'La posición ha sido publicada correctamente.'
       }
     },
     validations: {
@@ -742,26 +749,31 @@
         }
       },
       show_error_skills (msg) {
-        document.getElementById('alert-error-skills').style.display = 'block'
-        document.getElementById('alert-error-skills').innerHTML = msg
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-error'
+        this.typeMessage = 'Error:'
+        this.alertMessage = msg
       },
       show_error (msg) {
-        this.restoreSaveButton()
-        document.getElementById('alert-error').style.display = 'block'
-        document.getElementById('alert-error').innerHTML = msg
+        this.restoreButton()
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-error'
+        this.typeMessage = 'Error:'
+        this.alertMessage = msg
       },
       show_waiting (id, msg) {
         document.getElementById(id).innerHTML = msg
         document.getElementById(id).style.color = 'white'
       },
       restoreButton (id, msg) {
-        document.getElementById(id).innerHTML = msg
-        document.getElementById('create-form-container').style.paddingTop = '70px'
+        // document.getElementById(id).innerHTML = msg
       },
       show_success (id, buttonMessage, alertMessage) {
         this.restoreButton(id, buttonMessage)
-        document.getElementById('alert-success').style.display = 'block'
-        document.getElementById('alert-success').innerHTML = alertMessage
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-success'
+        this.typeMessage = 'Proceso Finalizado:'
+        this.alertMessage = alertMessage
         setTimeout(function () {
           window.location.href = '/positions'
         }, 500)
