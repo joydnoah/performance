@@ -1,5 +1,6 @@
 <template>
   <div id="general-container">
+    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
 
     <div class="body-container">
@@ -165,11 +166,13 @@
   import AppNav from './AppNav'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
+  import AlertModal from './AlertModal'
 
   export default {
     components: {
       AppNav,
-      Toolbar
+      Toolbar,
+      AlertModal
     },
     data: function () {
       return {
@@ -182,6 +185,10 @@
         logoValidSize: true,
         imageURL: '',
         data: null,
+        showAlert: true,
+        typeOfAlert: '',
+        typeMessage: '',
+        alertMessage: '',
         actualLogo: null
       }
     },
@@ -253,8 +260,10 @@
         window.location.href = '/positions'
       },
       confirmCopiedCompanyLink () {
-        document.getElementById('copy_link').style.display = 'block'
-        document.getElementById('create-form-container').style.paddingTop = '70px'
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-success'
+        this.typeMessage = 'Link Copiado.'
+        this.alertMessage = ''
       },
       setupLockButtonsBar () {
         var controller = new this.$scrollmagic.Controller()
@@ -267,7 +276,14 @@
           this.uploadLogo(false, 'El logo ha sido actualizado.')
         } else {
           this.showLogoInput()
-          this.showError('La imagen seleccionada no es valida.')
+          var msg = 'La imagen no es valida.'
+          if (this.logoValidSize) {
+            msg = msg + ' El tipo de archivo no es el correcto.'
+          }
+          if (this.logoValidType) {
+            msg = msg + ' El tamaño debe ser menor a 600x200 px'
+          }
+          this.showError(msg)
         }
       },
       getLogoUri () {
@@ -281,7 +297,9 @@
         .then(response => {
           this.showSuccess(msg)
           if (exit) {
-            this.exit()
+            setTimeout(() => {
+              this.exit()
+            }, 500)
           }
         })
         .catch(error => {
@@ -293,7 +311,9 @@
         .then(response => {
           this.showSuccess(msg)
           if (exit) {
-            this.exit()
+            setTimeout(() => {
+              this.exit()
+            }, 500)
           }
         })
         .catch(error => {
@@ -318,14 +338,18 @@
         return !v.$error && this.validateLogo()
       },
       showError (msg) {
-        document.getElementsByClassName('alert-danger')[1].style.display = 'block'
-        document.getElementsByClassName('alert-danger')[1].innerHTML = msg
-        document.getElementById('create-form-container').style.paddingTop = '70px'
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-error'
+        this.typeMessage = 'Error:'
+        this.alertMessage = msg
       },
       showSuccess (msg) {
-        document.getElementsByClassName('alert-success')[0].style.display = 'block'
-        document.getElementsByClassName('alert-success')[0].innerHTML = msg
-        document.getElementById('create-form-container').style.paddingTop = '70px'
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-success'
+        this.typeMessage = 'Success:'
+        this.alertMessage = msg
+        console.log(msg)
+        console.log('success')
       },
       update_company (v) {
         document.getElementsByClassName('alert-danger')[0].style.display = 'none'
@@ -343,7 +367,9 @@
               this.uploadLogo(true, 'La empresa se actualizó correctamente.')
             } else {
               this.showSuccess('La empresa se actualizó correctamente.')
-              this.exit()
+              setTimeout(() => {
+                this.exit()
+              }, 500)
             }
           })
           .catch(error => {

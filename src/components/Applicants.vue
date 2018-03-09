@@ -1,5 +1,7 @@
 <template>
   <div id="general-container">
+    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
+
     <div class="modal fade modal-confirmation" id="modal-confirmation">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -161,13 +163,15 @@
   import EmailControlTemplate from './EmailControlTemplate'
   import EmailModal from './EmailModal'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
+  import AlertModal from './AlertModal'
 
   export default {
     components: {
       Toolbar,
       EmailControlTemplate,
       LayoutHeader,
-      EmailModal
+      EmailModal,
+      AlertModal
     },
     data: function () {
       return {
@@ -180,7 +184,11 @@
         list: { 'first_name': true, 'created_at': true, 'status_application': true },
         actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'},
         clickedApplicantId: '',
-        statusAction: 'scheduled_call'
+        statusAction: 'scheduled_call',
+        showAlert: true,
+        typeOfAlert: '',
+        typeMessage: '',
+        alertMessage: ''
       }
     },
     methods: {
@@ -309,8 +317,24 @@
         .then(response => {
           this.get_applicants(this.actual_order_attribute.attribute, this.actual_order_attribute.asc_desc)
           this.hideModal = modalId
+          this.showSuccess('El estato del aplicante a sido cambiado con exito, un correo sera enviado automaticamente.')
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => {
+          console.log(error.response)
+          this.showError(error)
+        })
+      },
+      showSuccess (msg) {
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-success'
+        this.typeMessage = msg
+        this.alertMessage = ''
+      },
+      showError (msg) {
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-error'
+        this.typeMessage = 'Error: '
+        this.alertMessage = msg
       }
     },
     mounted: function () {
