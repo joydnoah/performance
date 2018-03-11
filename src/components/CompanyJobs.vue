@@ -185,10 +185,6 @@
         logoValidSize: true,
         imageURL: '',
         data: null,
-        showAlert: true,
-        typeOfAlert: '',
-        typeMessage: '',
-        alertMessage: '',
         actualLogo: null
       }
     },
