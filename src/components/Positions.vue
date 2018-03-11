@@ -249,6 +249,7 @@
           this.$showAlert = !this.$showAlert
           this.$typeOfAlert = 'is-success'
           this.$typeMessage = 'Link Copiado'
+          this.$alertMessage = ''
         }
         return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
       },
