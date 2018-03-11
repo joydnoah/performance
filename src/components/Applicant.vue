@@ -43,9 +43,7 @@
             <div class="col-xs-2">
               <div id="compatibility" class="header-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
                 <p id="compatibility-text">Esperando a ser calificado</p>
-                <div class="compatibility-container">
-                  <div class="compatibility-level"></div>
-                </div>
+                <p id="compatibility-text-value">-</p>
               </div>
             </div>
           </div>
@@ -319,16 +317,15 @@
         .catch(error => { console.log(error.response) })
       },
       change_compatibility (score) {
+        document.getElementById('compatibility-text').innerHTML = 'Compatibilidad:'
+        document.getElementById('compatibility-text-value').innerHTML = score + '%'
         if (score < 40.0) {
-          document.getElementById('compatibility-text').innerHTML = 'Compatibilidad baja'
           document.getElementById('compatibility').classList.add('is-low')
         }
         if (score >= 40.0 && score < 70.0) {
-          document.getElementById('compatibility-text').innerHTML = 'Compatibilidad media'
           document.getElementById('compatibility').classList.add('is-medium')
         }
         if (score >= 70.0) {
-          document.getElementById('compatibility-text').innerHTML = 'Compatibilidad alta'
           document.getElementById('compatibility').classList.add('is-high')
         }
       },

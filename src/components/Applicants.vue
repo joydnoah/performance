@@ -114,9 +114,7 @@
               <div class="col-xs-2">
                 <div :id="'id-' + item.applicant_id" class="row-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
                   <p :id="'label-' + item.applicant_id">Sin Parsear</p>
-                  <div class="compatibility-container">
-                    <div class="compatibility-level">{{ getDocuments(item.applicant_id) }}</div>
-                  </div>
+                  <p :id="'value-' + item.applicant_id">{{ getDocuments(item.applicant_id) }}</p>
                 </div>
               </div>
               <div class="col-xs-2">
@@ -251,21 +249,22 @@
         })
         .catch(error => { console.log(error.response) })
       },
-      changeCompatibilityValue (id, value) {
+      changeCompatibilityValue (id, value, score) {
         document.getElementById('id-' + id).classList.add('is-' + value)
-        document.getElementById('label-' + id).innerHTML = 'Compatibilidad ' + value.replace('low', 'baja').replace('medium', 'media').replace('high', 'alta')
+        document.getElementById('label-' + id).innerHTML = 'Compatibilidad:'
+        document.getElementById('value-' + id).innerHTML = score + '%'
       },
       updateCompatibility (score, id) {
         if (document.getElementById('label-' + id) !== null) {
           document.getElementById('id-' + id).className = 'row-compatibility'
           if (score < 40.0) {
-            this.changeCompatibilityValue(id, 'low')
+            this.changeCompatibilityValue(id, 'low', score)
           }
           if (score >= 40.0 && score < 70.0) {
-            this.changeCompatibilityValue(id, 'medium')
+            this.changeCompatibilityValue(id, 'medium', score)
           }
           if (score >= 70.0) {
-            this.changeCompatibilityValue(id, 'high')
+            this.changeCompatibilityValue(id, 'high', score)
           }
         }
       },
