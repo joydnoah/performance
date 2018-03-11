@@ -1,6 +1,6 @@
 <template>
   <div id="general-container">
-    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
+    <alert-modal :typeMessage="$typeMessage" :message="$alertMessage" :activate="$showAlert" :type="$typeOfAlert" time="5"></alert-modal>
 
     <div class="modal fade modal-confirmation" id="modal-confirmation">
       <div class="modal-dialog" role="document">
@@ -184,11 +184,7 @@
         list: { 'first_name': true, 'created_at': true, 'status_application': true },
         actual_order_attribute: {atrribute: 'created_at', asc_desc: 'false'},
         clickedApplicantId: '',
-        statusAction: 'scheduled_call',
-        showAlert: true,
-        typeOfAlert: '',
-        typeMessage: '',
-        alertMessage: ''
+        statusAction: 'scheduled_call'
       }
     },
     methods: {
@@ -325,19 +321,20 @@
         })
       },
       showSuccess (msg) {
-        this.showAlert = !this.showAlert
-        this.typeOfAlert = 'is-success'
-        this.typeMessage = msg
-        this.alertMessage = ''
+        this.$showAlert = !this.$showAlert
+        this.$typeOfAlert = 'is-success'
+        this.$typeMessage = msg
+        this.$alertMessage = ''
       },
       showError (msg) {
-        this.showAlert = !this.showAlert
-        this.typeOfAlert = 'is-error'
-        this.typeMessage = 'Error: '
-        this.alertMessage = msg
+        this.$showAlert = !this.$showAlert
+        this.$typeOfAlert = 'is-error'
+        this.$typeMessage = 'Error: '
+        this.$alertMessage = msg
       }
     },
     mounted: function () {
+      console.log(this.$showAlert)
       this.get_applicants('created_at')
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/position/' + this.positionId)

@@ -1,6 +1,6 @@
 <template>
   <div id="general-container">
-    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
+    <alert-modal :typeMessage="$typeMessage" :message="$alertMessage" :activate="$showAlert" :type="$typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
 
     <!-- body-container start -->
@@ -203,10 +203,6 @@
         company: {},
         copyn: false,
         bootstrap_min_js: null,
-        showAlert: true,
-        typeOfAlert: '',
-        typeMessage: '',
-        alertMessage: '',
         list: { 'position_number': true, 'name': true, 'city': true, 'created_at': true, 'publication_date': true, 'status': true }
       }
     },
@@ -250,9 +246,9 @@
       copy_to_clipboard (text) {
         if (this.copyn) {
           this.copyn = false
-          this.showAlert = !this.showAlert
-          this.typeOfAlert = 'is-success'
-          this.typeMessage = 'Link Copiado'
+          this.$showAlert = !this.$showAlert
+          this.$typeOfAlert = 'is-success'
+          this.$typeMessage = 'Link Copiado'
         }
         return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
       },
@@ -270,7 +266,6 @@
     },
     mounted: function () {
       this.get_positions('created_at', true)
-
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/company/' + this.company_id)
       .then((response) => {
