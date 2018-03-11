@@ -256,10 +256,10 @@
         window.location.href = '/positions'
       },
       confirmCopiedCompanyLink () {
-        this.showAlert = !this.showAlert
-        this.typeOfAlert = 'is-success'
-        this.typeMessage = 'Link Copiado.'
-        this.alertMessage = ''
+        this.$showAlert = !this.$showAlert
+        this.$typeOfAlert = 'is-success'
+        this.$typeMessage = 'Link Copiado.'
+        this.$alertMessage = ''
       },
       setupLockButtonsBar () {
         var controller = new this.$scrollmagic.Controller()
