@@ -1,6 +1,6 @@
 <template>
   <div id="general-container">
-    <alert-modal :typeMessage="$typeMessage" :message="$alertMessage" :activate="$showAlert" :type="$typeOfAlert" time="5"></alert-modal>
+    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
 
     <div class="body-container">
@@ -185,6 +185,10 @@
         logoValidSize: true,
         imageURL: '',
         data: null,
+        showAlert: true,
+        typeOfAlert: '',
+        typeMessage: '',
+        alertMessage: '',
         actualLogo: null
       }
     },
@@ -256,10 +260,10 @@
         window.location.href = '/positions'
       },
       confirmCopiedCompanyLink () {
-        this.$showAlert = !this.$showAlert
-        this.$typeOfAlert = 'is-success'
-        this.$typeMessage = 'Link Copiado.'
-        this.$alertMessage = ''
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-success'
+        this.typeMessage = 'Link Copiado.'
+        this.alertMessage = ''
       },
       setupLockButtonsBar () {
         var controller = new this.$scrollmagic.Controller()
@@ -334,16 +338,16 @@
         return !v.$error && this.validateLogo()
       },
       showError (msg) {
-        this.$showAlert = !this.$showAlert
-        this.$typeOfAlert = 'is-error'
-        this.$typeMessage = 'Error:'
-        this.$alertMessage = msg
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-error'
+        this.typeMessage = 'Error:'
+        this.alertMessage = msg
       },
       showSuccess (msg) {
-        this.$showAlert = !this.$showAlert
-        this.$typeOfAlert = 'is-success'
-        this.$typeMessage = 'Success:'
-        this.$alertMessage = msg
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-success'
+        this.typeMessage = 'Success:'
+        this.alertMessage = msg
       },
       update_company (v) {
         document.getElementsByClassName('alert-danger')[0].style.display = 'none'
