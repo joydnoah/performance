@@ -1,6 +1,6 @@
 <template>
   <div id="general-container">
-    <alert-modal :typeMessage="$typeMessage" :message="$alertMessage" :activate="$showAlert" :type="$typeOfAlert" time="5"></alert-modal>
+    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
     <!-- header start -->
     <div class="section-header">
@@ -79,6 +79,10 @@
         position_id: this.$route.params.position_id,
         position: {},
         bootstrap_min_js: null,
+        showAlert: true,
+        typeOfAlert: '',
+        typeMessage: '',
+        alertMessage: '',
         config: {
           placeholderText: 'Edita tu contenido aquí!',
           events: {
@@ -93,10 +97,10 @@
         return isLoggedIn()
       },
       saved () {
-        this.$showAlert = !this.$showAlert
-        this.$typeOfAlert = 'is-success'
-        this.$typeMessage = 'Plantilla Guardada.'
-        this.$alertMessage = ''
+        this.showAlert = !this.showAlert
+        this.typeOfAlert = 'is-success'
+        this.typeMessage = 'Plantilla Guardada.'
+        this.alertMessage = ''
         setTimeout(() => {
           window.location.href = '/positions'
         }, 500)
