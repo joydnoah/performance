@@ -1,5 +1,6 @@
 <template>
   <div id="general-container">
+    <alert-modal :typeMessage="$typeMessage" :message="$alertMessage" :activate="$showAlert" :type="$typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
 
     <!-- body-container start -->
@@ -184,13 +185,15 @@
   import LayoutHeader from './LayoutHeader'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Tooltip, Dropdown } from 'uiv'
+  import AlertModal from './AlertModal'
 
   export default {
     components: {
       Toolbar,
       LayoutHeader,
       Tooltip,
-      Dropdown
+      Dropdown,
+      AlertModal
     },
     data: function () {
       return {
@@ -242,8 +245,11 @@
       },
       copy_to_clipboard (text) {
         if (this.copyn) {
-          document.getElementById('copy_link').style.display = 'block'
           this.copyn = false
+          this.$showAlert = !this.$showAlert
+          this.$typeOfAlert = 'is-success'
+          this.$typeMessage = 'Link Copiado'
+          this.$alertMessage = ''
         }
         return window.location.href.substr(0, window.location.href.length - 1) + '-apply/' + text
       },
@@ -261,7 +267,6 @@
     },
     mounted: function () {
       this.get_positions('created_at', true)
-
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.get('/company/' + this.company_id)
       .then((response) => {

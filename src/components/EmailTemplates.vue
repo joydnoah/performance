@@ -1,5 +1,6 @@
 <template>
   <div id="general-container">
+    <alert-modal :typeMessage="$typeMessage" :message="$alertMessage" :activate="$showAlert" :type="$typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
     <!-- header start -->
     <div class="section-header">
@@ -29,24 +30,24 @@
           </div>
         </div><!-- general-container end -->
       </div><!-- email-tabs-container end -->
-      
+
       <div class="general-container">
         <div class="row">
           <div class="col-xs-offset-2 col-xs-8">
             <div class="mdl-tabs__panel is-active" id="regards-template">
-              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'in_process'" @go_back="go_back()"></email-control-template>
+              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'in_process'" @saved="saved()" @go_back="go_back()"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="reject-template">
-              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'reject'" @go_back="go_back()"></email-control-template>
+              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'reject'" @saved="saved()" @go_back="go_back()"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="call-template">
-              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'scheduled_call'" @go_back="go_back()"></email-control-template>
+              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'scheduled_call'" @saved="saved()" @go_back="go_back()"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="interview-template">
-              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'scheduled_interview'" @go_back="go_back()"></email-control-template>
+              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'scheduled_interview'" @saved="saved()" @go_back="go_back()"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="approved-template">
-              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'approved'" @go_back="go_back()"></email-control-template>
+              <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'approved'" @saved="saved()" @go_back="go_back()"></email-control-template>
             </div>
           </div>
         </div>
@@ -64,12 +65,14 @@
   import EmailControlTemplate from './EmailControlTemplate'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { Tabs } from 'uiv'
+  import AlertModal from './AlertModal'
 
   export default {
     components: {
       Toolbar,
       EmailControlTemplate,
-      Tabs
+      Tabs,
+      AlertModal
     },
     data: function () {
       return {
@@ -88,6 +91,15 @@
     methods: {
       isLoggedIn () {
         return isLoggedIn()
+      },
+      saved () {
+        this.$showAlert = !this.$showAlert
+        this.$typeOfAlert = 'is-success'
+        this.$typeMessage = 'Plantilla Guardada.'
+        this.$alertMessage = ''
+        setTimeout(() => {
+          window.location.href = '/positions'
+        }, 500)
       },
       go_back () {
         window.location.href = '/positions'

@@ -50,10 +50,21 @@ Vue.axios.defaults.baseURL = process.env.JOBS_API_URL
 Vue.axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8'
 Vue.axios.defaults.headers.put['Content-Type'] = 'application/json; charset=utf-8'
 
+Vue.prototype.$showAlert = true
+Vue.prototype.$typeOfAlert = ''
+Vue.prototype.$typeMessage = ''
+Vue.prototype.$alertMessage = ''
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  beforeCreate: function () {
+    this.$showAlert
+    this.$typeOfAlert
+    this.$typeMessage
+    this.$alertMessage
+  }
 })

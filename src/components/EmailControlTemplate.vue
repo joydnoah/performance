@@ -143,9 +143,6 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          if (this.type === 'template') {
-            document.getElementById('tempalteSaved').style.display = 'block'
-          }
           this.changeSaveButtonMessage(this.saveButtonMessage)
           this.$emit('saved', true)
         })
@@ -163,9 +160,6 @@
           'automatic_send': this.status.automatic_send
         })
         .then(response => {
-          if (this.type === 'template') {
-            document.getElementById('tempalteSaved').style.display = 'block'
-          }
           this.changeSaveButtonMessage(this.saveButtonMessage)
           this.$emit('saved', true)
         })

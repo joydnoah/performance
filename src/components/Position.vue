@@ -1,7 +1,7 @@
 <template>
   <div id="general-container">
     <!--<app-nav></app-nav>-->
-    <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
+    <alert-modal :typeMessage="$typeMessage" :message="$alertMessage" :activate="$showAlert" :type="$typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
     <!-- body-container start -->
     <div class="body-container">
@@ -522,10 +522,6 @@
         valid_asign: false,
         bootstrap_min_js: null,
         scrollmagic: null,
-        showAlert: true,
-        typeOfAlert: '',
-        typeMessage: '',
-        alertMessage: '',
         successSave: 'La posición se almaceno correctamente.',
         successPublish: 'La posición ha sido publicada correctamente.'
       }
@@ -749,17 +745,17 @@
         }
       },
       show_error_skills (msg) {
-        this.showAlert = !this.showAlert
-        this.typeOfAlert = 'is-error'
-        this.typeMessage = 'Error:'
-        this.alertMessage = msg
+        this.$showAlert = !this.$showAlert
+        this.$typeOfAlert = 'is-error'
+        this.$typeMessage = 'Error:'
+        this.$alertMessage = msg
       },
       show_error (msg) {
         this.restoreButton()
-        this.showAlert = !this.showAlert
-        this.typeOfAlert = 'is-error'
-        this.typeMessage = 'Error:'
-        this.alertMessage = msg
+        this.$showAlert = !this.$showAlert
+        this.$typeOfAlert = 'is-error'
+        this.$typeMessage = 'Error:'
+        this.$alertMessage = msg
       },
       show_waiting (id, msg) {
         document.getElementById(id).innerHTML = msg
@@ -770,10 +766,10 @@
       },
       show_success (id, buttonMessage, alertMessage) {
         this.restoreButton(id, buttonMessage)
-        this.showAlert = !this.showAlert
-        this.typeOfAlert = 'is-success'
-        this.typeMessage = 'Proceso Finalizado:'
-        this.alertMessage = alertMessage
+        this.$showAlert = !this.$showAlert
+        this.$typeOfAlert = 'is-success'
+        this.$typeMessage = 'Proceso Finalizado:'
+        this.$alertMessage = alertMessage
         setTimeout(function () {
           window.location.href = '/positions'
         }, 500)
