@@ -1,5 +1,13 @@
 <template>
   <div id="general-container">
+    <email-modal externalId="scheduled_interview" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_interview'" @clear="clear()" @saved="sendEmail('scheduled_interview')"></email-modal>
+
+    <email-modal externalId="scheduled_call" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_call'" @clear="clear()" @saved="sendEmail('scheduled_call')"></email-modal>
+
+    <email-modal externalId="rejection" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'reject'" @clear="clear()" @saved="sendEmail('rejection')"></email-modal>
+
+    <email-modal externalId="approved" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'approved'" @clear="clear()" @saved="sendEmail('approved')"></email-modal>
+
     <modal :scrollable="false" :adaptive="true" width="60%" height="100%" name="show-pdf">
       <div slot="top-right">
         <button style="padding-right: 20px;" @click="$modal.hide('show-pdf')" class="close-button">
@@ -57,10 +65,10 @@
           <div class="row">
             <div class="col-xs-offset-1 col-xs-10">
               <div class="buttons-container">
-                <button id="button_scheduled_call" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_call')">Invitar a entrevista telefonica</button>
-                <button id="button_scheduled_interview" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('scheduled_interview')">Invitar a entrevista presencial</button>
-                <button id="button_approved" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="set_status_application('approved')">Marcar como contratado</button>
-                <button id="button_rejection" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" @click="set_status_application('rejection')">Rechazar candidato</button>
+                <button id="button_scheduled_call" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('scheduled_call')">Invitar a entrevista telefonica</button>
+                <button id="button_scheduled_interview" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('scheduled_interview')">Invitar a entrevista presencial</button>
+                <button id="button_approved" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('approved')">Marcar como contratado</button>
+                <button id="button_rejection" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" @click="openModal('rejection')">Rechazar candidato</button>
               </div>
             </div>
           </div>
@@ -222,15 +230,18 @@
 <script>
   import AppNav from './AppNav'
   import Toolbar from './Toolbar'
+  import EmailModal from './EmailModal'
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
 
   export default {
     components: {
       Toolbar,
-      AppNav
+      AppNav,
+      EmailModal
     },
     data: function () {
       return {
+        positionId: this.$route.params.applications_id,
         applicant_id: this.$route.params.position_id,
         id: this.$route.params.id,
         first_name: '',
@@ -252,10 +263,22 @@
         score_status: 'No parseado',
         status: '',
         skills_list: [],
-        degree: []
+        degree: [],
+        showModal: '',
+        hideModal: ''
       }
     },
     methods: {
+      openModal (id) {
+        this.showModal = id
+      },
+      clear () {
+        this.showModal = ''
+        this.hideModal = ''
+      },
+      sendEmail (id) {
+        this.set_status_application(id)
+      },
       isLoggedIn () {
         return isLoggedIn()
       },
@@ -303,6 +326,7 @@
         .then(response => {
           this.get_status()
           this.changeButtonMessage('button_' + status, defaultButtonMessage)
+          this.hideModal = status
         })
         .catch(error => { console.log(error.response) })
       },
