@@ -1,8 +1,8 @@
 <template>
   <div id="general-container">
-    <!-- <email-modal externalId="scheduled_interview" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_interview'" @clear="clear()" @saved="sendEmail('scheduled_interview')"></email-modal> -->
+    <email-modal externalId="scheduled_interview" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_interview'" @clear="clear()" @saved="sendEmail('scheduled_interview')"></email-modal>
 
-    <!-- <email-modal externalId="scheduled_call" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_call'" @clear="clear()" @saved="sendEmail('scheduled_call')"></email-modal> -->
+    <email-modal externalId="scheduled_call" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_call'" @clear="clear()" @saved="sendEmail('scheduled_call')"></email-modal>
 
     <email-modal externalId="rejection" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'reject'" @clear="clear()" @saved="sendEmail('rejection')"></email-modal>
 
@@ -63,8 +63,8 @@
           <div class="row">
             <div class="col-xs-offset-1 col-xs-10">
               <div class="buttons-container">
-                <button id="button_scheduled_call" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('scheduled_call')">Invitar a entrevista telefonica</button>
-                <button id="button_scheduled_interview" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('scheduled_interview')">Invitar a entrevista presencial</button>
+                <!-- <button id="button_scheduled_call" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('scheduled_call')">Invitar a entrevista telefonica</button> -->
+                <!-- <button id="button_scheduled_interview" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('scheduled_interview')">Invitar a entrevista presencial</button> -->
                 <button id="button_approved" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="openModal('approved')">Marcar como contratado</button>
                 <button id="button_rejection" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" @click="openModal('rejection')">Rechazar candidato</button>
               </div>
