@@ -127,8 +127,8 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dLabel">
                     <li @click="go_to(item.applicant_id, item.id)">Ver detalle</li>
-                    <li @click="openEmailModal(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li>
-                    <li @click="openEmailModal(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li>
+                    <!-- <li @click="openEmailModal(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li> -->
+                    <!-- <li @click="openEmailModal(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li> -->
                     <li @click="openEmailModal(item.id, 'approved')">Marcar como contratado</li>
                     <li @click="openEmailModal(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
                   </ul>
