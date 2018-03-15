@@ -1,8 +1,8 @@
 <template>
   <div id="general-container">
-    <email-modal externalId="scheduled_interview" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_interview'" @clear="clear()" @saved="sendEmail('scheduled_interview')"></email-modal>
+    <!-- <email-modal externalId="scheduled_interview" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_interview'" @clear="clear()" @saved="sendEmail('scheduled_interview')"></email-modal> -->
 
-    <email-modal externalId="scheduled_call" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_call'" @clear="clear()" @saved="sendEmail('scheduled_call')"></email-modal>
+    <!-- <email-modal externalId="scheduled_call" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'scheduled_call'" @clear="clear()" @saved="sendEmail('scheduled_call')"></email-modal> -->
 
     <email-modal externalId="rejection" :showModal="showModal" :closeModal="hideModal" :positionId="positionId" :typeProp="'reject'" @clear="clear()" @saved="sendEmail('rejection')"></email-modal>
 
