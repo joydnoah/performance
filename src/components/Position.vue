@@ -927,6 +927,7 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
+          this.position = response.data.data.position
           this.id = response.data.data.position.id
           document.getElementById('name_label').parentElement.classList.add('is-focused')
           this.name = response.data.data.position.name
@@ -945,19 +946,13 @@
             this.candidate_characteristics_empty = false
           }
           this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
+          this.get_filters(this.$route.query.id)
         })
         .catch(error => { console.log(error.response) })
       } else {
         document.getElementById('preview-button').style.display = 'none'
         document.getElementById('publish').style.display = 'none'
       }
-      this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-      this.axios.get('/position/' + this.id)
-      .then((response) => {
-        this.position = response.data.data.position
-      })
-      .catch(error => { console.log(error.response) })
-      this.get_filters(this.$route.query.id)
     },
     created: function () {
       this.bootstrap_min_js = document.createElement('script')
