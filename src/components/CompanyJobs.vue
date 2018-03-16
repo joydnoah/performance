@@ -323,8 +323,7 @@
       uploadLogo (exit, msg) {
         this.getLogoUri()
         this.data = new FormData()
-        this.data.append('logo_file', this.logo)
-        console.log(this.actualLogo)
+        this.data.append('logo_file', this.logo
         if (this.actualLogo === undefined || this.actualLogo === null) {
           this.postLogo(exit, msg)
         } else {
