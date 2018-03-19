@@ -100,7 +100,7 @@
               <div class="col-xs-4">
                 <div class="buttons-container">
                   <button v-on:click="manualUpload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action">Examinar</button>
-                  <button v-on:click="uploadAndValidateLogo()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
+                  <button v-on:click="uploadAndValidateLogo(false)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
                   <button v-on:click="showLogoInput()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error">Borrar</button>
                 </div>
               </div>
@@ -271,9 +271,9 @@
         .setClassToggle('#create-buttons-bar', 'magic-scroll') // add .addIndicators() to check trigger position
         .addTo(controller)
       },
-      uploadAndValidateLogo () {
+      uploadAndValidateLogo (exit) {
         if (this.validateLogo()) {
-          this.uploadLogo(false, 'El logo ha sido actualizado.')
+          this.uploadLogo(exit, 'El logo ha sido actualizado.')
         } else {
           this.showLogoInput()
           var msg = 'La imagen no es valida.'
@@ -324,7 +324,7 @@
         this.getLogoUri()
         this.data = new FormData()
         this.data.append('logo_file', this.logo)
-        if (this.actualLogo === undefined) {
+        if (this.actualLogo === undefined || this.actualLogo === null) {
           this.postLogo(exit, msg)
         } else {
           this.updateLogo(exit, msg)
@@ -362,7 +362,7 @@
           })
           .then(response => {
             if (this.logo !== '') {
-              this.uploadLogo(true, 'La empresa se actualizó correctamente.')
+              this.uploadAndValidateLogo(true)
             } else {
               this.showSuccess('La empresa se actualizó correctamente.')
               setTimeout(() => {
