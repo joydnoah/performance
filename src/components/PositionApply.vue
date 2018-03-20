@@ -105,6 +105,10 @@
       }
     },
     mounted () {
+      this.axios.get('/')
+      .then((response) => {
+        console.log(response.data)
+      })
       this.axios.get('/position/' + this.$route.params.id)
       .then((response) => {
         if (response.data.data.logo_id !== null && response.data.data.logo_id !== undefined && response.data.data.logo_id !== '') {
