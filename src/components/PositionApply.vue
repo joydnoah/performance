@@ -109,6 +109,7 @@
       .then((response) => {
         console.log(response.data)
       })
+      .catch(error => { console.log(error.response) })
       this.axios.get('/position/' + this.$route.params.id)
       .then((response) => {
         if (response.data.data.logo_id !== null && response.data.data.logo_id !== undefined && response.data.data.logo_id !== '') {

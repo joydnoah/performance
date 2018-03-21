@@ -331,6 +331,7 @@
 
         this.axios.post('/application', this.form_data)
         .then(response => {
+          console.log(response.data)
           document.getElementsByClassName('alert')[0].style.display = 'block'
           document.getElementById('send-button').disabled = false
           document.getElementById('send-button').innerHTML = 'Enviar Solicitud'
