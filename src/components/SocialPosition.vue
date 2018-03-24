@@ -250,7 +250,6 @@
   import Toolbar from './Toolbar'
   import FBSignInButton from 'vue-facebook-signin-button'
   import { getAccessToken, getIdToken } from '../../utils/auth'
-
   export default {
     components: {
       Toolbar,
@@ -301,7 +300,6 @@
         event.target.innerHTML = 'Vinculando...'
         this.facebook_auth_response.access_token = token
         this.facebook_auth_response.id = id
-
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/social-network-connection/' + window.localStorage['company_id'], {
           'access_token': this.facebook_auth_response.access_token,
