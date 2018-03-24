@@ -1,25 +1,27 @@
 
 .actions-dropdown
 	&.dropdown
-		float right
+		position absolute
+		right -14px
 		&.open
 			button
 				@extends .transition-mdl-elements
-				background color-accent
+				background color-white
 				border solid 1px color-accent
-				color color-white
+				color color-accent
 		button
-			background color-white
+			background color-accent
 			border solid 1px color-accent
 			border-radius 100px
-			color color-accent
+			color color-white
 			height 28px
 			font-size 13px
 			font-weight regular
 			outline none
-			padding 0 12px 0 15px
+			padding 0
+			width 28px
 			.material-icons
-				font-size 16px
+				font-size 25px
 				vertical-align middle
 		&.open
 			.dropdown-menu

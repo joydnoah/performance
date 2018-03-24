@@ -18,7 +18,7 @@ export default {
   html, #general-container{
     background: url('~@/assets/background.png');
   }
-  select.form-control { 
+  select.form-control {
     transition: none !important;
   }*/
 
