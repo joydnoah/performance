@@ -155,8 +155,7 @@
             <div class="col-xs-2">
               <div class="dropdown actions-dropdown">
                 <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Acciones
-                  <i class="material-icons">keyboard_arrow_down</i>
+                  <i class="material-icons">more_horiz</i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
                   <li @click="go_to('/position?id=' + item.id)">Editar y Publicar Posición</li>

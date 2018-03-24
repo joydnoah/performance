@@ -59,11 +59,6 @@
           <!-- offer-header start -->
           <div class="offer-header-container">
             <div class="row">
-              <div class="col-xs-1">
-                <p class="header-title">
-                  Favoritos
-                </p>
-              </div>
               <div class="col-xs-3">
                 <p id='first_name' class="header-title" @click="changeOrder($event.target.id)">
                   Nombre
@@ -79,9 +74,18 @@
                   Status
                 </p>
               </div>
-              <div class="col-xs-2">
-                <p class="header-title">
-                  Compatibilidad
+              <div class="col-xs-5">
+                <p class="header-title compatibility-title">
+                  Educación
+                </p>
+                <p class="header-title compatibility-title">
+                  Experiencia
+                </p>
+                <p class="header-title compatibility-title">
+                  Habilidades
+                </p>
+                <p class="header-title compatibility-title">
+                  Total
                 </p>
               </div>
               <div class="col-xs-2">
@@ -89,14 +93,10 @@
             </div>
           </div><!-- offer-header end -->
 
-
-          <!-- applicant-row start -->
           <div class="applicant-row-container" v-for="item in applicants">
             <div class="row top-row">
-              <div class="col-xs-1">
-                <div class="row-bookmark is-active"><!-- add .is-active to add blue color as bookmarked -->
-                  <i class="material-icons">thumb_up</i>
-                </div>
+              <div class="row-bookmark is-active"><!-- add .is-active to add blue color as bookmarked -->
+                <i class="material-icons">thumb_up</i>
               </div>
               <div class="col-xs-3">
                 <a @click="go_to(item.applicant_id, item.id)" class="row-info row-name-link">
@@ -113,41 +113,46 @@
                   {{ get_applicants_status(item.status_application) }}
                 </p>
               </div>
-              <div class="col-xs-2">
-                <div :id="'id-' + item.applicant_id" class="row-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
-                  <p :id="'label-' + item.applicant_id">Sin Parsear</p>
-                  <p :id="'value-' + item.applicant_id">{{ getDocuments(item.applicant_id) }}</p>
+              <div class="col-xs-5">
+                <div :id="'id-education-' + item.applicant_id" class="row-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
+                  <p :id="'value-education-' + item.applicant_id">-</p>
+                </div>
+
+                <div :id="'id-experience-' + item.applicant_id" class="row-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
+                  <p :id="'value-experience-' + item.applicant_id">-</p>
+                </div>
+
+                <div :id="'id-skills-' + item.applicant_id" class="row-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
+                  <p :id="'value-skills-' + item.applicant_id">-</p>
+                </div>
+
+                <div :id="'id-' + item.applicant_id" class="row-compatibility compatibility-total"><!-- .is-high .is-medium .is-low change color compatibility -->
+                  <p :id="'value-' + item.applicant_id">-{{ getDocuments(item.applicant_id) }}</p>
                 </div>
               </div>
-              <div class="col-xs-2">
-                <div :id="'buttonMenu-' + item.id" class="dropdown actions-dropdown">
-                  <button :id="'dLabel-' + item.id" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Acciones
-                    <i class="material-icons">keyboard_arrow_down</i>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    <li @click="go_to(item.applicant_id, item.id)">Ver detalle</li>
-                    <!-- <li @click="openEmailModal(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li> -->
-                    <!-- <li @click="openEmailModal(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li> -->
-                    <li @click="openEmailModal(item.id, 'approved')">Marcar como contratado</li>
-                    <li @click="openEmailModal(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
-                  </ul>
-                </div>
+              <div class="dropdown actions-dropdown">
+                <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">more_horiz</i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                  <li @click="go_to(item.applicant_id, item.id)">Ver detalle</li>
+                  <!-- <li @click="openEmailModal(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li> -->
+                  <!-- <li @click="openEmailModal(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li> -->
+                  <li @click="openEmailModal(item.id, 'approved')">Marcar como contratado</li>
+                  <li @click="openEmailModal(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
+                </ul>
               </div>
             </div>
             <div class="row bottom-row">
               <div class="col-xs-12">
                 <div class="row-info">
-                  <!-- "
                   <p class="row-description">
-                     It is a long established fact that reader will distracted looking at the readable content pag will distracted looking at the readable content looking at the readable content
                   </p>
-                  ” -->
-
                 </div>
               </div>
             </div>
           </div><!-- applicant-row end -->
+
           <a href="/positions" class="btn btn-warning">Regresar</a>
         </div>
       </div>
@@ -249,31 +254,32 @@
         this.axios.get('/score/' + documentId)
         .then((response) => {
           var score = response.data.data.score[2]
-          if (score === null) {
-            document.getElementById('label-' + id).innerHTML = 'Esperando para calificar'
-          } else {
-            this.updateCompatibility(score, id)
+          var experienceScore = response.data.data.subscores.experience[3]
+          var educationScore = response.data.data.subscores.education[3]
+          var skillsScore = response.data.data.subscores.skills[3]
+          if (score !== null) {
+            this.updateCompatibility(experienceScore, 'experience-' + id, 'row-compatibility')
+            this.updateCompatibility(educationScore, 'education-' + id, 'row-compatibility')
+            this.updateCompatibility(skillsScore, 'skills-' + id, 'row-compatibility')
+            this.updateCompatibility(score, id, 'row-compatibility compatibility-total')
           }
         })
         .catch(error => { console.log(error.response) })
       },
       changeCompatibilityValue (id, value, score) {
         document.getElementById('id-' + id).classList.add('is-' + value)
-        document.getElementById('label-' + id).innerHTML = 'Compatibilidad:'
-        document.getElementById('value-' + id).innerHTML = score + '%'
+        document.getElementById('value-' + id).innerHTML = score + '<span>%</span>'
       },
-      updateCompatibility (score, id) {
-        if (document.getElementById('label-' + id) !== null) {
-          document.getElementById('id-' + id).className = 'row-compatibility'
-          if (score < 40.0) {
-            this.changeCompatibilityValue(id, 'low', score)
-          }
-          if (score >= 40.0 && score < 70.0) {
-            this.changeCompatibilityValue(id, 'medium', score)
-          }
-          if (score >= 70.0) {
-            this.changeCompatibilityValue(id, 'high', score)
-          }
+      updateCompatibility (score, id, parentClass) {
+        document.getElementById('id-' + id).className = parentClass
+        if (score < 40.0) {
+          this.changeCompatibilityValue(id, 'low', score)
+        }
+        if (score >= 40.0 && score < 70.0) {
+          this.changeCompatibilityValue(id, 'medium', score)
+        }
+        if (score >= 70.0) {
+          this.changeCompatibilityValue(id, 'high', score)
         }
       },
       make_visible () {
