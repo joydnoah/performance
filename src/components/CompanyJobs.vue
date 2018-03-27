@@ -167,7 +167,6 @@
   import { getAccessToken, getIdToken, isLoggedIn } from '../../utils/auth'
   import { required } from 'vuelidate/lib/validators'
   import AlertModal from './AlertModal'
-
   export default {
     components: {
       AppNav,
