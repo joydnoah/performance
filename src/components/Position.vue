@@ -37,7 +37,7 @@
                 <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
                 </div>
 
-                <div v-if="id !== null" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
+                <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
                   <social-sharing :url="shareUrl"
                                   title="COTOPAXI"
                                   description="Tecnología de punta para optimizar el proceso de reclutamiento de personal"
@@ -506,6 +506,7 @@
         google_api_plugin: null,
         id: null,
         name: '',
+        status: 'unpublished',
         new_department: '',
         department_list: [],
         skills_list: [],
@@ -955,6 +956,9 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
+          if (response.data.data.position.status_type !== 'unpublished') {
+            this.status = 'published'
+          }
           this.position = response.data.data.position
           this.id = response.data.data.position.id
           this.shareUrl = 'http://' + window.location.href.split('/')[2] + '/position-apply/' + this.id
