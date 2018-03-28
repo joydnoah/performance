@@ -10,6 +10,7 @@ require('froala-editor/js/froala_editor.pkgd.min')
 require('froala-editor/css/froala_editor.pkgd.min.css')
 require('font-awesome/css/font-awesome.css')
 require('froala-editor/css/froala_style.min.css')
+var SocialSharing = require('vue-social-sharing')
 
 import Vue from 'vue'
 import App from './App'
@@ -43,6 +44,7 @@ Vue.use(Router)
 Vue.use(VueHead)
 Vue.use(VueQuillEditor, { theme: 'snow', placeholder: 'Digite su texto aqui...' })
 Vue.use(KsVueScrollMagic)
+Vue.use(SocialSharing)
 
 Vue.config.productionTip = false
 

@@ -37,13 +37,38 @@
                 <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
                 </div>
 
+                <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
+                  <social-sharing :url="shareUrl"
+                                  title="COTOPAXI"
+                                  description="Tecnología de punta para optimizar el proceso de reclutamiento de personal"
+                                  quote="Tecnología de punta para optimizar el proceso de reclutamiento de personal"
+                                  inline-template>
+                                  <div>
+                                    <network network="facebook">
+                                      <a onmouseover="" style="cursor: pointer;">
+                                        <i class="fa fa-facebook"></i> Facebook
+                                      </a>
+                                    </network>
+                                    <network network="linkedin">
+                                      <a onmouseover="" style="cursor: pointer;">
+                                        <i class="fa fa-linkedin"></i> LinkedIn
+                                      </a>
+                                    </network>
+                                    <network network="twitter">
+                                      <a onmouseover="" style="cursor: pointer;">
+                                        <i class="fa fa-twitter"></i> Twitter
+                                      </a>
+                                    </network>
+                                  </div>
+                  </social-sharing>
+                </div>
               </div>
             </div>
           </div>
         </div><!-- create buttons bar end -->
       </div>
 
-      <div id="create-form-container" class="general-container">
+      <div id="create-form-container" class="general-container" style="padding-top: 30px;">
         <div class="create-form">
           <div class="collapse-group" role="tablist" aria-multiselectable="true">
             <div class="" role="tab" id="headingOne">
@@ -450,10 +475,12 @@
 
         </div><!-- create-form end -->
       </div><!-- create-form-container end -->
-
     </div>
   </div>
 </template>
+
+<script src="/dist/vue-social-sharing.min.js"></script>
+
 <script>
   import AlertModal from './AlertModal'
   import Toolbar from './Toolbar'
@@ -475,9 +502,11 @@
     },
     data: function () {
       return {
+        shareUrl: null,
         google_api_plugin: null,
         id: null,
         name: '',
+        status: 'unpublished',
         new_department: '',
         department_list: [],
         skills_list: [],
@@ -927,8 +956,12 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id)
         .then((response) => {
+          if (response.data.data.position.status_type !== 'unpublished') {
+            this.status = 'published'
+          }
           this.position = response.data.data.position
           this.id = response.data.data.position.id
+          this.shareUrl = 'http://' + window.location.href.split('/')[2] + '/position-apply/' + this.id
           document.getElementById('name_label').parentElement.classList.add('is-focused')
           this.name = response.data.data.position.name
           this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
