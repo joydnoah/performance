@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-
+    <meta property="og:title" content="COTOPAXI" />
+    <meta property="og:description" content="Tecnología de punta para optimizar el proceso de reclutamiento de personal" />
+    <meta property="og:image" content="/static/html_layout/images/company-logo.svg" />
     <title>Cotopaxi</title>
 
     <!-- Fonts -->
@@ -32,13 +34,13 @@
     <script type="text/javascript">
       function determineDropDirection(){
         $(".dropdown-menu").each( function(){
-          
+
           $(this).parent().removeClass("dropup");
-          
+
           if ($(this).offset().top + $(this).outerHeight() > $(window).innerHeight() + $(window).scrollTop()){
             $(this).parent().addClass("dropup");
           }
-          
+
           $(this).removeAttr("style");
         });
       }
