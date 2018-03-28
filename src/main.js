@@ -31,6 +31,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import VueQuillEditor from 'vue-quill-editor'
+import VueAnalytics from 'vue-analytics'
 
 Vue.use(uiv)
 Vue.use(Vuelidate)
@@ -45,6 +46,10 @@ Vue.use(VueHead)
 Vue.use(VueQuillEditor, { theme: 'snow', placeholder: 'Digite su texto aqui...' })
 Vue.use(KsVueScrollMagic)
 Vue.use(SocialSharing)
+Vue.use(VueAnalytics, {
+  id: process.env.GOOGLE_ANALITICS_ID,
+  router
+})
 
 Vue.config.productionTip = false
 
