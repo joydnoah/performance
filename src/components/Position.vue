@@ -45,17 +45,17 @@
                                   inline-template>
                                   <div>
                                     <network network="facebook">
-                                      <a onmouseover="" style="cursor: pointer;">
+                                      <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
                                         <i class="fa fa-facebook"></i> Facebook
                                       </a>
                                     </network>
                                     <network network="linkedin">
-                                      <a onmouseover="" style="cursor: pointer;">
+                                      <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
                                         <i class="fa fa-linkedin"></i> LinkedIn
                                       </a>
                                     </network>
                                     <network network="twitter">
-                                      <a onmouseover="" style="cursor: pointer;">
+                                      <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
                                         <i class="fa fa-twitter"></i> Twitter
                                       </a>
                                     </network>
