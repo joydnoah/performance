@@ -14,5 +14,6 @@ module.exports = merge(prodEnv, {
   GOOGLE_API_KEY: '"' +  process.env.GOOGLE_API_KEY + '"',
   FACEBOOK_APP_ID: '"' + process.env.FACEBOOK_APP_ID + '"',
   HOST: '"' + process.env.HOST + '"',
-  AWS_S3_BUCKET: '"' + process.env.AWS_S3_BUCKET + '"'
+  AWS_S3_BUCKET: '"' + process.env.AWS_S3_BUCKET + '"',
+  GOOGLE_ANALITICS_ID: '"' + process.env.GOOGLE_ANALITICS_ID + '"'
 })
