@@ -40,7 +40,7 @@
                 <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
                   <social-sharing :url="shareUrl"
                                   :title="name"
-                                  :quote="strippedDescription"
+                                  :quote="facebookQuote"
                                   inline-template>
                                   <network network="facebook">
                                     <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
@@ -478,7 +478,6 @@
               <div class="separator"></div>
             </div>
           </div>
-
         </div><!-- create-form end -->
       </div><!-- create-form-container end -->
     </div>
@@ -572,11 +571,17 @@
     },
     computed: {
       strippedDescription () {
-        let regex = /(<([^>]+)>)/ig
-        return this.description.replace(regex, '')
+        return this.stripTags(this.description)
+      },
+      facebookQuote () {
+        return this.name + '-' + this.stripTags(this.description)
       }
     },
     methods: {
+      stripTags (text) {
+        let regex = /(<([^>]+)>)/ig
+        return text.replace(regex, '')
+      },
       isLoggedIn () {
         return isLoggedIn()
       },
