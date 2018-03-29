@@ -40,26 +40,32 @@
                 <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
                   <social-sharing :url="shareUrl"
                                   :title="name"
-                                  :description="description"
-                                  :quote="description"
+                                  :quote="strippedDescription"
                                   inline-template>
-                                  <div>
-                                    <network network="facebook">
-                                      <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
-                                        <i class="fa fa-facebook"></i> Facebook
-                                      </a>
-                                    </network>
-                                    <network network="linkedin">
-                                      <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
-                                        <i class="fa fa-linkedin"></i> LinkedIn
-                                      </a>
-                                    </network>
-                                    <network network="twitter">
-                                      <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
-                                        <i class="fa fa-twitter"></i> Twitter
-                                      </a>
-                                    </network>
-                                  </div>
+                                  <network network="facebook">
+                                    <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
+                                      <i class="fa fa-facebook"></i> Facebook
+                                    </a>
+                                  </network>
+                  </social-sharing>
+                  <social-sharing :url="shareUrl"
+                                  :title="name"
+                                  :description="strippedDescription"
+                                  inline-template>
+                                  <network network="linkedin">
+                                    <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
+                                      <i class="fa fa-linkedin"></i> LinkedIn
+                                    </a>
+                                  </network>
+                  </social-sharing>
+                  <social-sharing :url="shareUrl"
+                                  :title="name"
+                                  inline-template>
+                                  <network network="twitter">
+                                    <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
+                                      <i class="fa fa-twitter"></i> Twitter
+                                    </a>
+                                  </network>
                   </social-sharing>
                 </div>
               </div>
@@ -562,6 +568,12 @@
     validations: {
       name: {
         required
+      }
+    },
+    computed: {
+      strippedDescription () {
+        let regex = /(<([^>]+)>)/ig
+        return this.description.replace(regex, '')
       }
     },
     methods: {
