@@ -39,9 +39,9 @@
 
                 <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
                   <social-sharing :url="shareUrl"
-                                  title="COTOPAXI"
-                                  description="Tecnología de punta para optimizar el proceso de reclutamiento de personal"
-                                  quote="Tecnología de punta para optimizar el proceso de reclutamiento de personal"
+                                  :title="name"
+                                  :description="description"
+                                  :quote="description"
                                   inline-template>
                                   <div>
                                     <network network="facebook">
