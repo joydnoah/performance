@@ -39,7 +39,7 @@
 
                 <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
                   <social-sharing :url="shareUrl"
-                                  title="COTOPAXI"
+                                  :title="name"
                                   :description="description"
                                   :quote="description"
                                   inline-template>
