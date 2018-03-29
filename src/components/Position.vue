@@ -574,7 +574,7 @@
         return this.stripTags(this.description)
       },
       facebookQuote () {
-        return this.name + '-' + this.stripTags(this.description)
+        return this.name + '  -  ' + this.stripTags(this.description)
       }
     },
     methods: {
