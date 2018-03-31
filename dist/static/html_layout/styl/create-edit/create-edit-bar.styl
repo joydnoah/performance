@@ -1,0 +1,47 @@
+
+.create-buttons-bar-container
+	height 77px
+	.create-buttons-bar
+		@extends .transition-mdl-elements
+		background color-white
+		border-bottom solid 1px color-border
+		left 0
+		padding 20px 0
+		right 0
+		top -77px
+		z-index 1
+		&:hover
+			box-shadow 0 7px 17px rgba(0,0,0,0.1)
+		&.magic-scroll
+			box-shadow 0 7px 17px rgba(0,0,0,0.1)
+			position fixed
+			top 0
+			&:hover
+				box-shadow 0 7px 24px rgba(0,0,0,0.2)
+
+		.buttons-container
+			text-align center
+			.btn-action
+				background color-third
+				border solid 1px color-third
+				border-radius 100px
+				box-shadow 0px 4px 8px rgba(0,0,0,0.15)
+				display inline-block
+				font-size 14px
+				font-weight regular
+				outline none
+				margin 0 6px
+				text-transform none
+				&.is-success
+					background color-third
+					border solid 1px color-third
+					color white
+				&.is-error
+					background color-white
+					border solid 1px color-error
+					color color-error
+				&.is-action
+					background color-white
+					border solid 1px color-primary
+					color color-primary
+		

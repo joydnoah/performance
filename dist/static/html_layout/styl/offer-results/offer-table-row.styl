@@ -1,0 +1,27 @@
+
+.offer-row-container
+	@extends .transition-mdl-elements
+	background color-white
+	border solid 1px color-border
+	border-radius 10px
+	box-shadow 0 4px 14px rgba(0,0,0,0.1)
+	min-height 86px
+	padding 28px 15px 10px
+	margin-bottom 32px
+	&:hover
+		background color-background
+		box-shadow 0 6px 20px rgba(0,0,0,0.12)
+	.row-info
+		display inline-block
+		font-size 12px
+		line-height 1.1
+		&.row-title
+			color color-text-primary
+			font-weight bold
+		&.row-title-link
+			color color-primary
+			cursor pointer
+			font-weight bold
+		&.row-text
+			color color-text-secondary
+			font-weight regular

@@ -1,0 +1,169 @@
+.datepicker 
+    color color-text-primary
+    font-size 14px
+    visibility visible
+
+
+.datepicker table 
+    margin-bottom 8px
+
+
+.datepicker .datepicker-days,
+.datepicker .datepicker-months,
+.datepicker .datepicker-years 
+    padding-left 25px
+    padding-right 25px
+
+
+.datepicker tr 
+    border-radius 0
+
+
+.datepicker thead tr:nth-child(2) 
+    border-bottom 1px solid color-text-disable
+
+    th 
+	    font-weight @regular
+	    font-size 15px
+    	padding-top 9px
+    
+
+
+.datepicker thead th.prev,
+.datepicker thead th.next 
+    position relative
+    color transparent
+
+
+.datepicker thead th.prev::before,
+.datepicker thead th.next::before 
+    font-family 'Glyphicons Halflings'
+    color color-text-primary
+    position absolute
+    left 8px
+    top 7px
+
+
+.datepicker thead th.prev::before 
+    content "\e079"
+
+
+.datepicker thead th.next::before 
+    content "\e080"
+
+
+.datepicker thead .dow 
+    font-weight bold
+
+
+.datepicker tbody 
+    /*border-bottom: 1px solid #bbb;*/
+
+
+.datepicker tbody tr td.day 
+    padding 2px
+    border-radius 15px
+    line-height 26px
+
+
+.datepicker tbody tr td.day:hover:not(.disabled),
+.datepicker tbody tr td.day.focused:not(.disabled) 
+    background color-background-hover
+    color color-secondary
+
+
+.datepicker tbody tr td.day.today 
+    position relative
+    color color-primary
+    font-weight medium
+
+
+.datepicker tbody tr td.day.today,
+.datepicker tbody tr td.day.today:hover,
+.datepicker tbody tr td.day.today:focus,
+.datepicker tbody tr td.day.today.disabled,
+.datepicker tbody tr td.day.today:hover.disabled,
+.datepicker tbody tr td.day.today:focus.disabled,
+.datepicker tbody tr td.day.today:hover,
+.datepicker tbody tr td.day.today:hover:hover,
+.datepicker tbody tr td.day.today:focus:hover,
+.datepicker tbody tr td.day.today.disabled:hover,
+.datepicker tbody tr td.day.today:hover.disabled:hover,
+.datepicker tbody tr td.day.today:focus.disabled:hover,
+.datepicker tbody tr td.day.today:focus,
+.datepicker tbody tr td.day.today:hover:focus,
+.datepicker tbody tr td.day.today:focus:focus,
+.datepicker tbody tr td.day.today.disabled:focus,
+.datepicker tbody tr td.day.today:hover.disabled:focus,
+.datepicker tbody tr td.day.today:focus.disabled:focus 
+    background-color transparent
+
+
+.datepicker tbody tr td.day.today::before,
+.datepicker tbody tr td.day.today:hover::before,
+.datepicker tbody tr td.day.today:focus::before,
+.datepicker tbody tr td.day.today.disabled::before,
+.datepicker tbody tr td.day.today:hover.disabled::before,
+.datepicker tbody tr td.day.today:focus.disabled::before,
+.datepicker tbody tr td.day.today:hover::before,
+.datepicker tbody tr td.day.today:hover:hover::before,
+.datepicker tbody tr td.day.today:focus:hover::before,
+.datepicker tbody tr td.day.today.disabled:hover::before,
+.datepicker tbody tr td.day.today:hover.disabled:hover::before,
+.datepicker tbody tr td.day.today:focus.disabled:hover::before,
+.datepicker tbody tr td.day.today:focus::before,
+.datepicker tbody tr td.day.today:hover:focus::before,
+.datepicker tbody tr td.day.today:focus:focus::before,
+.datepicker tbody tr td.day.today.disabled:focus::before,
+.datepicker tbody tr td.day.today:hover.disabled:focus::before,
+.datepicker tbody tr td.day.today:focus.disabled:focus::before 
+    content ''
+    position: absolute
+    left 0
+    top 0
+    width 100%
+    height 100%
+    border 1px solid color-primary
+    border-radius 100%
+
+
+.datepicker tbody tr td.day.active,
+.datepicker tbody tr td.day.active.today,
+.datepicker tbody tr td.day.active:hover,
+.datepicker tbody tr td.day.active.today:hover,
+.datepicker tbody tr td.day.active:focus,
+.datepicker tbody tr td.day.active.today:focus 
+    background-color color-third
+    color color-white
+    text-shadow none
+
+
+.datepicker tbody tr td.day.active::before,
+.datepicker tbody tr td.day.active.today::before,
+.datepicker tbody tr td.day.active:hover::before,
+.datepicker tbody tr td.day.active.today:hover::before,
+.datepicker tbody tr td.day.active:focus::before,
+.datepicker tbody tr td.day.active.today:focus::before 
+    border 0
+
+
+.datepicker tbody tr td.new,
+.datepicker tbody tr td.old.day 
+    color color-text-primary
+    opacity .5
+
+
+.datepicker tbody tr td.disabled,
+.datepicker tbody tr td.disabled.today,
+.datepicker tbody tr td.disabled.old,
+.datepicker tbody tr td.disabled:hover,
+.datepicker tbody tr td.disabled.today:hover,
+.datepicker tbody tr td.disabled.old:hover,
+.datepicker tbody tr td.disabled:hover:hover,
+.datepicker tbody tr td.disabled.today:hover:hover,
+.datepicker tbody tr td.disabled.old:hover:hover 
+    color: #f1f1f1;
+
+
+.datepicker table tfoot .clear, .datepicker table tfoot .today 
+    border-top 1px solid #bbb

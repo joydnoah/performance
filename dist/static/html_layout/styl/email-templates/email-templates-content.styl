@@ -1,0 +1,75 @@
+
+.email-tabs-container
+	background color-background
+	border-bottom solid 1px color-border
+	height 63px
+
+.email-template-content
+	.template-header
+		margin-bottom 30px
+		padding-top 60px
+		.template-title-container
+			margin-bottom 70px
+			.template-title
+				color color-secondary
+				float left
+				font-size 20px
+				line-height 1
+			.switch-container
+				float right
+		.template-instructions-container
+			background color-background
+			padding 20px
+			margin-bottom 30px
+			.instructions-title
+				color color-accent
+				font-size 16px
+				font-weight bold
+				margin-bottom 3px
+			.instructions-message
+				color color-text-primary
+				font-size 16px
+				font-weight regular
+	.template-body
+		@extends .transition-mdl-elements
+		height 0
+		margin-top -20px
+		opacity 0
+		overflow hidden
+		visibility hidden
+		&.is-active
+			height auto
+			margin-top 0
+			opacity 1
+			visibility visible
+		.template-explanation-container
+			padding 20px 0
+			.explanation-title
+				color color-text-primary
+				font-size 18px
+				font-weight regular
+				line-height 1
+				margin-bottom 30px
+			.explanation-text
+				color color-text-secondary
+				font-size 14px
+				font-weight regular
+				strong
+					font-weight bold
+		.separator
+			margin 10px 0 20px
+		.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+			margin-bottom 10px
+		.form-btn-container
+			padding 20px 0
+			text-align center
+			.mdl-button.btn-confirm
+				background color-third
+				border-radius 100px
+				box-shadow 0px 2px 8px rgba(0,0,0,0.13)
+				color color-white
+				font-size 16px
+				height 36px
+				margin 0 15px
+				padding 0 25px
+				text-transform none
