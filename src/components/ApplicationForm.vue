@@ -206,7 +206,6 @@
         this.set_files(type, e.target.files)
       },
       loadFiles (e) {
-        console.log(e.path[0])
         var id = e.path[0].id.split('-')[0]
         document.getElementById(id + '-container').className += ' hidden'
         document.getElementById(id + '-upload').className += '.hidden'
