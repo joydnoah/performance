@@ -398,7 +398,7 @@
         this.axios.get('/position/' + this.$route.params.position_id)
         .then((response) => {
           this.position = response.data.data.position
-          this.text_post_link = this.position.name + ' - ' + process.env.HOST + '/position-apply/' + this.position.id
+          this.text_post_link = this.position.name + ' - ' + process.env.HOST_PUBLIC_URL + '/position-apply/' + this.position.id
           this.get_counter_characters()
         })
         .catch(error => { console.log(error.response) })

@@ -11,5 +11,6 @@ module.exports = {
     GOOGLE_API_KEY: '"' +  process.env.GOOGLE_API_KEY + '"',
     FACEBOOK_APP_ID: '"' + process.env.FACEBOOK_APP_ID + '"',
     HOST: '"' + process.env.HOST + '"',
+    HOST_PUBLIC_URL: '"' + process.env.HOST_PUBLIC_URL + '"',
     AWS_S3_BUCKET: '"' + process.env.AWS_S3_BUCKET + '"'
 }
