@@ -24,10 +24,10 @@
             <div class="row">
               <div class="col-xs-offset-1 col-xs-10">
                 <div class="buttons-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" target="_blank" id="preview-button" @click="preview($v)">Vista previa</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="submit">Guardar</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="set_status_position('publish')" id="publish">Publicar</button>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Cancelar y salir</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="send-button">Guardar</button>
+                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="preview($v)">Vista previa</button>
+                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="set_status_position('publish')" id="publish">Publicar</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Salir</button>
                 </div>
 
                 <div style="display: none;" id="alert-error" class="alert alert-danger" role="alert">
@@ -354,7 +354,7 @@
                       <label v-bind:class="{ 'active': parseInt(item.importance) === 2 ? 'active' : '' }" :for="'business_skill' + index + '3'"> Alta </label>
                     </div>
                   </div>
-                  <div class="row-action-btn remove-btn" @click="remove_skill(index)">
+                  <div class="row-action-btn remove-btn" @click="remove_skill(index, item.id)">
                     <i class="material-icons">cancel</i>
                     <span>Eliminar</span>
                   </div>
@@ -543,6 +543,7 @@
         filters_technical_skill: [],
         filters_business_skill: [],
         filters: [],
+        filters_to_remove: [],
         education_level: '',
         experience_years_min: '',
         experience_years_max: '',
@@ -648,7 +649,10 @@
           }
         }
       },
-      remove_skill (index) {
+      remove_skill (index, id) {
+        if (id !== undefined) {
+          this.filters_to_remove.push(id)
+        }
         this.filters_business_skill.splice(index, 1)
       },
       getAddressData: function (addressData, placeResultData) {
@@ -699,8 +703,7 @@
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
-          this.show_waiting('submit', 'Guardando...')
-          document.getElementById('submit').disabled = true
+          this.show_waiting('send-button', 'Guardando...')
           this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.put('/position/' + this.id, {
@@ -712,14 +715,15 @@
             'work_team_description': this.work_team_description,
             'candidate_characteristics': this.candidate_characteristics,
             'expiration_date': this.expiration_date,
-            'filters': JSON.stringify(this.filters)
+            'filters': JSON.stringify(this.filters),
+            'filters_to_remove': JSON.stringify(this.filters_to_remove)
           })
           .then(response => {
-            this.show_success('submit', 'Guardar', this.successSave)
+            this.filters_to_remove = []
+            this.show_success('send-button', 'Guardar', this.successSave, 'put')
           })
           .catch(error => {
-            console.log(error.response)
-            document.getElementById('submit').disabled = false
+            console.log(error)
             this.show_error()
           })
         } else {
@@ -741,7 +745,8 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/position/' + this.id + '/' + status)
         .then(response => {
-          this.show_success(status, 'Publicar', this.successPublish)
+          this.show_success(status, 'Publicar', this.successPublish, 'publish')
+          this.getPosition()
         })
         .catch(error => {
           this.publish_problem = true
@@ -753,8 +758,8 @@
         v.$touch()
         this.is_valid_expiration_date = this.validate_expiration_date()
         if (this.valid_form(v)) {
-          this.show_waiting('submit', 'Guardando...')
-          document.getElementById('submit').disabled = true
+          this.show_waiting('send-button', 'Guardando...')
+          document.getElementById('send-button').disabled = true
           this.departments = []
           for (var item in this.department) {
             this.departments.push(this.department[item].name)
@@ -773,11 +778,13 @@
             'filters': JSON.stringify(this.filters)
           })
           .then(response => {
-            this.show_success('submit', 'Guardar', this.successSave)
+            this.$route.query.id = response.data.data.id
+            this.id = this.$route.query.id
+            this.show_success('send-button', 'Guardar', this.successSave, 'post')
+            this.getPosition()
           })
           .catch(error => {
-            console.log(error.response)
-            document.getElementById('submit').disabled = false
+            console.log(error)
             this.show_error(error.response)
           })
         } else {
@@ -810,22 +817,25 @@
       show_waiting (id, msg) {
         document.getElementById(id).innerHTML = msg
         document.getElementById(id).style.color = 'white'
+        document.getElementById(id).disabled = true
       },
       restoreButton (id, msg) {
-        // document.getElementById(id).innerHTML = msg
+        document.getElementById(id).innerHTML = msg
+        document.getElementById(id).disabled = false
       },
-      show_success (id, buttonMessage, alertMessage) {
+      show_success (id, buttonMessage, alertMessage, type) {
         this.restoreButton(id, buttonMessage)
         this.showAlert = !this.showAlert
         this.typeOfAlert = 'is-success'
         this.typeMessage = 'Proceso Finalizado:'
         this.alertMessage = alertMessage
-        setTimeout(function () {
-          window.location.href = '/positions'
-        }, 500)
+        if (type === 'post') {
+          var newurl = window.location.href + '?id=' + this.id
+          window.history.pushState({ path: newurl }, '', newurl)
+        }
       },
       hide_alerts () {
-        document.getElementById('create-form-container').style.paddingTop = '0px'
+        document.getElementById('create-form-container').style.paddingTop = '30px'
         document.getElementById('alert-error').style.display = 'none'
         document.getElementById('alert-success').style.display = 'none'
       },
@@ -898,7 +908,7 @@
             }
           }
         })
-        .catch(error => { console.log(error.response) })
+        .catch(error => { console.log(error) })
       },
       add_technical_skill () {
         this.filters_technical_skill.push({
@@ -960,49 +970,50 @@
         new this.$scrollmagic.Scene({ triggerElement: '#create-form-container', triggerHook: 0, offset: 0 })
         .setClassToggle('#create-buttons-bar', 'magic-scroll') // add .addIndicators() to check trigger position
         .addTo(controller)
+      },
+      getPosition () {
+        this.get_departments()
+        this.get_skills()
+        this.setupLockButtonsBar()
+        if (this.$route.query.id !== undefined) {
+          if (document.getElementById('cities_table') !== null) {
+            document.getElementById('cities_table').style.display = 'none'
+          }
+          this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
+          this.axios.get('/position/' + this.$route.query.id)
+          .then((response) => {
+            if (response.data.data.position.status_type !== 'unpublished') {
+              this.status = 'published'
+            }
+            this.position = response.data.data.position
+            this.id = response.data.data.position.id
+            this.shareUrl = 'http://' + window.location.href.split('/')[2] + '/position-apply/' + this.id
+            document.getElementById('name_label').parentElement.classList.add('is-focused')
+            this.name = response.data.data.position.name
+            this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
+            this.city = [response.data.data.position.city]
+            this.description = response.data.data.position.description
+            if (this.description !== '') {
+              this.description_empty = false
+            }
+            this.work_team_description = response.data.data.position.work_team_description
+            if (this.work_team_description !== '') {
+              this.work_team_description_empty = false
+            }
+            this.candidate_characteristics = response.data.data.position.candidate_characteristics
+            if (this.candidate_characteristics !== '') {
+              this.candidate_characteristics_empty = false
+            }
+            this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
+            this.get_filters(this.$route.query.id)
+            // this.restoreButton('preview', 'Vista previa')
+          })
+          .catch(error => { console.log(error) })
+        }
       }
     },
     mounted () {
-      this.get_departments()
-      this.get_skills()
-      this.setupLockButtonsBar()
-      if (this.$route.query.id !== undefined) {
-        if (document.getElementById('cities_table') !== null) {
-          document.getElementById('cities_table').style.display = 'none'
-        }
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
-        this.axios.get('/position/' + this.$route.query.id)
-        .then((response) => {
-          if (response.data.data.position.status_type !== 'unpublished') {
-            this.status = 'published'
-          }
-          this.position = response.data.data.position
-          this.id = response.data.data.position.id
-          this.shareUrl = 'http://' + window.location.href.split('/')[2] + '/position-apply/' + this.id
-          document.getElementById('name_label').parentElement.classList.add('is-focused')
-          this.name = response.data.data.position.name
-          this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
-          this.city = [response.data.data.position.city]
-          this.description = response.data.data.position.description
-          if (this.description !== '') {
-            this.description_empty = false
-          }
-          this.work_team_description = response.data.data.position.work_team_description
-          if (this.work_team_description !== '') {
-            this.work_team_description_empty = false
-          }
-          this.candidate_characteristics = response.data.data.position.candidate_characteristics
-          if (this.candidate_characteristics !== '') {
-            this.candidate_characteristics_empty = false
-          }
-          this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
-          this.get_filters(this.$route.query.id)
-        })
-        .catch(error => { console.log(error.response) })
-      } else {
-        document.getElementById('preview-button').style.display = 'none'
-        document.getElementById('publish').style.display = 'none'
-      }
+      this.getPosition()
     },
     created: function () {
       this.bootstrap_min_js = document.createElement('script')

@@ -15,25 +15,25 @@
 
       <div class="row">
         <div class="col-xs-offset-1 col-xs-6">
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.first_name.$error }">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid': $v.first_name.$error }">
             <label class="mdl-textfield__label" for="first_name">Nombre *</label>
             <input v-on:input="$v.first_name.$touch" v-model='first_name' id="first_name" name="first_name" class="mdl-textfield__input" type="text">
             <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.last_name.$error }">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid': $v.last_name.$error }">
             <label class="mdl-textfield__label" for="last_name">Apellido *</label>
             <input v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name" name="last_name" class="mdl-textfield__input" type="text">
             <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.email.$error }">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid': $v.email.$error }">
             <label class="mdl-textfield__label" for="email">Email *</label>
             <input v-on:input="$v.email.$touch" v-model='email' id="email" name="email" class="mdl-textfield__input" type="text">
             <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <label class="mdl-textfield__label" for="phone_number">Teléfono</label>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid': $v.phone_number.$error }">
+            <label class="mdl-textfield__label" for="phone_number">Teléfono *</label>
             <input v-model='phone_number' id="phone_number" name="phone_number" class="mdl-textfield__input" type="text">
-            <span class="mdl-textfield__error">Error message</span>
+            <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
         </div>
       </div>
@@ -78,17 +78,19 @@
           <div id="curriculum_vitae" class="file-upload-container">
             <div class="upload-title">Curriculum Vitae</div>
             <!-- Add .hidden class to hide this div when the file is uploaded -->
-            <div v-on:click="clickEvent('curriculum_vitae')" id="curriculum_vitae-container" class="upload-container">
-              <div id="curriculum_vitae-upload" @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
-                <i class="material-icons">cloud_upload</i>
-                Suelta el archivo aqui
+            <div id="curriculum_vitae-upload">
+              <div v-on:click="clickEvent('curriculum_vitae')" id="curriculum_vitae-container" class="upload-container" @drop.prevent="loadFiles" @dragover.prevent>
+                <div class="upload-sub-title" id="curriculum_vitae-subtittle">
+                  <i class="material-icons">cloud_upload</i>
+                  Suelta el archivo aqui
+                </div>
+                <div class="upload-note" id="curriculum_vitae-note">formatos aceptados .PDF o .docx</div>
               </div>
-              <div class="upload-note">formatos aceptados .PDF o .docx</div>
-            </div>
-            <div id="curriculum_vitae-file" class="uploaded-file hidden">
-              <i class="material-icons file-icon">description</i>
-              <span class="file-name">{{ curriculum_name }}</span>
-              <i @click="deleteFile($event)" class="material-icons delete-icon">close</i>
+              <div id="curriculum_vitae-file" class="uploaded-file hidden">
+                <i class="material-icons file-icon">description</i>
+                <span class="file-name">{{ curriculum_name }}</span>
+                <i @click="deleteFile($event)" class="material-icons delete-icon">close</i>
+              </div>
             </div>
           </div>
         </div>
@@ -101,17 +103,19 @@
           <div id="presentation_letter" class="file-upload-container">
             <div class="upload-title">Carta de presentación</div>
             <!-- Add .hidden class to hide this div when the file is uploaded -->
-            <div v-on:click="clickEvent('presentation_letter')" id="presentation_letter-container" class="upload-container">
-              <div id="presentation_letter-upload" @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
-                <i class="material-icons">cloud_upload</i>
-                Suelta el archivo aqui
+            <div id="presentation_letter-upload">
+              <div v-on:click="clickEvent('presentation_letter')" id="presentation_letter-container" class="upload-container" @drop.prevent="loadFiles" @dragover.prevent>
+                <div id="presentation_letter-subtittle" class="upload-sub-title">
+                  <i class="material-icons">cloud_upload</i>
+                  Suelta el archivo aqui
+                </div>
+                <div class="upload-note" id="presentation_letter-note">formatos aceptados .PDF o .docx</div>
               </div>
-              <div class="upload-note">formatos aceptados .PDF o .docx</div>
-            </div>
-            <div id="presentation_letter-file" class="uploaded-file hidden">
-              <i class="material-icons file-icon">description</i>
-              <span class="file-name">{{ presentation_letter_name }}</span>
-              <i @click="deleteFile($event)" class="material-icons delete-icon">close</i>
+              <div id="presentation_letter-file" class="uploaded-file hidden">
+                <i class="material-icons file-icon">description</i>
+                <span class="file-name">{{ presentation_letter_name }}</span>
+                <i @click="deleteFile($event)" class="material-icons delete-icon">close</i>
+              </div>
             </div>
           </div>
         </div>
@@ -181,6 +185,9 @@
         required
       },
       last_name: {
+        required
+      },
+      phone_number: {
         required
       },
       email: {
@@ -259,17 +266,6 @@
             break
         }
       },
-      validateInputs () {
-        if (this.first_name === '') {
-          document.getElementById('first_name').parentElement.classList.add('is-invalid')
-        }
-        if (this.last_name === '') {
-          document.getElementById('last_name').parentElement.classList.add('is-invalid')
-        }
-        if (this.email === '') {
-          document.getElementById('email').parentElement.classList.add('is-invalid')
-        }
-      },
       validate_file (validType, validSize, errorId) {
         var validation = validSize && validType
         if (!validation) {
@@ -299,7 +295,6 @@
       },
       post (v) {
         v.$touch()
-        this.validateInputs()
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
         if (this.validate_form(validCurriculum, validLetter)) {
