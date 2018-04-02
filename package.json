@@ -8,7 +8,7 @@
     "dev": "node $NODE_DEBUG_OPTION build/dev-server.js",
     "dev2": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "prod": "webpack-dev-server --inline --progress --config build/webpack.prod.conf.js",
-    "start": "node $NODE_DEBUG_OPTION build/dev-server.js",
+    "start": "node $NODE_DEBUG_OPTION --optimize_for_size --max_old_space_size=460 --gc_interval=100 build/dev-server.js",
     "build": "node $NODE_DEBUG_OPTION build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
