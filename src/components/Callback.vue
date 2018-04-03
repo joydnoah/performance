@@ -2,8 +2,15 @@
   <div id="general-container">
     <div id="loading" class="panel panel-default">
       <div class="panel-body">
-        <div id="loading-container">
-          <img src="~@/assets/loading.gif">
+        <div id="loading-container" align="center" style="color: #007bb6;">
+          <div class="loader">
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__ball"></div>
+          </div>
           Procesando por favor espere...
         </div>
       </div>
@@ -22,6 +29,11 @@
       }
     },
     mounted () {
+      // <link rel="stylesheet" href="/static/html_layout/css/loader.css">
+      this.loader_css = document.createElement('link')
+      this.loader_css.setAttribute('rel', 'stylesheet')
+      this.loader_css.setAttribute('href', '/static/html_layout/css/loader_css.css')
+      document.head.appendChild(this.loader_css)
       if (getParameterByName('error_description') === 'Please verify your email before logging in.') {
         window.location.href = '/verify-email'
       } else {
