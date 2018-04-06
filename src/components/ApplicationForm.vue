@@ -142,9 +142,9 @@
         <p>Existe un candidato registrado con ese correo</p>
       </div>
 
-      <div style="display: none;" class="alert alert-danger" id="alert-error">
-      </div>
       <div style="display: none;" class="alert alert-danger" id="alert-error1">
+      </div>
+      <div style="display: none;" class="alert alert-danger" id="alert-error2">
       </div>
     </div>
   </div>
@@ -288,8 +288,8 @@
         var validation = validCurriculum && validLetter && this.required_file
         if (!this.required_file) {
           msg = msg + '<div> Es necesario anexar un Curriculum Vitae. </div>'
-          document.getElementById('alert-error').style.display = 'block'
-          document.getElementById('alert-error').innerHTML = msg
+          document.getElementById('alert-error1').style.display = 'block'
+          document.getElementById('alert-error1').innerHTML = msg
         }
         return validation
       },
@@ -302,7 +302,7 @@
       },
       hideAlerts () {
         document.getElementById('alert-error1').style.display = 'none'
-        document.getElementById('alert-error').style.display = 'none'
+        document.getElementById('alert-error2').style.display = 'none'
         document.getElementById('alert-succes').style.display = 'none'
         document.getElementById('alert-warning').style.display = 'none'
         document.getElementById('alert-info').style.display = 'none'
