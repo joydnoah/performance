@@ -144,6 +144,8 @@
 
       <div style="display: none;" class="alert alert-danger" id="alert-error">
       </div>
+      <div style="display: none;" class="alert alert-danger" id="alert-error1">
+      </div>
     </div>
   </div>
 </template>
@@ -286,8 +288,6 @@
         var validation = validCurriculum && validLetter && this.required_file
         if (!this.required_file) {
           msg = msg + '<div> Es necesario anexar un Curriculum Vitae. </div>'
-        }
-        if (!validation) {
           document.getElementById('alert-error').style.display = 'block'
           document.getElementById('alert-error').innerHTML = msg
         }
@@ -300,7 +300,15 @@
           document.getElementById('email-box').classList.remove('is-invalid')
         }
       },
+      hideAlerts () {
+        document.getElementById('alert-error1').style.display = 'none'
+        document.getElementById('alert-error').style.display = 'none'
+        document.getElementById('alert-succes').style.display = 'none'
+        document.getElementById('alert-warning').style.display = 'none'
+        document.getElementById('alert-info').style.display = 'none'
+      },
       post (v) {
+        this.hideAlerts()
         v.$touch()
         this.validateEmail(v.email.$invalid)
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
