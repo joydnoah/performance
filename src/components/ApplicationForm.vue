@@ -25,10 +25,10 @@
             <input v-on:input="$v.last_name.$touch" v-model='last_name' id="last_name" name="last_name" class="mdl-textfield__input" type="text">
             <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid': $v.email.$error }">
+          <div id="email-box" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid': $v.email.$error }">
             <label class="mdl-textfield__label" for="email">Email *</label>
             <input v-on:input="$v.email.$touch" v-model='email' id="email" name="email" class="mdl-textfield__input" type="text">
-            <span class="mdl-textfield__error">Este campo no puede estar vacio</span>
+            <span id="email-error" class="mdl-textfield__error">Este no es un email valido</span>
           </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid': $v.phone_number.$error }">
             <label class="mdl-textfield__label" for="phone_number">Teléfono *</label>
@@ -293,8 +293,16 @@
         }
         return validation
       },
+      validateEmail (notValid) {
+        if (notValid) {
+          document.getElementById('email-box').className += ' is-invalid'
+        } else {
+          document.getElementById('email-box').classList.remove('is-invalid')
+        }
+      },
       post (v) {
         v.$touch()
+        this.validateEmail(v.email.$invalid)
         var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
         var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
         if (this.validate_form(validCurriculum, validLetter)) {
