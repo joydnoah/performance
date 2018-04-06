@@ -81,19 +81,26 @@
           <div class="logo-upload-container">
             <div class="row">
               <div class="col-xs-offset-2 col-xs-4">
-                <div class="upload-title">Logo empresarial</div>
-                <div id="logo-uploader" class="upload-container">
-                  <div @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
-                    <i class="material-icons">cloud_upload</i>
-                    Suelta el logo aquí
+                <div id="actual-logo" style="display: block;">
+                  <div class="uploaded-content">
+                    <img :src="logo_uri">
                   </div>
-                  <div class="upload-text">O click para seleccionar la imagen</div>
-                  <div class="upload-note">Archivos permitidos .jpg o .png tamaño de 600px X 200px</div>
                 </div>
-                <!-- Add .hidden class to hide this div when there is no logo -->
-                <div id="logo_img_container" class="uploaded-content hidden">
-                  <div>{{ logo['name'] }}</div>
-                  <img id="logo_img" v-on:change="helpFun()">
+                <div id="to-upload-logo" style="display: none;">
+                  <div class="upload-title">Logo empresarial</div>
+                  <div id="logo-uploader" class="upload-container">
+                    <div @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
+                      <i class="material-icons">cloud_upload</i>
+                      Suelta el logo aquí
+                    </div>
+                    <div class="upload-text">O click para seleccionar la imagen</div>
+                    <div class="upload-note">Archivos permitidos .jpg o .png tamaño de 600px X 200px</div>
+                  </div>
+                  <!-- Add .hidden class to hide this div when there is no logo -->
+                  <div id="logo_img_container" class="uploaded-content hidden">
+                    <div>{{ logo['name'] }}</div>
+                    <img id="logo_img" v-on:change="helpFun()">
+                  </div>
                 </div>
               </div>
 
@@ -188,7 +195,10 @@
         typeOfAlert: '',
         typeMessage: '',
         alertMessage: '',
-        actualLogo: null
+        actualLogo: null,
+        logo_uri: null,
+        bucket: process.env.AWS_S3_BUCKET,
+        logo_showed: false
       }
     },
     validations: {
@@ -200,6 +210,15 @@
       manualUpload () {
         document.getElementById('logo-file-input').click()
       },
+      show_logo (show) {
+        if (show) {
+          document.getElementById('actual-logo').style.display = 'none'
+          document.getElementById('to-upload-logo').style.display = 'block'
+        } else {
+          document.getElementById('actual-logo').style.display = 'block'
+          document.getElementById('to-upload-logo').style.display = 'none'
+        }
+      },
       manualLoadFile (e) {
         this.setFile(e.target.files[0])
       },
@@ -207,6 +226,8 @@
         this.setFile(e.dataTransfer.files[0])
       },
       setFile (file) {
+        this.logo_showed = this.logo_showed || true
+        this.show_logo(this.logo_showed)
         this.logoValidType = this.validateFileType(file['type'])
         this.logo = file
         this.showLogoPreview(file)
@@ -288,7 +309,12 @@
       getLogoUri () {
         this.axios.get('/company/' + localStorage['company_id'] + '/logo')
         .then(response => {
-          this.actualLogo = response.data.data.logo.id
+          this.logo_showed = this.logo_showed || response.data.data.logo.id === undefined
+          this.show_logo(this.logo_showed)
+          if (response.data.data.logo.id !== undefined) {
+            this.actualLogo = response.data.data.logo.id
+            this.logo_uri = 'https://' + this.bucket + '.s3.amazonaws.com/' + this.actualLogo
+          }
         })
       },
       postLogo (exit, msg) {
@@ -379,6 +405,7 @@
       }
     },
     mounted: function () {
+      this.getLogoUri()
       this.setupLockButtonsBar()
       this.bootstrap_min_js = document.createElement('script')
       this.bootstrap_min_js.setAttribute('src', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')

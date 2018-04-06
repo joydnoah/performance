@@ -29,7 +29,6 @@
       }
     },
     mounted () {
-      // <link rel="stylesheet" href="/static/html_layout/css/loader.css">
       this.loader_css = document.createElement('link')
       this.loader_css.setAttribute('rel', 'stylesheet')
       this.loader_css.setAttribute('href', '/static/html_layout/css/loader_css.css')
