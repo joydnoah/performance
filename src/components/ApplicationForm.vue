@@ -300,6 +300,7 @@
       },
       hideAlerts () {
         document.getElementById('alert-error').style.display = 'none'
+        document.getElementById('alert-error').innerHTML = ''
         document.getElementById('alert-succes').style.display = 'none'
         document.getElementById('alert-warning').style.display = 'none'
         document.getElementById('alert-info').style.display = 'none'
