@@ -266,18 +266,18 @@
             break
         }
       },
-      validate_file (validType, validSize, errorId) {
+      validate_file (validType, validSize, typeOfMessage) {
         var validation = validSize && validType
         if (!validation) {
-          var msg = 'Solo se pueden adjuntar archivos'
+          var msg = '<div>' + typeOfMessage
           if (!validSize) {
-            msg = msg + ' menores a 7MB '
+            msg = msg + ' menor a 7MB'
           }
           if (!validType) {
-            msg = msg + ' en formato PDF. '
+            msg = msg + ' en formato PDF'
           }
-          document.getElementById('alert-error' + errorId).style.display = 'block'
-          document.getElementById('alert-error' + errorId).innerHTML = msg
+          document.getElementById('alert-error').style.display = 'block'
+          document.getElementById('alert-error').innerHTML = document.getElementById('alert-error').innerHTML + msg + '.' + '</div>'
         }
         return validation
       },
@@ -285,9 +285,7 @@
         var msg = ''
         var validation = validCurriculum && validLetter && this.required_file
         if (!this.required_file) {
-          msg = msg + '<div> Es necesario anexar un Curriculum Vitae. </div>'
-        }
-        if (!validation) {
+          msg = msg + '<div> Es necesario anexar un Curriculum Vitae. </div>' + document.getElementById('alert-error').innerHTML
           document.getElementById('alert-error').style.display = 'block'
           document.getElementById('alert-error').innerHTML = msg
         }
@@ -300,11 +298,18 @@
           document.getElementById('email-box').classList.remove('is-invalid')
         }
       },
+      hideAlerts () {
+        document.getElementById('alert-error').style.display = 'none'
+        document.getElementById('alert-succes').style.display = 'none'
+        document.getElementById('alert-warning').style.display = 'none'
+        document.getElementById('alert-info').style.display = 'none'
+      },
       post (v) {
+        this.hideAlerts()
         v.$touch()
         this.validateEmail(v.email.$invalid)
-        var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, '1')
-        var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, '2')
+        var validCurriculum = this.validate_file(this.valid_file_type_curriculum, this.valid_file_size_curriculum, 'El curriculum vitae debe ser un archivo ')
+        var validLetter = this.validate_file(this.valid_file_type_presentation_letter, this.valid_file_size_presentation_letter, 'La carta de presentacion debe ser un archivo ')
         if (this.validate_form(validCurriculum, validLetter)) {
           if (this.applicant_id === 0) {
             if (!v.$error) {
