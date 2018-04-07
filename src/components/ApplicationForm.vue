@@ -274,7 +274,7 @@
             msg = msg + ' menor a 7MB'
           }
           if (!validType) {
-            msg = msg + ' en formato PDF'
+            msg = msg + ' en formato PDF o WORD'
           }
           document.getElementById('alert-error').style.display = 'block'
           document.getElementById('alert-error').innerHTML = document.getElementById('alert-error').innerHTML + msg + '.' + '</div>'
