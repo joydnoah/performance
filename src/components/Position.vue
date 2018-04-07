@@ -628,7 +628,7 @@
         }
         if (this.skills !== undefined && !existingSkill && this.filters_business_skill.length < 6) {
           this.filters_business_skill.push({
-            importance: -1,
+            importance: 0,
             position_id: this.id,
             type_filter: 'business_skill',
             value: this.skills
@@ -912,7 +912,7 @@
       },
       add_technical_skill () {
         this.filters_technical_skill.push({
-          importance: -1,
+          importance: 0,
           position_id: this.id,
           type_filter: 'technical_skill',
           value: this.technical_skill
@@ -921,7 +921,7 @@
       },
       add_business_skill () {
         this.filters_business_skill.push({
-          importance: -1,
+          importance: 0,
           position_id: this.id,
           type_filter: 'business_skill',
           value: this.business_skill
@@ -930,7 +930,7 @@
       },
       add_education_level () {
         this.filters_education_level.push({
-          importance: -1,
+          importance: 0,
           position_id: this.id,
           type_filter: 'education_level',
           value: this.education_level
@@ -940,7 +940,7 @@
       add_experience_years () {
         if (this.valid_years(document.getElementById('info04').value)) {
           this.filters_experience_years.push({
-            importance: -1,
+            importance: 0,
             position_id: this.id,
             type_filter: 'experience_years',
             value: this.experience_years_min
