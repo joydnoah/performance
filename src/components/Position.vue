@@ -736,24 +736,7 @@
             this.show_error()
           })
         } else {
-          if (this.expiration_date === '') {
-            document.getElementById('date').style.color = 'red'
-          }
-          if (this.name === '') {
-            this.name = ' '
-            document.getElementById('name_label').parentElement.classList.add('is-invalid')
-          }
-          var subValidationYears = !this.valid_years(document.getElementById('info04').value) && this.valid_asign
-          var subValidationDescription = !this.description_valid
-          if (subValidationYears) {
-            this.show_error('Digite un valor valido de años entre 0 y 50')
-          }
-          if (subValidationDescription) {
-            this.show_error('La descripción debe ser de máximo 10.000 caracteres.')
-          }
-          if (subValidationYears && subValidationDescription) {
-            this.show_error('Por favor diligencie todos los campos requeridos (*)')
-          }
+          this.show_errors()
         }
       },
       set_status_position (status) {
@@ -804,24 +787,27 @@
             this.show_error(error.response)
           })
         } else {
-          if (this.expiration_date === '') {
-            document.getElementById('date').style.color = 'red'
-          }
-          if (this.name === '') {
-            this.name = ' '
-            document.getElementById('name_label').parentElement.classList.add('is-invalid')
-          }
-          var subValidationYears = !this.valid_years(document.getElementById('info04').value) && this.valid_asign
-          var subValidationDescription = !this.description_valid
-          if (subValidationYears) {
-            this.show_error('Digite un valor valido de años entre 0 y 50')
-          }
-          if (subValidationDescription) {
-            this.show_error('La descripción debe ser de máximo 10.000 caracteres.')
-          }
-          if (subValidationYears && subValidationDescription) {
-            this.show_error('Por favor diligencie todos los campos requeridos (*)')
-          }
+          this.show_errors()
+        }
+      },
+      show_errors () {
+        if (this.expiration_date === '') {
+          document.getElementById('date').style.color = 'red'
+        }
+        if (this.name === '') {
+          this.name = ' '
+          document.getElementById('name_label').parentElement.classList.add('is-invalid')
+        }
+        var subValidationYears = !this.valid_years(document.getElementById('info04').value) && this.valid_asign
+        var subValidationDescription = !this.description_valid
+        if (subValidationYears) {
+          this.show_error('Digite un valor valido de años entre 0 y 50')
+        }
+        if (subValidationDescription) {
+          this.show_error('La descripción debe ser de máximo 10.000 caracteres.')
+        }
+        if (subValidationYears && subValidationDescription) {
+          this.show_error('Por favor diligencie todos los campos requeridos (*)')
         }
       },
       show_error_skills (msg) {
