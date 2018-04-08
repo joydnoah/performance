@@ -159,7 +159,10 @@
                   <label>Descripción</label>
                   <quill-editor v-model='description'
                           ref="myQuillEditor"
-                          :options="{placeholder: 'Descripción...'}"></quill-editor>
+                          @change="getDescriptionLength($event)"
+                          :options="{placeholder: 'Descripción...'}">
+                  </quill-editor>
+                  {{ 10000 - description_length }}
                 </div>
                 <!--
                 <div class="col-xs-offset-2 col-xs-8">
@@ -523,6 +526,8 @@
         position_type_id: '',
         city: [],
         description: '',
+        description_length: 0,
+        description_valid: true,
         description_empty: true,
         work_team_description: '',
         work_team_description_empty: true,
@@ -579,6 +584,10 @@
       }
     },
     methods: {
+      getDescriptionLength ({editor, html, text}) {
+        this.description_length = text.length - 1
+        this.description_valid = this.description_length < 10000
+      },
       stripTags (text) {
         let regex = /(<([^>]+)>)/ig
         return text.replace(regex, '')
@@ -696,7 +705,7 @@
         })
       },
       valid_form (v) {
-        return !v.$error && this.is_valid_expiration_date && this.valid
+        return !v.$error && this.is_valid_expiration_date && this.valid && this.description_valid
       },
       put (v) {
         if (this.name === ' ') { this.name = '' }
@@ -734,9 +743,16 @@
             this.name = ' '
             document.getElementById('name_label').parentElement.classList.add('is-invalid')
           }
-          this.show_error('Por favor diligencie todos los campos requeridos (*)')
-          if (!this.valid_years(document.getElementById('info04').value) && this.valid_asign) {
+          var subValidationYears = !this.valid_years(document.getElementById('info04').value) && this.valid_asign
+          var subValidationDescription = !this.description_valid
+          if (subValidationYears) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
+          }
+          if (subValidationDescription) {
+            this.show_error('La descripción debe ser de máximo 10.000 caracteres.')
+          }
+          if (subValidationYears && subValidationDescription) {
+            this.show_error('Por favor diligencie todos los campos requeridos (*)')
           }
         }
       },
@@ -795,9 +811,16 @@
             this.name = ' '
             document.getElementById('name_label').parentElement.classList.add('is-invalid')
           }
-          this.show_error('Por favor diligencie todos los campos requeridos (*)')
-          if (!this.valid_years(document.getElementById('info04').value) && this.valid_asign) {
+          var subValidationYears = !this.valid_years(document.getElementById('info04').value) && this.valid_asign
+          var subValidationDescription = !this.description_valid
+          if (subValidationYears) {
             this.show_error('Digite un valor valido de años entre 0 y 50')
+          }
+          if (subValidationDescription) {
+            this.show_error('La descripción debe ser de máximo 10.000 caracteres.')
+          }
+          if (subValidationYears && subValidationDescription) {
+            this.show_error('Por favor diligencie todos los campos requeridos (*)')
           }
         }
       },
@@ -808,11 +831,11 @@
         this.alertMessage = msg
       },
       show_error (msg) {
-        this.restoreButton()
         this.showAlert = !this.showAlert
         this.typeOfAlert = 'is-error'
         this.typeMessage = 'Error:'
         this.alertMessage = msg
+        this.restoreButton()
       },
       show_waiting (id, msg) {
         document.getElementById(id).innerHTML = msg
@@ -891,6 +914,10 @@
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.get('/position/' + this.$route.query.id + '/filter')
         .then((response) => {
+          this.filters_education_level = []
+          this.filters_experience_years = []
+          this.filters_technical_skill = []
+          this.filters_business_skill = []
           for (var item in response.data.data.filters) {
             switch (response.data.data.filters[item].type_filter) {
               case 'education_level':
@@ -976,9 +1003,6 @@
         this.get_skills()
         this.setupLockButtonsBar()
         if (this.$route.query.id !== undefined) {
-          if (document.getElementById('cities_table') !== null) {
-            document.getElementById('cities_table').style.display = 'none'
-          }
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
           this.axios.get('/position/' + this.$route.query.id)
           .then((response) => {
@@ -992,6 +1016,9 @@
             this.name = response.data.data.position.name
             this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
             this.city = [response.data.data.position.city]
+            if (this.city[0] === '') {
+              document.getElementById('cities_table').style.display = 'none'
+            }
             this.description = response.data.data.position.description
             if (this.description !== '') {
               this.description_empty = false
@@ -1006,7 +1033,6 @@
             }
             this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
             this.get_filters(this.$route.query.id)
-            // this.restoreButton('preview', 'Vista previa')
           })
           .catch(error => { console.log(error) })
         }
