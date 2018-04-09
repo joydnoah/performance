@@ -34,6 +34,7 @@
 
 <script>
   import { isLoggedIn, login, logout, getUserInfo } from '../../utils/auth'
+  import { setup } from '../../utils/hotjar'
 
   export default {
     name: 'app-nav',
@@ -61,6 +62,7 @@
       }
     },
     mounted: function () {
+      setup(this)
       if (this.isLoggedIn()) {
         this.getUserInfo()
       }

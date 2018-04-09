@@ -49,6 +49,7 @@
 
 <script>
   import { isLoggedIn, login, logout, getUserInfo, getIdToken, getAccessToken } from '../../utils/auth'
+  import { setup } from '../../utils/hotjar'
 
   export default {
     name: 'toolbar',
@@ -80,6 +81,7 @@
       }
     },
     mounted: function () {
+      setup(this)
       if (this.isLoggedIn()) {
         this.getUserInfo()
       }
