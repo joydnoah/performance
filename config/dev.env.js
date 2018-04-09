@@ -15,5 +15,7 @@ module.exports = merge(prodEnv, {
   FACEBOOK_APP_ID: '"' + process.env.FACEBOOK_APP_ID + '"',
   HOST: '"' + process.env.HOST + '"',
   AWS_S3_BUCKET: '"' + process.env.AWS_S3_BUCKET + '"',
-  GOOGLE_ANALITICS_ID: '"' + process.env.GOOGLE_ANALITICS_ID + '"'
+  GOOGLE_ANALITICS_ID: '"' + process.env.GOOGLE_ANALITICS_ID + '"',
+  HOTJAR_ID: '"' + process.env.HOTJAR_ID + '"',
+  HOTJAR_SNIPPET_VERSION: '"' + process.env.HOTJAR_SNIPPET_VERSION + '"'
 })

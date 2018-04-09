@@ -9,6 +9,8 @@
     "AUTH0_CALLBACK_REDIRECT": "https://recruiters-portal-develo-pr-10.herokuapp.com/callback",
     "AUTH0_AUDIENCE": "https://cotopaxi-auth0-staging.auth0.com/userinfo",
     "JOBS_API_URL": "https://jobs-api-development.herokuapp.com",
-    "GOOGLE_ANALITICS_ID": "UA-116551219-1"
+    "GOOGLE_ANALITICS_ID": "UA-116551219-1",
+    "HOTJAR_ID": "",
+    "HOTJAR_SNIPPET_VERSION": ""
   }
 }
