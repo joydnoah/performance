@@ -10,7 +10,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h1 class="header-title wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="1.2s">Información empresarial</h1>
-              <span class="header-title-link wow fadeInRight" data-wow-delay="0.4s" data-wow-duration="1.2s">
+              <span style="display: none;" class="header-title-link wow fadeInRight" data-wow-delay="0.4s" data-wow-duration="1.2s">
                 <div class="link-message">Enlace para publicar manualmente</div>
                 <router-link v-bind:to="'/' + uri" target="_blank" class="link-url">{{ server }}/{{ uri }}</router-link>
               </span>
@@ -28,7 +28,7 @@
                 <div class="buttons-container">
                   <router-link v-bind:to="'/' + uri" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success pull-left">Vista previa</router-link>
                   <button @click="update_company($v)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success pull-left">Guardar cambios</button>
-                  <button @click="exit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error pull-left">Cancelar</button>
+                  <button @click="exit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error pull-left">Salir</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action pull-right" style="display: none;">Completar este paso luego</button>
                 </div>
               </div>
@@ -88,13 +88,7 @@
                 </div>
                 <div id="to-upload-logo" style="display: none;">
                   <div class="upload-title">Logo empresarial</div>
-                  <div id="logo-uploader" class="upload-container">
-                    <div @drop.prevent="loadFiles" @dragover.prevent class="upload-sub-title">
-                      <i class="material-icons">cloud_upload</i>
-                      Suelta el logo aquí
-                    </div>
-                    <div class="upload-text">O click para seleccionar la imagen</div>
-                    <div class="upload-note">Archivos permitidos .jpg o .png tamaño de 600px X 200px</div>
+                  <div id="logo-uploader" class="uploaded-content">
                   </div>
                   <!-- Add .hidden class to hide this div when there is no logo -->
                   <div id="logo_img_container" class="uploaded-content hidden">
@@ -106,7 +100,7 @@
 
               <div class="col-xs-4">
                 <div class="buttons-container">
-                  <button v-on:click="manualUpload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action">Examinar</button>
+                  <button v-on:click="manualUpload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action">Buscar</button>
                   <button v-on:click="uploadAndValidateLogo(false)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
                   <button style="display: none;" v-on:click="showLogoInput()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error">Borrar</button>
                 </div>
@@ -127,7 +121,7 @@
             </div>
           </div>
 
-          <div class="row abilities">
+          <div style="display: none;" class="row abilities">
             <div class="col-xs-offset-2 col-xs-8" style="padding-bottom: 0px; border-right: 0px;">
               <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                 <div class="offer-header-container" v-bind:class="{ 'has-error': $v.uri.$error }">
