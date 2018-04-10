@@ -77,7 +77,7 @@
         </div><!-- create buttons bar end -->
       </div>
 
-      <div id="create-form-container" class="general-container" style="padding-top: 3%;">
+      <div id="create-form-container" class="general-container" style="padding-top: 4%;">
         <div class="create-form">
           <div class="collapse-group" role="tablist" aria-multiselectable="true">
             <div class="" role="tab" id="headingOne">
