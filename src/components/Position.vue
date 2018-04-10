@@ -25,8 +25,8 @@
               <div class="col-xs-offset-1 col-xs-10">
                 <div class="buttons-container">
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="send-button">Guardar</button>
-                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="preview($v)">Vista previa</button>
-                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="set_status_position('publish')" id="publish">Publicar</button>
+                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="preview($v, 'preview', 'Vista previa')" id="preview">Vista previa</button>
+                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="set_status_position('publish', $v)" id="publish">Publicar</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Salir</button>
                 </div>
 
@@ -37,13 +37,16 @@
                 <div style="display: none;" id="alert-success" class="alert alert-success" role="alert">
                 </div>
 
-                <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 20px">
+                <div v-if="id !== null && status == 'published'" class="col-xs-offset-5 col-xs-10" style="padding-top: 1%; padding-left: 5%;">
+                  Compartir:
+                </div>
+                <div v-if="id !== null && status == 'published'" class="col-xs-offset-4 col-xs-10" style="padding-top: 1%">
                   <social-sharing :url="shareUrl"
                                   :title="name"
                                   :quote="facebookQuote"
                                   inline-template>
                                   <network network="facebook">
-                                    <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
+                                    <a onmouseover="" style="cursor: pointer; padding-right: 3%;">
                                       <i class="fa fa-facebook"></i> Facebook
                                     </a>
                                   </network>
@@ -53,7 +56,7 @@
                                   :description="strippedDescription"
                                   inline-template>
                                   <network network="linkedin">
-                                    <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
+                                    <a onmouseover="" style="cursor: pointer; padding-right: 3%;">
                                       <i class="fa fa-linkedin"></i> LinkedIn
                                     </a>
                                   </network>
@@ -62,7 +65,7 @@
                                   :title="name"
                                   inline-template>
                                   <network network="twitter">
-                                    <a onmouseover="" style="cursor: pointer; padding-right: 30px;">
+                                    <a onmouseover="" style="cursor: pointer; padding-right: 3%;">
                                       <i class="fa fa-twitter"></i> Twitter
                                     </a>
                                   </network>
@@ -74,7 +77,7 @@
         </div><!-- create buttons bar end -->
       </div>
 
-      <div id="create-form-container" class="general-container" style="padding-top: 30px;">
+      <div id="create-form-container" class="general-container" style="padding-top: 3%;">
         <div class="create-form">
           <div class="collapse-group" role="tablist" aria-multiselectable="true">
             <div class="" role="tab" id="headingOne">
@@ -299,6 +302,20 @@
                 <div class="col-xs-offset-2 col-xs-7">
                   <div class="separator"></div>
                   <br>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-offset-2 col-xs-7">
+                  <div class="email-template-content">
+                    <div class="template-header" style="padding-top: 2%; padding-bottom: 0%;">
+                      <div class="template-instructions-container">
+                        <div class="instructions-message">
+                          Incluir máximo hasta 6 habilidades
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 

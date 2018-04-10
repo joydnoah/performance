@@ -162,7 +162,7 @@
                   <li @click="copy_now()" v-clipboard:copy="copy_to_clipboard(item.id)">Copiar Enlace de Posición</li>
                   <li @click="go_to('/applicants/' + item.id)">Ver Candidatos</li>
                   <li @click="go_to('/email-templates/' + item.id)">Editar Plantilla de Correos a Candidatos</li>
-                  <li @click="go_to('/social-position/' + item.id)">Publicar en Redes Sociales</li>
+                  <li style="display: none;" @click="go_to('/social-position/' + item.id)">Publicar en Redes Sociales</li>
                   <li @click="set_status_position(item.id, 'closed')" class="is-negative">Cerrar Posición</li><!-- .is-negative add error color to negative acctions -->
                 </ul>
               </div>

@@ -191,7 +191,7 @@ export default {
     save (v) {
       this.hide_alerts()
       if (this.id !== undefined && this.id !== null) {
-        this.put(v)
+        this.put(v, 'send-button', 'Guardar')
       } else {
         this.post(v)
       }
@@ -216,12 +216,12 @@ export default {
     valid_form (v) {
       return !v.$error && this.is_valid_expiration_date && this.valid && this.description_valid
     },
-    put (v) {
+    put (v, button, button_message) {
       if (this.name === ' ') { this.name = '' }
       v.$touch()
       this.is_valid_expiration_date = this.validate_expiration_date()
       if (this.valid_form(v)) {
-        this.show_waiting('send-button', 'Guardando...')
+        this.show_waiting(button, 'Guardando...')
         this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.put('/position/' + this.id, {
@@ -238,7 +238,7 @@ export default {
         })
         .then(response => {
           this.filters_to_remove = []
-          this.show_success('send-button', 'Guardar', this.successSave, 'put')
+          this.show_success(button, button_message, this.successSave, 'put')
         })
         .catch(error => {
           console.log(error)
@@ -248,7 +248,8 @@ export default {
         this.show_errors()
       }
     },
-    set_status_position (status) {
+    set_status_position (status, v) {
+      this.put(v, 'publish', 'Publicar')
       this.show_waiting(status, 'Publicando...')
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
       this.axios.post('/position/' + this.id + '/' + status)
