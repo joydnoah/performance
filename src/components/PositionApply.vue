@@ -37,7 +37,7 @@
           <div class="col-xs-offset-1 col-xs-6">
             <div v-show="isEmpty( description )" class="page-item">
               <div class="item-label">Descripción de la posición</div>
-              <div id="description_id" class="item-description"></div>
+              <div id="description_id" class="item-description" style="word-break: break-all;"></div>
             </div>
             <div class="page-item">
               <div v-show="isEmpty( work_team_description )" class="item-label">Equipo de trabajo</div>
