@@ -6,6 +6,7 @@ import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import { getAccessToken, getIdToken, isLoggedIn } from '../../../utils/auth'
 import { required } from 'vuelidate/lib/validators'
 import Datepicker from 'vuejs-datepicker'
+import axios from 'axios'
 
 export default {
   components: {
@@ -18,6 +19,15 @@ export default {
   },
   data: function () {
     return {
+      schema: {
+        name: ''
+      },
+      errors: {
+        name: false
+      },
+      dirty: {
+        name: false
+      },
       shareUrl: null,
       google_api_plugin: null,
       id: null,
@@ -76,23 +86,41 @@ export default {
       typeMessage: '',
       alertMessage: '',
       successSave: 'La posición se almaceno correctamente.',
-      successPublish: 'La posición ha sido publicada correctamente.'
+      successPublish: 'La posición ha sido publicada correctamente.',
+      dataJson: {}
     }
   },
-  validations: {
-    name: {
-      required
+  schema: [
+    function loadSchemaOnCreate() {
+      // functions must return a promise or a schema synchronously
+      let miPrimeraPromise = new Promise((resolve, reject) => {
+        // Llamamos a resolve(...) cuando lo que estabamos haciendo finaliza con éxito, y reject(...) cuando falla.
+        // En este ejemplo, usamos setTimeout(...) para simular código asíncrono.
+        // En la vida real, probablemente uses algo como XHR o una API HTML5.
+        axios.get('/schemas/position.json')
+        .then(response => {
+          resolve(response.data)
+        })
+      });
+      return miPrimeraPromise
     }
-  },
+  ],
   computed: {
     strippedDescription () {
       return this.stripTags(this.description)
     },
     facebookQuote () {
-      return this.name + '  -  ' + this.stripTags(this.description)
+      return this.schema.name + '  -  ' + this.stripTags(this.description)
     }
   },
   methods: {
+    reset () {
+      this.errors.name = false
+    },
+    showErrorLabel (v) {
+      this.errors.name = v.name.$error
+      this.dirty.name = v.name.$dirty
+    },
     getDescriptionLength ({editor, html, text}) {
       this.description_length = html.length
       this.description_valid = this.description_length < this.description_max_characters
@@ -217,15 +245,16 @@ export default {
       return !v.$error && this.is_valid_expiration_date && this.valid && this.description_valid
     },
     put (v, button, button_message) {
-      if (this.name === ' ') { this.name = '' }
+      if (this.schema.name === ' ') { this.schema.name = '' }
       v.$touch()
+      this.showErrorLabel(v)
       this.is_valid_expiration_date = this.validate_expiration_date()
       if (this.valid_form(v)) {
         this.show_waiting(button, 'Guardando...')
         this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.put('/position/' + this.id, {
-          'name': this.name,
+          'name': this.schema.name,
           'company_id': localStorage['company_id'],
           'department': this.department.name,
           'description': this.description,
@@ -263,8 +292,9 @@ export default {
       })
     },
     post (v) {
-      if (this.name === ' ') { this.name = '' }
+      if (this.schema.name === ' ') { this.schema.name = '' }
       v.$touch()
+      this.showErrorLabel(v)
       this.is_valid_expiration_date = this.validate_expiration_date()
       if (this.valid_form(v)) {
         this.show_waiting('send-button', 'Guardando...')
@@ -277,7 +307,7 @@ export default {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/position', {
           'company_id': localStorage['company_id'],
-          'name': this.name,
+          'name': this.schema.name,
           'description': this.description,
           'department': JSON.stringify([this.department.name]),
           'city': JSON.stringify(this.city),
@@ -304,8 +334,8 @@ export default {
       if (this.expiration_date === '') {
         document.getElementById('date').style.color = 'red'
       }
-      if (this.name === '') {
-        this.name = ' '
+      if (this.schema.name === '') {
+        this.schema.name = ' '
         document.getElementById('name_label').parentElement.classList.add('is-invalid')
       }
       var subValidationYears = !this.valid_years(document.getElementById('info04').value) && this.valid_asign
@@ -509,12 +539,10 @@ export default {
           this.id = response.data.data.position.id
           this.shareUrl = 'http://' + window.location.href.split('/')[2] + '/position-apply/' + this.id
           document.getElementById('name_label').parentElement.classList.add('is-focused')
-          this.name = response.data.data.position.name
+          this.schema.name = response.data.data.position.name
           this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
           this.city = [response.data.data.position.city]
-          if (this.city[0] === '') {
-            document.getElementById('cities_table').style.display = 'none'
-          }
+          this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
           this.description = response.data.data.position.description
           if (this.description !== '') {
             this.description_empty = false
@@ -527,8 +555,10 @@ export default {
           if (this.candidate_characteristics !== '') {
             this.candidate_characteristics_empty = false
           }
-          this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
           this.get_filters(this.$route.query.id)
+          if (this.city[0] === '') {
+            document.getElementById('cities_table').style.display = 'none'
+          }
         })
         .catch(error => { console.log(error) })
       }
