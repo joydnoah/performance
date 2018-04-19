@@ -4,7 +4,7 @@
     <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
     <!-- body-container start -->
-    <div class="body-container">
+    <div class="body-container" v-if="$schema && !$schema.then">
       <!-- header start -->
       <div class="section-header">
         <div class="general-container">
@@ -24,9 +24,9 @@
             <div class="row">
               <div class="col-xs-offset-1 col-xs-10">
                 <div class="buttons-container">
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v)" id="send-button">Guardar</button>
-                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="preview($v, 'preview', 'Vista previa')" id="preview">Vista previa</button>
-                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="set_status_position('publish', $v)" id="publish">Publicar</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="save($v.schema)" id="send-button">Guardar</button>
+                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success" @click="preview($v.schema, 'preview', 'Vista previa')" id="preview">Vista previa</button>
+                  <button v-if="id !== null" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-warning" @click="set_status_position('publish', $v.schema)" id="publish">Publicar</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error" v-on:click="exit()">Salir</button>
                 </div>
 
@@ -94,10 +94,10 @@
             <div id="general-info" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
               <div class="row">
                 <div class="col-xs-offset-2 col-xs-4">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'has-error': $v.name.$error }">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid is-dirty': errors.name , 'is-dirty': dirty.name}">
                     <label id="name_label" class="mdl-textfield__label" for='name'>Nombre de la posición *</label>
-                    <input class="mdl-textfield__input" type="text" id='name' name='name' v-on:input="$v.name.$touch" v-model='name'>
-                    <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
+                    <input class="mdl-textfield__input" type="text" id='name' name='name' v-on:change="reset()" v-model='schema.name'>
+                    <span class="mdl-textfield__error">{{ errors.name_label }}</span>
                   </div>
                 </div>
 

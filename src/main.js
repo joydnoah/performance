@@ -18,6 +18,7 @@ import axios from 'axios'
 import * as uiv from 'uiv'
 import router from './router'
 import VueAxios from 'vue-axios'
+import VueVuelidateJsonschema from 'vue-vuelidate-jsonschema'
 import Vuelidate from 'vuelidate'
 import VueClipboard from 'vue-clipboard2'
 import Multiselect from 'vue-multiselect'
@@ -34,6 +35,7 @@ import VueQuillEditor from 'vue-quill-editor'
 import VueAnalytics from 'vue-analytics'
 
 Vue.use(uiv)
+Vue.use(VueVuelidateJsonschema)
 Vue.use(Vuelidate)
 Vue.use(VueFroala)
 Vue.use(VueClipboard)
