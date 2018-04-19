@@ -23,7 +23,8 @@ export default {
         name: ''
       },
       errors: {
-        name: false
+        name: false,
+        name_label: ''
       },
       dirty: {
         name: false
@@ -116,6 +117,17 @@ export default {
     showErrorLabel (v) {
       this.errors.name = v.name.$error
       this.dirty.name = v.name.$dirty
+      if (this.errors.name) {
+        if (!this.dirty.name) {
+          this.errors.name_label = 'Este campo no puede estar en blanco'
+        }
+        if (!v.name.schemaMaxLength) {
+          this.errors.name_label = 'El nombre debe tener menos de ' + v.name.$params.schemaMaxLength.max + ' caracteres'
+        }
+        if (!v.name.schemaMinLength) {
+          this.errors.name_label = 'El nombre debe tener mas de ' + v.name.$params.schemaMinLength.min + ' caracteres'
+        }
+      }
     },
     getDescriptionLength ({editor, html, text}) {
       this.description_length = html.length

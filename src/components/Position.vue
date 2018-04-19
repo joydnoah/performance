@@ -97,7 +97,7 @@
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid is-dirty': errors.name , 'is-dirty': dirty.name}">
                     <label id="name_label" class="mdl-textfield__label" for='name'>Nombre de la posición *</label>
                     <input class="mdl-textfield__input" type="text" id='name' name='name' v-on:change="reset()" v-model='schema.name'>
-                    <span class="mdl-textfield__error">Este campo no puede estar en blanco</span>
+                    <span class="mdl-textfield__error">{{ errors.name_label }}</span>
                   </div>
                 </div>
 
