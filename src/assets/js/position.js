@@ -119,13 +119,14 @@ export default {
       this.dirty.name = v.name.$dirty
       if (this.errors.name) {
         if (!this.dirty.name) {
-          this.errors.name_label = 'Este campo no puede estar en blanco'
+          console.log(v.name.$params.name)
+          this.errors.name_label = v.name.$params.schemaType.schema.errorMessage.required
         }
         if (!v.name.schemaMaxLength) {
-          this.errors.name_label = 'El nombre debe tener menos de ' + v.name.$params.schemaMaxLength.max + ' caracteres'
+          this.errors.name_label = v.name.$params.schemaType.schema.errorMessage.maxLength
         }
         if (!v.name.schemaMinLength) {
-          this.errors.name_label = 'El nombre debe tener mas de ' + v.name.$params.schemaMinLength.min + ' caracteres'
+          this.errors.name_label = v.name.$params.schemaType.schema.errorMessage.minLength
         }
       }
     },
