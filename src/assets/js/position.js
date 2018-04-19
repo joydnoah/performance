@@ -20,14 +20,24 @@ export default {
   data: function () {
     return {
       schema: {
-        name: ''
+        name: '',
+        description: '',
+        work_team_description: '',
+        candidate_characteristics: '',
+        expiration_date: ''
       },
       errors: {
         name: false,
-        name_label: ''
+        name_label: '',
+        expiration_date: false,
+        expiration_date_label: '',
+        expiration_date_color: '',
+        description: false,
+        description_label: ''
       },
       dirty: {
-        name: false
+        name: false,
+        expiration_date: false
       },
       shareUrl: null,
       google_api_plugin: null,
@@ -44,18 +54,14 @@ export default {
       department_update: '',
       position_type_id: '',
       city: [],
-      description: '',
       description_length: 0,
       description_valid: true,
       description_empty: true,
       description_max_characters: 10000,
-      work_team_description: '',
       work_team_description_empty: true,
-      candidate_characteristics: '',
       candidate_characteristics_empty: true,
       questions: '',
       preformulated_questions: '',
-      expiration_date: '',
       disabled: {
         to: new Date()
       },
@@ -104,30 +110,40 @@ export default {
   ],
   computed: {
     strippedDescription () {
-      return this.stripTags(this.description)
+      return this.stripTags(this.schema.description)
     },
     facebookQuote () {
-      return this.schema.name + '  -  ' + this.stripTags(this.description)
+      return this.schema.name + '  -  ' + this.stripTags(this.schema.description)
     }
   },
   methods: {
     reset () {
       this.errors.name = false
     },
-    showErrorLabel (v) {
-      this.errors.name = v.name.$error
-      this.dirty.name = v.name.$dirty
-      if (this.errors.name) {
-        if (!this.dirty.name) {
-          console.log(v.name.$params.name)
-          this.errors.name_label = v.name.$params.schemaType.schema.errorMessage.required
+    showErrorsLabel (v) {
+      var inputKeys = Object.keys(this.schema)
+      for (var i = 0; i < inputKeys.length; i++) {
+        this.showErrorLabel(v, inputKeys[i])
+      }
+      this.specialErrorLabels()
+    },
+    showErrorLabel (v, input) {
+      this.errors[input] = v[input].$error
+      this.dirty[input] = v[input].$dirty
+      if (this.errors[input]) {
+        var listOfErrors = Object.keys(v[input].$params)
+        for (var i = 0; i < listOfErrors.length; i++) {
+          if (!v[input][listOfErrors[i]]) {
+            this.errors[input + '_label'] = v[input].$params[listOfErrors[i]].schema.errorMessage[listOfErrors[i]]
+          }
         }
-        if (!v.name.schemaMaxLength) {
-          this.errors.name_label = v.name.$params.schemaType.schema.errorMessage.maxLength
-        }
-        if (!v.name.schemaMinLength) {
-          this.errors.name_label = v.name.$params.schemaType.schema.errorMessage.minLength
-        }
+      }
+    },
+    specialErrorLabels () {
+      if (this.errors.expiration_date_label !== '') {
+        this.errors.expiration_date_color = 'red'
+      } else {
+        this.errors.expiration_date_color = 'black'
       }
     },
     getDescriptionLength ({editor, html, text}) {
@@ -251,13 +267,13 @@ export default {
       })
     },
     valid_form (v) {
-      return !v.$error && this.is_valid_expiration_date && this.valid && this.description_valid
+      return !v.$error && this.errors.expiration_date && this.valid 
     },
     put (v, button, button_message) {
       if (this.schema.name === ' ') { this.schema.name = '' }
       v.$touch()
-      this.showErrorLabel(v)
-      this.is_valid_expiration_date = this.validate_expiration_date()
+      this.showErrorsLabel(v)
+      this.errors.expiration_date = this.validate_expiration_date()
       if (this.valid_form(v)) {
         this.show_waiting(button, 'Guardando...')
         this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
@@ -266,11 +282,11 @@ export default {
           'name': this.schema.name,
           'company_id': localStorage['company_id'],
           'department': this.department.name,
-          'description': this.description,
+          'description': this.schema.description,
           'city': this.city,
-          'work_team_description': this.work_team_description,
-          'candidate_characteristics': this.candidate_characteristics,
-          'expiration_date': this.expiration_date,
+          'work_team_description': this.schema.work_team_description,
+          'candidate_characteristics': this.schema.candidate_characteristics,
+          'expiration_date': this.schema.expiration_date,
           'filters': JSON.stringify(this.filters),
           'filters_to_remove': JSON.stringify(this.filters_to_remove)
         })
@@ -303,8 +319,8 @@ export default {
     post (v) {
       if (this.schema.name === ' ') { this.schema.name = '' }
       v.$touch()
-      this.showErrorLabel(v)
-      this.is_valid_expiration_date = this.validate_expiration_date()
+      this.showErrorsLabel(v)
+      this.errors.expiration_date = this.validate_expiration_date()
       if (this.valid_form(v)) {
         this.show_waiting('send-button', 'Guardando...')
         document.getElementById('send-button').disabled = true
@@ -317,12 +333,12 @@ export default {
         this.axios.post('/position', {
           'company_id': localStorage['company_id'],
           'name': this.schema.name,
-          'description': this.description,
+          'description': this.schema.description,
           'department': JSON.stringify([this.department.name]),
           'city': JSON.stringify(this.city),
-          'work_team_description': this.work_team_description,
-          'candidate_characteristics': this.candidate_characteristics,
-          'expiration_date': this.expiration_date,
+          'work_team_description': this.schema.work_team_description,
+          'candidate_characteristics': this.schema.candidate_characteristics,
+          'expiration_date': this.schema.expiration_date,
           'filters': JSON.stringify(this.filters)
         })
         .then(response => {
@@ -340,7 +356,7 @@ export default {
       }
     },
     show_errors () {
-      if (this.expiration_date === '') {
+      if (this.schema.expiration_date === '') {
         document.getElementById('date').style.color = 'red'
       }
       if (this.schema.name === '') {
@@ -352,8 +368,10 @@ export default {
       if (subValidationYears) {
         this.show_error('Digite un valor valido de años entre 0 y 50')
       }
-      if (subValidationDescription) {
-        this.show_error('La descripción debe ser de máximo 10.000 caracteres.')
+      console.log('test')
+      console.log(this.errors.description_label)
+      if (this.errors.description_label !== '') {
+        this.show_error(this.errors.description_label)
       }
       if (subValidationYears && subValidationDescription) {
         this.show_error('Por favor diligencie todos los campos requeridos (*)')
@@ -398,7 +416,7 @@ export default {
       document.getElementById('alert-success').style.display = 'none'
     },
     validate_expiration_date () {
-      if (this.expiration_date === '') {
+      if (this.schema.expiration_date === '') {
         document.getElementById('expiration_date').parentElement.parentElement.parentElement.className = 'form-group has-error'
         return false
       } else {
@@ -534,6 +552,7 @@ export default {
       .addTo(controller)
     },
     getPosition () {
+      this.errors.expiration_date_color = 'black'
       this.get_departments()
       this.get_skills()
       this.setupLockButtonsBar()
@@ -551,17 +570,17 @@ export default {
           this.schema.name = response.data.data.position.name
           this.department = { name: response.data.data.position.department_name, id: Math.floor((Math.random() * 10000000)) }
           this.city = [response.data.data.position.city]
-          this.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
-          this.description = response.data.data.position.description
-          if (this.description !== '') {
+          this.schema.expiration_date = response.data.data.position.expiration_date.substring(0, 10)
+          this.schema.description = response.data.data.position.description
+          if (this.schema.description !== '') {
             this.description_empty = false
           }
-          this.work_team_description = response.data.data.position.work_team_description
-          if (this.work_team_description !== '') {
+          this.schema.work_team_description = response.data.data.position.work_team_description
+          if (this.schema.work_team_description !== '') {
             this.work_team_description_empty = false
           }
-          this.candidate_characteristics = response.data.data.position.candidate_characteristics
-          if (this.candidate_characteristics !== '') {
+          this.schema.candidate_characteristics = response.data.data.position.candidate_characteristics
+          if (this.schema.candidate_characteristics !== '') {
             this.candidate_characteristics_empty = false
           }
           this.get_filters(this.$route.query.id)
