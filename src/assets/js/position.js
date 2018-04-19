@@ -92,17 +92,13 @@ export default {
   },
   schema: [
     function loadSchemaOnCreate() {
-      // functions must return a promise or a schema synchronously
-      let miPrimeraPromise = new Promise((resolve, reject) => {
-        // Llamamos a resolve(...) cuando lo que estabamos haciendo finaliza con éxito, y reject(...) cuando falla.
-        // En este ejemplo, usamos setTimeout(...) para simular código asíncrono.
-        // En la vida real, probablemente uses algo como XHR o una API HTML5.
+      let schemaDataPromise = new Promise((resolve, reject) => {
         axios.get('/schemas/position.json')
         .then(response => {
           resolve(response.data)
         })
       });
-      return miPrimeraPromise
+      return schemaDataPromise
     }
   ],
   computed: {
