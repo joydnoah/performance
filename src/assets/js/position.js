@@ -112,10 +112,14 @@ export default {
   ],
   computed: {
     strippedDescription () {
-      return this.stripTags(this.schema.description)
+      if (this.schema.description !== null) {
+          return this.stripTags(this.schema.description)
+      }
     },
     facebookQuote () {
-      return this.schema.name + '  -  ' + this.stripTags(this.schema.description)
+      if (this.schema.description !== null) {
+        return this.schema.name + '  -  ' + this.stripTags(this.schema.description)
+      }
     }
   },
   methods: {
