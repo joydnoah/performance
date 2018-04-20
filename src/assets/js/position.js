@@ -24,7 +24,8 @@ export default {
         description: '',
         work_team_description: '',
         candidate_characteristics: '',
-        expiration_date: ''
+        expiration_date: '',
+        filters: [],
       },
       errors: {
         name: false,
@@ -33,7 +34,9 @@ export default {
         expiration_date_label: '',
         expiration_date_color: '',
         description: false,
-        description_label: ''
+        description_label: '',
+        filters: false,
+        filters_label: ''
       },
       dirty: {
         name: false,
@@ -73,7 +76,6 @@ export default {
       filters_experience_years: [],
       filters_technical_skill: [],
       filters_business_skill: [],
-      filters: [],
       filters_to_remove: [],
       education_level: '',
       experience_years_min: '',
@@ -267,7 +269,7 @@ export default {
       })
     },
     valid_form (v) {
-      return !v.$error && this.errors.expiration_date && this.valid 
+      return !v.$error && this.errors.expiration_date && this.valid
     },
     put (v, button, button_message) {
       if (this.schema.name === ' ') { this.schema.name = '' }
@@ -276,7 +278,7 @@ export default {
       this.errors.expiration_date = this.validate_expiration_date()
       if (this.valid_form(v)) {
         this.show_waiting(button, 'Guardando...')
-        this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
+        this.schema.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.put('/position/' + this.id, {
           'name': this.schema.name,
@@ -287,7 +289,7 @@ export default {
           'work_team_description': this.schema.work_team_description,
           'candidate_characteristics': this.schema.candidate_characteristics,
           'expiration_date': this.schema.expiration_date,
-          'filters': JSON.stringify(this.filters),
+          'filters': JSON.stringify(this.schema.filters),
           'filters_to_remove': JSON.stringify(this.filters_to_remove)
         })
         .then(response => {
@@ -328,7 +330,7 @@ export default {
         for (var item in this.department) {
           this.departments.push(this.department[item].name)
         }
-        this.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
+        this.schema.filters = this.filters_education_level.concat(this.filters_experience_years).concat(this.filters_business_skill).concat(this.filters_technical_skill)
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.post('/position', {
           'company_id': localStorage['company_id'],
@@ -339,7 +341,7 @@ export default {
           'work_team_description': this.schema.work_team_description,
           'candidate_characteristics': this.schema.candidate_characteristics,
           'expiration_date': this.schema.expiration_date,
-          'filters': JSON.stringify(this.filters)
+          'filters': JSON.stringify(this.schema.filters )
         })
         .then(response => {
           this.$route.query.id = response.data.data.id
