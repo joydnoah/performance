@@ -370,8 +370,6 @@ export default {
       if (subValidationYears) {
         this.show_error('Digite un valor valido de años entre 0 y 50')
       }
-      console.log('test')
-      console.log(this.errors.description_label)
       if (this.errors.description_label !== '') {
         this.show_error(this.errors.description_label)
       }
