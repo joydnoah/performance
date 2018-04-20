@@ -4,7 +4,7 @@
     <alert-modal :typeMessage="typeMessage" :message="alertMessage" :activate="showAlert" :type="typeOfAlert" time="5"></alert-modal>
     <toolbar></toolbar>
     <!-- body-container start -->
-    <div class="body-container" v-if="$schema && !$schema.then">
+    <div class="body-container">
       <!-- header start -->
       <div class="section-header">
         <div class="general-container">
@@ -76,7 +76,7 @@
           </div>
         </div><!-- create buttons bar end -->
       </div>
-
+      <!-- <pre>{{ $v.schema }}</pre> -->
       <div id="create-form-container" class="general-container" style="padding-top: 4%;">
         <div class="create-form">
           <div class="collapse-group" role="tablist" aria-multiselectable="true">
@@ -160,7 +160,7 @@
 
                 <div class="col-xs-offset-2 col-xs-8">
                   <label>Descripción</label>
-                  <quill-editor v-model='description'
+                  <quill-editor v-model='schema.description'
                           ref="myQuillEditor"
                           @change="getDescriptionLength($event)"
                           :options="{placeholder: 'Descripción...'}">
@@ -184,8 +184,8 @@
 
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <div id="date">Fecha de caducidad de la oferta *</div>
-                    <datepicker required v-model='expiration_date' id='expiration_date' name='expiration_date' :disabled="disabled" language="es" format="dd/MM/yyyy" input-class="form-control form__input"></datepicker>
+                    <div id="date" v-bind:style="{ color: errors.expiration_date_color }">Fecha de caducidad de la oferta *</div>
+                    <datepicker required v-model='schema.expiration_date' id='expiration_date' name='expiration_date' :disabled="disabled" language="es" format="dd/MM/yyyy" input-class="form-control form__input"></datepicker>
                   </div>
                 </div>
 
