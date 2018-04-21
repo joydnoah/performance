@@ -8,7 +8,7 @@
 
             <div class="row">
               <div class="col-xs-offset-2 col-xs-8">
-                <div class="page-logo">
+                <div class="page-logo" style="padding-bottom: 10%">
                   <img :src="logo_uri">
                 </div>
               </div>
@@ -158,7 +158,7 @@
           if (response.data.data.logo.id !== null && response.data.data.logo.id !== undefined && response.data.data.logo.id !== '') {
             this.logo_uri = 'https://' + this.bucket + '.s3.amazonaws.com/' + response.data.data.logo.id
           } else {
-            this.logo_uri = '/static/html_layout/images/logo-color.png'
+            this.logo_uri = '/static/html_layout/images/no-logo.png'
           }
         })
       },
@@ -206,7 +206,6 @@
       margin-bottom: 1em;
       font-size: 1em;
     }
-
     p{
       display: block;
       text-align: justify;

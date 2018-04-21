@@ -5,7 +5,7 @@
 
         <div class="row">
           <div class="col-xs-offset-0 col-xs-8">
-            <div class="page-logo">
+            <div class="page-logo" style="padding-bottom: 10%">
               <img :src="logo_uri">
             </div>
           </div>
@@ -80,7 +80,7 @@
         status_type: '',
         bucket: process.env.AWS_S3_BUCKET,
         url_position: window.location.href,
-        logo_uri: '/static/html_layout/images/logo-color.png'
+        logo_uri: '/static/html_layout/images/no-logo.png'
       }
     },
     head: {
