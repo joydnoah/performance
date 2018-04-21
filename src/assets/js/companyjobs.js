@@ -60,7 +60,6 @@ export default {
   ],
   methods: {
     showErrorsLabel (v) {
-      console.log(v)
       var inputKeys = Object.keys(this.schema)
       for (var i = 0; i < inputKeys.length; i++) {
         this.showErrorLabel(v, inputKeys[i])
@@ -191,26 +190,26 @@ export default {
     postLogo (exit, msg) {
       this.axios.post('/company/' + localStorage['company_id'] + '/logo', this.data)
       .then(response => {
-        this.showSuccess(msg)
-        if (exit) {
-          setTimeout(() => {
-            this.exit()
-          }, 500)
-        }
+        this.afterUpdateMessage(exit, msg)
       })
       .catch(error => {
         console.log(error)
       })
     },
+    afterUpdateMessage (exit, msg) {
+      if (exit) {
+        this.showSuccess('La empresa se actualizó correctamente.')
+        setTimeout(() => {
+          this.exit()
+        }, 500)
+      } else {
+        this.showSuccess(msg)
+      }
+    },
     updateLogo (exit, msg) {
       this.axios.put('/company/' + localStorage['company_id'] + '/logo', this.data)
       .then(response => {
-        this.showSuccess(msg)
-        if (exit) {
-          setTimeout(() => {
-            this.exit()
-          }, 500)
-        }
+        this.afterUpdateMessage(exit, msg)
       })
       .catch(error => {
         console.log(error)
