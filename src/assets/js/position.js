@@ -302,7 +302,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.show_error()
+          this.show_error(button, button_message, error.response)
         })
       } else {
         this.show_errors()
@@ -355,7 +355,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.show_error(error.response)
+          this.show_error('send-button', 'Guardar', error.response)
         })
       } else {
         this.show_errors()
@@ -387,12 +387,12 @@ export default {
       this.typeMessage = 'Error:'
       this.alertMessage = msg
     },
-    show_error (msg) {
+    show_error (id, buttonMessage, msg) {
       this.showAlert = !this.showAlert
       this.typeOfAlert = 'is-error'
       this.typeMessage = 'Error:'
       this.alertMessage = msg
-      this.restoreButton()
+      this.restoreButton(id, buttonMessage)
     },
     show_waiting (id, msg) {
       document.getElementById(id).innerHTML = msg
