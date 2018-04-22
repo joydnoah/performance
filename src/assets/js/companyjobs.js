@@ -264,11 +264,11 @@ export default {
     },
     update_company (button, v) {
       var oldMsg = document.getElementById(button).innerHTML
-      this.show_waiting(button, 'Guardando...')
       document.getElementsByClassName('alert-danger')[0].style.display = 'none'
       document.getElementsByClassName('alert-danger')[1].style.display = 'none'
       document.getElementsByClassName('alert-success')[0].style.display = 'none'
       if (this.validateDocument(v)) {
+        this.show_waiting(button, 'Guardando...')
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${getIdToken()}[${getAccessToken()}`
         this.axios.put('/company/' + localStorage['company_id'], {
           'description': this.schema.description,
