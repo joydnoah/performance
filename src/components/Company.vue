@@ -8,7 +8,7 @@
 
             <div class="row">
               <div class="col-xs-offset-2 col-xs-8">
-                <div class="page-logo" style="padding-bottom: 10%">
+                <div class="page-logo">
                   <img :src="logo_uri">
                 </div>
               </div>
@@ -188,6 +188,13 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
+    .page-logo{
+      max-width: 100%;
+      max-height:100%;
+      padding-bottom: 10%;
+      height: 30px;
+      width: 90px
+    }
     #container-preview{
       width: 90%;
       margin: 3em auto;

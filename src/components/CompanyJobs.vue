@@ -27,7 +27,7 @@
               <div class="col-xs-offset-4 col-xs-10">
                 <div class="buttons-container">
                   <router-link v-bind:to="'/' + schema.uri" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success pull-left">Vista previa</router-link>
-                  <button @click="update_company($v.schema)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success pull-left">Guardar cambios</button>
+                  <button id="save" @click="update_company('save', $v.schema)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success pull-left">Guardar cambios</button>
                   <button @click="exit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error pull-left">Salir</button>
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action pull-right" style="display: none;">Completar este paso luego</button>
                 </div>

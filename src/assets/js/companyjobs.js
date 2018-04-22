@@ -245,7 +245,18 @@ export default {
       this.typeMessage = 'Success:'
       this.alertMessage = msg
     },
-    update_company (v) {
+    show_waiting (id, msg) {
+      document.getElementById(id).innerHTML = msg
+      document.getElementById(id).style.color = 'white'
+      document.getElementById(id).disabled = true
+    },
+    restoreButton (id, msg) {
+      document.getElementById(id).innerHTML = msg
+      document.getElementById(id).disabled = false
+    },
+    update_company (button, v) {
+      var oldMsg = document.getElementById(button).innerHTML
+      this.show_waiting(button, 'Guardando...')
       document.getElementsByClassName('alert-danger')[0].style.display = 'none'
       document.getElementsByClassName('alert-danger')[1].style.display = 'none'
       document.getElementsByClassName('alert-success')[0].style.display = 'none'
@@ -262,6 +273,7 @@ export default {
           } else {
             this.showSuccess('La empresa se actualizó correctamente.')
             setTimeout(() => {
+              this.restoreButton(button, oldMsg)
               this.exit()
             }, 500)
           }
@@ -269,6 +281,7 @@ export default {
         .catch(error => {
           console.log(error)
           this.showError('Ocurrio un error inesperado, por favor contacte al administrador del sistema.')
+          this.restoreButton(button, oldMsg)
         })
       } else {
         // 'Antes de continuar por favor verifique la información suministrada.'
