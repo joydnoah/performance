@@ -161,9 +161,11 @@ export default {
       .setClassToggle('#create-buttons-bar', 'magic-scroll') // add .addIndicators() to check trigger position
       .addTo(controller)
     },
-    uploadAndValidateLogo (exit) {
+    uploadAndValidateLogo (button, exit) {
+      var oldMsg = document.getElementById(button).innerHTML
+      this.show_waiting(button, 'Guardando...')
       if (this.validateLogo()) {
-        this.uploadLogo(exit, 'El logo ha sido actualizado.')
+        this.uploadLogo(button, oldMsg, exit, 'El logo ha sido actualizado.')
       } else {
         this.showLogoInput()
         var msg = 'La imagen no es valida.'
@@ -187,13 +189,26 @@ export default {
         }
       })
     },
-    postLogo (exit, msg) {
+    postLogo (button, oldMsg, exit, msg) {
       this.axios.post('/company/' + localStorage['company_id'] + '/logo', this.data)
       .then(response => {
         this.afterUpdateMessage(exit, msg)
+        this.restoreButton(button, oldMsg)
       })
       .catch(error => {
         console.log(error)
+        this.restoreButton(button, oldMsg)
+      })
+    },
+    updateLogo (button, oldMsg, exit, msg) {
+      this.axios.put('/company/' + localStorage['company_id'] + '/logo', this.data)
+      .then(response => {
+        this.afterUpdateMessage(exit, msg)
+        this.restoreButton(button, oldMsg)
+      })
+      .catch(error => {
+        console.log(error)
+        this.restoreButton(button, oldMsg)
       })
     },
     afterUpdateMessage (exit, msg) {
@@ -206,23 +221,14 @@ export default {
         this.showSuccess(msg)
       }
     },
-    updateLogo (exit, msg) {
-      this.axios.put('/company/' + localStorage['company_id'] + '/logo', this.data)
-      .then(response => {
-        this.afterUpdateMessage(exit, msg)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
-    uploadLogo (exit, msg) {
+    uploadLogo (button, oldMsg, exit, msg) {
       this.getLogoUri()
       this.data = new FormData()
       this.data.append('logo_file', this.logo)
       if (this.actualLogo === undefined || this.actualLogo === null) {
-        this.postLogo(exit, msg)
+        this.postLogo(button, oldMsg, exit, msg)
       } else {
-        this.updateLogo(exit, msg)
+        this.updateLogo(button, oldMsg, exit, msg)
       }
     },
     validateLogo () {
@@ -251,6 +257,8 @@ export default {
       document.getElementById(id).disabled = true
     },
     restoreButton (id, msg) {
+      console.log(id)
+      console.log(msg)
       document.getElementById(id).innerHTML = msg
       document.getElementById(id).disabled = false
     },
@@ -269,7 +277,7 @@ export default {
         })
         .then(response => {
           if (this.logo !== '') {
-            this.uploadAndValidateLogo(true)
+            this.uploadAndValidateLogo(button, true)
           } else {
             this.showSuccess('La empresa se actualizó correctamente.')
             setTimeout(() => {

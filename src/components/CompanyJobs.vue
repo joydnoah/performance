@@ -101,7 +101,7 @@
               <div class="col-xs-4">
                 <div class="buttons-container">
                   <button v-on:click="manualUpload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-action">Buscar</button>
-                  <button v-on:click="uploadAndValidateLogo(false)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
+                  <button id="save_logo" v-on:click="uploadAndValidateLogo('save_logo', false)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-success">Guardar</button>
                   <button style="display: none;" v-on:click="showLogoInput()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-action is-error">Borrar</button>
                 </div>
               </div>
