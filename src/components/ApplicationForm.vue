@@ -46,15 +46,15 @@
 
       <div class="row">
         <div class="col-xs-offset-1 col-xs-6">
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid is-dirty': errors.linkedin_user , 'is-dirty': dirty.linkedin_user}">
             <label class="mdl-textfield__label" for="linkedin_user">Perfil de linkedIn (opcional)</label>
             <input v-model='schema.linkedin_user' id="linkedin_user" name="linkedin_user" class="mdl-textfield__input" type="text">
-            <span class="mdl-textfield__error">Error message</span>
+            <span class="mdl-textfield__error">{{ errors.linkedin_user_label }}</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-bind:class="{ 'is-invalid is-dirty': errors.twitter_user , 'is-dirty': dirty.twitter_user}">
             <label class="mdl-textfield__label" for="twitter_user">Usuario de Twitter (opcional)</label>
             <input v-model='schema.twitter_user' id="twitter_user" name="twitter_user" class="mdl-textfield__input" type="text">
-            <span class="mdl-textfield__error">Error message</span>
+            <span class="mdl-textfield__error">{{ errors.twitter_user_label }}</span>
           </div>
         </div>
       </div>
