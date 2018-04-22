@@ -302,7 +302,8 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.show_error(button, button_message, error.response)
+          this.show_error(error.response)
+          this.restoreButton(button, oldMsg)
         })
       } else {
         this.show_errors()
@@ -328,6 +329,7 @@ export default {
       this.showErrorsLabel(v)
       this.errors.expiration_date = this.validate_expiration_date()
       if (this.valid_form(v)) {
+        var oldMsg = document.getElementById('send-button').innerHTML
         this.show_waiting('send-button', 'Guardando...')
         document.getElementById('send-button').disabled = true
         this.departments = []
@@ -355,7 +357,8 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.show_error('send-button', 'Guardar', error.response)
+          this.show_error(error.response)
+          this.restoreButton('send-button', oldMsg)
         })
       } else {
         this.show_errors()
@@ -387,12 +390,11 @@ export default {
       this.typeMessage = 'Error:'
       this.alertMessage = msg
     },
-    show_error (id, buttonMessage, msg) {
+    show_error (msg) {
       this.showAlert = !this.showAlert
       this.typeOfAlert = 'is-error'
       this.typeMessage = 'Error:'
       this.alertMessage = msg
-      this.restoreButton(id, buttonMessage)
     },
     show_waiting (id, msg) {
       document.getElementById(id).innerHTML = msg
@@ -400,6 +402,7 @@ export default {
       document.getElementById(id).disabled = true
     },
     restoreButton (id, msg) {
+      console.log(id)
       document.getElementById(id).innerHTML = msg
       document.getElementById(id).disabled = false
     },
