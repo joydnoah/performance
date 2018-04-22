@@ -87,7 +87,7 @@
           <div class="row">
             <div class="col-xs-offset-4 col-xs-4">
               <div class="form-btn-container">
-                <button @click="create_company($v)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Continuar</button>
+                <button id="save" @click="create_company('save', $v)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm">Continuar</button>
               </div>
             </div>
           </div>
@@ -139,7 +139,18 @@
         this.user_info = JSON.parse(getUserInfo())
         this.user_id = this.user_info.user_id
       },
-      create_company (v) {
+      show_waiting (id, msg) {
+        document.getElementById(id).innerHTML = msg
+        document.getElementById(id).style.color = 'white'
+        document.getElementById(id).disabled = true
+      },
+      restoreButton (id, msg) {
+        document.getElementById(id).innerHTML = msg
+        document.getElementById(id).disabled = false
+      },
+      create_company (button, v) {
+        var oldMsg = document.getElementById(button).innerHTML
+        this.show_waiting(button, 'Guardando...')
         document.getElementsByClassName('alert-danger')[0].style.display = 'none'
         document.getElementsByClassName('alert-danger')[1].style.display = 'none'
         v.$touch()
@@ -158,18 +169,22 @@
             })
             .then(response => {
               window.location.href = '/company-jobs'
+              this.restoreButton(button, oldMsg)
             })
             .catch(error => {
               console.log(error)
               document.getElementsByClassName('alert-danger')[1].style.display = 'block'
+              this.restoreButton(button, oldMsg)
             })
           })
           .catch(error => {
             console.log(error)
             document.getElementsByClassName('alert-danger')[1].style.display = 'block'
+            this.restoreButton(button, oldMsg)
           })
         } else {
           document.getElementsByClassName('alert-danger')[0].style.display = 'block'
+          this.restoreButton(button, oldMsg)
         }
       }
     },
