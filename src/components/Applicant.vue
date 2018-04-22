@@ -84,8 +84,8 @@
               <div class="content-item">Teléfono: {{ phone_number }}</div>
             </div>
             <div class="col-xs-offset-2 col-xs-8">
-              <div class="content-item">Usuario Linkedin: {{ linkedin_user }}</div>
-              <div class="content-item">Usuario Twitter: {{ twitter_user }}</div>
+              <div class="content-item" style="word-break: break-all;">Usuario Linkedin: {{ linkedin_user }}</div>
+              <div class="content-item" style="word-break: break-all;">Usuario Twitter: {{ twitter_user }}</div>
             </div>
             <div class="col-xs-offset-1 col-xs-10">
               <div class="content-separator"></div>
