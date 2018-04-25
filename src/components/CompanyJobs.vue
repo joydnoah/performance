@@ -148,7 +148,7 @@
             <div class="col-xs-offset-2 col-xs-8">
               <div class="template-body is-active">
                 <div class="offer-header-container">
-                  <label class="header-title" for="template01">Danos una descripcion corta de tu empresa. (Máximo 200 palabras)</label>
+                  <label class="header-title" for="template01">Danos una descripcion corta de su empresa. (Máximo 200 palabras)</label>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <textarea v-model="schema.description" class="form-control" type="text" rows= "4" id="template01"></textarea>
                   </div>

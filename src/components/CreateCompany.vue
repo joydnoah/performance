@@ -67,7 +67,7 @@
                   <option value="Generalista de Recursos Humanos">Generalista de Recursos Humanos</option>
                   <option value="Otro">Otro</option>
                 </select>
-                <label class="mdl-selectfield__label" for="company_role">¿Cuál es tu rol dentro de la empresa? *</label>
+                <label class="mdl-selectfield__label" for="company_role">¿Cuál es su rol dentro de la empresa? *</label>
                 <span class="mdl-textfield__error">Error message</span>
               </div>
             </div>

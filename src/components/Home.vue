@@ -7,7 +7,7 @@
       La manera mas rapida de contratar ejecutivos y empleados.
       </h3>
       <p>
-        Con Cotopaxi ahorra tiempo publicando y manejando solicitudes de empleo a tu empresa.
+        Con Cotopaxi ahorra tiempo publicando y manejando solicitudes de empleo a su empresa.
       </p>
     </div>
   </div>
