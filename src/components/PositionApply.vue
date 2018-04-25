@@ -163,7 +163,7 @@
     max-width: 100%;
     max-height:100%;
     padding-bottom: 10%;
-    height: 30px;
-    width: 90px
+    height: 90px;
+    width: 270px;
   }
 </style>
