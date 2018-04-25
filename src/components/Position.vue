@@ -184,7 +184,7 @@
 
                 <div class="col-xs-offset-2 col-xs-4">
                   <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-                    <div id="date" v-bind:style="{ color: errors.expiration_date_color }">Fecha de caducidad de la oferta *</div>
+                    <div id="date" v-bind:style="{ color: errors.expiration_date_color }">Fecha de cierre de la oferta laboral *</div>
                     <datepicker required v-model='schema.expiration_date' id='expiration_date' name='expiration_date' :disabled="disabled" language="es" format="dd/MM/yyyy" input-class="form-control form__input"></datepicker>
                   </div>
                 </div>
@@ -239,7 +239,7 @@
                 </div>
 
                 <div class="col-xs-3">
-                  <span class="static-label">Nivel te importancia</span>
+                  <span class="static-label">Nivel de importancia</span>
                     <div v-for="item in filters_education_level" class="check-level-container">
                           <div class="check-level-item">
                             <input type="radio" v-model="item.importance" value="0" autocomplete="off" class="check-level" id="check-level-10" name="check-level-04">
@@ -311,7 +311,7 @@
                     <div class="template-header" style="padding-top: 2%; padding-bottom: 0%;">
                       <div class="template-instructions-container">
                         <div class="instructions-message">
-                          Incluir máximo hasta 6 habilidades
+                          Incluir máximo hasta seis habilidades
                         </div>
                       </div>
                     </div>

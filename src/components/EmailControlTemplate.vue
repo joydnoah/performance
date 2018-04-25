@@ -27,7 +27,7 @@
 
         <div class="template-instructions-container">
           <div class="instructions-title">Instrucciones</div>
-          <div class="instructions-message">Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de entrevistas de esta posición</div>
+          <div class="instructions-message">{{ help_text[type_prop] }}</div>
         </div>
 
       </div>
@@ -88,6 +88,13 @@
     data: function () {
       return {
         email_templates: [],
+        help_text: {
+          in_process: 'Este correo electrónico será enviado automáticamente a los candidatos que apliquen a la posición',
+          reject: 'Este correo electrónico será enviado automáticamente a los candidatos que rechaces.',
+          scheduled_call: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.',
+          scheduled_interview: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.',
+          approved: 'Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de entrevistas de esta posición'
+        },
         check_box_id: 'checkbox-',
         subject_id: '',
         email_id: '',

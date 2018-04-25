@@ -61,11 +61,13 @@
             <div class="col-xs-offset-2 col-xs-8">
               <div class="template-header">
                 <div class="template-title-container">
-                  <div class="template-title">Página publica empresarial</div>
+                  <div class="template-title">Página pública empresarial</div>
                 </div>
                 <div class="template-instructions-container">
                   <div class="instructions-title">Instrucciones</div>
-                  <div class="instructions-message">Esta es la información que veran los candidatos cuando busquen tu empresa, tambien aqui se listaran todas las ofertas laborales que tengas disponibles.</div>
+                  <div class="instructions-message">
+                    Esta es la información que verán los candidatos cuando busquen su empresa, también aquí se listaran todas las ofertas laborales que tenga disponibles.
+                  </div>
                 </div>
               </div>
             </div>

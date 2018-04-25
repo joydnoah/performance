@@ -19,7 +19,7 @@
         <div class="row">
           <div class="col-xs-offset-1 col-xs-6">
             <div class="page-item">
-              <div class="item-label">Nombre de la posiciòn</div>
+              <div class="item-label">Nombre de la posición</div>
               <div class="item-description">{{ name }}</div>
             </div>
             <div class="page-item">

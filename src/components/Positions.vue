@@ -16,7 +16,7 @@
             <div class="empty-icon">
               <i class="material-icons">note_add</i>
             </div>
-            <div class="empty-message">En este momento no tienes ofertas laborales creadas</div>
+            <div class="empty-message">En este momento no tiene ofertas laborales creadas</div>
             <button v-show="isLoggedIn()" @click="go_to('/position')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent empty-btn">Crear posición</button>
           </div>
         </div>

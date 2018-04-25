@@ -20,7 +20,7 @@
 
           <div class="row">
             <div class="col-xs-offset-3 col-xs-6">
-              <div class="form-header-title">Ahora cuéntanos un poco sobre tu empresa</div>
+              <div class="form-header-title">Ahora cuéntanos un poco sobre su empresa</div>
             </div>
           </div>
           <div class="row">
@@ -33,7 +33,7 @@
                   <option value="151-500">151-500</option>
                   <option value="Más de 500">Más de 500</option>
                 </select>
-                <label class="mdl-selectfield__label" for="number_employees">¿Cuantos empledos tiene su empresa? *</label>
+                <label class="mdl-selectfield__label" for="number_employees">¿Cuantos empleados tiene su empresa? *</label>
                 <span class="mdl-textfield__error">Error message</span>
               </div>
             </div>
@@ -46,8 +46,10 @@
                   <option value="Agricultura">Agricultura</option>
                   <option value="Servicios">Servicios</option>
                   <option value="Importación y Exportación">Importación y Exportación</option>
+                  <option value="Gobierno">Gobierno</option>
+                  <option value="Otra">Otra</option>
                 </select>
-                <label class="mdl-selectfield__label" for="industry">¿En que industria se desempeña tu empresa?*</label>
+                <label class="mdl-selectfield__label" for="industry">¿En que industria se desempeña su empresa?*</label>
                 <span class="mdl-textfield__error">Error message</span>
               </div>
             </div>
@@ -56,9 +58,13 @@
               <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" v-bind:class="{ 'is-invalid': $v.company_role.$error }">
                 <select v-on:input="$v.company_role.$touch" v-model="company_role" id="company_role" name="company_role" class="mdl-selectfield__select">
                   <option value=""></option>
+                  <option value="VP o Jefe de Recursos Humanos">VP o Jefe de Recursos Humanos</option>
                   <option value="Gerente de RRHH">Gerente de RRHH</option>
+                  <option value="Coordinador de RRHH">Coordinador de RRHH</option>
+                  <option value="Generalista de RRHH">Generalista de RRHH</option>
                   <option value="Especialista de RRHH">Especialista de RRHH</option>
-                  <option value="Entrevistador">Entrevistador</option>
+                  <option value="Reclutador">Reclutador</option>
+                  <option value="Generalista de Recursos Humanos">Generalista de Recursos Humanos</option>
                   <option value="Otro">Otro</option>
                 </select>
                 <label class="mdl-selectfield__label" for="company_role">¿Cuál es tu rol dentro de la empresa? *</label>

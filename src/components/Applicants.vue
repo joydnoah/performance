@@ -66,12 +66,12 @@
               </div>
               <div class="col-xs-2">
                 <p id="created_at" class="header-title" @click="changeOrder($event.target.id)"><!-- .descending add sort down icon -->
-                  Fecha de solicitud
+                  Fecha de aplicación
                 </p>
               </div>
               <div class="col-xs-2">
                 <p id="status_application" class="header-title"  @click="changeOrder($event.target.id)"><!-- .ascending add sort up icon -->
-                  Status
+                  Estado
                 </p>
               </div>
               <div class="col-xs-5">
@@ -85,7 +85,7 @@
                   Habilidades
                 </p>
                 <p class="header-title compatibility-title">
-                  Total
+                  Ranking
                 </p>
               </div>
               <div class="col-xs-2">

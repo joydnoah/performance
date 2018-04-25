@@ -248,7 +248,7 @@ export default {
     showSuccess (msg) {
       this.showAlert = !this.showAlert
       this.typeOfAlert = 'is-success'
-      this.typeMessage = 'Success:'
+      this.typeMessage = 'Exito:'
       this.alertMessage = msg
     },
     show_waiting (id, msg) {
@@ -257,8 +257,6 @@ export default {
       document.getElementById(id).disabled = true
     },
     restoreButton (id, msg) {
-      console.log(id)
-      console.log(msg)
       document.getElementById(id).innerHTML = msg
       document.getElementById(id).disabled = false
     },
