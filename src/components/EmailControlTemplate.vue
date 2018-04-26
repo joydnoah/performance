@@ -3,7 +3,7 @@
     <div class="email-template-content">
       <div class="template-header">
         <div class="template-title-container">
-          <div class="template-title">Plantilla para invitar candidato a llamada</div>
+          <div class="template-title">{{ help_text[type_prop].title }}</div>
           <div class="switch-container">
             <span class="switch-message">Activar plantilla</span>
 
@@ -27,7 +27,7 @@
 
         <div class="template-instructions-container">
           <div class="instructions-title">Instrucciones</div>
-          <div class="instructions-message">Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de entrevistas de esta posición</div>
+          <div class="instructions-message">{{ help_text[type_prop].help }}</div>
         </div>
 
       </div>
@@ -88,6 +88,28 @@
     data: function () {
       return {
         email_templates: [],
+        help_text: {
+          in_process: {
+            title: 'Plantilla para aplicación de candidato',
+            help: 'Este correo electrónico será enviado automáticamente a los candidatos que apliquen a la posición'
+          },
+          reject: {
+            title: 'Plantilla para candidato rechazado',
+            help: 'Este correo electrónico será enviado automáticamente a los candidatos que rechaces.'
+          },
+          scheduled_call: {
+            title: 'Plantilla para invitar candidato a entrevista o llamada.',
+            help: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.'
+          },
+          scheduled_interview: {
+            title: 'Plantilla para invitar candidato a entrevista o llamada.',
+            help: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.'
+          },
+          approved: {
+            title: 'Plantilla para invitar candidato aprobado',
+            help: 'Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de entrevistas de esta posición'
+          }
+        },
         check_box_id: 'checkbox-',
         subject_id: '',
         email_id: '',

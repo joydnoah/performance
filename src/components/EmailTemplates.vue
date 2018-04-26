@@ -84,7 +84,7 @@
         typeMessage: '',
         alertMessage: '',
         config: {
-          placeholderText: 'Edita tu contenido aquí!',
+          placeholderText: 'Edite su contenido aquí!',
           events: {
             'froalaEditor.initialized': function () {
             }

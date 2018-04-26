@@ -131,7 +131,7 @@
     <div class="panel-body">
       <div id="alert-succes" style="display: none;" class="alert alert-success">
         <i class="glyphicon glyphicon-ok"></i> <strong>Proceso finalizado</strong>
-        <p>Se ha enviado tu solicitud de aplicante para la posición actual.</p>
+        <p>Se ha enviado su solicitud de aplicante para la posición actual.</p>
       </div>
       <div id="alert-warning" style="display: none;" class="alert alert-warning">
         <i class="glyphicon glyphicon-ok"></i> <strong>Formulario no disponible</strong>

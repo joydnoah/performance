@@ -23,7 +23,7 @@
               <div class="empty-icon">
                 <i class="material-icons">email</i>
               </div>
-              <div class="empty-message">Verifica tu cuenta de Email y sigue las instrucciones</div>
+              <div class="empty-message">Verifique su cuenta de Email y sigue las instrucciones</div>
               <button @click="goTo()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent empty-btn">Regresar</button>
             </div>
           </div>

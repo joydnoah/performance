@@ -94,7 +94,7 @@ export default {
       typeOfAlert: '',
       typeMessage: '',
       alertMessage: '',
-      successSave: 'La posición se almaceno correctamente.',
+      successSave: 'La posición se almacenó correctamente.',
       successPublish: 'La posición ha sido publicada correctamente.',
       dataJson: {}
     }
