@@ -3,7 +3,7 @@
     <div class="email-template-content">
       <div class="template-header">
         <div class="template-title-container">
-          <div class="template-title">{{ help_text[type_prop].tittle }}</div>
+          <div class="template-title">{{ help_text[type_prop].title }}</div>
           <div class="switch-container">
             <span class="switch-message">Activar plantilla</span>
 
@@ -90,23 +90,23 @@
         email_templates: [],
         help_text: {
           in_process: {
-            tittle: 'Plantilla para aplicación de candidato',
+            title: 'Plantilla para aplicación de candidato',
             help: 'Este correo electrónico será enviado automáticamente a los candidatos que apliquen a la posición'
           },
           reject: {
-            tittle: 'Plantilla para candidato rechazado',
+            title: 'Plantilla para candidato rechazado',
             help: 'Este correo electrónico será enviado automáticamente a los candidatos que rechaces.'
           },
           scheduled_call: {
-            tittle: 'Plantilla para invitar candidato a entrevista o llamada.',
+            title: 'Plantilla para invitar candidato a entrevista o llamada.',
             help: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.'
           },
           scheduled_interview: {
-            tittle: 'Plantilla para invitar candidato a entrevista o llamada.',
+            title: 'Plantilla para invitar candidato a entrevista o llamada.',
             help: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.'
           },
           approved: {
-            tittle: 'Plantilla para invitar candidato aprobado',
+            title: 'Plantilla para invitar candidato aprobado',
             help: 'Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de entrevistas de esta posición'
           }
         },
