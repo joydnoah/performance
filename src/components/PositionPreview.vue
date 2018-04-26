@@ -13,15 +13,11 @@
 
         <div class="row">
           <div class="col-xs-offset-1 col-xs-6">
-            <div class="page-title">Acerca de la posición</div>
+            <div class="page-title">{{ name }}</div>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-offset-1 col-xs-6">
-            <div class="page-item">
-              <div class="item-label">Nombre de la posición</div>
-              <div class="item-description">{{ name }}</div>
-            </div>
             <div class="page-item">
               <div class="item-label">Departamento de la posición</div>
               <div class="item-description">Departamento de finanzas</div>
@@ -141,7 +137,7 @@ export default {
     max-width: 100%;
     max-height:100%;
     padding-bottom: 10%;
-    height: 30px;
-    width: 90px
+    height: 90px;
+    width: 270px;
   }
 </style>

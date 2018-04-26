@@ -23,9 +23,9 @@
             <div class="mdl-tabs__tab-bar">
               <a href="#regards-template" class="mdl-tabs__tab is-active" >Agradecer solicitud</a>
               <a href="#reject-template" class="mdl-tabs__tab">Rechazar candidato</a>
-              <a href="#call-template" class="mdl-tabs__tab">Invitar candidato a llamada</a>
+              <!--<a href="#call-template" class="mdl-tabs__tab">Invitar candidato a llamada</a>
               <a href="#interview-template" class="mdl-tabs__tab">Invitar candidato a entrevista</a>
-              <a href="#approved-template" class="mdl-tabs__tab">Contratado</a>
+              <a href="#approved-template" class="mdl-tabs__tab">Contratado</a>-->
             </div>
           </div>
         </div><!-- general-container end -->
@@ -40,7 +40,7 @@
             <div class="mdl-tabs__panel" id="reject-template">
               <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'reject'" @saved="saved()" @go_back="go_back()"></email-control-template>
             </div>
-            <div class="mdl-tabs__panel" id="call-template">
+            <!--<div class="mdl-tabs__panel" id="call-template">
               <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'scheduled_call'" @saved="saved()" @go_back="go_back()"></email-control-template>
             </div>
             <div class="mdl-tabs__panel" id="interview-template">
@@ -48,7 +48,7 @@
             </div>
             <div class="mdl-tabs__panel" id="approved-template">
               <email-control-template :saveButtonMessage="'Guardar'" :type="'template'" :position_id="position_id" :type_prop="'approved'" @saved="saved()" @go_back="go_back()"></email-control-template>
-            </div>
+            </div>-->
           </div>
         </div>
         <div style="display: none;" id="tempalteSaved" class="alert alert-success" role="alert">
