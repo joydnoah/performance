@@ -30,7 +30,6 @@
                 <i class="material-icons icon-row">keyboard_arrow_down</i>
                 <div class="dropdown-nav-container">
                   <div class="dropdown-nav arrow-right">
-                    <span class="dropdown-list-title">Opciones de usuario</span>
                     <ul class="dropdown-list">
                       <li><a @click="go_to('/' + company.uri)">Informacion empresarial</a></li>
                       <li><a @click="handleLogout()" href="#">Cerrar sesión</a></li>

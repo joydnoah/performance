@@ -10,7 +10,7 @@
               <div class="confirmation-message">¿Desea activar la plantilla de correo electronico que se enviara automaticamente a los candidatos?</div>
             </div>
             <div class="confirmation-btn-container">
-              <button v-on:click="hide('modal-confirmation')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-cancel" data-dismiss="modal" aria-label="Close">No enviar correo por ahora</button>
+              <button v-on:click="changeWithNoEmail()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-cancel" data-dismiss="modal" aria-label="Close">No enviar correo por ahora</button>
               <button v-on:click="changeModal('modal-confirmation', 'modal-email')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-confirm" data-dismiss="modal" aria-label="Close">Si, activar plantilla</button>
             </div>
           </div><!-- modal-body ends -->
@@ -48,8 +48,9 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="result-status-container">
-                <div class="results-status-number">{{ applicants.length }} de {{ applicants.length }}</div>
-                <div class="results-status-message">Candidatos activos que concuerdan con tus requisitos mínimos</div>
+                <!-- <div class="results-status-number">{{ applicants.length }} de {{ applicants.length }}</div>
+                <div class="results-status-message">Candidatos activos que concuerdan con tus requisitos mínimos</div> -->
+                <div class="results-status-message">Candidatos</div>
               </div>
             </div>
           </div>
@@ -138,7 +139,7 @@
                   <li @click="go_to(item.applicant_id, item.id)">Ver detalle</li>
                   <!-- <li @click="openEmailModal(item.id, 'scheduled_call')">Invitar a entrevista telefonica</li> -->
                   <!-- <li @click="openEmailModal(item.id, 'scheduled_interview')">Invitar a entrevista presencial</li> -->
-                  <li @click="openEmailModal(item.id, 'approved')">Marcar como contratado</li>
+                  <li @click="set_status_application(item.id, 'approved', 'modal-confirmation')"">Marcar como contratado</li>
                   <li @click="openEmailModal(item.id, 'rejection')" class="is-negative">Rechazar candidato</li><!-- .is-negative add error color to negative acctions -->
                 </ul>
               </div>
@@ -195,6 +196,10 @@
       }
     },
     methods: {
+      changeWithNoEmail () {
+        this.set_status_application(this.clickedApplicantId, this.statusAction, 'modal-confirmation')
+        this.hide('modal-confirmation')
+      },
       openModal (id) {
         this.showModal = id
       },
@@ -322,7 +327,7 @@
         .then(response => {
           this.get_applicants(this.actual_order_attribute.attribute, this.actual_order_attribute.asc_desc)
           this.hideModal = modalId
-          this.showSuccess('El estato del aplicante a sido cambiado con exito, un correo sera enviado automaticamente.')
+          this.showSuccess('El estato del aplicante a sido cambiado con exito.')
         })
         .catch(error => {
           console.log(error.response)

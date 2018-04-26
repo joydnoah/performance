@@ -45,10 +45,6 @@
               <p class="header-info">{{ status }}</p>
             </div>
             <div class="col-xs-2">
-              <p class="header-info">Score Status:</p>
-              <p class="header-info">{{ score_status }}</p>
-            </div>
-            <div class="col-xs-2">
               <div id="compatibility" class="header-compatibility"><!-- .is-high .is-medium .is-low change color compatibility -->
                 <p id="compatibility-text">Esperando a ser calificado</p>
                 <p id="compatibility-text-value">-</p>
@@ -167,11 +163,16 @@
         </div>
       </div>
 
-      <div class="pdf-viewer">
-
-      </div>
-
     </div><!-- modal-body ends -->
+    <div class="applicant-modal-content">
+      <div class="general-container">
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-10">
+            <a :href="'/applicants/' + positionId" class="btn btn-warning">Regresar</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <!--
     <app-nav></app-nav>
     <div id="container-positions" class="panel panel-default">
