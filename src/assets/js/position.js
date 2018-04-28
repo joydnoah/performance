@@ -402,7 +402,6 @@ export default {
       document.getElementById(id).disabled = true
     },
     restoreButton (id, msg) {
-      console.log(id)
       document.getElementById(id).innerHTML = msg
       document.getElementById(id).disabled = false
     },
