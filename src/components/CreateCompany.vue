@@ -194,6 +194,11 @@
         }
       }
     },
+    beforeCreate () {
+      if (localStorage['company_id'] !== undefined) {
+        window.location.href = '/positions'
+      }
+    },
     mounted: function () {
       this.getUserInfo()
       this.bootstrap_min_js = document.createElement('script')

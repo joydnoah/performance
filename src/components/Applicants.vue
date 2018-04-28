@@ -97,7 +97,7 @@
           <div class="applicant-row-container" v-for="item in applicants">
             <div class="row top-row">
               <div class="row-bookmark is-active"><!-- add .is-active to add blue color as bookmarked -->
-                <i class="material-icons">thumb_up</i>
+                <i class="material-icons" style="visibility: hidden;">thumb_up</i>
               </div>
               <div class="col-xs-3">
                 <a @click="go_to(item.applicant_id, item.id)" class="row-info row-name-link">
