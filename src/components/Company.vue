@@ -21,7 +21,7 @@
               <div v-show="isEmpty( company.description )" class="col-xs-offset-2 col-xs-8">
                 <div class="page-item">
                   <div class="item-label">Descripción de la empresa</div>
-                  <div class="item-description">{{ company.description }}</div>
+                  <div class="item-description" style="word-break: break-all;">{{ company.description }}</div>
                 </div>
               </div>
               <div v-show="false" class="col-xs-offset-2 col-xs-8">
