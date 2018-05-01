@@ -168,15 +168,19 @@ export default {
         this.uploadLogo(button, oldMsg, exit, 'El logo ha sido actualizado.')
       } else {
         this.showLogoInput()
-        var msg = 'La imagen no es valida.'
-        if (this.logoValidSize) {
-          msg = msg + ' El tipo de archivo no es el correcto.'
-        }
-        if (this.logoValidType) {
-          msg = msg + ' El tamaño debe ser menor a 600x200 px'
-        }
-        this.showError(msg)
+        this.showLogoError()
+        this.restoreButton(button, oldMsg)
       }
+    },
+    showLogoError() {
+      var msg = 'La imagen no es valida.'
+      if (this.logoValidSize) {
+        msg = msg + ' El tipo de archivo no es el correcto.'
+      }
+      if (this.logoValidType) {
+        msg = msg + ' El tamaño debe ser menor a 600x200 px'
+      }
+      this.showError(msg)
     },
     getLogoUri () {
       this.axios.get('/company/' + localStorage['company_id'] + '/logo')
@@ -291,8 +295,13 @@ export default {
         })
       } else {
         // 'Antes de continuar por favor verifique la información suministrada.'
-        var msg = this.errors.description_label
-        this.showError(msg)
+        if (v.$error) {
+          var msg = this.errors.description_label
+          this.showError(msg)
+        }
+        if (!this.validateLogo()) {
+          this.showLogoError()
+        }
       }
     }
   },
