@@ -143,7 +143,11 @@
       },
       getUserInfo () {
         this.user_info = JSON.parse(getUserInfo())
-        this.user_id = this.user_info.user_id
+        if (this.user_info.user_id !== null || this.user_info.user_id !== undefined) {
+          this.user_id = this.user_info.user_id
+        } else {
+          this.user_id = this.user_info.sub
+        }
       },
       show_waiting (id, msg) {
         document.getElementById(id).innerHTML = msg
