@@ -95,19 +95,19 @@
           },
           reject: {
             title: 'Plantilla para candidato rechazado',
-            help: 'Este correo electrónico será enviado automáticamente a los candidatos que rechaces.'
+            help: 'Este correo electrónico será enviado automáticamente a los candidatos que rechace.'
           },
           scheduled_call: {
             title: 'Plantilla para invitar candidato a entrevista o llamada.',
-            help: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.'
+            help: 'Este correo electrónico será enviado automáticamente a los candidatos que quiera invitar para una entrevista o llamada.'
           },
           scheduled_interview: {
             title: 'Plantilla para invitar candidato a entrevista o llamada.',
-            help: 'Este correo electrónico será enviado automáticamente a los candidatos que quieras invitar para una entrevista o llamada.'
+            help: 'Este correo electrónico será enviado automáticamente a los candidatos que quiera invitar para una entrevista o llamada.'
           },
           approved: {
             title: 'Plantilla para invitar candidato aprobado',
-            help: 'Este correo electrónico será enviado automaticamente a los candidatos que apruebes en el proceso de entrevistas de esta posición'
+            help: 'Este correo electrónico será enviado automaticamente a los candidatos que apruebe en el proceso de entrevistas de esta posición'
           }
         },
         check_box_id: 'checkbox-',
