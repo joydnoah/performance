@@ -248,7 +248,7 @@ export default {
     showSuccess (msg) {
       this.showAlert = !this.showAlert
       this.typeOfAlert = 'is-success'
-      this.typeMessage = 'Exito:'
+      this.typeMessage = 'Éxito:'
       this.alertMessage = msg
     },
     show_waiting (id, msg) {
