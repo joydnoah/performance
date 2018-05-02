@@ -51,7 +51,7 @@
     },
     methods: {
       goTo () {
-        window.location.href = '/'
+        window.location.href = '/login'
       }
     },
     mounted: function () {
