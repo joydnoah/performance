@@ -25,7 +25,8 @@
           </div>
           <div class="row">
             <div class="col-xs-offset-3 col-xs-6">
-              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" v-bind:class="{ 'is-invalid': $v.number_employees.$error }">
+              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                <div class="select-label" v-bind:class="{ 'error': $v.number_employees.$error }">¿Cuantos empleados tiene su empresa? *</div>
                 <select v-on:input="$v.number_employees.$touch" v-model="number_employees" id="number_employees" name="number_employees" class="mdl-selectfield__select">
                   <option value=""></option>
                   <option value="1-50">1-50</option>
@@ -33,12 +34,13 @@
                   <option value="151-500">151-500</option>
                   <option value="Más de 500">Más de 500</option>
                 </select>
-                <label class="mdl-selectfield__label" for="number_employees">¿Cuantos empleados tiene su empresa? *</label>
+                <label class="mdl-selectfield__label" for="number_employees"></label>
                 <span class="mdl-textfield__error">Error message</span>
               </div>
             </div>
             <div class="col-xs-offset-3 col-xs-6">
-              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" v-bind:class="{ 'is-invalid': $v.industry.$error }">
+              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                <div class="select-label" v-bind:class="{ 'error': $v.industry.$error }">¿En que industria se desempeña su empresa?*</div>
                 <select v-on:input="$v.industry.$touch" v-model="industry" id="industry" name="industry" class="mdl-selectfield__select">
                   <option value=""></option>
                   <option value="Banca o Finanzas">Banca o Finanzas</option>
@@ -49,13 +51,14 @@
                   <option value="Gobierno">Gobierno</option>
                   <option value="Otra">Otra</option>
                 </select>
-                <label class="mdl-selectfield__label" for="industry">¿En que industria se desempeña su empresa?*</label>
+                <label class="mdl-selectfield__label" for="industry"></label>
                 <span class="mdl-textfield__error">Error message</span>
               </div>
             </div>
 
             <div class="col-xs-offset-3 col-xs-6">
-              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label" v-bind:class="{ 'is-invalid': $v.company_role.$error }">
+              <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                <div class="select-label" v-bind:class="{ 'error': $v.company_role.$error }">¿Cuál es su rol dentro de la empresa? *</div>
                 <select v-on:input="$v.company_role.$touch" v-model="company_role" id="company_role" name="company_role" class="mdl-selectfield__select">
                   <option value=""></option>
                   <option value="VP o Jefe de Recursos Humanos">VP o Jefe de Recursos Humanos</option>
@@ -67,7 +70,7 @@
                   <option value="Generalista de Recursos Humanos">Generalista de Recursos Humanos</option>
                   <option value="Otro">Otro</option>
                 </select>
-                <label class="mdl-selectfield__label" for="company_role">¿Cuál es su rol dentro de la empresa? *</label>
+                <label class="mdl-selectfield__label" for="company_role"></label>
                 <span class="mdl-textfield__error">Error message</span>
               </div>
             </div>
@@ -213,6 +216,12 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
+  .select-label{
+    color: #12abd4;
+  }
+  .error{
+    color: 	#FF0000;
+  }
   #container-positions{
     width: 40%;
     margin: 0 auto;
