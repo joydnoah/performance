@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
 import Position from '@/components/Position'
 import PositionPreview from '@/components/PositionPreview'
 import PositionApply from '@/components/PositionApply'
@@ -28,7 +27,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Login
     },
     {
       path: '/login',
