@@ -9,13 +9,19 @@ const ACCESS_TOKEN_KEY = 'access_token';
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN;
+const CLIENT_CUSTOM_DOMAIN = process.env.CLIENT_CUSTOM_DOMAIN;
 const AUTH0_CALLBACK_REDIRECT = process.env.AUTH0_CALLBACK_REDIRECT;
 const SCOPE = "full_access";
 const AUDIENCE = process.env.AUTH0_AUDIENCE;
 
 var auth = new auth0.WebAuth({
   clientID: CLIENT_ID,
-  domain: CLIENT_DOMAIN
+  domain: CLIENT_DOMAIN,
+  //handle custom domain
+  overrides: {
+  	__tenant: CLIENT_CUSTOM_DOMAIN,
+  	__token_issuer: CLIENT_DOMAIN
+  },
 });
 
 export function login() {
