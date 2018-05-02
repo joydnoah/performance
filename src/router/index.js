@@ -17,6 +17,7 @@ import CreateCompany from '@/components/CreateCompany'
 import CompanyJobs from '@/components/CompanyJobs'
 import Company from '@/components/Company'
 import Dashboard from '@/components/Dashboard'
+import Login from '@/components/Login'
 import { requireAuth } from '../../utils/auth'
 
 Vue.use(Router)
@@ -28,6 +29,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/position',
