@@ -66,6 +66,7 @@
       if (this.isLoggedIn()) {
         this.getUserInfo()
       }
+      this.handleLogin()
     }
   }
 </script>
