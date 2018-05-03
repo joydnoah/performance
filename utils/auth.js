@@ -17,6 +17,10 @@ const AUDIENCE = process.env.AUTH0_AUDIENCE;
 var auth = new auth0.WebAuth({
   clientID: CLIENT_ID,
   domain: CLIENT_DOMAIN,
+  responseType: 'token id_token',
+  redirectUri: AUTH0_CALLBACK_REDIRECT,
+  audience: AUDIENCE,
+  scope: SCOPE,
   //handle custom domain
   overrides: {
   	__tenant: CLIENT_CUSTOM_DOMAIN,
@@ -25,12 +29,7 @@ var auth = new auth0.WebAuth({
 });
 
 export function login() {
-  auth.authorize({
-    responseType: 'token id_token',
-    redirectUri: AUTH0_CALLBACK_REDIRECT,
-    audience: AUDIENCE,
-    scope: SCOPE
-  });
+  auth.authorize();
 }
 
 var router = new Router({
