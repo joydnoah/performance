@@ -7,18 +7,9 @@ import { login } from '../../utils/auth'
 import { setup } from '../../utils/hotjar'
 
 export default {
-  data: function () {
-    return {
-    }
-  },
-  methods: {
-    handleLogin () {
-      login()
-    }
-  },
-  mounted: function () {
+  beforeCreate: function () {
     setup(this)
-    this.handleLogin()
+    login()
   }
 }
 </script>
