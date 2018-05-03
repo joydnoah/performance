@@ -18,6 +18,7 @@ import Company from '@/components/Company'
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/Login'
 import { requireAuth } from '../../utils/auth'
+import Home from '@/components/Home'
 
 Vue.use(Router)
 
@@ -27,7 +28,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Login
+      component: Home
     },
     {
       path: '/login',
